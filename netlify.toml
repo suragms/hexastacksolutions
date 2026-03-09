@@ -1,0 +1,40 @@
+[build]
+  command = "npm install && npx prisma generate && node scripts/generate-sitemap.js && npm run build"
+  publish = "dist"
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = [
+    "@prisma/client",
+    ".prisma/client",
+    "bcryptjs",
+    "mongodb",
+    "express",
+    "cors",
+    "jsonwebtoken",
+    "multer",
+    "serverless-http"
+  ]
+  included_files = ["prisma/schema.prisma"]
+
+# Environment variables (Set these in Netlify Dashboard)
+# DATABASE_URL - MongoDB connection string
+# JWT_SECRET - Secret key for JWT tokens
+# NODE_ENV - Set to 'production'
+
+# 301: redirect hexastacksolutions.com to canonical domain hexastack.in
+[[redirects]]
+  from = "https://hexastacksolutions.com/*"
+  to = "https://hexastack.in/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
