@@ -29,16 +29,24 @@ const prerenderRoutes = [
     '/admin',
 ];
 
+// Skip prerender on Vercel/CI: Puppeteer is not available and causes build failures
+const isVercel = process.env.VERCEL === '1';
+const isCI = process.env.CI === 'true';
+
 export default defineConfig({
     plugins: [
         react(),
-        vitePrerender({
-            staticDir: path.join(__dirname, 'dist'),
-            routes: prerenderRoutes,
-            renderer: {
-                renderAfterDocumentEvent: 'render-event',
-            },
-        }),
+        ...(isVercel || isCI
+            ? []
+            : [
+                vitePrerender({
+                    staticDir: path.join(__dirname, 'dist'),
+                    routes: prerenderRoutes,
+                    renderer: {
+                        renderAfterDocumentEvent: 'render-event',
+                    },
+                }),
+            ]),
     ],
     resolve: {
         alias: {
