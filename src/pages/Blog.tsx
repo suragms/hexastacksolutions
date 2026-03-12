@@ -30,13 +30,13 @@ export default function Blog() {
             />
 
             {/* Hero */}
-            <section className="relative pt-8 pb-16 md:pt-20 md:pb-24 overflow-hidden">
+            <section className="relative pt-8 pb-16 md:pt-20 md:pb-24 overflow-x-hidden">
                 <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(37,99,235,0.1),transparent)]" />
-                <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[var(--foreground)] leading-tight mb-6">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[var(--foreground)] leading-tight mb-6 break-words">
                         Blog
                     </h1>
-                    <p className="text-base md:text-lg text-[var(--muted-foreground)] max-w-2xl leading-relaxed">
+                    <p className="text-base md:text-lg text-[var(--muted-foreground)] max-w-2xl leading-relaxed break-words">
                         Guides on ATS, VAT compliance, billing software, and career tools.
                     </p>
                 </div>
@@ -44,7 +44,7 @@ export default function Blog() {
 
             {/* Categories */}
             <section className="py-6 border-t border-[var(--border)]">
-                <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
                     <p className="text-xs font-semibold uppercase tracking-wider text-[var(--muted-foreground)] mb-4">Topics</p>
                     <div className="flex flex-wrap gap-3">
                         {categories.map((cat) => (
@@ -61,9 +61,9 @@ export default function Blog() {
 
             {/* Guides */}
             <section className="py-8 md:py-16 border-t border-[var(--border)]">
-                <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                    <h2 className="text-2xl font-bold tracking-tight mb-2">Guides & insights</h2>
-                    <p className="text-[var(--muted-foreground)] mb-10 max-w-xl">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
+                    <h2 className="text-2xl font-bold tracking-tight mb-2 break-words">Guides & insights</h2>
+                    <p className="text-[var(--muted-foreground)] mb-10 max-w-xl break-words">
                         Practical guides for business software, compliance, and career optimization.
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">

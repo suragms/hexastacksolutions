@@ -193,23 +193,23 @@ export default function Home() {
 
             <main>
                 {/* 1. Hero */}
-                <section className="hero-parallax relative pt-12 pb-16 md:pt-32 md:pb-32 px-4 sm:px-6 overflow-hidden">
-                    <div className="max-w-6xl mx-auto relative z-10">
+                <section className="hero-parallax relative pt-8 pb-14 sm:pt-12 sm:pb-16 md:pt-32 md:pb-32 px-4 sm:px-6 overflow-x-hidden min-w-0">
+                    <div className="max-w-6xl mx-auto relative z-10 min-w-0 w-full">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
-                            className="max-w-3xl"
+                            className="max-w-3xl min-w-0 w-full"
                         >
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border)] bg-[var(--glass-bg)] backdrop-blur-sm mb-8">
-                                <span className="relative flex h-2 w-2">
+                            <div className="inline-flex items-center gap-2 px-3 py-2 sm:py-1.5 rounded-full border border-[var(--border)] bg-[var(--glass-bg)] backdrop-blur-sm mb-6 sm:mb-8 max-w-full">
+                                <span className="relative flex h-2 w-2 shrink-0 mt-0.5">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--primary)] opacity-40" />
                                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--primary)]" />
                                 </span>
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--muted-foreground)]">{heroData.eyebrow}</span>
+                                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider sm:tracking-widest text-[var(--muted-foreground)] whitespace-normal break-words leading-snug">{heroData.eyebrow}</span>
                             </div>
-                            <div className="mb-8">
-                                <div className="w-10 h-10 border-2 border-[var(--border)] rounded-lg flex items-center justify-center p-1.5 bg-[var(--card)]">
+                            <div className="mb-6 sm:mb-8">
+                                <div className="w-10 h-10 border-2 border-[var(--border)] rounded-lg flex items-center justify-center p-1.5 bg-[var(--card)] shrink-0">
                                     <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-[var(--foreground)]" stroke="currentColor" strokeWidth="1.5">
                                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                                     </svg>
@@ -222,34 +222,35 @@ export default function Home() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -8 }}
                                     transition={{ duration: 0.3 }}
+                                    className="min-w-0"
                                 >
-                                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[var(--foreground)] leading-[1.1] mb-6">
+                                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--foreground)] leading-[1.15] mb-4 sm:mb-6 break-words break-words">
                                         {heroData.h1line1}<br /><span className="text-[#3B82F6]">{heroData.h1line2}</span>
                                     </h1>
-                                    <p className="text-lg md:text-xl text-[var(--muted-foreground)] leading-relaxed mb-6 max-w-2xl font-light">
+                                    <p className="text-base sm:text-lg md:text-xl text-[var(--muted-foreground)] leading-relaxed mb-4 sm:mb-6 max-w-2xl font-light break-words">
                                         {heroData.sub}
                                     </p>
                                 </motion.div>
                             </AnimatePresence>
-                            <div className="flex flex-wrap gap-3 mb-8">
+                            <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8">
                                 {['3+ Gulf Projects', 'Kerala & UAE', 'Direct to Developer', 'Rs.15K websites'].map((stat, i) => (
-                                    <span key={i} className="px-5 py-2.5 rounded-full border border-[var(--border)] bg-[var(--glass-bg)] backdrop-blur-sm text-[var(--muted-foreground)] text-sm font-medium">
+                                    <span key={i} className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border border-[var(--border)] bg-[var(--glass-bg)] backdrop-blur-sm text-[var(--muted-foreground)] text-xs sm:text-sm font-medium">
                                         {stat}
                                     </span>
                                 ))}
                             </div>
-                            <div className="flex flex-col sm:flex-row gap-4 mb-10">
+                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10">
                                 <a
                                     href="https://wa.me/917591999365?text=Hi%20HexaStack!%20I%20found%20your%20website%20and%20I%20need%20help%20with%20a%20software%20project."
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="cta-glow inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[var(--primary)] text-white font-semibold hover:opacity-95 transition-all duration-300"
+                                    className="cta-glow inline-flex items-center justify-center gap-2 min-h-[48px] px-6 sm:px-8 py-3.5 rounded-full bg-[var(--primary)] text-white font-semibold hover:opacity-95 active:scale-[0.98] transition-all duration-300 touch-manipulation"
                                 >
-                                    {heroData.ctaText} <ArrowRight className="w-4 h-4" />
+                                    {heroData.ctaText} <ArrowRight className="w-4 h-4 shrink-0" />
                                 </a>
                                 <Link
                                     to="/work"
-                                    className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full border border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--muted)] font-medium transition-colors"
+                                    className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 sm:px-8 py-3.5 rounded-full border border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--muted)] font-medium transition-colors active:scale-[0.98] touch-manipulation"
                                 >
                                     View Our Work
                                 </Link>
@@ -259,10 +260,10 @@ export default function Home() {
                 </section>
 
                 {/* 2. Services */}
-                <section id="services" className="py-16 md:py-24 border-t border-[var(--border)] bg-[var(--background)]" aria-labelledby="services-heading">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <section id="services" className="py-16 md:py-24 border-t border-[var(--border)] bg-[var(--background)] overflow-visible" aria-labelledby="services-heading">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
                         <ScrollReveal>
-                            <h2 id="services-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)]">Services</h2>
+                            <h2 id="services-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)] break-words">Services</h2>
                             <p className="text-[var(--muted-foreground)] mb-10 md:mb-14 max-w-xl">Enterprise software, AI automation, SaaS platforms, and cloud architecture. Delivered — not vapour.</p>
                         </ScrollReveal>
                         {loadingServices ? (
@@ -295,10 +296,10 @@ export default function Home() {
                 </section>
 
                 {/* 3. Featured case studies */}
-                <section id="case-studies" className="py-16 md:py-24 border-t border-[var(--border)] bg-[var(--card)]/50" aria-labelledby="case-studies-heading">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <section id="case-studies" className="py-16 md:py-24 border-t border-[var(--border)] bg-[var(--card)]/50 overflow-visible" aria-labelledby="case-studies-heading">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
                         <ScrollReveal>
-                            <h2 id="case-studies-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)]">Featured Case Studies</h2>
+                            <h2 id="case-studies-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)] break-words">Featured Case Studies</h2>
                             <p className="text-[var(--muted-foreground)] mb-10 md:mb-14 max-w-xl">Outcome-first delivery: real projects for trading, retail, healthcare, and SaaS.</p>
                         </ScrollReveal>
                         <ScrollRevealStagger className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -319,10 +320,10 @@ export default function Home() {
                 </section>
 
                 {/* 4. Technology stack */}
-                <section id="tech-stack" className="py-16 md:py-24 border-t border-[var(--border)] bg-[var(--background)]" aria-labelledby="tech-heading">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <section id="tech-stack" className="py-16 md:py-24 border-t border-[var(--border)] bg-[var(--background)] overflow-visible" aria-labelledby="tech-heading">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
                         <ScrollReveal>
-                            <h2 id="tech-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)]">Technology Stack</h2>
+                            <h2 id="tech-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)] break-words">Technology Stack</h2>
                             <p className="text-[var(--muted-foreground)] mb-10 max-w-xl">Cloud, languages, frameworks, and AI/ML we use to deliver enterprise systems.</p>
                         </ScrollReveal>
                         <ScrollReveal>
@@ -341,10 +342,10 @@ export default function Home() {
                 </section>
 
                 {/* 5. Process workflow */}
-                <section id="process" className="py-16 md:py-24 border-t border-[var(--border)]" aria-labelledby="process-heading">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <section id="process" className="py-16 md:py-24 border-t border-[var(--border)] overflow-visible" aria-labelledby="process-heading">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
                         <ScrollReveal>
-                            <h2 id="process-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)]">Process Workflow</h2>
+                            <h2 id="process-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)] break-words">Process Workflow</h2>
                             <p className="text-[var(--muted-foreground)] mb-10 md:mb-14 max-w-xl">From discovery to optimization. Clear phases for predictable outcomes.</p>
                         </ScrollReveal>
                         <ScrollRevealStagger className="grid grid-cols-1 md:grid-cols-5 gap-6">
@@ -362,10 +363,10 @@ export default function Home() {
                 </section>
 
                 {/* 6. Client testimonials */}
-                <section id="testimonials" className="py-16 md:py-24 border-t border-[var(--border)] bg-[var(--card)]/50" aria-labelledby="testimonials-heading">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <section id="testimonials" className="py-16 md:py-24 border-t border-[var(--border)] bg-[var(--card)]/50 overflow-visible" aria-labelledby="testimonials-heading">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
                         <ScrollReveal>
-                            <h2 id="testimonials-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)]">Client Testimonials</h2>
+                            <h2 id="testimonials-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)] break-words">Client Testimonials</h2>
                             <p className="text-[var(--muted-foreground)] mb-10 md:mb-14 max-w-xl">What businesses in Kerala and the Gulf say about working with us.</p>
                         </ScrollReveal>
                         <ScrollRevealStagger className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -384,10 +385,10 @@ export default function Home() {
                 </section>
 
                 {/* 7. Contact CTA */}
-                <section id="contact-cta" className="py-20 md:py-24 border-t border-[var(--border)] bg-[var(--foreground)] text-white" aria-labelledby="contact-cta-heading">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+                <section id="contact-cta" className="py-20 md:py-24 border-t border-[var(--border)] bg-[var(--foreground)] text-white overflow-visible" aria-labelledby="contact-cta-heading">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center min-w-0 w-full">
                         <ScrollReveal>
-                            <h2 id="contact-cta-heading" className="text-2xl md:text-4xl font-bold tracking-tight mb-4">Ready to discuss your project?</h2>
+                            <h2 id="contact-cta-heading" className="text-2xl md:text-4xl font-bold tracking-tight mb-4 break-words">Ready to discuss your project?</h2>
                             <p className="text-white/80 max-w-xl mx-auto mb-10">Request a consultation. We respond within 24 hours and can align scope, timeline, and next steps.</p>
                             <Link
                                 to="/contact"
@@ -400,10 +401,10 @@ export default function Home() {
                 </section>
 
                 {/* Products */}
-                <section id="products" className="py-16 md:py-20 border-t border-[var(--border)] bg-[var(--background)]" aria-labelledby="products-heading">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <section id="products" className="py-16 md:py-20 border-t border-[var(--border)] bg-[var(--background)] overflow-visible" aria-labelledby="products-heading">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
                         <ScrollReveal>
-                            <h2 id="products-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)]">Products</h2>
+                            <h2 id="products-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)] break-words">Products</h2>
                             <p className="text-[var(--muted-foreground)] mb-10 max-w-xl">Business management, ATS resume tools, and career optimization.</p>
                         </ScrollReveal>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -440,10 +441,10 @@ export default function Home() {
                 </section>
 
                 {/* Industries */}
-                <section id="industries" className="py-12 md:py-16 border-t border-[var(--border)] bg-[var(--background)]" aria-labelledby="industries-heading">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <section id="industries" className="py-12 md:py-16 border-t border-[var(--border)] bg-[var(--background)] overflow-visible" aria-labelledby="industries-heading">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
                         <ScrollReveal>
-                            <h2 id="industries-heading" className="text-2xl font-bold tracking-tight mb-2 text-[var(--foreground)]">Industries We Serve</h2>
+                            <h2 id="industries-heading" className="text-2xl font-bold tracking-tight mb-2 text-[var(--foreground)] break-words">Industries We Serve</h2>
                             <p className="text-[var(--muted-foreground)] mb-6 max-w-xl">Retail, healthcare, logistics, hospitality, and growing enterprises.</p>
                         </ScrollReveal>
                         <div className="flex flex-wrap gap-3">
@@ -457,9 +458,9 @@ export default function Home() {
                 </section>
 
                 {/* Blog */}
-                <section className="py-12 md:py-16 border-t border-[var(--border)] bg-[var(--background)]" aria-labelledby="blog-heading">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                        <h2 id="blog-heading" className="text-2xl font-bold tracking-tight mb-2 text-[var(--foreground)]">Blog</h2>
+                <section className="py-12 md:py-16 border-t border-[var(--border)] bg-[var(--background)] overflow-visible" aria-labelledby="blog-heading">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
+                        <h2 id="blog-heading" className="text-2xl font-bold tracking-tight mb-2 text-[var(--foreground)] break-words">Blog</h2>
                         <p className="text-[var(--muted-foreground)] mb-6">Insights on ATS, VAT, and business software.</p>
                         <Link to="/blog" className="text-sm font-medium text-[var(--foreground)] hover:text-[var(--primary)] hover:underline">View blog →</Link>
                     </div>

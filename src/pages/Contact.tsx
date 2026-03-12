@@ -155,11 +155,11 @@ export default function Contact() {
                 }}
             />
             <div className="bg-[var(--background)] text-[var(--foreground)] font-sans antialiased selection:bg-[var(--secondary)] selection:text-[var(--foreground)] flex-1 flex flex-col justify-center py-6 md:py-0">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full min-w-0">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 md:mb-8">
-                        <div className="max-w-2xl">
-                            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight mb-2">Let&apos;s Build Together</h1>
-                            <p className="text-[var(--muted-foreground)] text-sm leading-relaxed">
+                        <div className="max-w-2xl min-w-0">
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight mb-2 break-words">Let&apos;s Build Together</h1>
+                            <p className="text-[var(--muted-foreground)] text-sm leading-relaxed break-words">
                                 Tell us about your project. We reply within 2 hours on WhatsApp, within 24 hours by email.
                             </p>
                         </div>

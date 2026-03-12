@@ -83,11 +83,11 @@ export default function Work() {
             />
             <div className="bg-[var(--background)] text-[var(--foreground)] font-sans antialiased selection:bg-[var(--secondary)] selection:text-[var(--foreground)]">
 
-                <section className="px-4 py-16 md:py-24 max-w-6xl mx-auto">
-                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight mb-4 text-[var(--foreground)]">
+                <section className="px-4 sm:px-6 py-16 md:py-24 max-w-6xl mx-auto min-w-0 w-full">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight leading-tight mb-4 text-[var(--foreground)] break-words">
                         Our Work
                     </h1>
-                    <p className="text-[var(--muted-foreground)] text-lg max-w-2xl leading-relaxed mb-6">
+                    <p className="text-[var(--muted-foreground)] text-base sm:text-lg max-w-2xl leading-relaxed mb-6 break-words">
                         Real projects delivered for clients in Kerala and the Gulf. Custom software, POS, medical systems, and AI apps.
                     </p>
 

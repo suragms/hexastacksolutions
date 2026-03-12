@@ -94,6 +94,13 @@
 
   #root {
     min-height: 100vh;
+    min-width: 0;
+  }
+
+  /* Prevent text truncation on mobile - allow wrapping */
+  h1, h2, h3, h4, h5, h6, p {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -109,6 +116,27 @@
   }
   h3, h4, h5, h6 {
     @apply font-semibold tracking-tight;
+  }
+
+  /* Mobile: better touch and responsiveness */
+  @media (max-width: 1023px) {
+    html {
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+    }
+    body {
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+    /* Remove tap highlight on interactive elements (we use our own active states) */
+    button, a, [role="button"] {
+      -webkit-tap-highlight-color: transparent;
+      tap-highlight-color: transparent;
+    }
+    /* Improve touch response - no 300ms delay on taps */
+    a, button {
+      touch-action: manipulation;
+    }
   }
 }
 
@@ -192,12 +220,16 @@ html {
   box-shadow: 0 0 0 1px rgba(26, 115, 232, 0.3), 0 0 50px rgba(26, 115, 232, 0.2);
 }
 
-/* Parallax hero background + radial gradient */
+/* Parallax hero background + radial gradient (scroll on mobile for performance) */
 .hero-parallax {
-  background-attachment: fixed;
   background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(26, 115, 232, 0.12), transparent 50%),
     radial-gradient(ellipse 60% 40% at 80% 50%, rgba(26, 115, 232, 0.06), transparent 40%);
   background-size: cover;
+}
+@media (min-width: 1024px) {
+  .hero-parallax {
+    background-attachment: fixed;
+  }
 }
 
 /* Section divider between content sections */

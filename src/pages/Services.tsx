@@ -51,11 +51,11 @@ export default function Services() {
             <div className="bg-[var(--background)] text-[var(--foreground)] font-sans antialiased selection:bg-[var(--secondary)] selection:text-[var(--foreground)]">
 
                 {/* SECTION 1: HERO */}
-                <section className="flex flex-col items-center justify-center text-center px-4 py-16 md:py-32 max-w-4xl mx-auto min-h-[70vh]">
-                    <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-tight mb-4">
+                <section className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-16 md:py-32 max-w-4xl mx-auto min-h-[70vh] min-w-0 w-full">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 break-words">
                         Software Development Company in Thrissur, Kerala
                     </h1>
-                    <p className="text-[var(--muted-foreground)] text-lg md:text-xl max-w-2xl mb-8 leading-relaxed">
+                    <p className="text-[var(--muted-foreground)] text-base sm:text-lg md:text-xl max-w-2xl mb-8 leading-relaxed break-words">
                         Business software build, SaaS build, mobile app build, and custom ERP. Web development, POS, and automation across India and the Gulf.
                     </p>
                     <div className="flex flex-col w-full md:w-auto md:flex-row gap-2 md:gap-4">
@@ -69,10 +69,10 @@ export default function Services() {
                 </section>
 
                 {/* SECTION 2: CORE SERVICES */}
-                <section className="px-4 py-16 md:py-32 max-w-7xl mx-auto border-t border-[var(--border)]">
-                    <div className="mb-12 md:mb-16">
-                        <h2 className="text-3xl font-medium tracking-tight mb-4">Core Competencies</h2>
-                        <p className="text-[var(--muted-foreground)] text-lg max-w-2xl">
+                <section className="px-4 sm:px-6 py-16 md:py-32 max-w-7xl mx-auto border-t border-[var(--border)] min-w-0 w-full">
+                    <div className="mb-12 md:mb-16 min-w-0">
+                        <h2 className="text-2xl sm:text-3xl font-medium tracking-tight mb-4 break-words">Core Competencies</h2>
+                        <p className="text-[var(--muted-foreground)] text-base sm:text-lg max-w-2xl break-words">
                             Precision-engineered tech stacks designed to handle high transaction volumes and complex workflows securely.
                         </p>
                     </div>
