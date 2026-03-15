@@ -57,11 +57,29 @@ interface CompanySettings {
     leadEmail1: string;
     leadWhatsApp1: string;
     leadName2: string;
+    leadEmail2: string;
     leadWhatsApp2: string;
     address: string;
     tagline: string;
     description: string;
 }
+
+const DEFAULT_COMPANY_SETTINGS: CompanySettings = {
+    companyName: 'HexaStack Solutions',
+    logoUrl: '',
+    primaryEmail: 'supporthexastack@hexastacksolutions.com',
+    primaryWhatsApp: '+917591999365',
+    secondaryWhatsApp: '+917012714150',
+    leadName1: 'Anandu Krishna',
+    leadEmail1: 'supporthexastack@hexastacksolutions.com',
+    leadWhatsApp1: '+917591999365',
+    leadName2: 'Surag',
+    leadEmail2: 'officialsurag@gmail.com',
+    leadWhatsApp2: '+917012714150',
+    address: 'Thrissur, Kerala',
+    tagline: 'Building Digital Excellence',
+    description: 'We create innovative web applications, mobile solutions, and AI-powered tools that transform your business ideas into reality.',
+};
 
 interface Service {
     id: string;
@@ -152,21 +170,7 @@ export default function Admin() {
     // Settings state
     const [settings, setSettings] = useState<CompanySettings | null>(null);
     const [editingSettings, setEditingSettings] = useState(false);
-    const [settingsForm, setSettingsForm] = useState<CompanySettings>({
-        companyName: '',
-        logoUrl: '',
-        primaryEmail: '',
-        primaryWhatsApp: '',
-        secondaryWhatsApp: '',
-        leadName1: '',
-        leadEmail1: '',
-        leadWhatsApp1: '',
-        leadName2: '',
-        leadWhatsApp2: '',
-        address: '',
-        tagline: '',
-        description: '',
-    });
+    const [settingsForm, setSettingsForm] = useState<CompanySettings>({ ...DEFAULT_COMPANY_SETTINGS });
 
     // Loading states
     const [loading, setLoading] = useState(true);
@@ -852,8 +856,9 @@ export default function Admin() {
             const response = await fetch(`${API_URL}/api/settings`);
             if (response.ok) {
                 const data = await response.json();
-                setSettings(data);
-                setSettingsForm((prev) => ({ ...prev, ...data }));
+                const hasSaved = data && (data.id ?? data.companyName);
+                setSettings(hasSaved ? data : null);
+                setSettingsForm((prev) => ({ ...DEFAULT_COMPANY_SETTINGS, ...prev, ...data }));
             }
         } catch (error) {
             console.error('Failed to fetch settings:', error);
@@ -938,6 +943,28 @@ export default function Admin() {
 
                         <div className="mt-6 text-center">
                             <Link to="/" className="text-sm text-slate-500 hover:text-slate-700">← Back to website</Link>
+                        </div>
+
+                        <div className="mt-8 pt-6 border-t border-slate-200">
+                            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 text-center mb-3">Founders</p>
+                            <div className="flex justify-center gap-6">
+                                <div className="flex flex-col items-center gap-1.5">
+                                    <img
+                                        src="https://media.licdn.com/dms/image/v2/D5603AQEiWUz1x8TqFA/profile-displayphoto-scale_400_400/B56ZnwzFGVJ4Ag-/0/1760681546981?e=1775088000&v=beta&t=7G-CHY_T7SR7QByvAS1uJFiPGt1W_Xfgx2iOc1ASj7s"
+                                        alt="Anandu"
+                                        className="w-12 h-12 rounded-full object-cover border-2 border-slate-200"
+                                    />
+                                    <span className="text-sm font-medium text-slate-700">Anandu</span>
+                                </div>
+                                <div className="flex flex-col items-center gap-1.5">
+                                    <img
+                                        src="https://media.licdn.com/dms/image/v2/D5603AQH8pB2vlL3GeA/profile-displayphoto-scale_400_400/B56Zwxt2X8K4Ag-/0/1770360629769?e=1775088000&v=beta&t=TSADhSp0jRbM2Gu5BKIBdgES-cMj8DAiEAczRGWV-rs"
+                                        alt="Surag"
+                                        className="w-12 h-12 rounded-full object-cover border-2 border-slate-200"
+                                    />
+                                    <span className="text-sm font-medium text-slate-700">Surag</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1507,36 +1534,69 @@ export default function Admin() {
                     <div>
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-lg font-semibold text-slate-900">Company Settings</h2>
-                            {!editingSettings ? (
-                                <button
-                                    onClick={() => setEditingSettings(true)}
-                                    className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium"
-                                >
-                                    <Edit2 className="w-4 h-4" />
-                                    Edit
+                            <div className="flex items-center gap-2">
+                                <button onClick={fetchSettings} className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900">
+                                    <RefreshCw className="w-4 h-4" />
+                                    Refresh
                                 </button>
-                            ) : (
-                                <div className="flex gap-2">
+                                {!editingSettings ? (
                                     <button
-                                        onClick={() => { setEditingSettings(false); setSettingsForm(settings || settingsForm); }}
-                                        className="px-4 py-2 border border-slate-200 rounded-md hover:bg-slate-50 text-sm font-medium"
+                                        onClick={() => setEditingSettings(true)}
+                                        className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium"
                                     >
-                                        Cancel
+                                        <Edit2 className="w-4 h-4" />
+                                        Edit
                                     </button>
-                                    <button
-                                        onClick={saveSettings}
-                                        disabled={saving}
-                                        className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium disabled:opacity-50"
-                                    >
-                                        <Save className="w-4 h-4" />
-                                        {saving ? 'Saving...' : 'Save'}
-                                    </button>
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={() => { setEditingSettings(false); setSettingsForm(settings || settingsForm); }}
+                                            className="px-4 py-2 border border-slate-200 rounded-md hover:bg-slate-50 text-sm font-medium"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            onClick={saveSettings}
+                                            disabled={saving}
+                                            className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium disabled:opacity-50"
+                                        >
+                                            <Save className="w-4 h-4" />
+                                            {saving ? 'Saving...' : 'Save'}
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Current details (read-only summary) */}
+                        <div className="bg-slate-50 rounded-lg border border-slate-200 p-4 mb-6">
+                            <h3 className="text-sm font-semibold text-slate-700 mb-3">Current details</h3>
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 text-sm">
+                                <div><span className="text-slate-500">Company</span><br /><span className="text-slate-900 font-medium">{settings?.companyName || settingsForm.companyName || '—'}</span></div>
+                                <div><span className="text-slate-500">Primary email</span><br /><span className="text-slate-900">{settings?.primaryEmail || settingsForm.primaryEmail || '—'}</span></div>
+                                <div><span className="text-slate-500">Primary WhatsApp</span><br /><span className="text-slate-900">{settings?.primaryWhatsApp || settingsForm.primaryWhatsApp || '—'}</span></div>
+                                <div><span className="text-slate-500">Secondary WhatsApp</span><br /><span className="text-slate-900">{(settings?.secondaryWhatsApp ?? settingsForm.secondaryWhatsApp) || '—'}</span></div>
+                                <div><span className="text-slate-500">Lead 1</span><br /><span className="text-slate-900">{[settings?.leadName1 || settingsForm.leadName1, (settings?.leadEmail1 || settingsForm.leadEmail1) && `(${settings?.leadEmail1 || settingsForm.leadEmail1})`].filter(Boolean).join(' ') || '—'}</span></div>
+                                <div><span className="text-slate-500">Lead 2</span><br /><span className="text-slate-900">{[settings?.leadName2 || settingsForm.leadName2, (settings?.leadEmail2 || settingsForm.leadEmail2) && `(${settings?.leadEmail2 || settingsForm.leadEmail2})`].filter(Boolean).join(' ') || '—'}</span></div>
+                                <div className="sm:col-span-2 lg:col-span-3"><span className="text-slate-500">Address</span><br /><span className="text-slate-900">{(settings?.address ?? settingsForm.address) || '—'}</span></div>
+                                <div><span className="text-slate-500">Tagline</span><br /><span className="text-slate-900">{(settings?.tagline ?? settingsForm.tagline) || '—'}</span></div>
+                                <div className="sm:col-span-2"><span className="text-slate-500">Description</span><br /><span className="text-slate-900 line-clamp-2">{(settings?.description ?? settingsForm.description) || '—'}</span></div>
+                            </div>
+                            {(settings?.logoUrl || settingsForm.logoUrl) && (
+                                <div className="mt-3 pt-3 border-t border-slate-200">
+                                    <span className="text-slate-500 text-sm">Logo</span>
+                                    <div className="mt-1 w-16 h-16 rounded border border-slate-200 overflow-hidden bg-white">
+                                        <img src={settings?.logoUrl || settingsForm.logoUrl || ''} alt="Current logo" className="w-full h-full object-contain" />
+                                    </div>
                                 </div>
                             )}
                         </div>
 
-                        <div className="bg-white rounded-lg border border-slate-200 p-6">
-                            <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-white rounded-lg border border-slate-200 p-6 space-y-8">
+                            {/* Branding */}
+                            <section>
+                                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Branding</h3>
+                                <div className="grid md:grid-cols-2 gap-6">
                                 <div className="md:col-span-2">
                                     <label className="block text-sm font-medium text-slate-700 mb-1">Brand Logo</label>
                                     <p className="text-xs text-slate-500 mb-2">Upload a logo (SVG/PNG/JPG). Used in header; fallback: site logo.</p>
@@ -1598,6 +1658,13 @@ export default function Admin() {
                                         className="w-full px-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-50"
                                     />
                                 </div>
+                                </div>
+                            </section>
+
+                            {/* Company & Contact */}
+                            <section>
+                                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Company & Contact</h3>
+                                <div className="grid md:grid-cols-2 gap-6">
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 mb-1">Primary Email</label>
                                     <input
@@ -1628,8 +1695,15 @@ export default function Admin() {
                                         className="w-full px-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-50"
                                     />
                                 </div>
+                                </div>
+                            </section>
+
+                            {/* Lead 1 */}
+                            <section>
+                                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Lead 1</h3>
+                                <div className="grid md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Lead 1 Name</label>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
                                     <input
                                         type="text"
                                         value={settingsForm.leadName1}
@@ -1639,7 +1713,17 @@ export default function Admin() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Lead 1 WhatsApp</label>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                    <input
+                                        type="email"
+                                        value={settingsForm.leadEmail1}
+                                        onChange={(e) => setSettingsForm({ ...settingsForm, leadEmail1: e.target.value })}
+                                        disabled={!editingSettings}
+                                        className="w-full px-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-50"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">WhatsApp</label>
                                     <input
                                         type="tel"
                                         value={settingsForm.leadWhatsApp1}
@@ -1648,8 +1732,15 @@ export default function Admin() {
                                         className="w-full px-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-50"
                                     />
                                 </div>
+                                </div>
+                            </section>
+
+                            {/* Lead 2 */}
+                            <section>
+                                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Lead 2</h3>
+                                <div className="grid md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Lead 2 Name</label>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
                                     <input
                                         type="text"
                                         value={settingsForm.leadName2}
@@ -1659,7 +1750,17 @@ export default function Admin() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Lead 2 WhatsApp</label>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                    <input
+                                        type="email"
+                                        value={settingsForm.leadEmail2}
+                                        onChange={(e) => setSettingsForm({ ...settingsForm, leadEmail2: e.target.value })}
+                                        disabled={!editingSettings}
+                                        className="w-full px-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-50"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">WhatsApp</label>
                                     <input
                                         type="tel"
                                         value={settingsForm.leadWhatsApp2}
@@ -1668,6 +1769,13 @@ export default function Admin() {
                                         className="w-full px-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-50"
                                     />
                                 </div>
+                                </div>
+                            </section>
+
+                            {/* About */}
+                            <section>
+                                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">About</h3>
+                                <div className="grid md:grid-cols-2 gap-6">
                                 <div className="md:col-span-2">
                                     <label className="block text-sm font-medium text-slate-700 mb-1">Address</label>
                                     <input
@@ -1698,7 +1806,8 @@ export default function Admin() {
                                         className="w-full px-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-50"
                                     />
                                 </div>
-                            </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
                 )}
