@@ -43,9 +43,16 @@ app.use((req, _res, next) => {
             req.url = trimmed.startsWith('/') ? `/api${trimmed}` : `/api/${trimmed}`;
         }
     }
-    // Vercel: ensure path starts with /api so routes match (some runtimes pass path without /api prefix)
-    if (process.env.VERCEL && req.url && !req.url.startsWith('/api') && req.url !== '/') {
-        req.url = req.url.startsWith('/') ? `/api${req.url}` : `/api/${req.url}`;
+    // Vercel: rewrite sends /api/* to /api?path=/admin/login — restore full path for Express routing
+    if (process.env.VERCEL && req.url && req.url.startsWith('/api')) {
+        const q = req.url.indexOf('?');
+        if (q !== -1) {
+            const params = new URLSearchParams(req.url.slice(q));
+            const path = params.get('path');
+            if (path) {
+                req.url = path.startsWith('/') ? `/api${path}` : `/api/${path}`;
+            }
+        }
     }
     next();
 });

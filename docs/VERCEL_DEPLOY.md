@@ -3,7 +3,7 @@
 ## Frontend and API on Vercel
 
 - **Frontend:** Static build (`dist/`) is served from the project root.
-- **API:** All `/api/*` requests are handled by the serverless function at `api/[[...path]].ts`, which forwards to the Express app in `server/index.ts`.
+- **API:** All `/api/*` requests are rewritten to `/api?path=...` and handled by the serverless function at `api/index.ts`, which forwards to the Express app in `server/index.ts`. The server restores the path so routes like `/api/admin/login` work.
 
 ---
 
@@ -58,5 +58,5 @@ If [https://www.hexastacksolutions.com/admin](https://www.hexastacksolutions.com
    - **ADMIN_PASSWORD** — the password you use to log in (e.g. a strong password; dev default is `hexastack@2024`).
    - **JWT_SECRET** — any string ≥ 32 characters (used to sign the session token).
 2. **Redeploy** after changing env vars (Deployments → ⋯ → Redeploy). Env is baked in at build/start.
-3. If you see "Login API not found" or "Connection error", the `/api/*` route may not be running: confirm `api/[[...path]].ts` is in the repo and that the deployment completed without errors.
+3. If you see "Login API not found" or "Connection error", the `/api/*` route may not be running: confirm `api/index.ts` and the rewrite in `vercel.json` are in the repo and that the deployment completed without errors.
 4. Use the same password in the login form as the one set in `ADMIN_PASSWORD`.
