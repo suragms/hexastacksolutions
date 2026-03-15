@@ -9,8 +9,9 @@ const isValidEmail = (email: string): boolean => {
     return emailRegex.test(email);
 };
 
-// Sanitize input
-const sanitize = (str: string): string => {
+// Sanitize input (accepts string or undefined)
+const sanitize = (str: string | undefined | null): string => {
+    if (str == null || typeof str !== 'string') return '';
     return str.trim().slice(0, 1000); // Limit length
 };
 
@@ -25,7 +26,7 @@ const sendEmailNotification = async (
     try {
         // Web3Forms is a free email API - no signup needed for basic usage
         // Alternative: User can replace with their own SMTP or email service
-        const adminEmail = process.env.ADMIN_EMAIL || 'hexastack78@gmail.com';
+        const adminEmail = process.env.ADMIN_EMAIL || 'supporthexastack@hexastacksolutions.com';
         
         // Log the notification (email can be configured later)
         console.log(`\n========================================`);
@@ -90,83 +91,84 @@ const sendEmailNotification = async (
     }
 };
 
-// Create new enquiry — accepts: name, whatsapp (phone), service, budget, requirement (5 fields per doc)
+// Create new enquiry — accepts: name, email, whatsapp (phone), service, budget, requirement
 router.post('/', async (req, res) => {
     try {
-        const { name, email, phone, whatsapp, requirement, companyName, country, industry, serviceOrProduct, service, budget, timeline, numberOfBranches, currentSystem } = req.body;
-        const contactPhone = phone || whatsapp;
+        const body = req.body || {};
+        const name = body.name != null ? String(body.name) : '';
+        const requirement = body.requirement != null ? String(body.requirement) : '';
+        const email = body.email != null ? String(body.email).trim() : '';
+        const phone = body.phone != null ? String(body.phone) : '';
+        const whatsapp = body.whatsapp != null ? String(body.whatsapp) : '';
+        const contactPhone = (phone || whatsapp).trim() || null;
         const contactEmail = email && isValidEmail(email) ? sanitize(email).toLowerCase() : null;
-        const serviceValue = service || serviceOrProduct;
+        const serviceValue = body.service || body.serviceOrProduct;
+        const companyName = body.companyName;
+        const country = body.country;
+        const industry = body.industry;
+        const budget = body.budget;
+        const timeline = body.timeline;
+        const numberOfBranches = body.numberOfBranches;
+        const currentSystem = body.currentSystem;
 
-        // Validate required fields (name + requirement; phone optional but preferred)
-        if (!name || !requirement) {
-            return res.status(400).json({ 
-                error: 'Missing required fields',
-                message: 'Please enter your name and requirement.' 
-            });
+        // Validate required fields (name + requirement)
+        if (!name.trim()) {
+            return res.status(400).json({ error: 'Missing required fields', message: 'Please enter your name.' });
         }
-
         if (name.trim().length < 2) {
-            return res.status(400).json({ 
-                error: 'Name too short',
-                message: 'Please enter your full name.' 
-            });
+            return res.status(400).json({ error: 'Name too short', message: 'Please enter your full name.' });
+        }
+        if (!requirement.trim()) {
+            return res.status(400).json({ error: 'Missing required fields', message: 'Please describe what you need.' });
         }
 
-        // Create enquiry
-        const message = await db.contactMessage.create({
-            data: {
-                name: sanitize(name),
-                email: contactEmail,
-                phone: contactPhone ? sanitize(contactPhone) : null,
-                requirement: sanitize(requirement),
-                companyName: companyName ? sanitize(companyName).slice(0, 200) : null,
-                country: country ? sanitize(country).slice(0, 100) : null,
-                industry: industry ? sanitize(industry).slice(0, 100) : null,
-                serviceOrProduct: serviceValue ? sanitize(serviceValue).slice(0, 100) : null,
-                budget: budget ? sanitize(budget).slice(0, 100) : null,
-                timeline: timeline ? sanitize(timeline).slice(0, 100) : null,
-                numberOfBranches: numberOfBranches ? sanitize(numberOfBranches).slice(0, 50) : null,
-                currentSystem: currentSystem ? sanitize(currentSystem).slice(0, 200) : null,
-            },
-        });
+        const createData = {
+            name: sanitize(name).slice(0, 200),
+            email: contactEmail ? contactEmail.slice(0, 255) : null,
+            phone: contactPhone ? sanitize(contactPhone).slice(0, 50) : null,
+            requirement: sanitize(requirement).slice(0, 5000),
+            companyName: companyName ? sanitize(String(companyName)).slice(0, 200) : null,
+            country: country ? sanitize(String(country)).slice(0, 100) : null,
+            industry: industry ? sanitize(String(industry)).slice(0, 100) : null,
+            serviceOrProduct: serviceValue ? sanitize(String(serviceValue)).slice(0, 100) : null,
+            budget: budget ? sanitize(String(budget)).slice(0, 100) : null,
+            timeline: timeline ? sanitize(String(timeline)).slice(0, 100) : null,
+            numberOfBranches: numberOfBranches ? sanitize(String(numberOfBranches)).slice(0, 50) : null,
+            currentSystem: currentSystem ? sanitize(String(currentSystem)).slice(0, 200) : null,
+        };
+
+        const message = await db.contactMessage.create({ data: createData });
 
         console.log(`[NEW_ENQUIRY] ${name} ${contactPhone || contactEmail || ''}`);
 
-        // Send email notification to admin (async, don't block response)
+        // Email notification (fire-and-forget)
         sendEmailNotification(name, contactEmail || 'no-email@hexastacksolutions.com', contactPhone, requirement, {
-            companyName: companyName ? sanitize(companyName) : undefined,
-            country: country ? sanitize(country) : undefined,
-            industry: industry ? sanitize(industry) : undefined,
-            serviceOrProduct: serviceValue ? sanitize(serviceValue) : undefined,
-            budget: budget ? sanitize(budget) : undefined,
-            timeline: timeline ? sanitize(timeline) : undefined,
-            numberOfBranches: numberOfBranches ? sanitize(numberOfBranches) : undefined,
-            currentSystem: currentSystem ? sanitize(currentSystem) : undefined,
+            companyName: companyName ? sanitize(String(companyName)) : undefined,
+            country: country ? sanitize(String(country)) : undefined,
+            industry: industry ? sanitize(String(industry)) : undefined,
+            serviceOrProduct: serviceValue ? sanitize(String(serviceValue)) : undefined,
+            budget: budget ? sanitize(String(budget)) : undefined,
+            timeline: timeline ? sanitize(String(timeline)) : undefined,
+            numberOfBranches: numberOfBranches ? sanitize(String(numberOfBranches)) : undefined,
+            currentSystem: currentSystem ? sanitize(String(currentSystem)) : undefined,
         });
 
-        // Track form submission for analytics
-        try {
-            const today = new Date().toISOString().split('T')[0];
-            await db.analytics.upsert({
-                where: { date: today },
-                create: { date: today, totalViews: 0, formSubmissions: 1 },
-                update: { formSubmissions: { increment: 1 } }
-            });
-        } catch (e) {
-            // Ignore analytics errors
-        }
+        // Analytics (don't block or fail the response)
+        const today = new Date().toISOString().split('T')[0];
+        db.analytics.upsert({
+            where: { date: today },
+            create: { date: today, totalViews: 0, formSubmissions: 1 },
+            update: { formSubmissions: { increment: 1 } },
+        }).catch(() => {});
 
-        res.json({ 
-            success: true,
-            message: 'Enquiry received successfully',
-            id: message.id 
-        });
-    } catch (error) {
-        console.error('[CONTACT_POST]', error);
-        res.status(500).json({ 
+        res.json({ success: true, message: 'Enquiry received successfully', id: message.id });
+    } catch (error: unknown) {
+        const err = error as Error;
+        console.error('[CONTACT_POST]', err);
+        const isDev = process.env.NODE_ENV !== 'production';
+        res.status(500).json({
             error: 'Internal Error',
-            message: 'Something went wrong. Please try again.' 
+            message: isDev && err?.message ? err.message : 'Something went wrong. Please try again.',
         });
     }
 });
@@ -278,7 +280,7 @@ router.post('/:id/reply', async (req, res) => {
                                 <p style="color: #64748b; margin: 0; font-size: 14px;">${enquiry.requirement}</p>
                             </div>
                             <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
-                            <p style="color: #64748b; font-size: 12px;">Best regards,<br>HexaStack AI Solutions<br>+91 94957 12853 | hexastack78@gmail.com</p>
+                            <p style="color: #64748b; font-size: 12px;">Best regards,<br>HexaStack Solutions<br>supporthexastack@hexastacksolutions.com</p>
                         </div>
                     `,
                 }),

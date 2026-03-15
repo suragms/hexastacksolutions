@@ -18,6 +18,7 @@ const budgetOptions = ['Under Rs.15K', 'Rs.15K – Rs.60K', 'Rs.60K – Rs.1.5L'
 export default function Contact() {
     const [formData, setFormData] = useState({
         name: '',
+        email: '',
         whatsapp: '',
         service: '',
         budget: '',
@@ -26,6 +27,7 @@ export default function Contact() {
     });
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [error, setError] = useState('');
     const [showWhatsApp, setShowWhatsApp] = useState(false);
     const [settings, setSettings] = useState<CompanySettings | null>(null);
@@ -39,7 +41,7 @@ export default function Contact() {
 
     const primaryPhone = settings?.primaryWhatsApp || '+917591999365';
     const secondaryPhone = settings?.secondaryWhatsApp || '+917012714150';
-    const email = settings?.primaryEmail || 'hexastack78@gmail.com';
+    const email = settings?.primaryEmail || 'supporthexastack@hexastacksolutions.com';
     const address = settings?.address || 'Thrissur, Kerala';
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -52,7 +54,14 @@ export default function Contact() {
         setError('');
         try {
             const { website, ...rest } = formData;
-            const submitData = { name: rest.name, whatsapp: rest.whatsapp, service: rest.service, budget: rest.budget, requirement: rest.requirement };
+            const submitData = {
+                name: rest.name,
+                email: rest.email?.trim() || undefined,
+                whatsapp: rest.whatsapp,
+                service: rest.service,
+                budget: rest.budget,
+                requirement: rest.requirement,
+            };
             const response = await fetch(`${API_URL}/api/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -63,8 +72,8 @@ export default function Contact() {
                 setError(data.error || data.message || (response.status === 429 ? 'Too many enquiries. Please try again in an hour.' : 'Failed to submit'));
                 return;
             }
-            setSubmitted(true);
-            setFormData({ name: '', whatsapp: '', service: '', budget: '', requirement: '', website: '' });
+            setFormData({ name: '', email: '', whatsapp: '', service: '', budget: '', requirement: '', website: '' });
+            setShowSuccessPopup(true);
         } catch {
             setError('Network error. Please try again.');
         } finally {
@@ -195,9 +204,13 @@ export default function Contact() {
                                             <input type="text" id="name" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className={inputClass} placeholder="Your name" />
                                         </div>
                                         <div>
-                                            <label htmlFor="whatsapp" className={labelClass}>Phone / WhatsApp</label>
-                                            <input type="tel" id="whatsapp" value={formData.whatsapp} onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })} className={inputClass} placeholder="e.g. +91 98765 43210" />
+                                            <label htmlFor="email" className={labelClass}>Email</label>
+                                            <input type="email" id="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className={inputClass} placeholder="you@example.com" />
                                         </div>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="whatsapp" className={labelClass}>Phone / WhatsApp</label>
+                                        <input type="tel" id="whatsapp" value={formData.whatsapp} onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })} className={inputClass} placeholder="e.g. +91 98765 43210" />
                                     </div>
                                     <div className="grid sm:grid-cols-2 gap-5">
                                         <div>
@@ -239,6 +252,26 @@ export default function Contact() {
                                         <p className="mt-3 text-center text-xs text-[var(--muted-foreground)]">Your data is sent securely.</p>
                                     </div>
                                 </form>
+
+                                {/* Confirmation popup after successful send */}
+                                {showSuccessPopup && (
+                                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="success-title">
+                                        <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-xl text-center">
+                                            <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4">
+                                                <CheckCircle className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
+                                            </div>
+                                            <h2 id="success-title" className="text-xl font-bold tracking-tight mb-2 text-[var(--foreground)]">Message sent successfully</h2>
+                                            <p className="text-[var(--muted-foreground)] mb-6">We&apos;ve received your details and will get back to you within 2 hours.</p>
+                                            <button
+                                                type="button"
+                                                onClick={() => { setShowSuccessPopup(false); setSubmitted(true); }}
+                                                className="w-full h-12 rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold hover:opacity-95 transition-opacity"
+                                            >
+                                                OK
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
 

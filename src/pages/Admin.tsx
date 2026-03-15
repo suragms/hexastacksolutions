@@ -28,7 +28,7 @@ const STATIC_BACKLINK_SITES = [
 interface Enquiry {
     id: string;
     name: string;
-    email: string;
+    email: string | null;
     phone: string | null;
     requirement: string;
     isRead: boolean;
@@ -79,6 +79,7 @@ interface Product {
     link: string | null;
     description: string;
     features: string[];
+    category?: string | null; // "business" | "free"
     isComingSoon: boolean;
     displayOrder: number;
 }
@@ -198,6 +199,7 @@ export default function Admin() {
         link: '',
         description: '',
         features: '', // as a string for the form
+        category: '' as '' | 'business' | 'free',
         isComingSoon: false,
         displayOrder: 0
     });
@@ -359,7 +361,8 @@ export default function Admin() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...productForm,
-                    features: featuresArray
+                    features: featuresArray,
+                    category: productForm.category === 'business' || productForm.category === 'free' ? productForm.category : null
                 }),
             });
 
@@ -367,7 +370,7 @@ export default function Admin() {
                 await fetchProducts();
                 setShowProductForm(false);
                 setEditingProduct(null);
-                setProductForm({ name: '', link: '', description: '', features: '', isComingSoon: false, displayOrder: 0 });
+                setProductForm({ name: '', link: '', description: '', features: '', category: '', isComingSoon: false, displayOrder: 0 });
                 showNotification('success', editingProduct ? 'Product updated' : 'Product created');
             } else {
                 const errorData = await response.json().catch(() => ({}));
@@ -405,6 +408,7 @@ export default function Admin() {
             link: product.link || '',
             description: product.description,
             features: product.features.join('\n'),
+            category: product.category === 'business' || product.category === 'free' ? product.category : '',
             isComingSoon: product.isComingSoon,
             displayOrder: product.displayOrder
         });
@@ -628,16 +632,32 @@ export default function Admin() {
     };
 
     // Analytics handlers
+    const defaultAnalytics = (): AnalyticsStats => ({
+        today: { totalViews: 0, homeViews: 0, workViews: 0, contactViews: 0, formSubmissions: 0 },
+        last30Days: { totalViews: 0, homeViews: 0, workViews: 0, contactViews: 0, formSubmissions: 0 },
+        totalEnquiries: 0,
+        unreadEnquiries: 0,
+        recentViews: [],
+    });
     const fetchAnalytics = async () => {
         try {
             setAnalyticsLoading(true);
             const response = await fetch(`${API_URL}/api/analytics/stats`);
             if (response.ok) {
                 const data = await response.json();
-                setAnalytics(data);
+                setAnalytics({
+                    today: data.today ?? defaultAnalytics().today,
+                    last30Days: data.last30Days ?? defaultAnalytics().last30Days,
+                    totalEnquiries: data.totalEnquiries ?? 0,
+                    unreadEnquiries: data.unreadEnquiries ?? 0,
+                    recentViews: Array.isArray(data.recentViews) ? data.recentViews : [],
+                });
+            } else {
+                setAnalytics(defaultAnalytics());
             }
         } catch (error) {
             console.error('Failed to fetch analytics:', error);
+            setAnalytics(defaultAnalytics());
         } finally {
             setAnalyticsLoading(false);
         }
@@ -951,6 +971,16 @@ export default function Admin() {
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
+                            <a
+                                href="https://search.google.com/search-console?resource_id=https%3A%2F%2Fwww.hexastacksolutions.com%2F"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900"
+                            >
+                                <Globe className="w-4 h-4" />
+                                Search Console
+                                <ExternalLink className="w-3 h-3 opacity-70" />
+                            </a>
                             {unreadCount > 0 && (
                                 <span className="flex items-center gap-1 text-sm text-orange-600 bg-orange-50 px-3 py-1 rounded-full">
                                     <Bell className="w-4 h-4" />
@@ -1006,7 +1036,7 @@ export default function Admin() {
                 {activeTab === 'analytics' && (
                     <div>
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-lg font-semibold text-slate-900">Analytics Dashboard</h2>
+                            <h2 className="text-lg font-semibold text-slate-900">Analytics</h2>
                             <button onClick={fetchAnalytics} className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900">
                                 <RefreshCw className={`w-4 h-4 ${analyticsLoading ? 'animate-spin' : ''}`} />
                                 Refresh
@@ -1138,7 +1168,7 @@ export default function Admin() {
                 {activeTab === 'enquiries' && (
                     <div>
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-lg font-semibold text-slate-900">Client Enquiries</h2>
+                            <h2 className="text-lg font-semibold text-slate-900">Enquiries</h2>
                             <button onClick={fetchEnquiries} className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900">
                                 <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                                 Refresh
@@ -1212,9 +1242,13 @@ export default function Admin() {
                                             <div className="space-y-4 mb-8">
                                                 <div className="flex items-center gap-3">
                                                     <Mail className="w-4 h-4 text-slate-400" />
-                                                    <a href={`mailto:${selectedEnquiry.email}`} className="text-slate-700 hover:text-slate-900">
-                                                        {selectedEnquiry.email}
-                                                    </a>
+                                                    {selectedEnquiry.email ? (
+                                                        <a href={`mailto:${selectedEnquiry.email}`} className="text-slate-700 hover:text-slate-900">
+                                                            {selectedEnquiry.email}
+                                                        </a>
+                                                    ) : (
+                                                        <span className="text-slate-500">No email</span>
+                                                    )}
                                                 </div>
                                                 {selectedEnquiry.phone && (
                                                     <div className="flex items-center gap-3">
@@ -1234,16 +1268,20 @@ export default function Admin() {
                                             {/* Reply Form */}
                                             <div className="mb-6">
                                                 <h3 className="text-sm font-medium text-slate-500 mb-3">Send Reply</h3>
+                                                {!selectedEnquiry.email && (
+                                                    <p className="text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-sm mb-3">No email address — reply by phone or other channel.</p>
+                                                )}
                                                 <textarea
                                                     value={replyText}
                                                     onChange={(e) => setReplyText(e.target.value)}
                                                     placeholder="Type your reply here... (min 10 characters)"
                                                     className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 text-slate-900 resize-none"
                                                     rows={4}
+                                                    disabled={!selectedEnquiry.email}
                                                 />
                                                 <button
                                                     onClick={sendReply}
-                                                    disabled={sendingReply || replyText.trim().length < 10}
+                                                    disabled={!selectedEnquiry.email || sendingReply || replyText.trim().length < 10}
                                                     className="mt-3 w-full bg-emerald-600 text-white py-3 px-4 rounded-lg hover:bg-emerald-700 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                                 >
                                                     <Mail className="w-4 h-4" />
@@ -1280,14 +1318,20 @@ export default function Admin() {
                 {activeTab === 'projects' && (
                     <div>
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-lg font-semibold text-slate-900">Portfolio Projects</h2>
-                            <button
-                                onClick={() => { setShowProjectForm(true); setEditingProject(null); setProjectForm({ title: '', description: '', techStack: '', projectUrl: '', featured: false, imageUrl: '' }); }}
-                                className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium"
-                            >
-                                <Plus className="w-4 h-4" />
-                                Add Project
-                            </button>
+                            <h2 className="text-lg font-semibold text-slate-900">Projects</h2>
+                            <div className="flex items-center gap-2">
+                                <button onClick={fetchProjects} className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900">
+                                    <RefreshCw className="w-4 h-4" />
+                                    Refresh
+                                </button>
+                                <button
+                                    onClick={() => { setShowProjectForm(true); setEditingProject(null); setProjectForm({ title: '', description: '', techStack: '', projectUrl: '', featured: false, imageUrl: '' }); }}
+                                    className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium"
+                                >
+                                    <Plus className="w-4 h-4" />
+                                    Add Project
+                                </button>
+                            </div>
                         </div>
 
                         {/* Project Form Modal */}
@@ -1663,14 +1707,20 @@ export default function Admin() {
                 {activeTab === 'services' && (
                     <div>
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-lg font-semibold text-slate-900">Manage Services</h2>
-                            <button
-                                onClick={() => { setShowServiceForm(true); setEditingService(null); setServiceForm({ name: '', description: '', link: '', icon: '', isComingSoon: false, displayOrder: services.length }); }}
-                                className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium"
-                            >
-                                <Plus className="w-4 h-4" />
-                                Add Service
-                            </button>
+                            <h2 className="text-lg font-semibold text-slate-900">Services</h2>
+                            <div className="flex items-center gap-2">
+                                <button onClick={fetchServices} className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900">
+                                    <RefreshCw className="w-4 h-4" />
+                                    Refresh
+                                </button>
+                                <button
+                                    onClick={() => { setShowServiceForm(true); setEditingService(null); setServiceForm({ name: '', description: '', link: '', icon: '', isComingSoon: false, displayOrder: services.length }); }}
+                                    className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium"
+                                >
+                                    <Plus className="w-4 h-4" />
+                                    Add Service
+                                </button>
+                            </div>
                         </div>
 
                         {/* Service Form Modal */}
@@ -1843,14 +1893,20 @@ export default function Admin() {
                 {activeTab === 'products' && (
                     <div>
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-lg font-semibold text-slate-900">Manage Products</h2>
-                            <button
-                                onClick={() => { setShowProductForm(true); setEditingProduct(null); setProductForm({ name: '', link: '', description: '', features: '', isComingSoon: false, displayOrder: products.length }); }}
-                                className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium"
-                            >
-                                <Plus className="w-4 h-4" />
-                                Add Product
-                            </button>
+                            <h2 className="text-lg font-semibold text-slate-900">Products</h2>
+                            <div className="flex items-center gap-2">
+                                <button onClick={fetchProducts} className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900">
+                                    <RefreshCw className="w-4 h-4" />
+                                    Refresh
+                                </button>
+                                <button
+                                    onClick={() => { setShowProductForm(true); setEditingProduct(null); setProductForm({ name: '', link: '', description: '', features: '', category: '', isComingSoon: false, displayOrder: products.length }); }}
+                                    className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium"
+                                >
+                                    <Plus className="w-4 h-4" />
+                                    Add Product
+                                </button>
+                            </div>
                         </div>
 
                         {/* Product Form Modal */}
@@ -1876,6 +1932,18 @@ export default function Admin() {
                                                 className="w-full px-3 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm"
                                                 placeholder="e.g. Hexa POS"
                                             />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-700 mb-1">Category</label>
+                                            <select
+                                                value={productForm.category}
+                                                onChange={(e) => setProductForm({ ...productForm, category: e.target.value as '' | 'business' | 'free' })}
+                                                className="w-full px-3 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm"
+                                            >
+                                                <option value="">— Select —</option>
+                                                <option value="business">Business Software</option>
+                                                <option value="free">Free Tools</option>
+                                            </select>
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-slate-700 mb-1">Product Link (Optional)</label>
@@ -1950,57 +2018,94 @@ export default function Admin() {
                             </div>
                         )}
 
-                        {/* Products List */}
+                        {/* Products List — Business Software then Free Tools */}
                         {products.length === 0 ? (
                             <div className="text-center py-12 bg-white rounded-lg border border-slate-200">
                                 <Package className="w-12 h-12 text-slate-300 mx-auto mb-4" />
                                 <h3 className="text-lg font-medium text-slate-700 mb-2">No products yet</h3>
-                                <p className="text-slate-500">Add products to display them on the homepage.</p>
+                                <p className="text-slate-500">Add products to sync with the site (Business Software & Free Tools).</p>
                             </div>
                         ) : (
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {products.map((product) => (
-                                    <div key={product.id} className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
-                                        <div className="flex justify-between items-start mb-3">
-                                            <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-600">
-                                                <Package className="w-6 h-6" />
-                                            </div>
-                                            <div className="flex gap-1">
-                                                <button onClick={() => editProduct(product)} className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded">
-                                                    <Edit2 className="w-4 h-4" />
-                                                </button>
-                                                <button
-                                                    onClick={() => deleteProduct(product.id)}
-                                                    disabled={deleting === product.id}
-                                                    className="p-1.5 text-red-300 hover:text-red-500 hover:bg-red-50 rounded disabled:opacity-50"
-                                                >
-                                                    <Trash2 className="w-4 h-4" />
-                                                </button>
+                            <div className="space-y-8">
+                                {(['business', 'free'] as const).map((cat) => {
+                                    const list = products.filter(p => (p.category || '') === cat);
+                                    if (list.length === 0) return null;
+                                    return (
+                                        <div key={cat}>
+                                            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">
+                                                {cat === 'business' ? 'Business Software' : 'Free Tools'}
+                                            </h3>
+                                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                                {list.map((product) => (
+                                                    <div key={product.id} className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+                                                        <div className="flex justify-between items-start mb-3">
+                                                            <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-600">
+                                                                <Package className="w-6 h-6" />
+                                                            </div>
+                                                            <div className="flex gap-1">
+                                                                <button onClick={() => editProduct(product)} className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded">
+                                                                    <Edit2 className="w-4 h-4" />
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => deleteProduct(product.id)}
+                                                                    disabled={deleting === product.id}
+                                                                    className="p-1.5 text-red-300 hover:text-red-500 hover:bg-red-50 rounded disabled:opacity-50"
+                                                                >
+                                                                    <Trash2 className="w-4 h-4" />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <h3 className="font-bold text-slate-900 mb-2">{product.name}</h3>
+                                                        <p className="text-sm text-slate-500 line-clamp-2 mb-3 leading-relaxed">
+                                                            {product.description}
+                                                        </p>
+                                                        <div className="space-y-1 mb-4">
+                                                            {product.features.slice(0, 3).map((f, i) => (
+                                                                <div key={i} className="flex items-center gap-2 text-xs text-slate-400">
+                                                                    <div className="w-1 h-1 bg-slate-400 rounded-full" />
+                                                                    {f}
+                                                                </div>
+                                                            ))}
+                                                            {product.features.length > 3 && (
+                                                                <p className="text-[10px] text-slate-300">+{product.features.length - 3} more features</p>
+                                                            )}
+                                                        </div>
+                                                        <div className="flex flex-wrap gap-2 mt-auto">
+                                                            {product.isComingSoon && (
+                                                                <span className="text-[10px] font-bold bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full uppercase">Coming Soon</span>
+                                                            )}
+                                                            <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full uppercase">Order: {product.displayOrder}</span>
+                                                        </div>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
-                                        <h3 className="font-bold text-slate-900 mb-2">{product.name}</h3>
-                                        <p className="text-sm text-slate-500 line-clamp-2 mb-3 leading-relaxed">
-                                            {product.description}
-                                        </p>
-                                        <div className="space-y-1 mb-4">
-                                            {product.features.slice(0, 3).map((f, i) => (
-                                                <div key={i} className="flex items-center gap-2 text-xs text-slate-400">
-                                                    <div className="w-1 h-1 bg-slate-400 rounded-full" />
-                                                    {f}
+                                    );
+                                })}
+                                {products.filter(p => p.category !== 'business' && p.category !== 'free').length > 0 && (
+                                    <div>
+                                        <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">Other</h3>
+                                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                            {products.filter(p => p.category !== 'business' && p.category !== 'free').map((product) => (
+                                                <div key={product.id} className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+                                                    <div className="flex justify-between items-start mb-3">
+                                                        <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-600"><Package className="w-6 h-6" /></div>
+                                                        <div className="flex gap-1">
+                                                            <button onClick={() => editProduct(product)} className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded"><Edit2 className="w-4 h-4" /></button>
+                                                            <button onClick={() => deleteProduct(product.id)} disabled={deleting === product.id} className="p-1.5 text-red-300 hover:text-red-500 hover:bg-red-50 rounded disabled:opacity-50"><Trash2 className="w-4 h-4" /></button>
+                                                        </div>
+                                                    </div>
+                                                    <h3 className="font-bold text-slate-900 mb-2">{product.name}</h3>
+                                                    <p className="text-sm text-slate-500 line-clamp-2 mb-3">{product.description}</p>
+                                                    <div className="flex flex-wrap gap-2 mt-auto">
+                                                        {product.isComingSoon && <span className="text-[10px] font-bold bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full uppercase">Coming Soon</span>}
+                                                        <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full uppercase">Order: {product.displayOrder}</span>
+                                                    </div>
                                                 </div>
                                             ))}
-                                            {product.features.length > 3 && (
-                                                <p className="text-[10px] text-slate-300">+{product.features.length - 3} more features</p>
-                                            )}
-                                        </div>
-                                        <div className="flex flex-wrap gap-2 mt-auto">
-                                            {product.isComingSoon && (
-                                                <span className="text-[10px] font-bold bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full uppercase">Coming Soon</span>
-                                            )}
-                                            <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full uppercase">Order: {product.displayOrder}</span>
                                         </div>
                                     </div>
-                                ))}
+                                )}
                             </div>
                         )}
                     </div>

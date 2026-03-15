@@ -244,6 +244,7 @@ model Product {
   link         String?
   description  String
   features     String[] // Array of features
+  category     String?  // "business" | "free" — Business Software vs Free Tools
   isComingSoon Boolean  @default(false)
   displayOrder Int      @default(0)
   createdAt    DateTime @default(now())

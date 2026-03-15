@@ -23,12 +23,31 @@ export default function Layout({ children }: LayoutProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [productsOpen, setProductsOpen] = useState(false);
     const [settings, setSettings] = useState<CompanySettings | null>(null);
+    const [businessSoftwareLinks, setBusinessSoftwareLinks] = useState<{ to: string; label: string; isExternal?: boolean }[]>([{ to: '/products/hexabill', label: 'HexaBill' }]);
+    const [freeToolsLinks, setFreeToolsLinks] = useState<{ to: string; label: string; isExternal?: boolean }[]>([
+        { to: 'https://www.hexacv.online/', label: 'HexaCV', isExternal: true },
+        { to: 'https://www.hexacv.online/free-tools', label: 'Hexa AI Tool Suite', isExternal: true },
+        { to: 'https://studentshub-gold.vercel.app/', label: 'Student Tools', isExternal: true },
+    ]);
 
     useEffect(() => {
         fetch(`${API_URL}/api/settings`)
             .then((res) => (res.ok ? res.json() : null))
             .then((data) => data && setSettings(data))
             .catch(() => { });
+    }, []);
+
+    useEffect(() => {
+        fetch(`${API_URL}/api/products`)
+            .then((res) => (res.ok ? res.json() : []))
+            .then((data: { name: string; link?: string | null; category?: string | null; displayOrder?: number }[]) => {
+                if (!Array.isArray(data) || data.length === 0) return;
+                const business = data.filter((p) => p.category === 'business').sort((a, b) => (a.displayOrder ?? 0) - (b.displayOrder ?? 0));
+                const free = data.filter((p) => p.category === 'free').sort((a, b) => (a.displayOrder ?? 0) - (b.displayOrder ?? 0));
+                if (business.length > 0) setBusinessSoftwareLinks(business.map((p) => ({ to: p.link || `/products/${p.name.toLowerCase().replace(/\s+/g, '')}`, label: p.name, isExternal: !!p.link?.startsWith('http') })));
+                if (free.length > 0) setFreeToolsLinks(free.map((p) => ({ to: p.link || '#', label: p.name, isExternal: true })));
+            })
+            .catch(() => {});
     }, []);
 
     useEffect(() => {
@@ -72,7 +91,7 @@ export default function Layout({ children }: LayoutProps) {
 
     const primaryPhone = settings?.primaryWhatsApp || '+917591999365';
     const secondaryPhone = settings?.secondaryWhatsApp || '+917012714150';
-    const email = settings?.primaryEmail || 'hexastack78@gmail.com';
+    const email = settings?.primaryEmail || 'supporthexastack@hexastacksolutions.com';
     const address = settings?.address || 'Thrissur, Kerala';
 
     const navLinks = [
@@ -83,16 +102,6 @@ export default function Layout({ children }: LayoutProps) {
         { to: '/about', label: 'About' },
         { to: '/contact', label: 'Contact' },
     ];
-
-    const businessSoftwareLinks = [
-        { to: '/products/hexabill', label: 'HexaBill' },
-    ];
-    const freeToolsLinks = [
-        { to: 'https://www.hexacv.online/', label: 'HexaCV', isExternal: true },
-        { to: 'https://www.hexacv.online/free-tools', label: 'Hexa AI Tool Suite', isExternal: true },
-        { to: 'https://studentshub-gold.vercel.app/', label: 'Student Tools', isExternal: true },
-    ];
-    const productLinks = [...businessSoftwareLinks, ...freeToolsLinks];
 
     const headerClass = "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 sm:py-5 pt-[calc(1rem+env(safe-area-inset-top))] pb-5 lg:bg-transparent bg-[var(--background)]/98 backdrop-blur-md border-b border-[var(--border)]/50 lg:border-b-0";
 
@@ -399,7 +408,7 @@ export default function Layout({ children }: LayoutProps) {
                             <h4 className="text-[11px] font-semibold uppercase tracking-widest text-[var(--foreground)] mb-4">Products</h4>
                             <nav aria-label="Footer products">
                                 <ul className="space-y-2.5">
-                                    {productLinks.map((link) => (
+                                    {[...businessSoftwareLinks, ...freeToolsLinks].map((link) => (
                                         <li key={link.label}>
                                             {link.isExternal ? (
                                                 <a href={link.to} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">

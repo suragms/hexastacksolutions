@@ -76,7 +76,7 @@ export default function Privacy() {
                             <section>
                                 <h2 className="text-2xl font-medium tracking-tight mb-4 text-white">7. Contact Us</h2>
                                 <p className="text-[#A0A0A0] leading-relaxed">
-                                    If you have any questions or concerns about this Privacy Policy, please contact our administrative team at hexastack78@gmail.com.
+                                    If you have any questions or concerns about this Privacy Policy, please contact us at supporthexastack@hexastacksolutions.com.
                                 </p>
                             </section>
                         </div>

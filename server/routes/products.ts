@@ -25,13 +25,14 @@ router.get('/', async (_req, res) => {
 router.post('/', async (req, res) => {
     try {
         const collection = await getCollection('Product');
-        const { name, link, description, features, isComingSoon, displayOrder } = req.body;
+        const { name, link, description, features, category, isComingSoon, displayOrder } = req.body;
 
         const newProduct = {
             name,
-            link,
-            description,
+            link: link || null,
+            description: description || '',
             features: Array.isArray(features) ? features : [],
+            category: category === 'business' || category === 'free' ? category : null,
             isComingSoon: !!isComingSoon,
             displayOrder: parseInt(displayOrder) || 0,
             createdAt: new Date(),
@@ -51,13 +52,14 @@ router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const collection = await getCollection('Product');
-        const { name, link, description, features, isComingSoon, displayOrder } = req.body;
+        const { name, link, description, features, category, isComingSoon, displayOrder } = req.body;
 
         const updateData = {
             name,
-            link,
-            description,
+            link: link || null,
+            description: description || '',
             features: Array.isArray(features) ? features : [],
+            category: category === 'business' || category === 'free' ? category : null,
             isComingSoon: !!isComingSoon,
             displayOrder: parseInt(displayOrder) || 0,
             updatedAt: new Date()

@@ -1,45 +1,54 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { API_URL } from '@/lib/utils';
 
-const businessProducts = [
-    {
-        title: 'HexaBill',
-        subtitle: 'Billing & POS for Kerala and Gulf',
-        hook: 'Your restaurant or shop, without the billing chaos.',
-        description: 'Invoicing, POS, inventory, multi-branch, VAT-ready — India and Gulf. Used by businesses in UAE and Kerala right now.',
-        cta: 'Request Demo',
-        ctaLink: '/contact?demo=hexabill',
-        to: '/products/hexabill',
-    },
+const FALLBACK_BUSINESS = [
+    { title: 'HexaBill', subtitle: 'Billing & POS for Kerala and Gulf', hook: 'Your restaurant or shop, without the billing chaos.', description: 'Invoicing, POS, inventory, multi-branch, VAT-ready — India and Gulf. Used by businesses in UAE and Kerala right now.', cta: 'Request Demo', ctaLink: '/contact?demo=hexabill', to: '/products/hexabill', isExternal: false },
 ];
-
-const freeTools = [
-    {
-        title: 'HexaCV',
-        description: 'Your resume is probably getting rejected before a human sees it. Find out your ATS score — free.',
-        cta: 'Try HexaCV Free',
-        ctaLink: 'https://www.hexacv.online/',
-        isExternal: true,
-    },
-    {
-        title: 'Hexa AI Tool Suite',
-        description: 'ATS checker, JD vs resume comparison, bullet improver, section checker. Part of HexaCV.',
-        cta: 'Explore Tools',
-        ctaLink: 'https://www.hexacv.online/free-tools',
-        isExternal: true,
-    },
-    {
-        title: 'Student Hub',
-        description: 'CGPA, attendance deficit, internal marks. Built for Kerala university students.',
-        cta: 'Open Student Hub',
-        ctaLink: 'https://studentshub-gold.vercel.app/',
-        isExternal: true,
-    },
+const FALLBACK_FREE = [
+    { title: 'HexaCV', description: 'Your resume is probably getting rejected before a human sees it. Find out your ATS score — free.', cta: 'Try HexaCV Free', ctaLink: 'https://www.hexacv.online/', isExternal: true },
+    { title: 'Hexa AI Tool Suite', description: 'ATS checker, JD vs resume comparison, bullet improver, section checker. Part of HexaCV.', cta: 'Explore Tools', ctaLink: 'https://www.hexacv.online/free-tools', isExternal: true },
+    { title: 'Student Tools', description: 'CGPA, attendance deficit, internal marks. Built for Kerala university students.', cta: 'Open Student Tools', ctaLink: 'https://studentshub-gold.vercel.app/', isExternal: true },
 ];
 
 export default function Products() {
+    const [businessProducts, setBusinessProducts] = useState<{ title: string; subtitle?: string; hook?: string; description: string; cta: string; ctaLink: string; to?: string; isExternal: boolean }[]>(FALLBACK_BUSINESS);
+    const [freeTools, setFreeTools] = useState<{ title: string; description: string; cta: string; ctaLink: string; isExternal: boolean }[]>(FALLBACK_FREE);
+
+    useEffect(() => {
+        fetch(`${API_URL}/api/products`)
+            .then((res) => (res.ok ? res.json() : []))
+            .then((data: { name: string; description: string; link?: string | null; category?: string | null; isComingSoon: boolean }[]) => {
+                if (!Array.isArray(data) || data.length === 0) return;
+                const business = data.filter((p) => p.category === 'business' && !p.isComingSoon).sort((a, b) => (a as any).displayOrder - (b as any).displayOrder);
+                const free = data.filter((p) => p.category === 'free' && !p.isComingSoon).sort((a, b) => (a as any).displayOrder - (b as any).displayOrder);
+                if (business.length > 0) {
+                    setBusinessProducts(business.map((p) => ({
+                        title: p.name,
+                        subtitle: p.name === 'HexaBill' ? 'Billing & POS for Kerala and Gulf' : undefined,
+                        hook: p.name === 'HexaBill' ? 'Your restaurant or shop, without the billing chaos.' : undefined,
+                        description: p.description,
+                        cta: p.link?.startsWith('/') ? 'Request Demo' : 'Open',
+                        ctaLink: p.link || (p.name === 'HexaBill' ? '/contact?demo=hexabill' : '#'),
+                        isExternal: !!p.link?.startsWith('http'),
+                    })));
+                }
+                if (free.length > 0) {
+                    setFreeTools(free.map((p) => ({
+                        title: p.name,
+                        description: p.description,
+                        cta: p.name === 'HexaCV' ? 'Try HexaCV Free' : p.name === 'Hexa AI Tool Suite' ? 'Explore Tools' : p.name === 'Student Tools' ? 'Open Student Tools' : 'Open',
+                        ctaLink: p.link || '#',
+                        isExternal: !!p.link?.startsWith('http'),
+                    })));
+                }
+            })
+            .catch(() => {});
+    }, []);
+
     return (
         <Layout>
             <SEO
@@ -73,16 +82,20 @@ export default function Products() {
                                 className="p-6 md:p-10 rounded-2xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--primary)] hover:shadow-[0_4px_12px_rgba(29,78,216,0.08)] transition-all duration-150 flex flex-col md:flex-row md:items-center gap-8"
                             >
                                 <div className="flex-1">
-                                    <h2 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-2">{p.title} — {p.subtitle}</h2>
-                                    <p className="text-[var(--foreground)] font-medium mb-2">{p.hook}</p>
+                                    <h2 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-2">{p.title}{p.subtitle ? ` — ${p.subtitle}` : ''}</h2>
+                                    {p.hook && <p className="text-[var(--foreground)] font-medium mb-2">{p.hook}</p>}
                                     <p className="text-sm text-[var(--muted-foreground)] leading-relaxed mb-6">{p.description}</p>
-                                    <Link
-                                        to={p.ctaLink}
-                                        className="inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold hover:opacity-95 transition-opacity"
-                                    >
-                                        {p.cta}
-                                        <ArrowRight className="w-4 h-4" />
-                                    </Link>
+                                    {p.isExternal ? (
+                                        <a href={p.ctaLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold hover:opacity-95 transition-opacity">
+                                            {p.cta}
+                                            <ArrowRight className="w-4 h-4" />
+                                        </a>
+                                    ) : (
+                                        <Link to={p.ctaLink} className="inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold hover:opacity-95 transition-opacity">
+                                            {p.cta}
+                                            <ArrowRight className="w-4 h-4" />
+                                        </Link>
+                                    )}
                                 </div>
                                 <div className="w-full md:w-80 h-48 rounded-xl bg-gradient-to-br from-[var(--primary)]/15 to-[var(--card)] border border-[var(--border)] flex items-center justify-center text-[var(--muted-foreground)] text-sm">
                                     {p.title}

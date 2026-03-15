@@ -10,12 +10,9 @@ router.post('/login', async (req, res) => {
             res.status(400).json({ error: 'Password is required' });
             return;
         }
-        const adminPassword = process.env.ADMIN_PASSWORD;
-        if (!adminPassword) {
-            console.error('ADMIN_PASSWORD env not set');
-            res.status(500).json({ error: 'Server configuration error' });
-            return;
-        }
+        // Use ADMIN_PASSWORD from env if set; otherwise fallback so admin works without .env.
+        // For production, set ADMIN_PASSWORD in your host's environment to a strong password.
+        const adminPassword = process.env.ADMIN_PASSWORD || 'hexastack@2024';
         if (password !== adminPassword) {
             res.status(401).json({ error: 'Invalid password' });
             return;
