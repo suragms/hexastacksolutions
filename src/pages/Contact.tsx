@@ -52,30 +52,51 @@ export default function Contact() {
         }
         setLoading(true);
         setError('');
+        const submitData = {
+            name: formData.name.trim(),
+            requirement: formData.requirement.trim(),
+            email: formData.email?.trim() || undefined,
+            whatsapp: formData.whatsapp?.trim() || undefined,
+            service: formData.service || undefined,
+            budget: formData.budget || undefined,
+        };
+        if (!submitData.name || submitData.name.length < 2) {
+            setError('Please enter your full name.');
+            setLoading(false);
+            return;
+        }
+        if (!submitData.requirement) {
+            setError('Please describe what you need.');
+            setLoading(false);
+            return;
+        }
         try {
-            const { website, ...rest } = formData;
-            const submitData = {
-                name: rest.name,
-                email: rest.email?.trim() || undefined,
-                whatsapp: rest.whatsapp,
-                service: rest.service,
-                budget: rest.budget,
-                requirement: rest.requirement,
-            };
-            const response = await fetch(`${API_URL}/api/contact`, {
+            const url = `${API_URL}/api/contact`.replace(/([^:])\/\/+/, '$1/'); // avoid double slash
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(submitData),
             });
-            const data = await response.json();
+            let data: { error?: string; message?: string } = {};
+            try {
+                data = await response.json();
+            } catch {
+                // Server returned non-JSON (e.g. HTML error page)
+                setError(response.ok ? 'Something went wrong.' : `Server error (${response.status}). Please try again.`);
+                setLoading(false);
+                return;
+            }
             if (!response.ok) {
-                setError(data.error || data.message || (response.status === 429 ? 'Too many enquiries. Please try again in an hour.' : 'Failed to submit'));
+                const msg = data.message || data.error || (response.status === 429 ? 'Too many enquiries. Please try again in an hour.' : 'Failed to submit. Please try again.');
+                setError(msg);
+                setLoading(false);
                 return;
             }
             setFormData({ name: '', email: '', whatsapp: '', service: '', budget: '', requirement: '', website: '' });
             setShowSuccessPopup(true);
-        } catch {
-            setError('Network error. Please try again.');
+        } catch (err) {
+            console.error('[Contact submit]', err);
+            setError('Network error. Check your connection and try again.');
         } finally {
             setLoading(false);
         }
