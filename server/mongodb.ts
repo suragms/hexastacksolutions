@@ -1,19 +1,29 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const uri = process.env.DATABASE_URL;
-if (!uri) {
-    throw new Error('DATABASE_URL is not defined in .env');
+function getUri(): string {
+    const uri = process.env.DATABASE_URL;
+    if (!uri || !uri.trim()) {
+        throw new Error('DATABASE_URL is not set. Add it in Vercel/Netlify Environment Variables.');
+    }
+    return uri;
 }
 
-let client: MongoClient;
+let client: MongoClient | null = null;
 let dbInstance: any = null;
 
 export async function getCollection(name: string) {
     if (!dbInstance) {
-        client = new MongoClient(uri!);
+        const uri = getUri();
+        client = new MongoClient(uri, {
+            serverApi: {
+                version: ServerApiVersion.v1,
+                strict: true,
+                deprecationErrors: true,
+            },
+        });
         await client.connect();
         dbInstance = client.db();
     }

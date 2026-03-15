@@ -164,12 +164,10 @@ router.post('/', async (req, res) => {
         res.json({ success: true, message: 'Enquiry received successfully', id: message.id });
     } catch (error: unknown) {
         const err = error as Error;
-        console.error('[CONTACT_POST]', err);
-        const isDev = process.env.NODE_ENV !== 'production';
-        res.status(500).json({
-            error: 'Internal Error',
-            message: isDev && err?.message ? err.message : 'Something went wrong. Please try again.',
-        });
+        console.error('[CONTACT_POST]', err?.message || err);
+        const isDb = err?.message?.includes('DATABASE') || err?.message?.includes('connect') || (err as any)?.code === 'P1001';
+        const message = isDb ? 'Database not configured. Set DATABASE_URL in Vercel/Netlify Environment Variables.' : 'Something went wrong. Please try again.';
+        res.status(isDb ? 503 : 500).json({ error: 'Internal Error', message });
     }
 });
 

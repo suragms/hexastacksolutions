@@ -5,7 +5,28 @@
 - **Frontend:** Static build (`dist/`) is served from the project root.
 - **API:** All `/api/*` requests are handled by the serverless function at `api/[[...path]].ts`, which forwards to the Express app in `server/index.ts`.
 
-## Required environment variables (Vercel Dashboard → Project → Settings → Environment Variables)
+---
+
+## How to set environment variables in Vercel
+
+1. Go to **[Vercel Dashboard](https://vercel.com/dashboard)** and sign in.
+2. Open your **project** (e.g. hexastack-solutions).
+3. Click the **Settings** tab.
+4. In the left sidebar, click **Environment Variables**.
+5. For each variable:
+   - **Key:** e.g. `DATABASE_URL`
+   - **Value:** your actual value (paste from `.env` or type it)
+   - **Environments:** tick **Production** (and **Preview** if you want them in preview deployments).
+   - Click **Save**.
+6. **Redeploy** so the new variables are used:
+   - Go to **Deployments** → open the **⋯** on the latest deployment → **Redeploy** (or push a new commit).
+
+You can also add/update variables when deploying via CLI:  
+`vercel env add DATABASE_URL` (then paste the value when prompted).
+
+---
+
+## Required environment variables
 
 Set these for **Production** (and optionally Preview):
 

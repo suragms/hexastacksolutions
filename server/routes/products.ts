@@ -15,9 +15,10 @@ router.get('/', async (_req, res) => {
         const collection = await getCollection('Product');
         const products = await collection.find({}).sort({ displayOrder: 1 }).toArray();
         res.json(products.map(mapId));
-    } catch (error) {
-        console.error('Failed to fetch products:', error);
-        res.status(500).json({ error: 'Failed to fetch products' });
+    } catch (error: any) {
+        console.error('Failed to fetch products:', error?.message || error);
+        const msg = error?.message?.includes('DATABASE_URL') ? error.message : 'Failed to fetch products';
+        res.status(error?.message?.includes('DATABASE_URL') ? 503 : 500).json({ error: msg });
     }
 });
 

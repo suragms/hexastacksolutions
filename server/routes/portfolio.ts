@@ -11,9 +11,10 @@ router.get('/', async (_req, res) => {
             include: { media: true }
         });
         res.json(projects);
-    } catch (error) {
-        console.error('[PORTFOLIO_GET]', error);
-        res.status(500).json({ error: 'Internal Error' });
+    } catch (error: any) {
+        console.error('[PORTFOLIO_GET]', error?.message || error);
+        const isDb = error?.message?.includes('DATABASE') || error?.message?.includes('connect') || error?.code === 'P1001';
+        res.status(isDb ? 503 : 500).json({ error: isDb ? 'Database not configured. Set DATABASE_URL in Vercel/Netlify.' : 'Internal Error' });
     }
 });
 

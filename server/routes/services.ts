@@ -15,9 +15,10 @@ router.get('/', async (_req, res) => {
         const collection = await getCollection('Service');
         const services = await collection.find({}).sort({ displayOrder: 1 }).toArray();
         res.json(services.map(mapId));
-    } catch (error) {
-        console.error('Failed to fetch services:', error);
-        res.status(500).json({ error: 'Failed to fetch services' });
+    } catch (error: any) {
+        console.error('Failed to fetch services:', error?.message || error);
+        const msg = error?.message?.includes('DATABASE_URL') ? error.message : 'Failed to fetch services';
+        res.status(error?.message?.includes('DATABASE_URL') ? 503 : 500).json({ error: msg });
     }
 });
 

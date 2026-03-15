@@ -7,8 +7,10 @@ router.get('/', async (_req, res) => {
     try {
         const settings = await db.companySettings.findFirst();
         res.json(settings || {});
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch settings' });
+    } catch (error: any) {
+        console.error('[SETTINGS_GET]', error?.message || error);
+        const isDb = error?.message?.includes('DATABASE') || error?.message?.includes('connect') || error?.code === 'P1001';
+        res.status(isDb ? 503 : 500).json({ error: isDb ? 'Database not configured. Set DATABASE_URL in Vercel/Netlify.' : 'Failed to fetch settings' });
     }
 });
 
