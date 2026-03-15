@@ -2,6 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /dashboard
+Disallow: /login
+Disallow: /register
 Disallow: /api/
 
-Sitemap: https://hexastack.in/sitemap.xml
+Sitemap: https://www.hexastacksolutions.com/sitemap.xml

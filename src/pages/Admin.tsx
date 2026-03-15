@@ -2157,7 +2157,7 @@ export default function Admin() {
                                         </div>
                                         <div>
                                             <label className="block font-medium text-slate-700 mb-1">Our URL (target)</label>
-                                            <input type="url" value={backlinkForm.targetUrl} onChange={(e) => setBacklinkForm({ ...backlinkForm, targetUrl: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded" placeholder="https://hexastacksolutions.com" />
+                                            <input type="url" value={backlinkForm.targetUrl} onChange={(e) => setBacklinkForm({ ...backlinkForm, targetUrl: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded" placeholder="https://www.hexastacksolutions.com" />
                                         </div>
                                         <div>
                                             <label className="block font-medium text-slate-700 mb-1">Source site / domain</label>

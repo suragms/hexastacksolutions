@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { MessageCircle, ExternalLink } from 'lucide-react';
 
-type FilterTab = 'All' | 'Gulf' | 'Kerala' | 'AI & SaaS' | 'Software Systems';
+type FilterTab = 'All' | 'Gulf' | 'Kerala' | 'AI & SaaS' | 'Business Systems' | 'Websites';
 
 interface CaseStudy {
     id: string;
@@ -25,14 +25,16 @@ interface CaseStudy {
     location?: string | null;
     clientType?: string | null;
     media?: { id: string; type: string; url: string }[];
+    problem?: string;
+    build?: string;
 }
 
 const FALLBACK_CASE_STUDIES: CaseStudy[] = [
-    { id: 'zayoga', title: 'ZAYOGA', description: 'Yoga and wellness brand: website, booking, and digital presence. Clean UI and mobile-first design.', techStack: 'React, Node', projectUrl: null, tags: ['Kerala', 'Website'], results: 'Live site and booking flow', location: 'Kerala', clientType: 'Wellness' },
-    { id: 'healit', title: 'HEALit', description: 'Healthcare / medical lab management: sample tracking, reporting, and patient records. Built for a Kerala lab.', techStack: 'React, Node, PostgreSQL', projectUrl: null, tags: ['Kerala', 'Healthcare'], results: 'Reporting time cut significantly', location: 'Kerala', clientType: 'Healthcare' },
-    { id: 'hexabill-b2b', title: 'HexaBill B2B', description: 'B2B billing and ERP: multi-branch, VAT-compliant invoicing and inventory. Deployed for trading and retail clients.', techStack: 'React, Node, Cloud DB', projectUrl: null, liveUrl: null, tags: ['Gulf', 'Kerala', 'Billing'], results: 'Rs.2Cr+ client volume', location: 'UAE', clientType: 'Trading' },
-    { id: 'nutriscan', title: 'NutriScan AI', description: 'AI-powered food recognition SaaS: users upload food images, get nutrition estimates. From concept to launch.', techStack: 'React, GPT-4o Vision, Node', projectUrl: null, liveUrl: 'https://nutriscan-ai.vercel.app', tags: ['AI', 'SaaS'], results: 'SaaS product live', location: null, clientType: 'SaaS' },
-    { id: 'studenthub', title: 'Student Hub', description: 'Academic productivity SaaS: CGPA calculator, attendance, internal marks, PDF tools. Student-focused product.', techStack: 'React, Vercel', projectUrl: null, liveUrl: 'https://studentshub-gold.vercel.app', tags: ['Kerala', 'SaaS'], results: 'Live app in use', location: 'Kerala', clientType: 'SaaS' },
+    { id: 'healit', title: 'HEALit Medical', description: 'Paper registers. 200+ samples/month tracked manually. We built a lab management system — intake to final report. Reporting time cut 60%.', techStack: 'React, Node, PostgreSQL', projectUrl: null, tags: ['Kerala', 'Healthcare'], results: 'Reporting time cut 60%.', location: 'Kerala', clientType: 'Healthcare', problem: 'Paper registers. 200+ samples/month tracked manually.', build: 'Lab management system — intake to final report.' },
+    { id: 'hexabill-b2b', title: 'HexaBill B2B', description: 'Trading company reconciling 200+ invoices by hand each month. We built automated billing, inventory, and multi-branch ERP. Manual work reduced 70%.', techStack: 'React, Node, Cloud DB', projectUrl: null, liveUrl: null, tags: ['UAE', 'Kerala', 'Billing'], results: 'Manual work reduced 70%.', location: 'UAE', clientType: 'Trading', problem: 'Trading company reconciling 200+ invoices by hand each month.', build: 'Automated billing, inventory, and multi-branch ERP.' },
+    { id: 'uae-restaurant', title: 'UAE Restaurant POS', description: 'Orders lost between floors. Cash reconciled manually at close. We built POS with live inventory sync, VAT billing, multi-branch. Zero manual reconciliation.', techStack: 'React, Node', projectUrl: null, tags: ['UAE', 'Restaurant'], results: 'Zero manual reconciliation.', location: 'UAE', clientType: 'Restaurant', problem: 'Orders lost between floors. Cash reconciled manually at close.', build: 'POS with live inventory sync, VAT billing, multi-branch.' },
+    { id: 'nutriscan', title: 'NutriScan AI', description: 'Founder had an idea — photo your food, get nutrition data. We built GPT-4o Vision + SaaS platform from architecture to launch. Live and growing.', techStack: 'React, GPT-4o Vision, Node', projectUrl: null, liveUrl: 'https://nutriscan-ai.vercel.app', tags: ['AI', 'SaaS'], results: 'Live and growing.', location: null, clientType: 'SaaS', problem: 'Founder had an idea — photo your food, get nutrition data.', build: 'GPT-4o Vision + SaaS platform — architecture to launch.' },
+    { id: 'studenthub', title: 'Student Hub', description: 'Academic productivity SaaS: CGPA calculator, attendance, internal marks, PDF tools. Student-focused product. Live app in use.', techStack: 'React, Vercel', projectUrl: null, liveUrl: 'https://studentshub-gold.vercel.app', tags: ['Kerala', 'SaaS'], results: 'Live app in use', location: 'Kerala', clientType: 'SaaS', problem: 'Students needed CGPA, attendance, and PDF tools in one place.', build: 'Academic productivity SaaS — all tools in browser.' },
 ];
 
 export default function Work() {
@@ -53,13 +55,14 @@ export default function Work() {
         ...p,
         tags: p.tags ?? [p.location, p.clientType].filter(Boolean) as string[],
     }));
-    const filters: FilterTab[] = ['All', 'Gulf', 'Kerala', 'AI & SaaS', 'Software Systems'];
+    const filters: FilterTab[] = ['All', 'Gulf', 'Kerala', 'AI & SaaS', 'Business Systems', 'Websites'];
     const filtered = projects.filter((p) => {
         if (activeFilter === 'All') return true;
         if (activeFilter === 'Gulf') return p.location?.includes('UAE') || p.tags?.some(t => t.toLowerCase().includes('gulf'));
         if (activeFilter === 'Kerala') return p.location?.includes('Kerala') || p.tags?.some(t => t.toLowerCase().includes('kerala'));
         if (activeFilter === 'AI & SaaS') return p.clientType === 'SaaS' || p.tags?.some(t => t === 'AI' || t === 'SaaS') || p.techStack?.toLowerCase().includes('ai');
-        if (activeFilter === 'Software Systems') return ['Healthcare', 'Trading', 'Wellness', 'Restaurant'].includes(p.clientType || '') || p.tags?.some(t => ['Billing', 'Healthcare', 'Website'].includes(t));
+        if (activeFilter === 'Business Systems') return ['Healthcare', 'Trading', 'Wellness', 'Restaurant'].includes(p.clientType || '') || p.tags?.some(t => ['Billing', 'Healthcare'].includes(t));
+        if (activeFilter === 'Websites') return p.tags?.some(t => t.toLowerCase().includes('website')) || p.clientType === 'Wellness';
         return true;
     });
 
@@ -76,16 +79,16 @@ export default function Work() {
     return (
         <Layout>
             <SEO
-                title="Our Work | Portfolio | HexaStack Solutions — Thrissur Kerala"
-                description="Real projects: Gulf Restaurant POS (UAE), Medical Lab (Kerala), NutriScan AI. Custom software and websites from Thrissur."
-                keywords="portfolio HexaStack, web development Thrissur, POS UAE, medical software Kerala, AI app"
+                title="Portfolio | Software Projects Kerala & UAE | HexaStack Solutions"
+                description="Case studies: Restaurant POS UAE, Medical Lab Kerala, NutriScan AI. Custom software delivered in 4–6 weeks."
+                keywords="software portfolio Kerala, POS system UAE case study, medical software Kerala, AI SaaS project India, HexaStack projects, custom software examples, restaurant POS Dubai case study, billing software success story, software company portfolio Thrissur, software company Vadanappally, projects Vadanappally Thrissur"
                 canonical="/work"
             />
             <div className="bg-[var(--background)] text-[var(--foreground)] font-sans antialiased selection:bg-[var(--secondary)] selection:text-[var(--foreground)]">
 
                 <section className="px-4 sm:px-6 py-16 md:py-24 max-w-6xl mx-auto min-w-0 w-full">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight leading-tight mb-4 text-[var(--foreground)] break-words">
-                        Our Work
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-4 text-[var(--foreground)] break-words">
+                        Real software. Real clients. Real results.
                     </h1>
                     <p className="text-[var(--muted-foreground)] text-base sm:text-lg max-w-2xl leading-relaxed mb-6 break-words">
                         Real projects delivered for clients in Kerala and the Gulf. Custom software, POS, medical systems, and AI apps.
@@ -93,13 +96,13 @@ export default function Work() {
 
                     {/* Stats bar */}
                     <div className="flex flex-wrap gap-4 mb-10 p-4 rounded-xl bg-[var(--card)] border border-[var(--border)]">
-                        <span className="text-sm font-medium text-[var(--foreground)]">Rs.2Cr+ client volume</span>
+                        <span className="text-sm font-medium text-[var(--foreground)]">5 projects delivered</span>
                         <span className="text-sm text-[var(--muted-foreground)]">·</span>
-                        <span className="text-sm font-medium text-[var(--foreground)]">2 Gulf</span>
+                        <span className="text-sm font-medium text-[var(--foreground)]">2 countries</span>
                         <span className="text-sm text-[var(--muted-foreground)]">·</span>
-                        <span className="text-sm font-medium text-[var(--foreground)]">3 SaaS</span>
+                        <span className="text-sm font-medium text-[var(--foreground)]">4–6 weeks average delivery</span>
                         <span className="text-sm text-[var(--muted-foreground)]">·</span>
-                        <span className="text-sm font-medium text-[var(--foreground)]">5 projects</span>
+                        <span className="text-sm font-medium text-[var(--foreground)]">70% avg. manual work reduction</span>
                     </div>
 
                     {/* Filter tabs */}
@@ -109,7 +112,7 @@ export default function Work() {
                                 key={f}
                                 onClick={() => setActiveFilter(f)}
                                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeFilter === f
-                                    ? 'bg-white text-black'
+                                    ? 'bg-[var(--primary)] text-[var(--primary-foreground)]'
                                     : 'border border-[var(--border)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]'
                                     }`}
                             >
@@ -142,7 +145,7 @@ export default function Work() {
                                     {p.media?.[0]?.url ? (
                                         <img src={p.media[0].url} alt={p.title} className="w-full h-40 object-cover bg-[var(--card)]" />
                                     ) : (
-                                        <div className="w-full h-40 bg-[var(--card)] flex items-center justify-center text-[var(--muted-foreground)] text-sm">No image</div>
+                                        <div className="w-full h-40 bg-gradient-to-br from-[var(--primary)]/20 via-[var(--card)] to-[var(--primary)]/10 flex items-center justify-center text-[var(--muted-foreground)] text-sm font-medium">{p.title}</div>
                                     )}
                                     <div className="p-5 flex flex-col flex-1">
                                         <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -156,7 +159,7 @@ export default function Work() {
                                         </div>
                                         <h2 className="text-lg font-semibold text-[var(--foreground)] mb-2">{p.title}</h2>
                                         <p className="text-sm text-[var(--muted-foreground)] leading-relaxed line-clamp-3 flex-1">{p.description}</p>
-                                        {p.results && <p className="text-xs text-[var(--primary)] mt-1">{p.results}</p>}
+                                        {p.results && <p className="text-sm font-semibold text-[#10B981] mt-2">{p.results}</p>}
                                         {p.techStack && (
                                             <p className="text-xs text-[var(--muted-foreground)] mt-2 truncate">{p.techStack}</p>
                                         )}
@@ -186,7 +189,7 @@ export default function Work() {
                                 <DialogTitle className="text-xl text-[var(--foreground)]">{selectedProject?.title}</DialogTitle>
                             </DialogHeader>
                             {selectedProject && (
-                                <div className="space-y-4">
+                                <div className="space-y-5">
                                     <div className="flex flex-wrap gap-2">
                                         {locationBadge(selectedProject.location)}
                                         {(selectedProject.tags || []).map((t) => (
@@ -196,24 +199,40 @@ export default function Work() {
                                             <span className="px-2 py-0.5 rounded text-xs text-[var(--muted-foreground)] border border-[var(--border)]">{selectedProject.clientType}</span>
                                         )}
                                     </div>
-                                    <p className="text-[var(--muted-foreground)] text-sm leading-relaxed">{selectedProject.description}</p>
-                                    {selectedProject.results && <p className="text-sm text-[var(--primary)]">{selectedProject.results}</p>}
+                                    {selectedProject.problem && (
+                                        <div>
+                                            <h4 className="text-xs font-semibold uppercase tracking-wider text-[var(--muted-foreground)] mb-1">Problem</h4>
+                                            <p className="text-sm text-[var(--foreground)]">{selectedProject.problem}</p>
+                                        </div>
+                                    )}
+                                    {selectedProject.build && (
+                                        <div>
+                                            <h4 className="text-xs font-semibold uppercase tracking-wider text-[var(--muted-foreground)] mb-1">Solution</h4>
+                                            <p className="text-sm text-[var(--foreground)]">{selectedProject.build}</p>
+                                        </div>
+                                    )}
+                                    {!selectedProject.problem && <p className="text-[var(--muted-foreground)] text-sm leading-relaxed">{selectedProject.description}</p>}
+                                    {selectedProject.results && (
+                                        <p className="text-sm font-semibold text-[#10B981]">Result: {selectedProject.results}</p>
+                                    )}
                                     {selectedProject.techStack && (
                                         <p className="text-xs text-[var(--muted-foreground)]">Tech: {selectedProject.techStack}</p>
                                     )}
-                                    {selectedProject.liveUrl && (
-                                        <a href={selectedProject.liveUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[var(--border)] text-[var(--foreground)] font-medium text-sm hover:bg-[var(--muted)]">
-                                            <ExternalLink className="w-4 h-4" /> View Live
+                                    <div className="flex flex-wrap gap-2 pt-2">
+                                        {selectedProject.liveUrl && (
+                                            <a href={selectedProject.liveUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[var(--border)] text-[var(--foreground)] font-medium text-sm hover:bg-[var(--muted)]">
+                                                <ExternalLink className="w-4 h-4" /> View Live
+                                            </a>
+                                        )}
+                                        <a
+                                            href={`https://wa.me/917591999365?text=${whatsappMsg}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#25D366] text-white font-semibold hover:bg-[#20BA5A] transition-colors text-sm"
+                                        >
+                                            <MessageCircle className="w-5 h-5" /> Similar project? WhatsApp us
                                         </a>
-                                    )}
-                                    <a
-                                        href={`https://wa.me/917591999365?text=${whatsappMsg}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#25D366] text-white font-semibold hover:bg-[#20BA5A] transition-colors text-sm"
-                                    >
-                                        <MessageCircle className="w-5 h-5" /> Similar project? WhatsApp us
-                                    </a>
+                                    </div>
                                 </div>
                             )}
                         </DialogContent>
@@ -222,15 +241,15 @@ export default function Work() {
 
                 <section className="px-4 py-12 md:py-16 border-t border-[var(--border)] bg-[var(--background)]">
                     <div className="max-w-6xl mx-auto text-center">
-                        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4 text-[var(--foreground)]">Let&apos;s build your next system</h2>
-                        <p className="text-[var(--muted-foreground)] mb-6 max-w-xl mx-auto">Website, POS, medical software, or AI app — we deliver from Thrissur to the Gulf.</p>
+                        <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 text-[var(--foreground)]">Want a system like this for your business?</h2>
+                        <p className="text-[var(--muted-foreground)] mb-6 max-w-xl mx-auto">Restaurant like the UAE project? Medical system like HEALit? Tell us — we&apos;ll tell you if we can build it.</p>
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link to="/contact" className="inline-flex items-center justify-center h-12 px-8 bg-white text-black font-semibold rounded-full hover:bg-gray-100 transition-colors">
+                            <a href={`https://wa.me/917591999365?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 h-12 px-8 rounded-full bg-[#25D366] text-white font-semibold hover:bg-[#20BA5A] transition-colors">
+                                <MessageCircle className="w-5 h-5" /> WhatsApp
+                            </a>
+                            <Link to="/contact" className="inline-flex items-center justify-center h-12 px-8 rounded-full border border-[var(--border)] text-[var(--foreground)] font-semibold hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors">
                                 Get Free Quote
                             </Link>
-                            <a href={`https://wa.me/917591999365?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 h-12 px-8 rounded-full bg-[#25D366] text-white font-semibold hover:bg-[#20BA5A] transition-colors">
-                                <MessageCircle className="w-5 h-5" /> WhatsApp Us
-                            </a>
                         </div>
                     </div>
                 </section>

@@ -37,7 +37,7 @@ async function seedAdminData() {
                 title: 'Global Retail POS',
                 description: 'A robust multi-branch Point of Sale and inventory platform processing $5M daily transaction volume.',
                 techStack: 'React, Node.js, PostgreSQL',
-                projectUrl: 'https://hexastacksolutions.com',
+                projectUrl: 'https://www.hexastacksolutions.com',
                 featured: true,
                 displayOrder: 1
             }

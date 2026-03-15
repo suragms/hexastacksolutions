@@ -11,7 +11,8 @@ interface SEOProps {
     schema?: object;
 }
 
-const CANONICAL_BASE = 'https://hexastacksolutions.com';
+const CANONICAL_BASE = 'https://www.hexastacksolutions.com';
+// Use 1200×630 public/og-image.png for best shares; pass ogImage prop or add the file and set default to /og-image.png
 const DEFAULT_OG_IMAGE = `${CANONICAL_BASE}/logo-full-white.png`;
 
 export default function SEO({ title, description, keywords, ogImage = DEFAULT_OG_IMAGE, ogType = 'website', noindex = false, canonical, schema }: SEOProps) {
@@ -93,6 +94,7 @@ export default function SEO({ title, description, keywords, ogImage = DEFAULT_OG
         updateOgTag('og:description', description);
         updateOgTag('og:type', ogType);
         updateOgTag('og:image', ogImage);
+        updateOgTag('og:url', canonicalUrl);
 
     }, [title, description, keywords, ogImage, ogType, noindex, canonical, schema]);
 

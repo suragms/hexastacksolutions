@@ -8,6 +8,8 @@ export default function Solutions() {
             <SEO
                 title="Solutions | HexaStack"
                 description="Business management, ATS resume tools, and career optimization for India, Gulf, and global markets."
+                canonical="/solutions"
+                keywords="business management software, ATS resume tools, HexaBill, HexaCV, career optimization India, billing solutions Kerala, POS solutions UAE, ERP solutions Gulf, software solutions Vadanappally, business software Vadanappally Thrissur Kerala"
             />
             <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
                 <h1 className="text-4xl font-bold tracking-tight mb-6">Solutions</h1>

@@ -134,7 +134,7 @@ router.post('/', async (req, res) => {
         console.log(`[NEW_ENQUIRY] ${name} ${contactPhone || contactEmail || ''}`);
 
         // Send email notification to admin (async, don't block response)
-        sendEmailNotification(name, contactEmail || 'no-email@hexastack.in', contactPhone, requirement, {
+        sendEmailNotification(name, contactEmail || 'no-email@hexastacksolutions.com', contactPhone, requirement, {
             companyName: companyName ? sanitize(companyName) : undefined,
             country: country ? sanitize(country) : undefined,
             industry: industry ? sanitize(industry) : undefined,

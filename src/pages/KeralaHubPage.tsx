@@ -17,7 +17,7 @@ export default function KeralaHubPage() {
                 title="Software & Web Development Kerala | HexaStack Solutions"
                 description="Web development, POS, billing, and custom software across Kerala. Thrissur, Ernakulam, Kozhikode, and all 14 districts. Talk to the developer."
                 canonical="/kerala"
-                keywords="software company Kerala, web development Kerala, POS Kerala, billing software Kerala, HexaStack"
+                keywords="software company Kerala, web development Kerala, POS Kerala, billing software Kerala, HexaStack, Thrissur software, Ernakulam web development, Kozhikode POS, software all districts Kerala, custom software Kerala 14 districts, Vadanappally Thrissur Kerala, software company Vadanappally, web development Vadanappally Thrissur"
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">

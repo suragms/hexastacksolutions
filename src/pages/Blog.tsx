@@ -25,7 +25,7 @@ export default function Blog() {
             <SEO
                 title="Blog | HEXASTACK SOLUTIONS — Guides on ATS, VAT, Billing & Career"
                 description="Guides on ATS, VAT compliance, billing software, and career tools. Insights for India, Gulf, and global professionals."
-                keywords="ATS guide, VAT compliance UAE, billing software India, career tools, resume optimization"
+                keywords="ATS guide, VAT compliance UAE, billing software India, career tools, resume optimization, POS software blog, web development Kerala blog, software tips Kerala, Gulf VAT guide, career advice India, software blog Vadanappally Thrissur"
                 canonical="/blog"
             />
 

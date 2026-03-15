@@ -17,7 +17,7 @@ export default function GulfVatPage() {
                 title="VAT Billing Software Gulf | UAE, Dubai, Abu Dhabi | HexaStack"
                 description="VAT-compliant billing and invoicing software for Gulf: UAE, Dubai, Abu Dhabi, Sharjah, Riyadh, Jeddah. TRN, reports. Built by Kerala team."
                 canonical="/gulf-vat"
-                keywords="Gulf VAT billing, VAT software UAE, VAT billing Dubai, VAT compliant UAE, HexaStack"
+                keywords="Gulf VAT billing, VAT software UAE, VAT billing Dubai, VAT compliant UAE, HexaStack, TRN billing UAE, Saudi VAT software, invoicing software Dubai, POS VAT Gulf, billing software Abu Dhabi Sharjah"
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { API_URL } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
-import { ChevronDown, Menu, X, MessageCircle, LogOut } from 'lucide-react';
+import { ChevronDown, Menu, X, MessageCircle, LogOut, Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface CompanySettings {
@@ -76,20 +76,23 @@ export default function Layout({ children }: LayoutProps) {
     const address = settings?.address || 'Thrissur, Kerala';
 
     const navLinks = [
-        { to: '/services', label: 'Services' },
         { to: '/work', label: 'Work' },
+        { to: '/services', label: 'Services' },
+        { to: '/pricing', label: 'Pricing' },
         { to: '/blog', label: 'Blog' },
-        { to: '/solutions', label: 'Solutions' },
         { to: '/about', label: 'About' },
         { to: '/contact', label: 'Contact' },
     ];
 
-    const productLinks = [
+    const businessSoftwareLinks = [
         { to: '/products/hexabill', label: 'HexaBill' },
+    ];
+    const freeToolsLinks = [
         { to: 'https://www.hexacv.online/', label: 'HexaCV', isExternal: true },
         { to: 'https://www.hexacv.online/free-tools', label: 'Hexa AI Tool Suite', isExternal: true },
         { to: 'https://studentshub-gold.vercel.app/', label: 'Student Tools', isExternal: true },
     ];
+    const productLinks = [...businessSoftwareLinks, ...freeToolsLinks];
 
     const headerClass = "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 sm:py-5 pt-[calc(1rem+env(safe-area-inset-top))] pb-5 lg:bg-transparent bg-[var(--background)]/98 backdrop-blur-md border-b border-[var(--border)]/50 lg:border-b-0";
 
@@ -112,82 +115,84 @@ export default function Layout({ children }: LayoutProps) {
                         </Link>
 
                         <div className="hidden lg:flex items-center gap-1 flex-shrink-0">
-                            <Link
-                                to="/"
-                                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] ${location.pathname === '/' ? 'text-[var(--primary)]' : 'text-[var(--foreground)]/80'}`}
-                            >
-                                Home
-                                {location.pathname === '/' && (
-                                    <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-[var(--primary)] rounded-full" />
-                                )}
-                            </Link>
-                            <div
-                                className="relative"
-                                onMouseEnter={() => setProductsOpen(true)}
-                                onMouseLeave={() => setProductsOpen(false)}
-                            >
-                                <button className="relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] flex items-center gap-1 text-[var(--foreground)]/80">
-                                    Products
-                                    <ChevronDown className={`h-3 w-3 transition-transform duration-300 ${productsOpen ? 'rotate-180' : ''}`} />
-                                </button>
-                                <AnimatePresence>
-                                    {productsOpen && (
-                                        <motion.div
-                                            initial={{ opacity: 0, y: -8 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: -8 }}
-                                            transition={{ duration: 0.3 }}
-                                            className="absolute left-0 top-full pt-2 z-50"
-                                        >
-                                            <div className="bg-[var(--background)] rounded-xl border border-[var(--border)] shadow-2xl p-4 min-w-[280px] max-w-[320px]">
-                                                <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[var(--border)]">
-                                                    <span className="font-semibold text-sm text-[var(--foreground)]">Products</span>
-                                                </div>
-                                                <div className="space-y-1 max-h-[300px] overflow-y-auto">
-                                                    {productLinks.map((link) => (
-                                                        link.isExternal ? (
-                                                            <a
-                                                                key={link.to}
-                                                                href={link.to}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="flex items-center justify-between gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] hover:bg-[var(--muted)]/50 px-2 py-1.5 rounded-md transition-all duration-200"
-                                                                onClick={() => setProductsOpen(false)}
-                                                            >
-                                                                {link.label}
-                                                            </a>
-                                                        ) : (
-                                                            <Link
-                                                                key={link.to}
-                                                                to={link.to}
-                                                                className="flex items-center justify-between gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] hover:bg-[var(--muted)]/50 px-2 py-1.5 rounded-md transition-all duration-200"
-                                                                onClick={() => setProductsOpen(false)}
-                                                            >
-                                                                {link.label}
-                                                            </Link>
-                                                        )
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                            {navLinks.map((link) => {
-                                const isActive = location.pathname === link.to;
-                                return (
+                            {navLinks.map((link) => (
+                                <span key={link.to} className="flex items-center gap-1">
                                     <Link
-                                        key={link.to}
                                         to={link.to}
-                                        className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] ${isActive ? 'text-[var(--primary)]' : 'text-[var(--foreground)]/80'}`}
+                                        className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] ${location.pathname === link.to ? 'text-[var(--primary)]' : 'text-[var(--foreground)]/80'}`}
                                     >
                                         {link.label}
-                                        {isActive && (
+                                        {location.pathname === link.to && (
                                             <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-[var(--primary)] rounded-full" />
                                         )}
                                     </Link>
-                                );
-                            })}
+                                    {link.to === '/pricing' && (
+                                        <div
+                                            className="relative"
+                                            onMouseEnter={() => setProductsOpen(true)}
+                                            onMouseLeave={() => setProductsOpen(false)}
+                                        >
+                                            <button className="relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] flex items-center gap-1 text-[var(--foreground)]/80">
+                                                Products
+                                                <ChevronDown className={`h-3 w-3 transition-transform duration-300 ${productsOpen ? 'rotate-180' : ''}`} />
+                                            </button>
+                                            <AnimatePresence>
+                                                {productsOpen && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, y: -8 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        exit={{ opacity: 0, y: -8 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        className="absolute left-0 top-full pt-2 z-50"
+                                                    >
+                                                        <div className="bg-[var(--background)] rounded-xl border border-[var(--border)] shadow-2xl p-4 min-w-[280px] max-w-[320px]">
+                                                            <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)] mb-2">Business Software</p>
+                                                            <div className="space-y-1 mb-3">
+                                                                {businessSoftwareLinks.map((link) => (
+                                                                    <Link
+                                                                        key={link.to}
+                                                                        to={link.to}
+                                                                        className="flex items-center gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] hover:bg-[var(--muted)]/50 px-2 py-1.5 rounded-md transition-all duration-200"
+                                                                        onClick={() => setProductsOpen(false)}
+                                                                    >
+                                                                        {link.label}
+                                                                    </Link>
+                                                                ))}
+                                                            </div>
+                                                            <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)] mb-2 pt-1 border-t border-[var(--border)]">Free Tools</p>
+                                                            <div className="space-y-1 max-h-[240px] overflow-y-auto">
+                                                                {freeToolsLinks.map((link) => (
+                                                                    link.isExternal ? (
+                                                                        <a
+                                                                            key={link.to}
+                                                                            href={link.to}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            className="flex items-center justify-between gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] hover:bg-[var(--muted)]/50 px-2 py-1.5 rounded-md transition-all duration-200"
+                                                                            onClick={() => setProductsOpen(false)}
+                                                                        >
+                                                                            {link.label}
+                                                                        </a>
+                                                                    ) : (
+                                                                        <Link
+                                                                            key={link.to}
+                                                                            to={link.to}
+                                                                            className="flex items-center justify-between gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] hover:bg-[var(--muted)]/50 px-2 py-1.5 rounded-md transition-all duration-200"
+                                                                            onClick={() => setProductsOpen(false)}
+                                                                        >
+                                                                            {link.label}
+                                                                        </Link>
+                                                                    )
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
+                                    )}
+                                </span>
+                            ))}
                             {user ? (
                                 <>
                                     <Link to="/dashboard" className="relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] text-[var(--foreground)]/80">Dashboard</Link>
@@ -273,9 +278,15 @@ export default function Layout({ children }: LayoutProps) {
                                     })}
                                 </div>
                                 <div className="pt-6 pb-2">
-                                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)] px-4 mb-2">Products &amp; Tools</p>
+                                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)] px-4 mb-2">Business Software</p>
+                                    <div className="grid gap-1 mb-4">
+                                        {businessSoftwareLinks.map((link) => (
+                                            <Link key={link.to} to={link.to} className="min-h-[48px] flex items-center rounded-xl px-4 text-[15px] font-medium py-3 transition-colors text-[var(--foreground)]/90 hover:bg-[var(--muted)]/60 active:bg-[var(--muted)]" onClick={() => setIsMenuOpen(false)}>{link.label}</Link>
+                                        ))}
+                                    </div>
+                                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)] px-4 mb-2">Free Tools</p>
                                     <div className="grid gap-1">
-                                        {productLinks.map((link) => (
+                                        {freeToolsLinks.map((link) => (
                                             link.isExternal ? (
                                                 <a key={link.to} href={link.to} target="_blank" rel="noopener noreferrer" className="min-h-[48px] flex items-center rounded-xl px-4 text-[15px] font-medium py-3 transition-colors text-[var(--foreground)]/90 hover:bg-[var(--muted)]/60 active:bg-[var(--muted)]" onClick={() => setIsMenuOpen(false)}>{link.label}</a>
                                             ) : (
@@ -320,39 +331,83 @@ export default function Layout({ children }: LayoutProps) {
                 </AnimatePresence>
             </main>
 
-            {/* Footer - responsive */}
-            <footer className="border-t border-[var(--border)] bg-[var(--card)]" role="contentinfo">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 md:gap-12">
-                        <div className="md:col-span-4">
-                            <Link to="/" className="inline-flex items-center gap-3 mb-6 group">
-                                <img src={logoUrl} alt="HexaStack Solutions - AI automation and enterprise software consulting Thrissur Kerala" className="h-8 w-8 object-contain" />
-                                <span className="text-base sm:text-lg font-bold uppercase tracking-[0.15em] text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
-                                    HEXASTACK SOLUTIONS
+            {/* Footer */}
+            <footer className="border-t border-[var(--border)] bg-[var(--card)]/80 backdrop-blur-sm" role="contentinfo">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Main footer grid */}
+                    <div className="py-12 sm:py-14 md:py-16 lg:py-20 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-10 sm:gap-y-12 md:gap-x-10 lg:gap-x-12">
+                        {/* Brand column - full width on mobile (row 1), 5 cols on md+ */}
+                        <div className="col-span-2 md:col-span-5">
+                            <Link to="/" className="inline-flex items-center gap-3 mb-5 group">
+                                <img src={logoUrl} alt="HexaStack Solutions" className="h-9 w-9 sm:h-10 sm:w-10 object-contain" />
+                                <span className="text-base sm:text-lg font-bold uppercase tracking-[0.12em] text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
+                                    HexaStack Solutions
                                 </span>
                             </Link>
-                            <p className="text-base text-[var(--muted-foreground)] max-w-sm leading-relaxed mb-8">
-                                AI automation consulting, custom enterprise software, and SaaS platform engineering from Thrissur. Kerala and Gulf — you talk directly to the team. Reply in 2 hours.
+                            <p className="text-sm sm:text-base text-[var(--muted-foreground)] max-w-md leading-relaxed mb-6">
+                                Custom software, POS, billing & AI tools from Thrissur. Kerala & Gulf — you talk directly to the team. Reply in 2 hours.
                             </p>
-                            <div className="flex flex-col gap-3">
-                                <span className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground)]">Follow</span>
-                                <a href="https://www.linkedin.com/company/hexastack-solutions/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BgRPeQwUCSyGi54I4m7rNLw%3D%3D" target="_blank" rel="noopener noreferrer" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">
-                                    LinkedIn
-                                </a>
+                            <div className="flex flex-col gap-2">
+                                <span className="text-[11px] font-semibold uppercase tracking-widest text-[var(--muted-foreground)]">Follow</span>
+                                <div className="flex flex-wrap items-center gap-3">
+                                    <a
+                                        href="https://www.linkedin.com/company/hexastack-solutions/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BgRPeQwUCSyGi54I4m7rNLw%3D%3D"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors w-fit"
+                                    >
+                                        <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[var(--muted)]/60 hover:bg-[var(--primary)]/10 transition-colors">
+                                            <ExternalLink className="w-3.5 h-3.5" />
+                                        </span>
+                                        LinkedIn
+                                    </a>
+                                    <a
+                                        href="https://share.google/cnsKSTykx8sjMzNxC"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors w-fit"
+                                    >
+                                        <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[var(--muted)]/60 hover:bg-[var(--primary)]/10 transition-colors">
+                                            <ExternalLink className="w-3.5 h-3.5" />
+                                        </span>
+                                        Google
+                                    </a>
+                                </div>
                             </div>
                         </div>
+
+                        {/* Company / Explore */}
                         <div className="md:col-span-2">
-                            <h4 className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground)] mb-4 sm:mb-6">Products</h4>
+                            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-[var(--foreground)] mb-4">Company</h4>
+                            <nav aria-label="Footer company links">
+                                <ul className="space-y-2.5">
+                                    {navLinks.map((link) => (
+                                        <li key={link.to}>
+                                            <Link to={link.to} className="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">
+                                                {link.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                    <li><Link to="/kerala" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">Kerala</Link></li>
+                                    <li><Link to="/gulf-vat" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">Gulf VAT</Link></li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                        {/* Products */}
+                        <div className="md:col-span-2">
+                            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-[var(--foreground)] mb-4">Products</h4>
                             <nav aria-label="Footer products">
-                                <ul className="space-y-1 sm:space-y-2">
+                                <ul className="space-y-2.5">
                                     {productLinks.map((link) => (
                                         <li key={link.label}>
                                             {link.isExternal ? (
-                                                <a href={link.to} target="_blank" rel="noopener noreferrer" className="inline-block py-2 sm:py-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">
+                                                <a href={link.to} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">
                                                     {link.label}
+                                                    <ExternalLink className="w-3 h-3 opacity-60" />
                                                 </a>
                                             ) : (
-                                                <Link to={link.to} className="inline-block py-2 sm:py-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">
+                                                <Link to={link.to} className="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">
                                                     {link.label}
                                                 </Link>
                                             )}
@@ -361,70 +416,56 @@ export default function Layout({ children }: LayoutProps) {
                                 </ul>
                             </nav>
                         </div>
-                        <div className="md:col-span-2">
-                            <h4 className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground)] mb-4 sm:mb-6">Explore</h4>
-                            <nav aria-label="Footer explore">
-                                <ul className="space-y-1 sm:space-y-2">
-                                    {navLinks.map((link) => (
-                                        <li key={link.to}>
-                                            <Link to={link.to} className="inline-block py-2 sm:py-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">
-                                                {link.label}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </nav>
-                        </div>
-                        <div className="md:col-span-2">
-                            <h4 className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground)] mb-4 sm:mb-6">SEO &amp; Locations</h4>
-                            <nav aria-label="Footer SEO and locations">
-                                <ul className="space-y-1 sm:space-y-2">
-                                    <li><Link to="/services" className="inline-block py-2 sm:py-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">Services</Link></li>
-                                    <li><Link to="/work" className="inline-block py-2 sm:py-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">Case Studies</Link></li>
-                                    <li><Link to="/about" className="inline-block py-2 sm:py-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">About</Link></li>
-                                    <li><Link to="/kerala" className="inline-block py-2 sm:py-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">Kerala</Link></li>
-                                    <li><Link to="/gulf-vat" className="inline-block py-2 sm:py-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">Gulf VAT</Link></li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div className="md:col-span-2">
-                            <h4 className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground)] mb-4 sm:mb-6">Contact</h4>
-                            <ul className="space-y-1 sm:space-y-2">
+
+                        {/* Contact */}
+                        <div className="col-span-2 md:col-span-3">
+                            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-[var(--foreground)] mb-4">Contact</h4>
+                            <ul className="space-y-3">
                                 <li>
-                                    <a href={`mailto:${email}`} className="inline-block py-2 sm:py-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors flex items-center gap-2 break-all">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] flex-shrink-0 mt-1.5"></div>
+                                    <a href={`mailto:${email}`} className="inline-flex items-start gap-3 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors group">
+                                        <Mail className="w-4 h-4 flex-shrink-0 mt-0.5 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
                                         <span className="break-all">{email}</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href={`https://wa.me/${primaryPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="inline-block py-2 sm:py-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors flex items-center gap-2">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] flex-shrink-0 mt-1.5"></div>
+                                    <a href={`https://wa.me/${primaryPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors group">
+                                        <MessageCircle className="w-4 h-4 flex-shrink-0 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
                                         {primaryPhone}
                                     </a>
                                 </li>
                                 {secondaryPhone && (
                                     <li>
-                                        <a href={`https://wa.me/${secondaryPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="inline-block py-2 sm:py-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors flex items-center gap-2">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-[var(--primary)] flex-shrink-0 mt-1.5"></div>
+                                        <a href={`https://wa.me/${secondaryPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors group">
+                                            <MessageCircle className="w-4 h-4 flex-shrink-0 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
                                             {secondaryPhone}
                                         </a>
                                     </li>
                                 )}
-                                <li className="pt-2">
-                                    <span className="text-sm text-[var(--muted-foreground)] leading-relaxed block">{address}</span>
+                                <li>
+                                    <span className="inline-flex items-start gap-3 text-sm text-[var(--muted-foreground)]">
+                                        <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                                        <span>{address}</span>
+                                    </span>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div className="mt-12 sm:mt-16 md:mt-20 pt-8 border-t border-[var(--border)] flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
-                        <p className="text-xs text-[var(--muted-foreground)] tracking-wide text-center md:text-left">
-                            © {new Date().getFullYear()} HEXASTACK SOLUTIONS. ALL RIGHTS RESERVED.
+
+                    {/* Bottom bar */}
+                    <div className="py-5 sm:py-6 border-t border-[var(--border)] flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <p className="text-xs text-[var(--muted-foreground)] order-2 sm:order-1">
+                            © {new Date().getFullYear()} HexaStack Solutions. All rights reserved.
                         </p>
-                        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8">
-                            <Link to="/privacy" className="inline-block py-2 sm:py-1 text-xs text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors uppercase tracking-widest font-medium">Privacy Policy</Link>
-                            <Link to="/terms" className="inline-block py-2 sm:py-1 text-xs text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors uppercase tracking-widest font-medium">Terms of Service</Link>
-                            <a href="https://www.linkedin.com/company/hexastack-solutions/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BgRPeQwUCSyGi54I4m7rNLw%3D%3D" target="_blank" rel="noopener noreferrer" className="inline-block py-2 sm:py-1 text-xs text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors uppercase tracking-widest font-medium">LinkedIn</a>
-                            <a href="#" className="inline-block py-2 sm:py-1 text-xs text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors uppercase tracking-widest font-medium">Twitter</a>
+                        <div className="flex flex-wrap justify-center sm:justify-end gap-6 sm:gap-8 order-1 sm:order-2">
+                            <Link to="/privacy" className="text-xs text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">
+                                Privacy
+                            </Link>
+                            <Link to="/terms" className="text-xs text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">
+                                Terms
+                            </Link>
+                            <a href="https://www.linkedin.com/company/hexastack-solutions/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BgRPeQwUCSyGi54I4m7rNLw%3D%3D" target="_blank" rel="noopener noreferrer" className="text-xs text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors">
+                                LinkedIn
+                            </a>
                         </div>
                     </div>
                 </div>

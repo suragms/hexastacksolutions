@@ -1,60 +1,42 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 
-const products = [
+const businessProducts = [
     {
         title: 'HexaBill',
-        description: 'Billing, POS, and inventory in one. Used by restaurants in the Gulf and businesses in Kerala. VAT-ready for India and UAE.',
-        benefits: [
-            'Invoicing that stays compliant with local tax',
-            'POS that works across multiple branches',
-            'Stock and reports that actually match reality',
-        ],
+        subtitle: 'Billing & POS for Kerala and Gulf',
+        hook: 'Your restaurant or shop, without the billing chaos.',
+        description: 'Invoicing, POS, inventory, multi-branch, VAT-ready — India and Gulf. Used by businesses in UAE and Kerala right now.',
         cta: 'Request Demo',
-        ctaLink: '/contact?demo=1',
+        ctaLink: '/contact?demo=hexabill',
         to: '/products/hexabill',
     },
+];
+
+const freeTools = [
     {
         title: 'HexaCV',
-        description: 'Build a resume that passes ATS. No account, no paywall. We run it; you get a score, keyword gaps, and a JD breakdown.',
-        benefits: [
-            'See how ATS-friendly your resume is',
-            'Compare your wording to the job description',
-            'Use it from the browser, nothing to install',
-        ],
-        cta: 'Try Now',
+        description: 'Your resume is probably getting rejected before a human sees it. Find out your ATS score — free.',
+        cta: 'Try HexaCV Free',
         ctaLink: 'https://www.hexacv.online/',
-        to: 'https://www.hexacv.online/',
         isExternal: true,
     },
     {
         title: 'Hexa AI Tool Suite',
-        description: 'Free tools for job seekers: ATS checker, JD vs resume comparison, bullet improver, section checker. Part of HexaCV.',
-        benefits: [
-            'Check ATS score and fix weak spots',
-            'Match your bullets to the job ad',
-            'Improve one section at a time',
-        ],
+        description: 'ATS checker, JD vs resume comparison, bullet improver, section checker. Part of HexaCV.',
         cta: 'Explore Tools',
         ctaLink: 'https://www.hexacv.online/free-tools',
-        to: 'https://www.hexacv.online/free-tools',
         isExternal: true,
     },
     {
-        title: 'Student Tools',
-        description: 'CGPA and internal marks calculators, attendance tracker, and PDF helpers. Built for students; data stays in your browser.',
-        benefits: [
-            'CGPA and internal marks in one place',
-            'Attendance and deficit calculators',
-            'PDF tools that run locally, no uploads',
-        ],
-        cta: 'Open App',
+        title: 'Student Hub',
+        description: 'CGPA, attendance deficit, internal marks. Built for Kerala university students.',
+        cta: 'Open Student Hub',
         ctaLink: 'https://studentshub-gold.vercel.app/',
-        to: 'https://studentshub-gold.vercel.app/',
         isExternal: true,
-    }
+    },
 ];
 
 export default function Products() {
@@ -63,7 +45,8 @@ export default function Products() {
             <SEO
                 title="Products | HexaStack — HexaBill, HexaCV, Student Tools"
                 description="HexaBill for billing and POS in Kerala and Gulf. HexaCV for ATS resumes. Student calculators and PDF tools. Built in Thrissur."
-                keywords="HexaBill, HexaCV, billing software Kerala, POS UAE, free ATS resume builder, student CGPA calculator"
+                keywords="HexaBill, HexaCV, billing software Kerala, POS UAE, free ATS resume builder, student CGPA calculator, GST billing software, VAT POS Dubai, ATS resume checker free, resume optimization tool, inventory software Kerala, POS for restaurant UAE, billing software Vadanappally, HexaBill Vadanappally Thrissur"
+                canonical="/products"
             />
 
             {/* Hero */}
@@ -71,76 +54,38 @@ export default function Products() {
                 <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(37,99,235,0.1),transparent)]" />
                 <div className="max-w-6xl mx-auto px-4 sm:px-6">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[var(--foreground)] leading-tight mb-6">
-                        What we build and run
+                        Software we built and run.
                     </h1>
-                    <p className="text-base md:text-lg text-[var(--muted-foreground)] max-w-2xl leading-relaxed mb-10">
-                        Billing for shops and restaurants. Resumes that get past ATS. Student calculators and PDF tools. All built in Thrissur; some used in the Gulf.
+                    <p className="text-base md:text-lg text-[var(--muted-foreground)] max-w-2xl leading-relaxed">
+                        One for businesses. Two free tools for anyone.
                     </p>
-                    <Link to="/contact?demo=1" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[48px] rounded-full brand-gradient text-white font-semibold hover:opacity-90 transition-opacity">
-                        See HexaBill in action
-                        <ArrowRight className="w-4 h-4" />
-                    </Link>
                 </div>
             </section>
 
-            {/* Product cards */}
-            <section className="py-8 md:py-20 border-t border-[var(--border)]">
+            {/* Business Software — HexaBill */}
+            <section className="py-8 md:py-12 border-t border-[var(--border)]">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">Live products</h2>
-                    <p className="text-[var(--muted-foreground)] mb-10 max-w-xl">Not mockups. Things we built and people use.</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                        {products.map((p) => (
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[var(--primary)]">Business Software</span>
+                    <div className="mt-4">
+                        {businessProducts.map((p) => (
                             <div
                                 key={p.title}
-                                className="p-5 md:p-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--accent)] transition-colors flex flex-col"
+                                className="p-6 md:p-10 rounded-2xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--primary)] hover:shadow-[0_4px_12px_rgba(29,78,216,0.08)] transition-all duration-150 flex flex-col md:flex-row md:items-center gap-8"
                             >
-                                <h3 className="text-xl font-semibold mb-2">{p.title}</h3>
-                                <p className="text-sm text-[var(--muted-foreground)] leading-relaxed mb-6 flex-1">{p.description}</p>
-                                <ul className="space-y-2 mb-6">
-                                    {p.benefits.map((b) => (
-                                        <li key={b} className="flex items-center gap-2 text-sm text-[var(--foreground)]">
-                                            <Check className="w-4 h-4 text-[var(--accent)] shrink-0" />
-                                            {b}
-                                        </li>
-                                    ))}
-                                </ul>
-                                <div className="flex flex-col sm:flex-row gap-3">
-                                    {p.isExternal ? (
-                                        <a
-                                            href={p.ctaLink}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 min-h-[48px] rounded-xl brand-gradient text-white text-sm font-semibold hover:opacity-90 transition-opacity"
-                                        >
-                                            {p.cta}
-                                            <ArrowRight className="w-4 h-4" />
-                                        </a>
-                                    ) : (
-                                        <Link
-                                            to={p.ctaLink}
-                                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 min-h-[48px] rounded-xl brand-gradient text-white text-sm font-semibold hover:opacity-90 transition-opacity"
-                                        >
-                                            {p.cta}
-                                            <ArrowRight className="w-4 h-4" />
-                                        </Link>
-                                    )}
-                                    {p.isExternal ? (
-                                        <a
-                                            href={p.to}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 min-h-[48px] rounded-xl border border-[var(--border)] hover:bg-[var(--muted)] text-sm font-medium transition-colors"
-                                        >
-                                            Learn more
-                                        </a>
-                                    ) : (
-                                        <Link
-                                            to={p.to}
-                                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 min-h-[48px] rounded-xl border border-[var(--border)] hover:bg-[var(--muted)] text-sm font-medium transition-colors"
-                                        >
-                                            Learn more
-                                        </Link>
-                                    )}
+                                <div className="flex-1">
+                                    <h2 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-2">{p.title} — {p.subtitle}</h2>
+                                    <p className="text-[var(--foreground)] font-medium mb-2">{p.hook}</p>
+                                    <p className="text-sm text-[var(--muted-foreground)] leading-relaxed mb-6">{p.description}</p>
+                                    <Link
+                                        to={p.ctaLink}
+                                        className="inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold hover:opacity-95 transition-opacity"
+                                    >
+                                        {p.cta}
+                                        <ArrowRight className="w-4 h-4" />
+                                    </Link>
+                                </div>
+                                <div className="w-full md:w-80 h-48 rounded-xl bg-gradient-to-br from-[var(--primary)]/15 to-[var(--card)] border border-[var(--border)] flex items-center justify-center text-[var(--muted-foreground)] text-sm">
+                                    {p.title}
                                 </div>
                             </div>
                         ))}
@@ -148,12 +93,39 @@ export default function Products() {
                 </div>
             </section>
 
+            {/* Free tools */}
+            <section className="py-12 md:py-20 border-t border-[var(--border)]">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted-foreground)]">Free tools — no login, no payment</span>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                        {freeTools.map((p) => (
+                            <div
+                                key={p.title}
+                                className="p-5 md:p-6 rounded-2xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--primary)] transition-colors flex flex-col"
+                            >
+                                <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">{p.title}</h3>
+                                <p className="text-sm text-[var(--muted-foreground)] leading-relaxed mb-6 flex-1">{p.description}</p>
+                                <a
+                                    href={p.ctaLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full border border-[var(--border)] text-[var(--foreground)] font-medium hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+                                >
+                                    {p.cta}
+                                    <ArrowRight className="w-4 h-4" />
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             {/* CTA */}
-            <section className="py-8 md:py-20 border-t border-[var(--border)] bg-[var(--card)]">
+            <section className="py-12 md:py-20 border-t border-[var(--border)] bg-[var(--card)]/50">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">Need something different?</h2>
-                    <p className="text-[var(--muted-foreground)] mb-8 max-w-md mx-auto">We build custom software too. Describe what you need and we’ll say if we can do it.</p>
-                    <Link to="/contact" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 min-h-[48px] rounded-full brand-gradient text-white font-semibold hover:opacity-90 transition-opacity">
+                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 text-[var(--foreground)]">Need something different?</h2>
+                    <p className="text-[var(--muted-foreground)] mb-8 max-w-md mx-auto">We build custom software too. Tell us what you need and we&apos;ll say if we can do it.</p>
+                    <Link to="/contact" className="inline-flex items-center justify-center gap-2 px-8 py-4 min-h-[48px] rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold hover:opacity-95 transition-opacity">
                         Tell us what you need
                         <ArrowRight className="w-4 h-4" />
                     </Link>

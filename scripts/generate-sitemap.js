@@ -1,11 +1,11 @@
 /**
- * Generate public/sitemap.xml for hexastack.in
+ * Generate public/sitemap.xml for www.hexastacksolutions.com
  * Core pages + blog + Kerala (14×14) + India (36×14) + Gulf (10×14)
  */
 const fs = require('fs');
 const path = require('path');
 
-const BASE = 'https://hexastack.in';
+const BASE = 'https://www.hexastacksolutions.com';
 const lastmod = new Date().toISOString().split('T')[0];
 
 const corePaths = [
