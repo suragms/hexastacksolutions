@@ -22,9 +22,9 @@ dotenv.config();
 export const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Log initialization
-if (process.env.NETLIFY) {
-    console.log('=== Initializing Express App for Netlify ===');
+// Log initialization (Netlify or Vercel serverless)
+if (process.env.NETLIFY || process.env.VERCEL) {
+    console.log(`=== Express (${process.env.VERCEL ? 'Vercel' : 'Netlify'}) ===`);
     console.log('NODE_ENV:', process.env.NODE_ENV);
     console.log('DATABASE_URL configured:', process.env.DATABASE_URL ? 'Yes' : 'No');
     console.log('JWT_SECRET configured:', process.env.JWT_SECRET ? 'Yes' : 'No');
