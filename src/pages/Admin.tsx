@@ -619,11 +619,15 @@ export default function Admin() {
                     localStorage.setItem('hexastack_lock_time', Date.now().toString());
                     setLoginError('Too many failed attempts. Locked for 15 minutes.');
                 } else {
-                    setLoginError(data.error || `Invalid password. ${5 - newAttempts} attempts remaining.`);
+                    if (res.status === 404) {
+                        setLoginError('Login API not found. Check that the deployment has API routes and env vars (ADMIN_PASSWORD, JWT_SECRET) set.');
+                    } else {
+                        setLoginError(data.error || `Invalid password. ${5 - newAttempts} attempts remaining.`);
+                    }
                 }
             }
         } catch {
-            setLoginError('Connection error. Try again.');
+            setLoginError('Connection error. Check your network and that the site API is reachable.');
         }
         setPassword('');
     };

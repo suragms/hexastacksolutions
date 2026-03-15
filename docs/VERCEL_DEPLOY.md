@@ -47,3 +47,16 @@ Set these for **Production** (and optionally Preview):
 1. Run **Prisma** once to ensure the DB schema is in sync (e.g. from your machine with `DATABASE_URL` in `.env`):  
    `npx prisma db push`
 2. Contact form, Admin, and all API routes use the same Vercel deployment and MongoDB.
+
+---
+
+## Troubleshooting: /admin login not working
+
+If [https://www.hexastacksolutions.com/admin](https://www.hexastacksolutions.com/admin) does not accept your password:
+
+1. **Set env vars in Vercel** (Project → Settings → Environment Variables):
+   - **ADMIN_PASSWORD** — the password you use to log in (e.g. a strong password; dev default is `hexastack@2024`).
+   - **JWT_SECRET** — any string ≥ 32 characters (used to sign the session token).
+2. **Redeploy** after changing env vars (Deployments → ⋯ → Redeploy). Env is baked in at build/start.
+3. If you see "Login API not found" or "Connection error", the `/api/*` route may not be running: confirm `api/[[...path]].ts` is in the repo and that the deployment completed without errors.
+4. Use the same password in the login form as the one set in `ADMIN_PASSWORD`.

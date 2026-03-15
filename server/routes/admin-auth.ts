@@ -5,13 +5,13 @@ const router = express.Router();
 
 router.post('/login', async (req, res) => {
     try {
-        const { password } = req.body;
+        const body = req.body && typeof req.body === 'object' ? req.body : {};
+        const password = body.password;
         if (!password || typeof password !== 'string') {
             res.status(400).json({ error: 'Password is required' });
             return;
         }
-        // Use ADMIN_PASSWORD from env if set; otherwise fallback so admin works without .env.
-        // For production, set ADMIN_PASSWORD in your host's environment to a strong password.
+        // Production: set ADMIN_PASSWORD in Vercel/Netlify env. Dev fallback: hexastack@2024
         const adminPassword = process.env.ADMIN_PASSWORD || 'hexastack@2024';
         if (password !== adminPassword) {
             res.status(401).json({ error: 'Invalid password' });

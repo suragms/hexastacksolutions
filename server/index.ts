@@ -43,6 +43,10 @@ app.use((req, _res, next) => {
             req.url = trimmed.startsWith('/') ? `/api${trimmed}` : `/api/${trimmed}`;
         }
     }
+    // Vercel: ensure path starts with /api so routes match (some runtimes pass path without /api prefix)
+    if (process.env.VERCEL && req.url && !req.url.startsWith('/api') && req.url !== '/') {
+        req.url = req.url.startsWith('/') ? `/api${req.url}` : `/api/${req.url}`;
+    }
     next();
 });
 
