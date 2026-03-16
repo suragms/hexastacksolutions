@@ -3,25 +3,29 @@ import { db } from '../db';
 
 const router = express.Router();
 
-// Track page view
+// Track page view (best-effort: do not break the app if DB is down)
 router.post('/track', async (req, res) => {
     try {
-        const { page } = req.body;
+        const body = req.body && typeof req.body === 'object' ? req.body : {};
+        const page = body.page;
         const userAgent = req.headers['user-agent'] || null;
-        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
+        const ip = req.headers['x-forwarded-for'] || (req.socket && req.socket.remoteAddress) || null;
         const referrer = req.headers['referer'] || null;
 
-        // Store page view
+        if (!process.env.DATABASE_URL?.trim()) {
+            res.status(503).json({ error: 'Analytics not configured', success: false });
+            return;
+        }
+
         await db.pageView.create({
             data: {
-                page: page || 'unknown',
+                page: typeof page === 'string' ? page.slice(0, 500) : 'unknown',
                 userAgent: userAgent?.slice(0, 500),
-                ip: typeof ip === 'string' ? ip.split(',')[0].trim() : null,
+                ip: typeof ip === 'string' ? ip.split(',')[0].trim().slice(0, 100) : null,
                 referrer: referrer?.slice(0, 500) || null,
             }
         });
 
-        // Update daily analytics
         const today = new Date().toISOString().split('T')[0];
         const pageField = page === '/' ? 'homeViews' : 
                          page === '/work' ? 'workViews' :
@@ -41,9 +45,14 @@ router.post('/track', async (req, res) => {
         });
 
         res.json({ success: true });
-    } catch (error) {
-        console.error('[ANALYTICS_TRACK]', error);
-        res.status(500).json({ error: 'Failed to track' });
+    } catch (error: any) {
+        console.error('[ANALYTICS_TRACK]', error?.message || error);
+        const isDb = error?.message?.includes('DATABASE') || error?.message?.includes('connect') || error?.code === 'P1001';
+        if (isDb) {
+            res.status(503).json({ error: 'Database not configured. Set DATABASE_URL in Environment Variables.', success: false });
+        } else {
+            res.status(500).json({ error: 'Failed to track', success: false });
+        }
     }
 });
 

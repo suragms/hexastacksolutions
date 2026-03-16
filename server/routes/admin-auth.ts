@@ -11,11 +11,19 @@ router.post('/login', async (req, res) => {
             res.status(400).json({ error: 'Password is required' });
             return;
         }
-        // Production (Vercel/Netlify): ADMIN_PASSWORD must be set in Environment Variables
+        const isProduction = !!(process.env.VERCEL || process.env.NETLIFY);
         const envPassword = process.env.ADMIN_PASSWORD;
-        if ((process.env.VERCEL || process.env.NETLIFY) && (envPassword === undefined || envPassword === '')) {
+        const envJwtSecret = process.env.JWT_SECRET;
+
+        if (isProduction && (envPassword === undefined || envPassword === '')) {
             res.status(503).json({
                 error: 'Admin login not configured. Set ADMIN_PASSWORD (and JWT_SECRET) in Vercel/Netlify Environment Variables, then redeploy.',
+            });
+            return;
+        }
+        if (isProduction && (!envJwtSecret || envJwtSecret.trim() === '')) {
+            res.status(503).json({
+                error: 'JWT_SECRET is not set. Add JWT_SECRET in Environment Variables and redeploy.',
             });
             return;
         }
@@ -26,9 +34,9 @@ router.post('/login', async (req, res) => {
         }
         const token = generateToken('admin', 'admin');
         res.json({ token });
-    } catch (err) {
-        console.error('Admin login error:', err);
-        res.status(500).json({ error: 'Login failed' });
+    } catch (err: any) {
+        console.error('Admin login error:', err?.message || err);
+        res.status(500).json({ error: 'Login failed. Check server logs.' });
     }
 });
 

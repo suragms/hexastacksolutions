@@ -63,3 +63,7 @@ Set these for **Production** (and optionally Preview):
 If you see **"Admin login not configured"** (503), `ADMIN_PASSWORD` (or `JWT_SECRET`) is missing in Vercel — add both and redeploy.
 
 If you see **"Login API not found"** or **"Connection error"**, the `/api/*` route may not be running: confirm `api/index.ts` and the rewrite in `vercel.json` are deployed and the deployment succeeded.
+
+**500 on `api/analytics/track` or `api/admin/login`** — Usually missing or invalid env in Production:
+- **Analytics 500/503:** Set `DATABASE_URL` in Vercel (MongoDB connection string including database name). Redeploy.
+- **Admin login 500:** Ensure both `ADMIN_PASSWORD` and `JWT_SECRET` are set. If you get 503 "JWT_SECRET is not set", add it and redeploy.
