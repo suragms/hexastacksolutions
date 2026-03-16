@@ -32,11 +32,18 @@ router.post('/login', async (req, res) => {
             res.status(401).json({ error: 'Invalid password' });
             return;
         }
-        const token = generateToken('admin', 'admin');
+        let token: string;
+        try {
+            token = generateToken('admin', 'admin');
+        } catch (jwtErr: any) {
+            console.error('Admin JWT error:', jwtErr?.message || jwtErr);
+            res.status(503).json({ error: 'JWT_SECRET invalid or missing. Set JWT_SECRET in Environment Variables and redeploy.' });
+            return;
+        }
         res.json({ token });
     } catch (err: any) {
         console.error('Admin login error:', err?.message || err);
-        res.status(500).json({ error: 'Login failed. Check server logs.' });
+        res.status(503).json({ error: 'Login failed. Set ADMIN_PASSWORD and JWT_SECRET in Environment Variables and redeploy.' });
     }
 });
 

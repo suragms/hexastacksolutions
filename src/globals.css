@@ -37,7 +37,7 @@
   --radius-lg: var(--radius);
 }
 
-/* Google Advanced style: white + blue */
+/* Google Advanced style: white + blue (Tech/Modern palette) */
 :root {
   --radius: 0.375rem; /* 6px - clean, minimal */
   --background: #ffffff;
@@ -64,6 +64,44 @@
   --brand-fg: #111827;
   --brand-primary: #1D4ED8;
   --brand-primary-hover: #1E40AF;
+  --color-brand: var(--brand-primary);
+  --color-brand-hover: #1E3A8A;
+  --color-accent: #2563EB;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #9CA3AF;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #F9FAFB;
+  --color-border-strong: rgba(15, 23, 42, 0.12);
+  --color-success: #059669;
+  --color-error: #DC2626;
+
+  /* Spacing scale (8pt grid) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Typography scale */
+  --font-size-12: 12px;
+  --font-size-13: 13px;
+  --font-size-14: 14px;
+  --font-size-16: 16px;
+  --font-size-18: 18px;
+  --font-size-20: 20px;
+  --font-size-24: 24px;
+  --font-size-30: 30px;
+  --font-size-36: 36px;
+  --font-size-48: 48px;
+  --font-size-56: 56px;
 
   /* Premium design system */
   --glass-bg: rgba(255, 255, 255, 0.72);
@@ -72,6 +110,15 @@
   --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.06);
   --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.1);
   --shadow-glow: 0 0 40px rgba(26, 115, 232, 0.15);
+
+  /* Animation tokens */
+  --anim-duration-fast: 150ms;
+  --anim-duration-default: 250ms;
+  --anim-duration-slow: 400ms;
+  --anim-hero-delay-1: 0ms;
+  --anim-hero-delay-2: 150ms;
+  --anim-hero-delay-3: 300ms;
+  --anim-hero-delay-4: 450ms;
 }
 
 @layer base {
@@ -218,6 +265,25 @@ html {
 }
 .cta-glow:hover {
   box-shadow: 0 0 0 1px rgba(26, 115, 232, 0.3), 0 0 50px rgba(26, 115, 232, 0.2);
+}
+
+/* Hero logo marquee */
+@keyframes hero-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Parallax hero background + radial gradient (scroll on mobile for performance) */

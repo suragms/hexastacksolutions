@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, Code2, Calculator, Bot, Cloud, Layout as LayoutIcon, BarChart3, X, Quote } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { GlassCard } from '@/components/GlassCard';
 import { ScrollReveal, ScrollRevealStagger } from '@/components/ScrollReveal';
+import { PortfolioCard } from '@/components/PortfolioCard';
 import { API_URL } from '@/lib/utils';
 
 const productCards = [
@@ -32,29 +33,6 @@ const processSteps = [
     { name: 'We go live together', desc: 'Your team is trained, data is migrated, we stay available.' },
     { name: 'We don\'t disappear', desc: 'Monitoring and fixes included after launch.' },
 ];
-
-const GULF_COUNTRY_CODES = ['AE', 'SA', 'OM', 'QA', 'KW', 'BH'];
-
-const HERO_INDIA = {
-    eyebrow: 'Restaurant POS  ·  Billing Software  ·  AI Tools  ·  UAE + Kerala  ·  Reply in 2 hrs',
-    h1line1: 'Your business runs on manual work.',
-    h1line2: 'We fix that.',
-    sub: 'Billing systems, POS, and AI tools for Kerala businesses and Gulf restaurants. Live in 4–6 weeks. You talk directly to the developer.',
-    ctaPrimary: 'See Our Work',
-    ctaPrimaryTo: '/work',
-    ctaSecondary: 'Get Free Quote',
-    ctaSecondaryTo: '/contact',
-};
-const HERO_GULF = {
-    eyebrow: 'Restaurant POS  ·  Billing Software  ·  AI Tools  ·  UAE + Kerala  ·  Reply in 2 hrs',
-    h1line1: 'Wrong orders. Manual billing.',
-    h1line2: 'We built POS for Gulf restaurants.',
-    sub: 'Billing systems, POS, and AI tools for Kerala businesses and Gulf restaurants. Live in 4–6 weeks. You talk directly to the developer.',
-    ctaPrimary: 'See Our Work',
-    ctaPrimaryTo: '/work',
-    ctaSecondary: 'Get Free Quote',
-    ctaSecondaryTo: '/contact',
-};
 
 const defaultCaseStudies: { title: string; problem: string; build: string; result: string; to: string }[] = [
     { title: 'Trading company billing', problem: '200+ orders/month done by hand.', build: 'We automated invoicing and reconciliation.', result: 'Manual work cut 70%.', to: '/work' },
@@ -84,23 +62,6 @@ export default function Home() {
     const [loadingProducts, setLoadingProducts] = useState(true);
     const [loadingServices, setLoadingServices] = useState(true);
     const [exitIntentShown, setExitIntentShown] = useState(false);
-    const [countryCode, setCountryCode] = useState<string | null>(null);
-
-    const isGulf = countryCode && GULF_COUNTRY_CODES.includes(countryCode);
-    const heroData = isGulf ? HERO_GULF : HERO_INDIA;
-
-    useEffect(() => {
-        fetch('https://ipapi.co/json/')
-            .then((res) => res.json())
-            .then((data) => data?.country_code && setCountryCode(data.country_code))
-            .catch(() => {});
-    }, []);
-
-    useEffect(() => {
-        if (countryCode && GULF_COUNTRY_CODES.includes(countryCode)) {
-            document.title = 'HexaStack Solutions | Software & POS for UAE & Gulf';
-        }
-    }, [countryCode]);
 
     useEffect(() => {
         fetch(`${API_URL}/api/products`)
@@ -203,87 +164,188 @@ export default function Home() {
             />
 
             <main>
-                {/* 1. Hero */}
-                <section className="hero-parallax relative pt-8 pb-14 sm:pt-12 sm:pb-16 md:pt-32 md:pb-32 px-4 sm:px-6 overflow-x-hidden min-w-0">
-                    <div className="max-w-6xl mx-auto relative z-10 min-w-0 w-full">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="max-w-3xl min-w-0 w-full"
-                        >
-                            <div className="inline-flex items-center gap-2 px-3 py-2 sm:py-1.5 rounded-full border border-[var(--border)] bg-[var(--glass-bg)] backdrop-blur-sm mb-6 sm:mb-8 max-w-full">
-                                <span className="relative flex h-2 w-2 shrink-0 mt-0.5">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--primary)] opacity-40" />
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--primary)]" />
-                                </span>
-                                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider sm:tracking-widest text-[var(--muted-foreground)] whitespace-normal break-words leading-snug">{heroData.eyebrow}</span>
-                            </div>
-                            <div className="mb-6 sm:mb-8">
-                                <div className="w-10 h-10 border-2 border-[var(--border)] rounded-lg flex items-center justify-center p-1.5 bg-[var(--card)] shrink-0">
-                                    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-[var(--foreground)]" stroke="currentColor" strokeWidth="1.5">
-                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={isGulf ? 'gulf' : 'india'}
-                                    initial={{ opacity: 0, y: 8 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -8 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="min-w-0"
+                {/* 1. Hero – outcome-led, Z-pattern, staggered entrance */}
+                <section
+                    className="relative px-4 sm:px-6 overflow-x-hidden min-w-0 bg-[var(--background)]"
+                    style={{ minHeight: 'calc(100vh - 80px)' }}
+                    aria-labelledby="hero-heading"
+                >
+                    <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center lg:items-end gap-10 lg:gap-16 pt-10 sm:pt-16 lg:pt-24 pb-12 sm:pb-16 lg:pb-24">
+                        {/* Left: copy */}
+                        <div className="flex-1 min-w-0">
+                            <motion.div
+                                initial={{ opacity: 0, y: 16 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                            >
+                                <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted-foreground)] mb-4">
+                                    Software Development · Thrissur, Kerala
+                                </p>
+                            </motion.div>
+
+                            <motion.h1
+                                id="hero-heading"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.05 }}
+                                className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold tracking-tight text-[var(--foreground)] leading-[1.1] mb-4 sm:mb-5 max-w-xl"
+                            >
+                                Custom software that grows your Kerala business.
+                            </motion.h1>
+
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.15 }}
+                                className="text-base sm:text-lg md:text-xl text-[var(--muted-foreground)] leading-relaxed max-w-xl mb-6 sm:mb-8"
+                            >
+                                Web apps, POS and billing systems, and AI automation for Kerala businesses and Gulf clients.
+                                Built by a Thrissur-based team using React, Node.js, and MongoDB — typically live in 4–8 weeks.
+                            </motion.p>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.25 }}
+                                className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8"
+                            >
+                                <Link
+                                    to="/contact"
+                                    className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 sm:px-8 py-3.5 rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] text-sm sm:text-base font-semibold shadow-[0_10px_25px_rgba(37,99,235,0.35)] transition-transform duration-150 ease-out hover:scale-[1.03] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--primary)]"
                                 >
-                                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--foreground)] leading-[1.15] mb-4 sm:mb-6 break-words">
-                                        {heroData.h1line1}<br /><span className="text-[var(--primary)]">{heroData.h1line2}</span>
-                                    </h1>
-                                    <p className="text-base sm:text-lg md:text-xl text-[var(--muted-foreground)] leading-relaxed mb-4 sm:mb-6 max-w-2xl font-light break-words">
-                                        {heroData.sub}
+                                    Get a Free Quote <span aria-hidden>→</span>
+                                </Link>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const el = document.getElementById('homepage-portfolio');
+                                        if (el) {
+                                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                        }
+                                    }}
+                                    className="inline-flex items-center gap-2 text-sm sm:text-base font-medium text-[var(--foreground)] underline underline-offset-4 decoration-[var(--border)] hover:decoration-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--primary)]"
+                                >
+                                    See Our Work <span aria-hidden>↓</span>
+                                </button>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.35 }}
+                                className="flex flex-col sm:flex-row items-start sm:items-center gap-3 text-sm text-[var(--muted-foreground)]"
+                            >
+                                <div>
+                                    <p className="font-medium text-[var(--foreground)]">Trusted by 50+ Kerala businesses</p>
+                                    <p className="text-xs sm:text-[13px]">
+                                        From restaurants and labs to SaaS founders — projects delivered in Kerala, UAE, and Oman.
                                     </p>
-                                </motion.div>
-                            </AnimatePresence>
-                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10">
-                                <Link
-                                    to={(heroData as { ctaPrimaryTo?: string }).ctaPrimaryTo || '/work'}
-                                    className="cta-glow inline-flex items-center justify-center gap-2 min-h-[48px] px-6 sm:px-8 py-3.5 rounded-full bg-[var(--primary)] text-white font-semibold hover:opacity-95 active:scale-[0.98] transition-all duration-300 touch-manipulation"
-                                >
-                                    {(heroData as { ctaPrimary?: string }).ctaPrimary || 'See Our Work'} <ArrowRight className="w-4 h-4 shrink-0" />
-                                </Link>
-                                <Link
-                                    to={(heroData as { ctaSecondaryTo?: string }).ctaSecondaryTo || '/contact'}
-                                    className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 sm:px-8 py-3.5 rounded-full border border-[var(--border)] bg-transparent text-[var(--foreground)] font-semibold hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300 touch-manipulation"
-                                >
-                                    {(heroData as { ctaSecondary?: string }).ctaSecondary || 'Get Free Quote'}
-                                </Link>
+                                </div>
+                                <div className="flex items-center gap-3 sm:ml-auto">
+                                    {[1, 2, 3].map((i) => (
+                                        <div
+                                            key={i}
+                                            className="h-8 w-16 sm:h-9 sm:w-20 rounded-md border border-[var(--border)] bg-[var(--card)]/80 shadow-sm"
+                                            aria-hidden
+                                        />
+                                    ))}
+                                </div>
+                            </motion.div>
+                        </div>
+
+                        {/* Right: simple visual placeholder to complete Z-pattern */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 24 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.2 }}
+                            className="w-full max-w-md lg:max-w-sm xl:max-w-md flex-1 lg:flex-none"
+                            aria-hidden
+                        >
+                            <div className="relative rounded-2xl bg-[var(--card)] border border-[var(--border)] shadow-[var(--shadow-card)] px-6 py-5 sm:px-7 sm:py-6">
+                                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted-foreground)] mb-3">
+                                    Recent outcomes
+                                </p>
+                                <ul className="space-y-3 text-sm text-[var(--foreground)]">
+                                    <li>
+                                        <span className="inline-flex items-center gap-2">
+                                            <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 text-[11px] font-semibold">
+                                                60%
+                                            </span>
+                                            Checkout time cut for an e‑commerce brand.
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span className="inline-flex items-center gap-2">
+                                            <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-50 text-blue-600 text-[11px] font-semibold">
+                                                3x
+                                            </span>
+                                            Faster invoicing for a trading company.
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span className="inline-flex items-center gap-2">
+                                            <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-violet-50 text-violet-600 text-[11px] font-semibold">
+                                                70%
+                                            </span>
+                                            Less manual work for a medical lab.
+                                        </span>
+                                    </li>
+                                </ul>
                             </div>
                         </motion.div>
                     </div>
                 </section>
 
-                {/* 2. Case Studies — Work we've delivered */}
-                <section id="case-studies" className="py-16 md:py-24 border-t border-[var(--border)] bg-[var(--card)]/50 overflow-visible" aria-labelledby="case-studies-heading">
+                {/* 1b. Social proof strip directly under hero */}
+                <section className="border-t border-[var(--border)] bg-[var(--card)]/70">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row items-center gap-3">
+                        <p className="text-xs sm:text-sm font-medium text-[var(--muted-foreground)]">
+                            Trusted by businesses across Kerala
+                        </p>
+                        <div className="flex-1 overflow-hidden">
+                            <div className="flex items-center gap-6 sm:gap-8 text-[var(--muted-foreground)] text-xs whitespace-nowrap animate-[hero-marquee_20s_linear_infinite]">
+                                {[1, 2, 3, 4, 5].map((i) => (
+                                    <div
+                                        key={i}
+                                        className="h-6 w-20 rounded-md border border-[var(--border)] bg-[var(--background)]/90"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 2. Case Studies / Portfolio preview */}
+                <section id="homepage-portfolio" className="py-16 md:py-24 border-t border-[var(--border)] bg-[var(--card)]/50 overflow-visible" aria-labelledby="case-studies-heading">
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 min-w-0 w-full">
                         <ScrollReveal>
-                            <h2 id="case-studies-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)] break-words">Work we&apos;ve delivered</h2>
-                            <p className="text-[var(--muted-foreground)] mb-10 md:mb-14 max-w-xl">Real projects: problem, solution, result.</p>
+                            <h2 id="case-studies-heading" className="text-2xl md:text-3xl font-bold tracking-tight mb-2 text-[var(--foreground)] break-words">
+                                Recent projects from Kerala & Gulf
+                            </h2>
+                            <p className="text-[var(--muted-foreground)] mb-10 md:mb-14 max-w-xl">
+                                Outcome-led case studies so you can see the problems we solved and the results we delivered.
+                            </p>
                         </ScrollReveal>
-                        <ScrollRevealStagger className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {caseStudies.map((c, i) => (
-                                <Link key={i} to={c.to} className="block h-full group">
-                                    <GlassCard gradientBorder hover className="p-6 h-full flex flex-col border-[var(--border)] group-hover:border-[var(--primary)] group-hover:shadow-[0_4px_12px_rgba(29,78,216,0.08)] transition-all duration-150">
-                                        <h3 className="font-semibold text-[var(--foreground)] mb-2">{c.title}</h3>
-                                        {c.problem && <p className="text-sm text-[var(--muted-foreground)] mb-1">{c.problem}</p>}
-                                        {c.build && <p className="text-sm text-[var(--muted-foreground)] mb-1">{c.build}</p>}
-                                        {c.result && <p className="text-base font-semibold text-[#10B981] mt-2">{c.result}</p>}
-                                        {!c.problem && c.outcome && <p className="text-sm text-[var(--muted-foreground)] flex-1">{c.outcome}</p>}
-                                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--primary)] mt-4">View Case Study <ArrowRight className="w-4 h-4" /></span>
-                                    </GlassCard>
+                        <ScrollRevealStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {caseStudies.slice(0, 3).map((c, i) => (
+                                <Link key={i} to={c.to} className="group block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--primary)] rounded-2xl">
+                                    <PortfolioCard
+                                        category={i === 0 ? 'Billing & ERP' : i === 1 ? 'Restaurant POS' : 'Medical / SaaS'}
+                                        techLabel={i === 1 ? 'POS · React + Node.js' : 'Web App · React + Node.js'}
+                                        name={c.title}
+                                        outcome={c.result || c.outcome || 'Delivered on scope and timeline.'}
+                                        problem={c.problem || 'We replaced manual work with a structured system.'}
+                                        techStack={i === 1 ? ['React', 'Node.js', 'MongoDB'] : ['React', 'Node.js', 'MongoDB']}
+                                        to={c.to}
+                                        featured={i === 0}
+                                    />
                                 </Link>
                             ))}
                         </ScrollRevealStagger>
                         <ScrollReveal className="mt-10">
-                            <Link to="/work" className="inline-flex items-center gap-2 text-[var(--primary)] font-semibold hover:underline">View all work <ArrowRight className="w-4 h-4" /></Link>
+                            <Link to="/portfolio" className="inline-flex items-center gap-2 text-[var(--primary)] font-semibold hover:underline">
+                                View full portfolio <ArrowRight className="w-4 h-4" />
+                            </Link>
                         </ScrollReveal>
                     </div>
                 </section>

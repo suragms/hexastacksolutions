@@ -47,11 +47,14 @@ router.post('/track', async (req, res) => {
         res.json({ success: true });
     } catch (error: any) {
         console.error('[ANALYTICS_TRACK]', error?.message || error);
-        const isDb = error?.message?.includes('DATABASE') || error?.message?.includes('connect') || error?.code === 'P1001';
+        const code = error?.code ?? '';
+        const msg = (error?.message || '').toLowerCase();
+        const isDb = msg.includes('database') || msg.includes('connect') || msg.includes('econnrefused') ||
+            String(code).startsWith('P1'); // Prisma connection/schema errors
         if (isDb) {
             res.status(503).json({ error: 'Database not configured. Set DATABASE_URL in Environment Variables.', success: false });
         } else {
-            res.status(500).json({ error: 'Failed to track', success: false });
+            res.status(503).json({ error: 'Analytics temporarily unavailable.', success: false });
         }
     }
 });

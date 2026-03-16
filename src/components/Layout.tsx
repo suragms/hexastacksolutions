@@ -30,6 +30,8 @@ export default function Layout({ children }: LayoutProps) {
         { to: 'https://studentshub-gold.vercel.app/', label: 'Student Tools', isExternal: true },
     ]);
 
+    const [scrolled, setScrolled] = useState(false);
+
     useEffect(() => {
         fetch(`${API_URL}/api/settings`)
             .then((res) => (res.ok ? res.json() : null))
@@ -96,15 +98,27 @@ export default function Layout({ children }: LayoutProps) {
     const address = settings?.address || 'Vadanappally, Thrissur, Kerala 680614, India';
 
     const navLinks = [
-        { to: '/work', label: 'Work' },
         { to: '/services', label: 'Services' },
-        { to: '/pricing', label: 'Pricing' },
-        { to: '/blog', label: 'Blog' },
+        { to: '/portfolio', label: 'Portfolio' },
         { to: '/about', label: 'About' },
-        { to: '/contact', label: 'Contact' },
+        { to: '/blog', label: 'Blog' },
     ];
 
-    const headerClass = "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 sm:py-5 pt-[calc(1rem+env(safe-area-inset-top))] pb-5 lg:bg-transparent bg-[var(--background)]/98 backdrop-blur-md border-b border-[var(--border)]/50 lg:border-b-0";
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 80);
+        };
+        handleScroll();
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const headerClass = [
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 sm:py-5 pt-[calc(1rem+env(safe-area-inset-top))] pb-5",
+        scrolled
+            ? "bg-[var(--background)]/98 border-b border-[var(--border)]/70 backdrop-blur-md shadow-sm"
+            : "lg:bg-transparent bg-[var(--background)]/95 border-b border-[var(--border)]/30 lg:border-b-0",
+    ].join(" ");
 
     return (
         <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] font-sans antialiased overflow-x-hidden">
@@ -126,97 +140,27 @@ export default function Layout({ children }: LayoutProps) {
 
                         <div className="hidden lg:flex items-center gap-1 flex-shrink-0">
                             {navLinks.map((link) => (
-                                <span key={link.to} className="flex items-center gap-1">
-                                    <Link
-                                        to={link.to}
-                                        className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] ${location.pathname === link.to ? 'text-[var(--primary)]' : 'text-[var(--foreground)]/80'}`}
-                                    >
-                                        {link.label}
-                                        {location.pathname === link.to && (
-                                            <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-[var(--primary)] rounded-full" />
-                                        )}
-                                    </Link>
-                                    {link.to === '/pricing' && (
-                                        <div
-                                            className="relative"
-                                            onMouseEnter={() => setProductsOpen(true)}
-                                            onMouseLeave={() => setProductsOpen(false)}
-                                        >
-                                            <button className="relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] flex items-center gap-1 text-[var(--foreground)]/80">
-                                                Products
-                                                <ChevronDown className={`h-3 w-3 transition-transform duration-300 ${productsOpen ? 'rotate-180' : ''}`} />
-                                            </button>
-                                            <AnimatePresence>
-                                                {productsOpen && (
-                                                    <motion.div
-                                                        initial={{ opacity: 0, y: -8 }}
-                                                        animate={{ opacity: 1, y: 0 }}
-                                                        exit={{ opacity: 0, y: -8 }}
-                                                        transition={{ duration: 0.3 }}
-                                                        className="absolute left-0 top-full pt-2 z-50"
-                                                    >
-                                                        <div className="bg-[var(--background)] rounded-xl border border-[var(--border)] shadow-2xl p-4 min-w-[280px] max-w-[320px]">
-                                                            <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)] mb-2">Business Software</p>
-                                                            <div className="space-y-1 mb-3">
-                                                                {businessSoftwareLinks.map((link) => (
-                                                                    <Link
-                                                                        key={link.to}
-                                                                        to={link.to}
-                                                                        className="flex items-center gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] hover:bg-[var(--muted)]/50 px-2 py-1.5 rounded-md transition-all duration-200"
-                                                                        onClick={() => setProductsOpen(false)}
-                                                                    >
-                                                                        {link.label}
-                                                                    </Link>
-                                                                ))}
-                                                            </div>
-                                                            <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)] mb-2 pt-1 border-t border-[var(--border)]">Free Tools</p>
-                                                            <div className="space-y-1 max-h-[240px] overflow-y-auto">
-                                                                {freeToolsLinks.map((link) => (
-                                                                    link.isExternal ? (
-                                                                        <a
-                                                                            key={link.to}
-                                                                            href={link.to}
-                                                                            target="_blank"
-                                                                            rel="noopener noreferrer"
-                                                                            className="flex items-center justify-between gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] hover:bg-[var(--muted)]/50 px-2 py-1.5 rounded-md transition-all duration-200"
-                                                                            onClick={() => setProductsOpen(false)}
-                                                                        >
-                                                                            {link.label}
-                                                                        </a>
-                                                                    ) : (
-                                                                        <Link
-                                                                            key={link.to}
-                                                                            to={link.to}
-                                                                            className="flex items-center justify-between gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] hover:bg-[var(--muted)]/50 px-2 py-1.5 rounded-md transition-all duration-200"
-                                                                            onClick={() => setProductsOpen(false)}
-                                                                        >
-                                                                            {link.label}
-                                                                        </Link>
-                                                                    )
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    </motion.div>
-                                                )}
-                                            </AnimatePresence>
-                                        </div>
+                                <Link
+                                    key={link.to}
+                                    to={link.to}
+                                    className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] ${location.pathname === link.to ? 'text-[var(--primary)]' : 'text-[var(--foreground)]/80'}`}
+                                >
+                                    {link.label}
+                                    {location.pathname === link.to && (
+                                        <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-[var(--primary)] rounded-full" />
                                     )}
-                                </span>
+                                </Link>
                             ))}
                             <a href="tel:+917591999365" className="relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] text-[var(--foreground)]/80 flex items-center gap-1.5">
                                 <Phone className="w-3.5 h-3.5" /> +91 75919 99365
                             </a>
-                            {user ? (
+                            {user && (
                                 <>
                                     <Link to="/dashboard" className="relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] text-[var(--foreground)]/80">Dashboard</Link>
                                     <button type="button" onClick={logout} className="relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] text-[var(--foreground)]/80 flex items-center gap-1">
                                         <LogOut className="w-3.5 h-3.5" /> Logout
                                     </button>
                                 </>
-                            ) : (
-                                <Link to="/login" className="relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] text-[var(--foreground)]/80">
-                                    Client Login
-                                </Link>
                             )}
                         </div>
 
@@ -312,13 +256,11 @@ export default function Layout({ children }: LayoutProps) {
                                     <a href="tel:+917591999365" className="min-h-[48px] flex items-center gap-3 rounded-xl px-4 text-base font-medium py-3 transition-colors text-[var(--foreground)] hover:bg-[var(--muted)]/60 active:bg-[var(--muted)]" onClick={() => setIsMenuOpen(false)}>
                                         <Phone className="w-5 h-5 text-[var(--primary)]" /> +91 75919 99365
                                     </a>
-                                    {user ? (
+                                    {user && (
                                         <>
                                             <Link to="/dashboard" className="min-h-[48px] flex items-center rounded-xl px-4 text-base font-medium py-3 transition-colors text-[var(--foreground)] hover:bg-[var(--muted)]/60" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
                                             <button type="button" onClick={() => { logout(); setIsMenuOpen(false); }} className="min-h-[48px] w-full flex items-center rounded-xl px-4 text-base font-medium py-3 transition-colors text-[var(--foreground)] hover:bg-[var(--muted)]/60 active:bg-[var(--muted)] text-left cursor-pointer">Logout</button>
                                         </>
-                                    ) : (
-                                        <Link to="/login" className="min-h-[48px] flex items-center rounded-xl px-4 text-base font-medium py-3 transition-colors text-[var(--foreground)] hover:bg-[var(--muted)]/60" onClick={() => setIsMenuOpen(false)}>Client Login</Link>
                                     )}
                                     <Link to="/contact" className="min-h-[52px] mt-3 flex items-center justify-center font-semibold rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-95 active:scale-[0.98] transition-all shadow-lg shadow-[var(--primary)]/20" onClick={() => setIsMenuOpen(false)}>
                                         Get Quote

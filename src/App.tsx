@@ -25,6 +25,7 @@ import LocationServicePage from '@/pages/LocationServicePage';
 import SEOLocationPage from '@/pages/seo/SEOLocationPage';
 import KeralaHubPage from '@/pages/KeralaHubPage';
 import GulfVatPage from '@/pages/GulfVatPage';
+import Portfolio from '@/pages/Portfolio';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Dashboard from '@/pages/Dashboard';
@@ -63,7 +64,8 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/services" element={<Services />} />
                     <Route path="/products" element={<Products />} />
-                        <Route path="/work" element={<Work />} />
+                    <Route path="/work" element={<Work />} />
+                    <Route path="/portfolio" element={<Portfolio />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/solutions" element={<Solutions />} />
                     <Route path="/pricing" element={<Pricing />} />
