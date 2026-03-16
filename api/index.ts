@@ -1,9 +1,12 @@
-/**
- * Single Vercel API handler for all /api/* routes.
- * vercel.json rewrites /api/(.*) -> /api?path=/$1 so this is invoked; server restores path for Express.
- */
-import { app } from '../server/index';
+// Wrapper for Vercel serverless function using CommonJS semantics.
+// We keep this file in TypeScript, but use require/module.exports so
+// the compiled output is compatible with Node's CJS loader.
 
-export default function handler(req: any, res: any): void {
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { app } = require('../server/index');
+
+function handler(req: any, res: any): void {
   app(req, res);
 }
+
+module.exports = handler;
