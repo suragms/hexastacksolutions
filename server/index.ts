@@ -13,6 +13,8 @@ import portfolioRouter from './routes/portfolio';
 import analyticsRouter from './routes/analytics';
 import servicesRouter from './routes/services';
 import productsRouter from './routes/products';
+import seoPagesRouter from './routes/seo-pages';
+import backlinksRouter from './routes/backlinks';
 import adminAuthRouter from './routes/admin-auth';
 import clientAuthRouter from './routes/client-auth';
 
@@ -111,6 +113,8 @@ app.use('/api/portfolio', portfolioRouter as any);
 app.use('/api/analytics', analyticsRouter as any);
 app.use('/api/services', servicesRouter as any);
 app.use('/api/products', productsRouter as any);
+app.use('/api/seo-pages', seoPagesRouter as any);
+app.use('/api/backlinks', backlinksRouter as any);
 app.use('/api/admin', adminLoginLimiter, adminAuthRouter as any);
 app.use('/api/client', clientAuthRouter as any);
 

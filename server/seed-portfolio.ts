@@ -1,56 +1,80 @@
 /**
- * One-time seed for 3 real HexaStack portfolio projects.
+ * Seed sample Portfolio (showcase) items for the Admin "Projects" tab and public Work page.
  * Run: npx ts-node --project tsconfig.server.json server/seed-portfolio.ts
- * Requires DATABASE_URL in .env
  */
 import { db } from './db';
 
-const realProjects = [
+const samples = [
   {
-    title: 'Gulf Restaurant POS System',
-    description: 'Complete restaurant management system for a UAE client. Real-time order tracking, table management, kitchen display, inventory, and daily sales reports. Handles 200+ orders/day.',
-    techStack: 'React, Node.js, MongoDB, Socket.io, Express',
-    location: 'UAE',
-    clientType: 'Restaurant',
+    title: 'HexaBill – Billing & POS',
+    description: 'Smart billing and POS for small businesses. GST-ready, inventory, and reports.',
+    techStack: 'React, Node.js, MongoDB',
+    projectUrl: 'https://hexabill.hexastacksolutions.com',
     featured: true,
     displayOrder: 0,
+    location: 'Kerala, India',
+    clientType: 'SaaS',
+    imageUrl: 'https://via.placeholder.com/800x500/1e40af/ffffff?text=HexaBill',
   },
   {
-    title: 'Medical Lab Management System — Kerala',
-    description: 'Full laboratory information system for a Kerala clinic. Patient registration, test ordering, sample tracking, result entry, automated PDF reports, and billing. Used daily.',
-    techStack: 'React, Express, PostgreSQL, TypeScript',
-    location: 'Thrissur, Kerala',
-    clientType: 'Healthcare',
+    title: 'NutriScan AI',
+    description: 'Photo your food, get full macro and micro nutrients. GPT-4o Vision–powered nutrition app.',
+    techStack: 'React, GPT-4o Vision, Node.js',
+    projectUrl: null,
     featured: true,
     displayOrder: 1,
+    location: 'SaaS (Global)',
+    clientType: 'SaaS',
+    imageUrl: 'https://via.placeholder.com/800x500/059669/ffffff?text=NutriScan+AI',
   },
   {
-    title: 'NutriScan AI — Nutrition Tracking SaaS',
-    description: 'AI-powered nutrition app. Users photograph food, GPT-4o Vision returns full macro+micro nutrient breakdown. Live SaaS with user accounts, history, admin panel.',
-    techStack: 'FastAPI, Python, OpenAI GPT-4o Vision, SQLite, JavaScript',
-    location: 'SaaS (Global)',
-    clientType: 'SaaS / Health Tech',
-    featured: true,
+    title: 'Student Hub',
+    description: 'CGPA calculator, attendance, internal marks, and PDF tools for students.',
+    techStack: 'React, Vercel',
+    projectUrl: 'https://studentshub-gold.vercel.app',
+    featured: false,
     displayOrder: 2,
+    location: 'Kerala',
+    clientType: 'SaaS',
+    imageUrl: 'https://via.placeholder.com/800x500/7c3aed/ffffff?text=Student+Hub',
   },
 ];
 
-async function seed() {
+async function seedPortfolio() {
   try {
     const existing = await db.portfolio.count();
     if (existing > 0) {
-      console.log('Portfolio already has projects. Skip seed or delete existing first.');
+      console.log(`Portfolio already has ${existing} item(s). Skipping seed.`);
       process.exit(0);
       return;
     }
-    await db.portfolio.createMany({ data: realProjects });
-    console.log('Seeded 3 portfolio projects.');
-  } catch (e) {
-    console.error('Seed failed:', e);
+    for (let i = 0; i < samples.length; i++) {
+      const s = samples[i];
+      await db.portfolio.create({
+        data: {
+          title: s.title,
+          description: s.description,
+          techStack: s.techStack,
+          projectUrl: s.projectUrl,
+          featured: s.featured,
+          displayOrder: s.displayOrder,
+          location: s.location,
+          clientType: s.clientType,
+          media: s.imageUrl
+            ? { create: { type: 'IMAGE' as const, url: s.imageUrl } }
+            : undefined,
+        },
+        include: { media: true },
+      });
+      console.log('Created portfolio:', s.title);
+    }
+    console.log('Portfolio seed done.');
+  } catch (error) {
+    console.error('Portfolio seed failed:', error);
     process.exit(1);
   } finally {
     await db.$disconnect();
   }
 }
 
-seed();
+seedPortfolio();

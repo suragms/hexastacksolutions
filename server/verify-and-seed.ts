@@ -69,10 +69,10 @@ async function verifyAndSeedAdmin() {
             settings = await db.companySettings.create({
                 data: {
                     companyName: 'HexaStack Solutions',
-                    primaryEmail: 'anandukrishnapa2000@gmail.com',
+                    primaryEmail: 'supporthexastack@hexastacksolutions.com',
                     primaryWhatsApp: '+917591999365',
                     leadName1: 'Anandu Krishna',
-                    leadEmail1: 'anandukrishnapa2000@gmail.com',
+                    leadEmail1: 'supporthexastack@hexastacksolutions.com',
                     leadWhatsApp1: '+917591999365',
                     leadName2: 'Surag',
                     leadEmail2: 'officialsurag@gmail.com',

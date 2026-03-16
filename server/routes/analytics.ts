@@ -117,7 +117,7 @@ router.get('/stats', async (_req, res) => {
             homeViews: 0,
             workViews: 0,
             contactViews: 0,
-            formSubmissions: 0
+            formSubmissions: 0,
         };
 
         res.json({

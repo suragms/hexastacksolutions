@@ -15,6 +15,9 @@ interface CompanySettings {
 const serviceOptions = ['I\'m not sure', 'Website', 'Web App / Business Software', 'POS / Billing', 'ERP / Inventory', 'AI / SaaS', 'Other'];
 const budgetOptions = ['Under Rs.15K', 'Rs.15K – Rs.60K', 'Rs.60K – Rs.1.5L', 'Rs.1.5L – Rs.2L', 'Rs.2L+', 'Not sure'];
 
+/** Public contact email shown on Contact page and in mailto links. */
+const CONTACT_EMAIL = 'supporthexastack@hexastacksolutions.com';
+
 export default function Contact() {
     const [formData, setFormData] = useState({
         name: '',
@@ -41,7 +44,7 @@ export default function Contact() {
 
     const primaryPhone = settings?.primaryWhatsApp || '+917591999365';
     const secondaryPhone = settings?.secondaryWhatsApp || '+917012714150';
-    const email = settings?.primaryEmail || 'supporthexastack@hexastacksolutions.com';
+    const email = CONTACT_EMAIL;
     const address = settings?.address || 'Vadanappally, Thrissur, Kerala 680614, India';
 
     const handleSubmit = async (e: React.FormEvent) => {

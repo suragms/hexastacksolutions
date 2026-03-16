@@ -15,6 +15,11 @@
     "db:reset": "prisma migrate reset",
     "db:seed": "ts-node --project tsconfig.server.json server/fix-admin-config.ts",
     "db:test-connection": "node scripts/test-mongo-connection.js",
+    "db:seed-portfolio": "ts-node --project tsconfig.server.json server/seed-portfolio.ts",
+    "db:seed-services-products": "ts-node --project tsconfig.server.json server/seed-services-products.ts",
+    "db:seed-enquiries": "ts-node --project tsconfig.server.json server/seed-enquiries.ts",
+    "db:seed-seo-backlinks": "ts-node --project tsconfig.server.json server/seed-seo-backlinks.ts",
+    "db:seed-all": "npm run db:seed-portfolio && npm run db:seed-services-products && npm run db:seed-enquiries && npm run db:seed-seo-backlinks",
     "verify": "ts-node --project tsconfig.server.json server/verify-setup.ts",
     "screenshots": "node scripts/screenshot-pages.cjs"
   },

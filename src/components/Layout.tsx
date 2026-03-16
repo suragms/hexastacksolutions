@@ -91,7 +91,8 @@ export default function Layout({ children }: LayoutProps) {
 
     const primaryPhone = settings?.primaryWhatsApp || '+917591999365';
     const secondaryPhone = settings?.secondaryWhatsApp || '+917012714150';
-    const email = settings?.primaryEmail || 'supporthexastack@hexastacksolutions.com';
+    /** Public contact email for footer and mailto links. */
+    const email = 'supporthexastack@hexastacksolutions.com';
     const address = settings?.address || 'Vadanappally, Thrissur, Kerala 680614, India';
 
     const navLinks = [

@@ -181,9 +181,10 @@ router.get('/', async (_req, res) => {
         });
 
         res.json(messages);
-    } catch (error) {
+    } catch (error: any) {
         console.error('[CONTACT_GET]', error);
-        res.status(500).json({ error: 'Internal Error' });
+        const isDb = error?.message?.includes('DATABASE') || error?.message?.includes('connect') || error?.code === 'P1001';
+        res.status(isDb ? 503 : 500).json({ error: isDb ? 'Database not configured.' : 'Internal Error' });
     }
 });
 

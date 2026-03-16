@@ -572,6 +572,8 @@ export default function Admin() {
             fetchAnalytics();
             fetchServices();
             fetchProducts();
+            fetchSeoPages();
+            fetchBacklinks();
         }
     }, [isAuthenticated]);
 
@@ -691,12 +693,12 @@ export default function Admin() {
 
     const markAsRead = async (id: string) => {
         try {
-            await fetch(`${API_URL}/api/contact/${id}`, {
+            const res = await fetch(`${API_URL}/api/contact/${id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ isRead: true }),
             });
-            setEnquiries(enquiries.map(e => e.id === id ? { ...e, isRead: true } : e));
+            if (res.ok) setEnquiries(enquiries.map(e => e.id === id ? { ...e, isRead: true } : e));
         } catch (error) {
             console.error('Failed to mark as read:', error);
         }
@@ -738,6 +740,7 @@ export default function Admin() {
                 setReplyText('');
                 setEnquiries(enquiries.map(e => e.id === selectedEnquiry.id ? { ...e, isRead: true } : e));
                 setSelectedEnquiry({ ...selectedEnquiry, isRead: true });
+                await fetchEnquiries();
             } else {
                 showNotification('error', data.message || 'Failed to send reply');
             }

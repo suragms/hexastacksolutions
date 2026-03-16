@@ -158,7 +158,7 @@ const realProjects = [
 DATABASE_URL="mongodb+srv://..."   # MongoDB Atlas connection string
 JWT_SECRET="[64 char random string]"
 NODE_ENV="development"
-ADMIN_EMAIL="anandukrishnapa2000@gmail.com"
+ADMIN_EMAIL="supporthexastack@hexastacksolutions.com"
 RESEND_API_KEY="re_..."            # from resend.com — already integrated in code
 
 # Netlify dashboard — set same vars for production
