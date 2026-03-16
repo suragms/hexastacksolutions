@@ -107,7 +107,7 @@ model CompanySettings {
   leadName2           String   @default("Surag")
   leadEmail2          String   @default("officialsurag@gmail.com")
   leadWhatsApp2       String   @default("+917012714150")
-  address             String?  @default("Thrissur, Kerala")
+  address             String?  @default("Vadanappally, Thrissur, Kerala 680614, India")
   tagline             String?  @default("Building Digital Excellence")
   description         String?  @default("We create innovative web applications, mobile solutions, and AI-powered tools that transform your business ideas into reality.")
   createdAt           DateTime @default(now())

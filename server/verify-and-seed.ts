@@ -77,7 +77,7 @@ async function verifyAndSeedAdmin() {
                     leadName2: 'Surag',
                     leadEmail2: 'officialsurag@gmail.com',
                     leadWhatsApp2: '+917012714150',
-                    address: 'Thrissur, Kerala',
+                    address: 'Vadanappally, Thrissur, Kerala 680614, India',
                     tagline: 'Building Digital Excellence',
                     description: 'We create innovative web applications.',
                 },

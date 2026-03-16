@@ -42,7 +42,7 @@ export default function Contact() {
     const primaryPhone = settings?.primaryWhatsApp || '+917591999365';
     const secondaryPhone = settings?.secondaryWhatsApp || '+917012714150';
     const email = settings?.primaryEmail || 'supporthexastack@hexastacksolutions.com';
-    const address = settings?.address || 'Thrissur, Kerala';
+    const address = settings?.address || 'Vadanappally, Thrissur, Kerala 680614, India';
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -300,15 +300,36 @@ export default function Contact() {
                         <div className="lg:col-span-5">
                             <div className="lg:sticky lg:top-28 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 sm:p-8">
                                 <h2 className="text-lg font-semibold text-[var(--foreground)] mb-6">Contact info</h2>
+                                {/* Clear business address & contact (visible for Google / citations) */}
+                                <div className="mb-6 p-4 rounded-xl bg-[var(--muted)]/30 border border-[var(--border)]">
+                                    <p className="font-semibold text-[var(--foreground)] mb-2">HexaStack Solutions</p>
+                                    <p className="text-sm text-[var(--muted-foreground)] leading-relaxed mb-2">
+                                        Vadanappally, Thrissur<br />
+                                        Kerala 680614<br />
+                                        India
+                                    </p>
+                                    <p className="text-sm mt-3">
+                                        Phone: <a href="tel:+917591999365" className="font-medium text-[var(--primary)] hover:underline">+91 75919 99365</a>
+                                    </p>
+                                    <p className="text-sm mt-1">
+                                        Email: <a href={`mailto:${email}`} className="font-medium text-[var(--primary)] hover:underline break-all">{email}</a>
+                                    </p>
+                                </div>
                                 <div className="space-y-5">
                                     <div>
                                         <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)] mb-3">Direct lines</p>
                                         <div className="space-y-2.5">
+                                            <a href="tel:+917591999365" className="group flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--muted)]/50 transition-colors">
+                                                <div className="w-10 h-10 rounded-xl bg-[var(--muted)]/60 flex items-center justify-center shrink-0 group-hover:bg-[var(--primary)]/10 transition-colors">
+                                                    <Phone className="w-5 h-5 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
+                                                </div>
+                                                <span className="font-medium text-sm text-[var(--foreground)]">+91 75919 99365</span>
+                                            </a>
                                             <a href={`https://wa.me/${primaryPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--muted)]/50 transition-colors">
                                                 <div className="w-10 h-10 rounded-xl bg-[var(--muted)]/60 flex items-center justify-center shrink-0 group-hover:bg-[var(--primary)]/10 transition-colors">
                                                     <MessageCircle className="w-5 h-5 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
                                                 </div>
-                                                <span className="font-medium text-sm text-[var(--foreground)]">{primaryPhone}</span>
+                                                <span className="font-medium text-sm text-[var(--foreground)]">WhatsApp</span>
                                             </a>
                                             {secondaryPhone && (
                                                 <a href={`https://wa.me/${secondaryPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--muted)]/50 transition-colors">
@@ -333,8 +354,8 @@ export default function Contact() {
                                                 <MapPin className="w-5 h-5 text-[var(--muted-foreground)]" />
                                             </div>
                                             <span className="text-sm text-[var(--muted-foreground)] leading-relaxed pt-1.5">
-                                                {address}<br />
-                                                Kerala, India
+                                                Vadanappally, Thrissur<br />
+                                                Kerala 680614, India
                                             </span>
                                         </div>
                                     </div>

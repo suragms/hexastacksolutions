@@ -92,7 +92,7 @@ export default function Layout({ children }: LayoutProps) {
     const primaryPhone = settings?.primaryWhatsApp || '+917591999365';
     const secondaryPhone = settings?.secondaryWhatsApp || '+917012714150';
     const email = settings?.primaryEmail || 'supporthexastack@hexastacksolutions.com';
-    const address = settings?.address || 'Thrissur, Kerala';
+    const address = settings?.address || 'Vadanappally, Thrissur, Kerala 680614, India';
 
     const navLinks = [
         { to: '/work', label: 'Work' },
@@ -202,6 +202,9 @@ export default function Layout({ children }: LayoutProps) {
                                     )}
                                 </span>
                             ))}
+                            <a href="tel:+917591999365" className="relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] text-[var(--foreground)]/80 flex items-center gap-1.5">
+                                <Phone className="w-3.5 h-3.5" /> +91 75919 99365
+                            </a>
                             {user ? (
                                 <>
                                     <Link to="/dashboard" className="relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] text-[var(--foreground)]/80">Dashboard</Link>
@@ -305,6 +308,9 @@ export default function Layout({ children }: LayoutProps) {
                                     </div>
                                 </div>
                                 <div className="pt-4 mt-auto border-t border-[var(--border)] space-y-1">
+                                    <a href="tel:+917591999365" className="min-h-[48px] flex items-center gap-3 rounded-xl px-4 text-base font-medium py-3 transition-colors text-[var(--foreground)] hover:bg-[var(--muted)]/60 active:bg-[var(--muted)]" onClick={() => setIsMenuOpen(false)}>
+                                        <Phone className="w-5 h-5 text-[var(--primary)]" /> +91 75919 99365
+                                    </a>
                                     {user ? (
                                         <>
                                             <Link to="/dashboard" className="min-h-[48px] flex items-center rounded-xl px-4 text-base font-medium py-3 transition-colors text-[var(--foreground)] hover:bg-[var(--muted)]/60" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
@@ -426,10 +432,20 @@ export default function Layout({ children }: LayoutProps) {
                             </nav>
                         </div>
 
-                        {/* Contact */}
+                        {/* Contact - full address & clickable phone for Google / citations */}
                         <div className="col-span-2 md:col-span-3">
                             <h4 className="text-[11px] font-semibold uppercase tracking-widest text-[var(--foreground)] mb-4">Contact</h4>
+                            <p className="text-sm font-semibold text-[var(--foreground)] mb-1">HexaStack Solutions</p>
+                            <p className="text-sm text-[var(--muted-foreground)] leading-relaxed mb-3">
+                                Vadanappally, Thrissur<br />
+                                Kerala 680614<br />
+                                India
+                            </p>
                             <ul className="space-y-3">
+                                <li>
+                                    <span className="text-sm text-[var(--muted-foreground)]">Phone: </span>
+                                    <a href="tel:+917591999365" className="text-sm font-medium text-[var(--primary)] hover:underline">+91 75919 99365</a>
+                                </li>
                                 <li>
                                     <a href={`mailto:${email}`} className="inline-flex items-start gap-3 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors group">
                                         <Mail className="w-4 h-4 flex-shrink-0 mt-0.5 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
@@ -437,24 +453,16 @@ export default function Layout({ children }: LayoutProps) {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href={`https://wa.me/${primaryPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors group">
+                                    <a href="https://wa.me/917591999365" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors group">
                                         <MessageCircle className="w-4 h-4 flex-shrink-0 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
-                                        {primaryPhone}
+                                        WhatsApp: +91 75919 99365
                                     </a>
                                 </li>
-                                {secondaryPhone && (
-                                    <li>
-                                        <a href={`https://wa.me/${secondaryPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors group">
-                                            <MessageCircle className="w-4 h-4 flex-shrink-0 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
-                                            {secondaryPhone}
-                                        </a>
-                                    </li>
-                                )}
                                 <li>
-                                    <span className="inline-flex items-start gap-3 text-sm text-[var(--muted-foreground)]">
-                                        <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                                        <span>{address}</span>
-                                    </span>
+                                    <a href="https://wa.me/917012714150" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors group">
+                                        <MessageCircle className="w-4 h-4 flex-shrink-0 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
+                                        WhatsApp: +91 70127 14150
+                                    </a>
                                 </li>
                             </ul>
                         </div>
