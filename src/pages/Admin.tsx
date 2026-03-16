@@ -621,6 +621,8 @@ export default function Admin() {
                 } else {
                     if (res.status === 404) {
                         setLoginError('Login API not found. Check that the deployment has API routes and env vars (ADMIN_PASSWORD, JWT_SECRET) set.');
+                    } else if (res.status === 503 && data.error) {
+                        setLoginError(data.error);
                     } else {
                         setLoginError(data.error || `Invalid password. ${5 - newAttempts} attempts remaining.`);
                     }

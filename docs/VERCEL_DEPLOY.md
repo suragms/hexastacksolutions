@@ -52,11 +52,14 @@ Set these for **Production** (and optionally Preview):
 
 ## Troubleshooting: /admin login not working
 
-If [https://www.hexastacksolutions.com/admin](https://www.hexastacksolutions.com/admin) does not accept your password:
+**"Invalid password" on production but works locally** — Your deployed app doesn’t have the same env as local. Do this:
 
-1. **Set env vars in Vercel** (Project → Settings → Environment Variables):
-   - **ADMIN_PASSWORD** — the password you use to log in (e.g. a strong password; dev default is `hexastack@2024`).
-   - **JWT_SECRET** — any string ≥ 32 characters (used to sign the session token).
-2. **Redeploy** after changing env vars (Deployments → ⋯ → Redeploy). Env is baked in at build/start.
-3. If you see "Login API not found" or "Connection error", the `/api/*` route may not be running: confirm `api/index.ts` and the rewrite in `vercel.json` are in the repo and that the deployment completed without errors.
-4. Use the same password in the login form as the one set in `ADMIN_PASSWORD`.
+1. **Vercel** → your project → **Settings** → **Environment Variables**.
+2. Add **ADMIN_PASSWORD** with the **exact same value** you use locally (e.g. `hexastack@2024`). No extra spaces.
+3. Add **JWT_SECRET** (any string ≥ 32 characters, e.g. `hexastack-secure-secret-key-2024`).
+4. **Redeploy**: **Deployments** → ⋯ on latest → **Redeploy**. Env vars are applied on deploy; changing them alone is not enough.
+5. Log in with the same password as in `ADMIN_PASSWORD`.
+
+If you see **"Admin login not configured"** (503), `ADMIN_PASSWORD` (or `JWT_SECRET`) is missing in Vercel — add both and redeploy.
+
+If you see **"Login API not found"** or **"Connection error"**, the `/api/*` route may not be running: confirm `api/index.ts` and the rewrite in `vercel.json` are deployed and the deployment succeeded.

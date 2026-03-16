@@ -11,8 +11,15 @@ router.post('/login', async (req, res) => {
             res.status(400).json({ error: 'Password is required' });
             return;
         }
-        // Production: set ADMIN_PASSWORD in Vercel/Netlify env. Dev fallback: hexastack@2024
-        const adminPassword = process.env.ADMIN_PASSWORD || 'hexastack@2024';
+        // Production (Vercel/Netlify): ADMIN_PASSWORD must be set in Environment Variables
+        const envPassword = process.env.ADMIN_PASSWORD;
+        if ((process.env.VERCEL || process.env.NETLIFY) && (envPassword === undefined || envPassword === '')) {
+            res.status(503).json({
+                error: 'Admin login not configured. Set ADMIN_PASSWORD (and JWT_SECRET) in Vercel/Netlify Environment Variables, then redeploy.',
+            });
+            return;
+        }
+        const adminPassword = envPassword || 'hexastack@2024';
         if (password !== adminPassword) {
             res.status(401).json({ error: 'Invalid password' });
             return;
