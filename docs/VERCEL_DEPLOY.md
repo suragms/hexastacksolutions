@@ -3,7 +3,7 @@
 ## Frontend and API on Vercel
 
 - **Frontend:** Static build (`dist/`) is served from the project root.
-- **API:** All `/api/*` requests are rewritten to `/api?path=...` and handled by the serverless function at `api/index.js` (CommonJS), which loads the Express app from `api/server-bundle.cjs`. The bundle is built by `node scripts/build-api-bundle.cjs` (esbuild, CommonJS) so Node never loads ESM and avoids "Cannot use import statement outside a module".
+- **API:** All `/api/*` requests are routed to the serverless function `api/index.js` (ESM). That file loads the Express app from `api/server-bundle.cjs` (built by `npm run build` via `node scripts/build-api-bundle.cjs`). The root `package.json` has `"type": "module"` so `api/index.js` uses `import`/`export`; the bundle stays CommonJS to avoid "Cannot use import statement outside a module".
 
 ---
 
@@ -64,7 +64,7 @@ After adding or changing any variable, **redeploy** (Deployments → ⋯ → Red
 
 If you see **"Admin login not configured"** (503), `ADMIN_PASSWORD` (or `JWT_SECRET`) is missing in Vercel — add both and redeploy.
 
-If you see **"Login API not found"** or **"Connection error"**, the `/api/*` route may not be running: confirm `api/index.js` exists, `vercel.json` rewrites and build command include `tsc -p tsconfig.server.json`, and the deployment succeeded.
+If you see **"Login API not found"** or **"Connection error"**, the `/api/*` route may not be running: confirm `api/index.js` exists, `vercel.json` routes `/api/(.*)` to `/api/index.js`, and the **Build Command** runs `npm run build` (so `api/server-bundle.cjs` is created). In Vercel → Settings → General, set **Output Directory** to `dist` so the frontend is served.
 
 **"Server error" or 500 on admin login** — Do this in order:
 
@@ -76,4 +76,4 @@ If you see **"Login API not found"** or **"Connection error"**, the `/api/*` rou
 3. **Redeploy**: **Deployments** → **⋯** on latest deployment → **Redeploy**. Env vars are only applied on deploy.
 4. Try logging in again with `ADMIN_PASSWORD`.
 
-If you still get 500 or "Cannot use import statement outside a module", the API bundle may not be built. **Build Command** must end with `node scripts/build-api-bundle.cjs` (so `api/server-bundle.cjs` is created). **Locally on Windows PowerShell** use `npm run build` (do not paste the long command with `&&`).
+If you still get 500 or "Cannot use import statement outside a module", the API bundle may not be built. **Build Command** must be `npm run build` (which runs `node scripts/build-api-bundle.cjs` and creates `api/server-bundle.cjs`). **Locally** run `npm run build` or `npm run build:api` then `npm run start` or `npm run dev` for the API.

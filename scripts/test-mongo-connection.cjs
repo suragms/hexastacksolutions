@@ -1,6 +1,6 @@
 /**
  * Test MongoDB Atlas connectivity using the native driver with Stable API (ServerApiVersion.v1).
- * Uses DATABASE_URL from .env. Run: node scripts/test-mongo-connection.js
+ * Uses DATABASE_URL from .env. Run: node scripts/test-mongo-connection.cjs
  */
 require('dotenv').config();
 const { MongoClient, ServerApiVersion } = require('mongodb');
