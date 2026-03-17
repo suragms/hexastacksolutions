@@ -1,11 +1,11 @@
 {
-  "buildCommand": "prisma generate && node scripts/generate-sitemap.js && vite build",
+  "buildCommand": "prisma generate && node scripts/generate-sitemap.js && vite build && tsc -p tsconfig.server.json",
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api"
+      "destination": "/api?path=$1"
     },
     {
       "source": "/((?!api/).*)",

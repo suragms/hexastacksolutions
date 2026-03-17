@@ -7,7 +7,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "vite",
     "server": "nodemon --exec ts-node --project tsconfig.server.json server/index.ts",
-    "build": "prisma generate && node scripts/generate-sitemap.js && vite build",
+    "build": "prisma generate && node scripts/generate-sitemap.js && vite build && tsc -p tsconfig.server.json",
     "preview": "vite preview",
     "lint": "eslint .",
     "db:push": "prisma db push",

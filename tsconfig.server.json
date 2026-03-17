@@ -5,10 +5,11 @@
         "moduleResolution": "node",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
+        "allowImportingTsExtensions": false,
         "noUnusedLocals": false,
         "noUnusedParameters": false,
         "noEmit": false,
-        "outDir": "dist"
+        "outDir": "dist-server"
     },
     "include": [
         "server/**/*"

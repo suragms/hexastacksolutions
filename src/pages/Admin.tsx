@@ -611,6 +611,9 @@ export default function Admin() {
                 setLoginError('');
                 setLoginAttempts(0);
                 setIsAuthenticated(true);
+                if (typeof window !== 'undefined' && window.history.replaceState) {
+                    window.history.replaceState(null, '', '/admin');
+                }
             } else {
                 const newAttempts = loginAttempts + 1;
                 setLoginAttempts(newAttempts);
