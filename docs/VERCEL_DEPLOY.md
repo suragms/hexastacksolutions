@@ -3,7 +3,7 @@
 ## Frontend and API on Vercel
 
 - **Frontend:** Static build (`dist/`) is served from the project root.
-- **API:** All `/api/*` requests are rewritten to `/api?path=...` and handled by the serverless function at `api/index.js` (CommonJS), which loads the compiled Express app from `dist-server/` and restores the path so routes like `/api/admin/login` work.
+- **API:** All `/api/*` requests are rewritten to `/api?path=...` and handled by the serverless function at `api/index.js` (CommonJS), which loads the Express app from `api/server-bundle.cjs`. The bundle is built by `node scripts/build-api-bundle.cjs` (esbuild, CommonJS) so Node never loads ESM and avoids "Cannot use import statement outside a module".
 
 ---
 
@@ -76,5 +76,4 @@ If you see **"Login API not found"** or **"Connection error"**, the `/api/*` rou
 3. **Redeploy**: **Deployments** → **⋯** on latest deployment → **Redeploy**. Env vars are only applied on deploy.
 4. Try logging in again with `ADMIN_PASSWORD`.
 
-If you still get 500, the API build may be failing. In **Settings** → **General**, check **Build Command** contains:  
-`prisma generate && node scripts/generate-sitemap.js && vite build && tsc -p tsconfig.server.json`. If not, set it in `vercel.json` and redeploy.
+If you still get 500 or "Cannot use import statement outside a module", the API bundle may not be built. **Build Command** must end with `node scripts/build-api-bundle.cjs` (so `api/server-bundle.cjs` is created). **Locally on Windows PowerShell** use `npm run build` (do not paste the long command with `&&`).

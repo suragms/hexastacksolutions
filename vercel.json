@@ -1,5 +1,5 @@
 {
-  "buildCommand": "prisma generate && node scripts/generate-sitemap.js && vite build && tsc -p tsconfig.server.json",
+  "buildCommand": "prisma generate && node scripts/generate-sitemap.js && vite build && node scripts/build-api-bundle.cjs",
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [

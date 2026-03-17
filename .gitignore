@@ -50,3 +50,4 @@ prompt
 server.log
 dist
 dist-server
+api/server-bundle.cjs

@@ -1,15 +1,16 @@
 /**
  * Vercel catch-all API route (CommonJS). Handles /api, /api/admin/login, etc.
- * Uses require() so Vercel runs this as CJS (avoids "Cannot use import statement outside a module").
+ * Loads the server from api/server-bundle.cjs (built by scripts/build-api-bundle.cjs).
+ * Do NOT load server/ or dist-server/ — they can be ESM on Vercel and cause 500.
  * Set ADMIN_PASSWORD and JWT_SECRET in Vercel env.
  */
 const path = require('path');
-// Use compiled server (dist) when present (Vercel build); fallback to server for local dev
 let app;
 try {
-    app = require(path.join(__dirname, '..', 'dist-server', 'index')).app;
-} catch (_) {
-    app = require(path.join(__dirname, '..', 'server', 'index')).app;
+    app = require(path.join(__dirname, 'server-bundle.cjs')).app;
+} catch (e) {
+    console.error('[API] Failed to load server-bundle.cjs. Run: node scripts/build-api-bundle.cjs', e && e.message);
+    app = null;
 }
 
 function handler(req, res) {
@@ -33,6 +34,12 @@ function handler(req, res) {
                 var p = invokePath.indexOf('?') >= 0 ? invokePath.split('?')[0] : invokePath;
                 if (p.startsWith('/api')) req.url = p + (invokePath.indexOf('?') >= 0 ? '?' + invokePath.split('?')[1] : '');
             }
+        }
+        if (!app) {
+            res.statusCode = 503;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ error: 'Server bundle not loaded. Ensure build runs: node scripts/build-api-bundle.cjs', success: false }));
+            return;
         }
         app(req, res);
     } catch (err) {
