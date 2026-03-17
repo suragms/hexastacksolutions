@@ -2,7 +2,13 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { db } from '../db';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+function getJwtSecret(): string {
+    const secret = process.env.JWT_SECRET && String(process.env.JWT_SECRET).trim();
+    const isProd = process.env.NODE_ENV === 'production' || !!process.env.VERCEL || !!process.env.NETLIFY;
+    if (secret) return secret;
+    if (isProd) throw new Error('JWT_SECRET is not set');
+    return 'dev-secret';
+}
 
 export async function hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, 12);
@@ -13,12 +19,12 @@ export async function verifyPassword(password: string, hashedPassword: string): 
 }
 
 export function generateToken(userId: string, role: string): string {
-    return jwt.sign({ userId, role }, JWT_SECRET, { expiresIn: '7d' });
+    return jwt.sign({ userId, role }, getJwtSecret(), { expiresIn: '7d' });
 }
 
 export function verifyToken(token: string): { userId: string; role: string } | null {
     try {
-        return jwt.verify(token, JWT_SECRET) as { userId: string; role: string };
+        return jwt.verify(token, getJwtSecret()) as { userId: string; role: string };
     } catch {
         return null;
     }
