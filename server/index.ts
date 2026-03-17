@@ -112,14 +112,20 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Route not found', path: req.path, originalUrl: req.originalUrl });
 });
 
-// Global error handler (avoid 500 for body parse / analytics so client gets 503)
+// Global error handler — return 503 for API routes so frontend shows env/redeploy message
 app.use((err: any, req: express.Request, res: express.Response, _next: express.NextFunction) => {
     console.error('Unhandled Error:', err);
     const isBodyParse = err.type === 'entity.parse.failed' || err instanceof SyntaxError;
-    const isAnalytics = req.url && String(req.url).includes('/api/analytics');
-    const status = (isBodyParse || isAnalytics) ? 503 : 500;
+    const url = req.url && String(req.url);
+    const isAnalytics = url && url.includes('/api/analytics');
+    const isAdmin = url && url.includes('/api/admin');
+    const use503 = isBodyParse || isAnalytics || isAdmin;
+    const status = use503 ? 503 : 500;
+    const errorMessage = isAdmin
+        ? 'Login failed. Set DATABASE_URL, ADMIN_PASSWORD and JWT_SECRET in Vercel Environment Variables and redeploy.'
+        : (use503 ? 'Service temporarily unavailable' : 'Internal Server Error');
     res.status(status).json({
-        error: status === 503 ? 'Service temporarily unavailable' : 'Internal Server Error',
+        error: errorMessage,
         message: err.message,
         success: false,
         ...(process.env.NODE_ENV === 'development' ? { stack: err.stack } : {})

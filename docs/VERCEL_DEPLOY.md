@@ -66,6 +66,15 @@ If you see **"Admin login not configured"** (503), `ADMIN_PASSWORD` (or `JWT_SEC
 
 If you see **"Login API not found"** or **"Connection error"**, the `/api/*` route may not be running: confirm `api/index.js` exists, `vercel.json` rewrites and build command include `tsc -p tsconfig.server.json`, and the deployment succeeded.
 
-**500 on `api/analytics/track` or `api/admin/login`** — Usually missing or invalid env in Production:
-- **Analytics 500/503:** Set `DATABASE_URL` in Vercel (MongoDB connection string including database name). Redeploy.
-- **Admin login 500:** Ensure both `ADMIN_PASSWORD` and `JWT_SECRET` are set. If you get 503 "JWT_SECRET is not set", add it and redeploy.
+**"Server error" or 500 on admin login** — Do this in order:
+
+1. **Vercel** → your project → **Settings** → **Environment Variables**.
+2. Add these for **Production** (no typos, no extra spaces):
+   - `DATABASE_URL` = your MongoDB Atlas connection string (include database name, e.g. `.../hexastacksolutions?retryWrites=true&w=majority`).
+   - `JWT_SECRET` = a long secret (e.g. ≥32 characters).
+   - `ADMIN_PASSWORD` = the password you will type on the login page.
+3. **Redeploy**: **Deployments** → **⋯** on latest deployment → **Redeploy**. Env vars are only applied on deploy.
+4. Try logging in again with `ADMIN_PASSWORD`.
+
+If you still get 500, the API build may be failing. In **Settings** → **General**, check **Build Command** contains:  
+`prisma generate && node scripts/generate-sitemap.js && vite build && tsc -p tsconfig.server.json`. If not, set it in `vercel.json` and redeploy.
