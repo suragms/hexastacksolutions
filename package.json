@@ -15,7 +15,7 @@
     "client": "vite",
     "server": "nodemon --exec \"tsx server/index.ts\" --ext ts,json",
     "build:api": "node scripts/build-api-bundle.cjs",
-    "build": "node scripts/build-api-bundle.cjs && node scripts/generate-sitemap.cjs && vite build",
+    "build": "vite build && node scripts/build-api-bundle.cjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "db:push": "prisma db push",
