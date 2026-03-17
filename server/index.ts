@@ -112,13 +112,17 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Route not found', path: req.path, originalUrl: req.originalUrl });
 });
 
-// Global error handler
-app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+// Global error handler (avoid 500 for body parse / analytics so client gets 503)
+app.use((err: any, req: express.Request, res: express.Response, _next: express.NextFunction) => {
     console.error('Unhandled Error:', err);
-    res.status(500).json({
-        error: 'Internal Server Error',
+    const isBodyParse = err.type === 'entity.parse.failed' || err instanceof SyntaxError;
+    const isAnalytics = req.url && String(req.url).includes('/api/analytics');
+    const status = (isBodyParse || isAnalytics) ? 503 : 500;
+    res.status(status).json({
+        error: status === 503 ? 'Service temporarily unavailable' : 'Internal Server Error',
         message: err.message,
-        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+        success: false,
+        ...(process.env.NODE_ENV === 'development' ? { stack: err.stack } : {})
     });
 });
 

@@ -625,9 +625,11 @@ export default function Admin() {
                     setLoginError('Too many failed attempts. Locked for 15 minutes.');
                 } else {
                     if (res.status === 404) {
-                        setLoginError('Login API not found. Check that the deployment has API routes and env vars (ADMIN_PASSWORD, JWT_SECRET) set.');
+                        setLoginError('Login API not found. Add API route and set ADMIN_PASSWORD, JWT_SECRET in Vercel → Settings → Environment Variables, then redeploy.');
                     } else if (res.status === 503 && data.error) {
                         setLoginError(data.error);
+                    } else if (res.status === 500) {
+                        setLoginError('Server error. Set DATABASE_URL, ADMIN_PASSWORD and JWT_SECRET in Vercel Environment Variables and redeploy.');
                     } else {
                         setLoginError(data.error || `Invalid password. ${5 - newAttempts} attempts remaining.`);
                     }

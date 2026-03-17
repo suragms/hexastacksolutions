@@ -7,29 +7,30 @@ const router = express.Router();
 router.post('/track', async (req, res) => {
     try {
         const body = req.body && typeof req.body === 'object' ? req.body : {};
-        const page = body.page;
+        const page = body && typeof body.page !== 'undefined' ? body.page : undefined;
         const userAgent = req.headers['user-agent'] || null;
-        const ip = req.headers['x-forwarded-for'] || (req.socket && req.socket.remoteAddress) || null;
+        const ip = req.headers['x-forwarded-for'] || (req.socket && (req.socket as any).remoteAddress) || null;
         const referrer = req.headers['referer'] || null;
 
-        if (!process.env.DATABASE_URL?.trim()) {
+        if (!process.env.DATABASE_URL || !String(process.env.DATABASE_URL).trim()) {
             res.status(503).json({ error: 'Analytics not configured', success: false });
             return;
         }
 
+        const pageStr = typeof page === 'string' ? page.slice(0, 500) : 'unknown';
         await db.pageView.create({
             data: {
-                page: typeof page === 'string' ? page.slice(0, 500) : 'unknown',
-                userAgent: userAgent?.slice(0, 500),
+                page: pageStr,
+                userAgent: userAgent ? String(userAgent).slice(0, 500) : null,
                 ip: typeof ip === 'string' ? ip.split(',')[0].trim().slice(0, 100) : null,
-                referrer: referrer?.slice(0, 500) || null,
+                referrer: referrer ? String(referrer).slice(0, 500) : null,
             }
         });
 
         const today = new Date().toISOString().split('T')[0];
-        const pageField = page === '/' ? 'homeViews' : 
-                         page === '/work' ? 'workViews' :
-                         page === '/contact' ? 'contactViews' : 'totalViews';
+        const pageField = page === '/' ? 'homeViews' :
+            page === '/work' ? 'workViews' :
+                page === '/contact' ? 'contactViews' : 'totalViews';
 
         await db.analytics.upsert({
             where: { date: today },
@@ -45,17 +46,19 @@ router.post('/track', async (req, res) => {
         });
 
         res.json({ success: true });
-    } catch (error: any) {
-        console.error('[ANALYTICS_TRACK]', error?.message || error);
-        const code = error?.code ?? '';
-        const msg = (error?.message || '').toLowerCase();
+    } catch (error: unknown) {
+        const err = error as { code?: string; message?: string };
+        console.error('[ANALYTICS_TRACK]', err?.message ?? error);
+        const code = err?.code ?? '';
+        const msg = String(err?.message ?? '').toLowerCase();
         const isDb = msg.includes('database') || msg.includes('connect') || msg.includes('econnrefused') ||
-            String(code).startsWith('P1'); // Prisma connection/schema errors
-        if (isDb) {
-            res.status(503).json({ error: 'Database not configured. Set DATABASE_URL in Environment Variables.', success: false });
-        } else {
-            res.status(503).json({ error: 'Analytics temporarily unavailable.', success: false });
-        }
+            String(code).startsWith('P1');
+        res.status(503).json({
+            error: isDb
+                ? 'Database not configured. Set DATABASE_URL in Environment Variables.'
+                : 'Analytics temporarily unavailable.',
+            success: false
+        });
     }
 });
 

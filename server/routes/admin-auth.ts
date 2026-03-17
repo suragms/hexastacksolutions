@@ -6,8 +6,9 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
     try {
         const body = req.body && typeof req.body === 'object' ? req.body : {};
-        const password = body.password;
-        if (!password || typeof password !== 'string') {
+        const rawPassword = body && typeof body.password !== 'undefined' ? body.password : undefined;
+        const password = typeof rawPassword === 'string' ? rawPassword.trim() : '';
+        if (!password) {
             res.status(400).json({ error: 'Password is required' });
             return;
         }
@@ -15,19 +16,19 @@ router.post('/login', async (req, res) => {
         const envPassword = process.env.ADMIN_PASSWORD;
         const envJwtSecret = process.env.JWT_SECRET;
 
-        if (isProduction && (envPassword === undefined || envPassword === '')) {
+        if (isProduction && (envPassword === undefined || String(envPassword).trim() === '')) {
             res.status(503).json({
-                error: 'Admin login not configured. Set ADMIN_PASSWORD (and JWT_SECRET) in Vercel/Netlify Environment Variables, then redeploy.',
+                error: 'Admin login not configured. Set ADMIN_PASSWORD (and JWT_SECRET) in Vercel Environment Variables, then redeploy.',
             });
             return;
         }
-        if (isProduction && (!envJwtSecret || envJwtSecret.trim() === '')) {
+        if (isProduction && (!envJwtSecret || String(envJwtSecret).trim() === '')) {
             res.status(503).json({
-                error: 'JWT_SECRET is not set. Add JWT_SECRET in Environment Variables and redeploy.',
+                error: 'JWT_SECRET is not set. Add JWT_SECRET in Vercel Environment Variables and redeploy.',
             });
             return;
         }
-        const adminPassword = envPassword || 'hexastack@2024';
+        const adminPassword = (envPassword && String(envPassword).trim()) || 'hexastack@2024';
         if (password !== adminPassword) {
             res.status(401).json({ error: 'Invalid password' });
             return;
@@ -35,15 +36,17 @@ router.post('/login', async (req, res) => {
         let token: string;
         try {
             token = generateToken('admin', 'admin');
-        } catch (jwtErr: any) {
-            console.error('Admin JWT error:', jwtErr?.message || jwtErr);
-            res.status(503).json({ error: 'JWT_SECRET invalid or missing. Set JWT_SECRET in Environment Variables and redeploy.' });
+        } catch (jwtErr: unknown) {
+            const msg = (jwtErr as { message?: string })?.message ?? jwtErr;
+            console.error('Admin JWT error:', msg);
+            res.status(503).json({ error: 'JWT_SECRET invalid or missing. Set JWT_SECRET in Vercel Environment Variables and redeploy.' });
             return;
         }
         res.json({ token });
-    } catch (err: any) {
-        console.error('Admin login error:', err?.message || err);
-        res.status(503).json({ error: 'Login failed. Set ADMIN_PASSWORD and JWT_SECRET in Environment Variables and redeploy.' });
+    } catch (err: unknown) {
+        const msg = (err as { message?: string })?.message ?? err;
+        console.error('Admin login error:', msg);
+        res.status(503).json({ error: 'Login failed. Set ADMIN_PASSWORD and JWT_SECRET in Vercel Environment Variables and redeploy.' });
     }
 });
 
