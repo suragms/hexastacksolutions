@@ -66,4 +66,9 @@ if (process.env.NODE_ENV !== 'production' && (devApp || app)?.listen) {
   });
 }
 
-export default devApp || app || apiHandler;
+const handlerTarget = devApp || app || apiHandler;
+
+// Vercel (@vercel/node) expects a request handler function export.
+export default function handler(req, res) {
+  return handlerTarget(req, res);
+}
