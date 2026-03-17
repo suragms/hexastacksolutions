@@ -2,8 +2,8 @@
 
 ## Frontend and API on Vercel
 
-- **Frontend:** Static build (`dist/`) is served from the project root.
-- **API:** All `/api/*` requests are routed to the serverless function `api/index.js` (ESM). That file loads the Express app from `api/server-bundle.cjs`, which is built by `npm run build` (runs `node scripts/build-api-bundle.cjs`). `vercel.json` has `functions["api/index.js"].includeFiles = "api/server-bundle.cjs"` so the generated bundle is included in the deployment. The root `package.json` has `"type": "module"` so `api/index.js` uses `import`/`export`; the bundle stays CommonJS.
+- **Frontend:** Static build (`dist/`) is served from the project root. Build command: `npm run build` (runs Vite then the API bundle script). In Vercel → Settings → General, **Build Command** should be `npm run build` and **Output Directory** `dist`.
+- **API:** All `/api/*` requests are routed to the serverless function `api/index.js` (ESM). That file loads the Express app from `api/server-bundle.cjs`, which is created by `npm run build` (runs `vite build && node scripts/build-api-bundle.cjs`). `vercel.json` has `functions["api/index.js"].includeFiles = "api/server-bundle.cjs"` so the generated bundle is included in the deployment. The root `package.json` has `"type": "module"` so `api/index.js` uses `import`/`export`; the bundle stays CommonJS. If the bundle fails to load, the API returns 503 JSON instead of crashing.
 
 ---
 
@@ -76,4 +76,4 @@ If you see **"Login API not found"** or **"Connection error"**, the `/api/*` rou
 3. **Redeploy**: **Deployments** → **⋯** on latest deployment → **Redeploy**. Env vars are only applied on deploy.
 4. Try logging in again with `ADMIN_PASSWORD`.
 
-If you still get 500 or "Cannot use import statement outside a module", the API bundle may not be built. **Build Command** must be `npm run build` (which runs `node scripts/build-api-bundle.cjs` and creates `api/server-bundle.cjs`). **Locally** run `npm run build` or `npm run build:api` then `npm run start` or `npm run dev` for the API.
+If you still get 500 or "Cannot use import statement outside a module", the API bundle may not be built or included. **Build Command** must be `npm run build` (which runs `vite build && node scripts/build-api-bundle.cjs` and creates `dist/` and `api/server-bundle.cjs`). In **Vercel → Settings → General**, set **Root Directory** to blank (repo root) and **Build Command** to `npm run build`. Redeploy **without cache** (Deployments → ⋯ → Redeploy, clear cache if available) so the API bundle is built and included via `functions["api/index.js"].includeFiles`. **MongoDB Atlas:** ensure Network Access allows `0.0.0.0/0` (or Vercel IPs) so the serverless API can connect. **Locally** run `npm run build` then `npm run start` or `npm run dev` to test the API.

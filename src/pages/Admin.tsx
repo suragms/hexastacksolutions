@@ -14,6 +14,15 @@ const ADMIN_TOKEN_KEY = 'admin_token';
 const ADMIN_SESSION_TIME_KEY = 'hexastack_admin_time';
 const BACKLINKS_CHECKLIST_KEY = 'hexastack_backlinks_checklist';
 
+/** Headers for admin API calls (includes Bearer token when logged in). */
+function getAdminAuthHeaders(json = true): Record<string, string> {
+    const token = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem(ADMIN_TOKEN_KEY) : null;
+    const h: Record<string, string> = {};
+    if (json) h['Content-Type'] = 'application/json';
+    if (token) h['Authorization'] = `Bearer ${token}`;
+    return h;
+}
+
 const STATIC_BACKLINK_SITES = [
     { id: 'justdial', name: 'JustDial', url: 'https://www.justdial.com/', da: 'DA 70+' },
     { id: 'sulekha', name: 'Sulekha', url: 'https://www.sulekha.com/', da: 'DA 85+' },
@@ -233,7 +242,7 @@ export default function Admin() {
     // Service handlers
     const fetchServices = async () => {
         try {
-            const response = await fetch(`${API_URL}/api/services`);
+            const response = await fetch(`${API_URL}/api/services`, { headers: getAdminAuthHeaders(false) });
             if (response.ok) {
                 const data = await response.json();
                 setServices(data);
@@ -257,7 +266,7 @@ export default function Admin() {
 
             const response = await fetch(url, {
                 method: editingService ? 'PUT' : 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAdminAuthHeaders(),
                 body: JSON.stringify(serviceForm),
             });
 
@@ -279,7 +288,7 @@ export default function Admin() {
         if (!window.confirm('Delete this service?')) return;
         setDeleting(id);
         try {
-            const response = await fetch(`${API_URL}/api/services/${id}`, { method: 'DELETE' });
+            const response = await fetch(`${API_URL}/api/services/${id}`, { method: 'DELETE', headers: getAdminAuthHeaders(false) });
             if (response.ok) {
                 setServices(services.filter(s => s.id !== id));
                 showNotification('success', 'Service deleted');
@@ -315,6 +324,7 @@ export default function Admin() {
 
             const response = await fetch(`${API_URL}/api/upload`, {
                 method: 'POST',
+                headers: getAdminAuthHeaders(false),
                 body: formData,
             });
 
@@ -333,7 +343,7 @@ export default function Admin() {
     // Product handlers
     const fetchProducts = async () => {
         try {
-            const response = await fetch(`${API_URL}/api/products`);
+            const response = await fetch(`${API_URL}/api/products`, { headers: getAdminAuthHeaders(false) });
             if (response.ok) {
                 const data = await response.json();
                 setProducts(data);
@@ -362,7 +372,7 @@ export default function Admin() {
 
             const response = await fetch(url, {
                 method: editingProduct ? 'PUT' : 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAdminAuthHeaders(),
                 body: JSON.stringify({
                     ...productForm,
                     features: featuresArray,
@@ -393,7 +403,7 @@ export default function Admin() {
         if (!window.confirm('Delete this product?')) return;
         setDeleting(id);
         try {
-            const response = await fetch(`${API_URL}/api/products/${id}`, { method: 'DELETE' });
+            const response = await fetch(`${API_URL}/api/products/${id}`, { method: 'DELETE', headers: getAdminAuthHeaders(false) });
             if (response.ok) {
                 setProducts(products.filter(p => p.id !== id));
                 showNotification('success', 'Product deleted');
@@ -422,7 +432,7 @@ export default function Admin() {
     const fetchSeoPages = async () => {
         try {
             setSeoLoading(true);
-            const res = await fetch(`${API_URL}/api/seo-pages`);
+            const res = await fetch(`${API_URL}/api/seo-pages`, { headers: getAdminAuthHeaders(false) });
             if (res.ok) setSeoPages(await res.json());
         } catch (e) {
             console.error('Fetch SEO pages:', e);
@@ -442,7 +452,7 @@ export default function Admin() {
             const url = editingSeo ? `${API_URL}/api/seo-pages/${editingSeo.id}` : `${API_URL}/api/seo-pages`;
             const res = await fetch(url, {
                 method: editingSeo ? 'PATCH' : 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAdminAuthHeaders(),
                 body: JSON.stringify({ location, locationSlug, service, serviceSlug, title, description, h1, region: region || null })
             });
             if (res.ok) {
@@ -466,7 +476,7 @@ export default function Admin() {
         if (!window.confirm('Delete this SEO page?')) return;
         setDeleting(id);
         try {
-            const res = await fetch(`${API_URL}/api/seo-pages/${id}`, { method: 'DELETE' });
+            const res = await fetch(`${API_URL}/api/seo-pages/${id}`, { method: 'DELETE', headers: getAdminAuthHeaders(false) });
             if (res.ok) {
                 setSeoPages(seoPages.filter(p => p.id !== id));
                 showNotification('success', 'Deleted');
@@ -479,7 +489,7 @@ export default function Admin() {
     const fetchBacklinks = async () => {
         try {
             setBacklinksLoading(true);
-            const res = await fetch(`${API_URL}/api/backlinks`);
+            const res = await fetch(`${API_URL}/api/backlinks`, { headers: getAdminAuthHeaders(false) });
             if (res.ok) setBacklinks(await res.json());
         } catch (e) {
             console.error('Fetch backlinks:', e);
@@ -498,7 +508,7 @@ export default function Admin() {
             const url = editingBacklink ? `${API_URL}/api/backlinks/${editingBacklink.id}` : `${API_URL}/api/backlinks`;
             const res = await fetch(url, {
                 method: editingBacklink ? 'PATCH' : 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAdminAuthHeaders(),
                 body: JSON.stringify(backlinkForm)
             });
             if (res.ok) {
@@ -522,7 +532,7 @@ export default function Admin() {
         if (!window.confirm('Remove this backlink?')) return;
         setDeleting(id);
         try {
-            const res = await fetch(`${API_URL}/api/backlinks/${id}`, { method: 'DELETE' });
+            const res = await fetch(`${API_URL}/api/backlinks/${id}`, { method: 'DELETE', headers: getAdminAuthHeaders(false) });
             if (res.ok) {
                 setBacklinks(backlinks.filter(b => b.id !== id));
                 showNotification('success', 'Removed');
@@ -659,7 +669,7 @@ export default function Admin() {
     const fetchAnalytics = async () => {
         try {
             setAnalyticsLoading(true);
-            const response = await fetch(`${API_URL}/api/analytics/stats`);
+            const response = await fetch(`${API_URL}/api/analytics/stats`, { headers: getAdminAuthHeaders(false) });
             if (response.ok) {
                 const data = await response.json();
                 setAnalytics({
@@ -684,7 +694,7 @@ export default function Admin() {
     const fetchEnquiries = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`${API_URL}/api/contact`);
+            const response = await fetch(`${API_URL}/api/contact`, { headers: getAdminAuthHeaders(false) });
             if (response.ok) {
                 const data = await response.json();
                 setEnquiries(data);
@@ -700,7 +710,7 @@ export default function Admin() {
         try {
             const res = await fetch(`${API_URL}/api/contact/${id}`, {
                 method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAdminAuthHeaders(),
                 body: JSON.stringify({ isRead: true }),
             });
             if (res.ok) setEnquiries(enquiries.map(e => e.id === id ? { ...e, isRead: true } : e));
@@ -713,7 +723,7 @@ export default function Admin() {
         if (!window.confirm('Delete this enquiry?')) return;
         setDeleting(id);
         try {
-            const response = await fetch(`${API_URL}/api/contact/${id}`, { method: 'DELETE' });
+            const response = await fetch(`${API_URL}/api/contact/${id}`, { method: 'DELETE', headers: getAdminAuthHeaders(false) });
             if (response.ok) {
                 setEnquiries(enquiries.filter(e => e.id !== id));
                 if (selectedEnquiry?.id === id) setSelectedEnquiry(null);
@@ -736,7 +746,7 @@ export default function Admin() {
             setSendingReply(true);
             const response = await fetch(`${API_URL}/api/contact/${selectedEnquiry.id}/reply`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAdminAuthHeaders(),
                 body: JSON.stringify({ replyMessage: replyText }),
             });
             const data = await response.json();
@@ -759,7 +769,7 @@ export default function Admin() {
     // Project handlers
     const fetchProjects = async () => {
         try {
-            const response = await fetch(`${API_URL}/api/portfolio`);
+            const response = await fetch(`${API_URL}/api/portfolio`, { headers: getAdminAuthHeaders(false) });
             if (response.ok) {
                 const data = await response.json();
                 setProjects(data);
@@ -783,7 +793,7 @@ export default function Admin() {
 
             const response = await fetch(url, {
                 method: editingProject ? 'PATCH' : 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAdminAuthHeaders(),
                 body: JSON.stringify(projectForm),
             });
 
@@ -805,7 +815,7 @@ export default function Admin() {
         if (!window.confirm('Delete this project?')) return;
         setDeleting(id);
         try {
-            const response = await fetch(`${API_URL}/api/portfolio/${id}`, { method: 'DELETE' });
+            const response = await fetch(`${API_URL}/api/portfolio/${id}`, { method: 'DELETE', headers: getAdminAuthHeaders(false) });
             if (response.ok) {
                 setProjects(projects.filter(p => p.id !== id));
                 showNotification('success', 'Project deleted');
@@ -847,6 +857,7 @@ export default function Admin() {
 
             const response = await fetch(`${API_URL}/api/upload`, {
                 method: 'POST',
+                headers: getAdminAuthHeaders(false),
                 body: formData,
             });
 
@@ -867,7 +878,7 @@ export default function Admin() {
     // Settings handlers
     const fetchSettings = async () => {
         try {
-            const response = await fetch(`${API_URL}/api/settings`);
+            const response = await fetch(`${API_URL}/api/settings`, { headers: getAdminAuthHeaders(false) });
             if (response.ok) {
                 const data = await response.json();
                 const hasSaved = data && (data.id ?? data.companyName);
@@ -884,7 +895,7 @@ export default function Admin() {
         try {
             const response = await fetch(`${API_URL}/api/settings`, {
                 method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAdminAuthHeaders(),
                 body: JSON.stringify(settingsForm),
             });
 
@@ -1641,7 +1652,7 @@ export default function Admin() {
                                                         try {
                                                             const formData = new FormData();
                                                             formData.append('file', file);
-                                                            const res = await fetch(`${API_URL}/api/upload`, { method: 'POST', body: formData });
+                                                            const res = await fetch(`${API_URL}/api/upload`, { method: 'POST', headers: getAdminAuthHeaders(false), body: formData });
                                                             if (res.ok) {
                                                                 const data = await res.json();
                                                                 setSettingsForm({ ...settingsForm, logoUrl: data.url });

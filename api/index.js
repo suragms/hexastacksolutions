@@ -17,9 +17,20 @@ if (process.env.NODE_ENV !== 'production') process.env.VERCEL = '1';
 
 const require = createRequire(import.meta.url);
 
-// No bundle-checking fallback: the deployment must include this file.
-const app = require('./server-bundle.cjs').app;
-const apiHandler = app;
+let app;
+let apiHandler;
+try {
+  app = require('./server-bundle.cjs').app;
+  apiHandler = app;
+} catch (err) {
+  console.error('Failed to load server-bundle.cjs:', err?.message || err);
+  apiHandler = (_req, res) => {
+    res.status(503).setHeader('Content-Type', 'application/json').end(JSON.stringify({
+      error: 'API bundle not loaded. Run "npm run build" and ensure api/server-bundle.cjs is deployed.',
+      detail: process.env.NODE_ENV === 'development' ? (err?.message || String(err)) : undefined
+    }));
+  };
+}
 
 // In dev, wrap so non-API requests serve SPA from dist (avoids 404 for / and /admin)
 const distPath = path.join(__dirname, '..', 'dist');

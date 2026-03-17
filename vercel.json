@@ -11,6 +11,11 @@
       "use": "@vercel/node"
     }
   ],
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "api/server-bundle.cjs"
+    }
+  },
   "routes": [
     {
       "src": "/api/(.*)",
