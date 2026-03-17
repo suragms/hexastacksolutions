@@ -17,24 +17,9 @@ if (process.env.NODE_ENV !== 'production') process.env.VERCEL = '1';
 
 const require = createRequire(import.meta.url);
 
-let app;
-try {
-  // Static path so Vercel file-tracing can include server-bundle.cjs
-  app = require('./server-bundle.cjs').app;
-} catch (e) {
-  console.error('[API] Failed to load server-bundle.cjs. Run: node scripts/build-api-bundle.cjs', e?.message);
-  app = null;
-}
-
-// If bundle failed to load, export a stub that returns 503
-const apiHandler = app || function (req, res) {
-  res.statusCode = 503;
-  res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify({
-    error: 'Server bundle not loaded. Ensure build runs: node scripts/build-api-bundle.cjs',
-    success: false
-  }));
-};
+// No bundle-checking fallback: the deployment must include this file.
+const app = require('./server-bundle.cjs').app;
+const apiHandler = app;
 
 // In dev, wrap so non-API requests serve SPA from dist (avoids 404 for / and /admin)
 const distPath = path.join(__dirname, '..', 'dist');
