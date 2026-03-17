@@ -19,7 +19,8 @@ const require = createRequire(import.meta.url);
 
 let app;
 try {
-  app = require(path.join(__dirname, 'server-bundle.cjs')).app;
+  // Static path so Vercel file-tracing can include server-bundle.cjs
+  app = require('./server-bundle.cjs').app;
 } catch (e) {
   console.error('[API] Failed to load server-bundle.cjs. Run: node scripts/build-api-bundle.cjs', e?.message);
   app = null;

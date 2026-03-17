@@ -3,7 +3,7 @@
 ## Frontend and API on Vercel
 
 - **Frontend:** Static build (`dist/`) is served from the project root.
-- **API:** All `/api/*` requests are routed to the serverless function `api/index.js` (ESM). That file loads the Express app from `api/server-bundle.cjs` (built by `npm run build` via `node scripts/build-api-bundle.cjs`). The root `package.json` has `"type": "module"` so `api/index.js` uses `import`/`export`; the bundle stays CommonJS to avoid "Cannot use import statement outside a module".
+- **API:** All `/api/*` requests are routed to the serverless function `api/index.js` (ESM). That file loads the Express app from `api/server-bundle.cjs`, which is built by `npm run build` (runs `node scripts/build-api-bundle.cjs`). `vercel.json` has `functions["api/index.js"].includeFiles = "api/server-bundle.cjs"` so the generated bundle is included in the deployment. The root `package.json` has `"type": "module"` so `api/index.js` uses `import`/`export`; the bundle stays CommonJS.
 
 ---
 
