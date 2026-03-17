@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "vite",
     "server": "nodemon --exec ts-node --project tsconfig.server.json server/index.ts",
