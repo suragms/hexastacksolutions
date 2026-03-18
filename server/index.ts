@@ -129,11 +129,11 @@ app.use((err: any, req: express.Request, res: express.Response, _next: express.N
     const use503 = isBodyParse || isAnalytics || isAdmin;
     const status = use503 ? 503 : 500;
     const errorMessage = isAdmin
-        ? 'Login failed. Set DATABASE_URL, ADMIN_PASSWORD and JWT_SECRET in Vercel Environment Variables and redeploy.'
+        ? (err?.message ? `Login failed: ${err.message}` : 'Login failed. Set ADMIN_PASSWORD and JWT_SECRET in Vercel → Settings → Environment Variables, then redeploy. Check /api/admin/status to verify.')
         : (use503 ? 'Service temporarily unavailable' : 'Internal Server Error');
     res.status(status).json({
         error: errorMessage,
-        message: err.message,
+        message: err?.message,
         success: false,
         ...(process.env.NODE_ENV === 'development' ? { stack: err.stack } : {})
     });

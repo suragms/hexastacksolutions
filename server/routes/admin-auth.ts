@@ -24,7 +24,10 @@ router.post('/login', async (req, res) => {
 
         if (!ADMIN_PASSWORD?.trim() || !JWT_SECRET?.trim()) {
             console.error('MISSING ENV: ADMIN_PASSWORD or JWT_SECRET not set');
-            return res.status(500).json({ error: 'Server misconfiguration — env vars missing' });
+            return res.status(500).json({
+                error: 'ADMIN_PASSWORD and JWT_SECRET must be set in Vercel → Settings → Environment Variables (Production), then redeploy. Open /api/admin/status to verify.',
+                code: 'ENV_MISSING'
+            });
         }
 
         if (email && String(email).trim().toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {

@@ -40,6 +40,11 @@ Set these in **Vercel → Project → Settings → Environment Variables** for *
 
 After adding or changing any variable, **redeploy** (Deployments → ⋯ → Redeploy) so the new values are used.
 
+**If you see "Server error" on admin login:**  
+1. Open **https://www.hexastacksolutions.com/api/admin/status** — it must show `{"configured":true}`.  
+2. In Vercel → Settings → Environment Variables, ensure **ADMIN_PASSWORD** and **JWT_SECRET** exist and are checked for **Production** (not only Preview).  
+3. **Redeploy**: Deployments → ⋯ on latest → Redeploy. Variables are applied only on deploy.
+
 ## Optional
 
 - **VITE_API_URL:** Leave **unset** so the frontend uses the same origin (`/api/*`). Only set it if you host the API on a different domain.

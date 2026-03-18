@@ -639,7 +639,7 @@ export default function Admin() {
                     } else if (res.status === 503 && data.error) {
                         setLoginError(data.error);
                     } else if (res.status === 500) {
-                        setLoginError(data.error || 'Server error. Set DATABASE_URL, ADMIN_PASSWORD and JWT_SECRET in Vercel → Settings → Environment Variables, then redeploy.');
+                        setLoginError(data.error || 'Server error. Set ADMIN_PASSWORD and JWT_SECRET in Vercel → Settings → Environment Variables (Production), then redeploy. Verify: ' + (typeof window !== 'undefined' ? window.location.origin : API_URL || '') + '/api/admin/status');
                     } else {
                         setLoginError(data.error || `Invalid password. ${5 - newAttempts} attempts remaining.`);
                     }
