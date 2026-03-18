@@ -22,14 +22,12 @@
     },
     {
       "src": "api/index.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": "api/server-bundle.cjs"
+      }
     }
   ],
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "api/server-bundle.cjs"
-    }
-  },
   "routes": [
     {
       "src": "/api/(.*)",
