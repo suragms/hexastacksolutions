@@ -89,6 +89,16 @@ function ensureBody(req) {
 
 // Vercel (@vercel/node) expects a request handler function export.
 export default async function handler(req, res) {
-  await ensureBody(req);
-  return handlerTarget(req, res);
+  try {
+    await ensureBody(req);
+    handlerTarget(req, res);
+  } catch (err) {
+    console.error('API handler error:', err?.message || err);
+    if (!res.headersSent) {
+      res.status(500).setHeader('Content-Type', 'application/json').end(JSON.stringify({
+        error: 'Server error',
+        message: process.env.NODE_ENV === 'development' ? (err?.message || String(err)) : undefined
+      }));
+    }
+  }
 }
