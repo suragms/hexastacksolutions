@@ -1,6 +1,6 @@
 import express from 'express';
 import { db } from '../db';
-import { nanoid } from 'nanoid';
+import crypto from 'crypto';
 
 const router = express.Router();
 
@@ -12,7 +12,8 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
-        const linkToken = nanoid(32);
+        // Use built-in crypto to avoid ESM-only deps in the serverless CJS bundle.
+        const linkToken = crypto.randomUUID().replace(/-/g, '');
 
         const feedback = await db.feedback.create({
             data: {
