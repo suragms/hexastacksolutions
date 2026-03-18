@@ -3,29 +3,37 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
+// ── GET /api/admin/status — public; returns whether admin login is configured (for debugging deploy)
+router.get('/status', (_req, res) => {
+    const hasPassword = !!process.env.ADMIN_PASSWORD?.trim();
+    const hasSecret = !!process.env.JWT_SECRET?.trim();
+    res.json({ configured: hasPassword && hasSecret });
+});
+
 // ── POST /api/admin/login
 router.post('/login', async (req, res) => {
     try {
-        const { email, password } = (req.body && typeof req.body === 'object' ? req.body : {}) as {
-            email?: string;
-            password?: string;
-        };
+        const body = req.body && typeof req.body === 'object' ? req.body : {};
+        const email = body.email;
+        const password = body.password;
         if (!password || !String(password).trim()) return res.status(400).json({ error: 'Password is required' });
 
         const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-        const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'supporthexastack@hexastacksolutions.com';
+        const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'supporthexastack@hexastacksolutions.com').trim();
         const JWT_SECRET = process.env.JWT_SECRET;
 
-        if (!ADMIN_PASSWORD || !JWT_SECRET) {
+        if (!ADMIN_PASSWORD?.trim() || !JWT_SECRET?.trim()) {
             console.error('MISSING ENV: ADMIN_PASSWORD or JWT_SECRET not set');
             return res.status(500).json({ error: 'Server misconfiguration — env vars missing' });
         }
 
-        if (email && email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+        if (email && String(email).trim().toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        if (String(password) !== String(ADMIN_PASSWORD)) {
+        const passwordTrimmed = String(password).trim();
+        const envPasswordTrimmed = String(ADMIN_PASSWORD).trim();
+        if (passwordTrimmed !== envPasswordTrimmed) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 

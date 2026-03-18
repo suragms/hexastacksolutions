@@ -34,7 +34,14 @@ if (process.env.NETLIFY || process.env.VERCEL) {
 }
 
 app.use(cors());
-app.use(express.json({ limit: '50mb' }));
+// On Vercel, req.body can be pre-set by the runtime; express.json() then reads an already-consumed stream and can overwrite with {}. Preserve Vercel's body.
+app.use((req, res, next) => {
+    const preBody = req.body;
+    if (process.env.VERCEL && preBody != null && typeof preBody === 'object' && !Array.isArray(preBody) && Object.keys(preBody).length > 0) {
+        return next();
+    }
+    express.json({ limit: '50mb' })(req, res, next);
+});
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.use((req, _res, next) => {

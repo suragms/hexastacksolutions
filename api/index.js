@@ -65,7 +65,30 @@ if (process.env.NODE_ENV !== 'production' && (devApp || app)?.listen) {
 
 const handlerTarget = devApp || app || apiHandler;
 
+/** On Vercel, same-origin requests sometimes have empty req.body. Read stream and set req.body so Express gets it. */
+function ensureBody(req) {
+  return new Promise((resolve) => {
+    if (!process.env.VERCEL || req.body != null) return resolve();
+    const method = (req.method || '').toUpperCase();
+    if (method !== 'POST' && method !== 'PUT' && method !== 'PATCH') return resolve();
+    const ct = (req.headers['content-type'] || '').toLowerCase();
+    if (!ct.includes('application/json')) return resolve();
+    if (req.readableEnded) return resolve();
+    const chunks = [];
+    req.on('data', (chunk) => chunks.push(chunk));
+    req.on('end', () => {
+      try {
+        const raw = Buffer.concat(chunks).toString('utf8');
+        if (raw.trim()) req.body = JSON.parse(raw);
+      } catch (_) { /* leave req.body undefined */ }
+      resolve();
+    });
+    req.on('error', () => resolve());
+  });
+}
+
 // Vercel (@vercel/node) expects a request handler function export.
-export default function handler(req, res) {
+export default async function handler(req, res) {
+  await ensureBody(req);
   return handlerTarget(req, res);
 }

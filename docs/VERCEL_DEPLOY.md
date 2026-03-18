@@ -54,7 +54,10 @@ After adding or changing any variable, **redeploy** (Deployments → ⋯ → Red
 
 ## Troubleshooting: /admin login not working
 
-**"Invalid password" on production but works locally** — Your deployed app doesn’t have the same env as local. Do this:
+**1. Check if the server sees your env**  
+Open `https://www.hexastacksolutions.com/api/admin/status` in the browser. It returns `{ "configured": true }` only when `ADMIN_PASSWORD` and `JWT_SECRET` are both set (no values are revealed). If you see `{ "configured": false }`, add both in Vercel → Settings → Environment Variables and redeploy.
+
+**2. "Invalid password" on production but works locally** — Your deployed app doesn’t have the same env as local. Do this:
 
 1. **Vercel** → your project → **Settings** → **Environment Variables**.
 2. Add **ADMIN_PASSWORD** with the **exact same value** you use locally (e.g. `hexastack@2024`). No extra spaces.
@@ -63,6 +66,8 @@ After adding or changing any variable, **redeploy** (Deployments → ⋯ → Red
 5. Log in with the same password as in `ADMIN_PASSWORD`.
 
 If you see **"Admin login not configured"** (503), `ADMIN_PASSWORD` (or `JWT_SECRET`) is missing in Vercel — add both and redeploy.
+
+If you see **"Password is required"** or the login request seems to send an empty body (e.g. only on the deployed site, not locally), the API now parses the request body in the handler before calling Express so same-origin POSTs from the frontend are handled correctly. Redeploy to pick up this fix.
 
 If you see **"Login API not found"** or **"Connection error"**, the `/api/*` route may not be running: confirm `api/index.js` exists, `vercel.json` routes `/api/(.*)` to `/api/index.js`, and the **Build Command** runs `npm run build` (so `api/server-bundle.cjs` is created). In Vercel → Settings → General, set **Output Directory** to `dist` so the frontend is served.
 
