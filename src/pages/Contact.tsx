@@ -205,16 +205,43 @@ export default function Contact() {
                         </div>
                     </div>
 
-                    {/* WhatsApp CTA banner */}
-                    <a
-                        href={`https://wa.me/${primaryPhone.replace(/\D/g, '')}?text=${encodeURIComponent('Hi HexaStack! I want to discuss a project with you.')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-3 w-full min-h-[52px] px-5 py-3 rounded-xl bg-[#25D366] text-white font-semibold hover:bg-[#20BA5A] transition-colors text-sm mb-8 sm:mb-10"
-                    >
-                        <MessageCircle className="w-5 h-5 shrink-0" />
-                        Fastest reply — WhatsApp us now (reply in 2 hrs)
-                    </a>
+                    {/* Contact trust banner (avoid "WhatsApp-only" feel) */}
+                    <div className="w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 sm:p-6 mb-8 sm:mb-10">
+                        <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+                            <div className="min-w-0">
+                                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted-foreground)] mb-2">
+                                    Contact
+                                </p>
+                                <p className="text-sm sm:text-base text-[var(--foreground)] font-semibold mb-1">
+                                    Call / WhatsApp: <a className="text-[var(--primary)] hover:underline" href={`tel:${primaryPhone.replace(/\D/g, '')}`}>+91 75919 99365</a>
+                                </p>
+                                <p className="text-sm text-[var(--muted-foreground)]">
+                                    Email: <a className="text-[var(--primary)] hover:underline break-all" href={`mailto:${email}`}>{email}</a>
+                                </p>
+                                <p className="text-xs text-[var(--muted-foreground)] mt-2">
+                                    We serve clients across Kerala, India and UAE.
+                                </p>
+                            </div>
+                            <div className="flex flex-col sm:flex-row gap-3">
+                                <a
+                                    href={`tel:${primaryPhone.replace(/\D/g, '')}`}
+                                    className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-xl border border-[var(--border)] text-[var(--foreground)] font-semibold hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors text-sm"
+                                >
+                                    <Phone className="w-4 h-4" />
+                                    Call now
+                                </a>
+                                <a
+                                    href={`https://wa.me/${primaryPhone.replace(/\D/g, '')}?text=${encodeURIComponent('Hi HexaStack! I want to discuss a project with you.')}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-xl bg-[#25D366] text-white font-semibold hover:bg-[#20BA5A] transition-colors text-sm"
+                                >
+                                    <MessageCircle className="w-5 h-5 shrink-0" />
+                                    WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
                     <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                         {/* Form */}

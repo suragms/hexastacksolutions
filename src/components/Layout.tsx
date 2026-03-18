@@ -96,6 +96,7 @@ export default function Layout({ children }: LayoutProps) {
     /** Public contact email for footer and mailto links. */
     const email = 'supporthexastack@hexastacksolutions.com';
     const address = settings?.address || 'Vadanappally, Thrissur, Kerala 680614, India';
+    const serviceAreaText = 'Serving clients across Kerala, India and UAE';
 
     const navLinks = [
         { to: '/services', label: 'Services' },
@@ -152,7 +153,7 @@ export default function Layout({ children }: LayoutProps) {
                                 </Link>
                             ))}
                             <a href="tel:+917591999365" className="relative px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-[var(--primary)] text-[var(--foreground)]/80 flex items-center gap-1.5">
-                                <Phone className="w-3.5 h-3.5" /> +91 75919 99365
+                                <Phone className="w-3.5 h-3.5" /> Call: +91 75919 99365
                             </a>
                             {user && (
                                 <>
@@ -379,14 +380,15 @@ export default function Layout({ children }: LayoutProps) {
                         <div className="col-span-2 md:col-span-3">
                             <h4 className="text-[11px] font-semibold uppercase tracking-widest text-[var(--foreground)] mb-4">Contact</h4>
                             <p className="text-sm font-semibold text-[var(--foreground)] mb-1">HexaStack Solutions</p>
-                            <p className="text-sm text-[var(--muted-foreground)] leading-relaxed mb-3">
+                            <p className="text-sm text-[var(--muted-foreground)] leading-relaxed mb-2">
                                 Vadanappally, Thrissur<br />
                                 Kerala 680614<br />
                                 India
                             </p>
+                            <p className="text-xs text-[var(--muted-foreground)] mb-3">{serviceAreaText}</p>
                             <ul className="space-y-3">
                                 <li>
-                                    <span className="text-sm text-[var(--muted-foreground)]">Phone: </span>
+                                    <span className="text-sm text-[var(--muted-foreground)]">Call / WhatsApp: </span>
                                     <a href="tel:+917591999365" className="text-sm font-medium text-[var(--primary)] hover:underline">+91 75919 99365</a>
                                 </li>
                                 <li>
@@ -398,13 +400,13 @@ export default function Layout({ children }: LayoutProps) {
                                 <li>
                                     <a href="https://wa.me/917591999365" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors group">
                                         <MessageCircle className="w-4 h-4 flex-shrink-0 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
-                                        WhatsApp: +91 75919 99365
+                                        Call / WhatsApp: +91 75919 99365
                                     </a>
                                 </li>
                                 <li>
                                     <a href="https://wa.me/917012714150" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors group">
                                         <MessageCircle className="w-4 h-4 flex-shrink-0 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
-                                        WhatsApp: +91 70127 14150
+                                        Call / WhatsApp: +91 70127 14150
                                     </a>
                                 </li>
                             </ul>

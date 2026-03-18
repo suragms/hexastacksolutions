@@ -296,6 +296,57 @@ export default function Home() {
                     </div>
                 </section>
 
+                {/* Identity / About (trust for Google Business verification) */}
+                <section className="py-14 sm:py-16 border-t border-[var(--border)] bg-[var(--background)]" aria-labelledby="about-us">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                        <ScrollReveal>
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--muted-foreground)] mb-3">
+                                About us
+                            </p>
+                            <h2 id="about-us" className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--foreground)] mb-4">
+                                A Kerala-based software team building custom systems for India and UAE.
+                            </h2>
+                            <div className="grid md:grid-cols-12 gap-6 md:gap-10 items-start">
+                                <div className="md:col-span-8">
+                                    <p className="text-[var(--muted-foreground)] leading-relaxed mb-4">
+                                        HexaStack Solutions is a software development service founded by <span className="text-[var(--foreground)] font-semibold">Anandu Krishna</span> and <span className="text-[var(--foreground)] font-semibold">Surag</span>, based in Kerala, India.
+                                    </p>
+                                    <p className="text-[var(--muted-foreground)] leading-relaxed mb-4">
+                                        We specialize in building custom software, websites, billing systems, and AI-based solutions for businesses in India and the UAE.
+                                        We operate as a service-based business, working remotely with clients and delivering high-quality digital solutions.
+                                    </p>
+                                    <p className="text-[var(--muted-foreground)] leading-relaxed">
+                                        For inquiries, contact: <span className="text-[var(--foreground)] font-semibold">Call / WhatsApp:</span> <a className="text-[var(--primary)] hover:underline" href="tel:+917591999365">+91 75919 99365</a> ·{' '}
+                                        <span className="text-[var(--foreground)] font-semibold">Email:</span> <a className="text-[var(--primary)] hover:underline" href="mailto:support@hexastacksolutions.com">support@hexastacksolutions.com</a>
+                                    </p>
+                                    <p className="text-xs text-[var(--muted-foreground)] mt-3">
+                                        We serve clients across Kerala, India and UAE.
+                                    </p>
+                                </div>
+                                <div className="md:col-span-4">
+                                    <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 sm:p-6">
+                                        <p className="text-sm font-semibold text-[var(--foreground)] mb-2">Company details</p>
+                                        <ul className="space-y-2 text-sm text-[var(--muted-foreground)]">
+                                            <li><span className="text-[var(--foreground)] font-medium">Business:</span> HexaStack Solutions</li>
+                                            <li><span className="text-[var(--foreground)] font-medium">Location:</span> Thrissur, Kerala, India</li>
+                                            <li><span className="text-[var(--foreground)] font-medium">Phone:</span> +91 75919 99365</li>
+                                            <li><span className="text-[var(--foreground)] font-medium">Email:</span> support@hexastacksolutions.com</li>
+                                        </ul>
+                                        <div className="mt-4 flex flex-wrap gap-3">
+                                            <Link to="/about" className="inline-flex items-center justify-center h-10 px-5 rounded-full border border-[var(--border)] text-[var(--foreground)] font-semibold hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors text-sm">
+                                                Read our story
+                                            </Link>
+                                            <Link to="/work" className="inline-flex items-center justify-center h-10 px-5 rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold hover:opacity-95 transition-opacity text-sm">
+                                                View projects
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ScrollReveal>
+                    </div>
+                </section>
+
                 {/* 1b. Social proof strip directly under hero */}
                 <section className="border-t border-[var(--border)] bg-[var(--card)]/70">
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row items-center gap-3">
