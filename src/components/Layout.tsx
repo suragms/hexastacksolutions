@@ -290,8 +290,8 @@ export default function Layout({ children }: LayoutProps) {
                 </AnimatePresence>
             </main>
 
-            {/* Footer */}
-            <footer className="border-t border-[var(--border)] bg-[var(--card)]/80 backdrop-blur-sm" role="contentinfo">
+            {/* Footer - data-deploy-version helps confirm latest build is live (Inspect Element) */}
+            <footer className="border-t border-[var(--border)] bg-[var(--card)]/80 backdrop-blur-sm" role="contentinfo" data-deploy-version="2025-03-14">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Main footer grid */}
                     <div className="py-12 sm:py-14 md:py-16 lg:py-20 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-10 sm:gap-y-12 md:gap-x-10 lg:gap-x-12">

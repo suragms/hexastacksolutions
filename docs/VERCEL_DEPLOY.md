@@ -1,5 +1,31 @@
 # Vercel + MongoDB deployment
 
+## Production not updating / latest design not showing
+
+If you pushed but production still shows the old design:
+
+1. **Confirm Production Branch**  
+   Vercel → your project → **Settings** → **Git** → **Production Branch**.  
+   It must be the branch you push to (e.g. `main` or `master`). If it was `master` and you only pushed to `main`, production won’t update until you push to `master` or change Production Branch to `main`.
+
+2. **Redeploy and clear cache**  
+   **Deployments** → open the **⋯** menu on the **latest** deployment → **Redeploy**.  
+   If you see **“Redeploy with existing Build Cache”**, choose **“Redeploy”** without cache (or use **Clear cache and redeploy** if available) so the full build runs and new static files are uploaded.
+
+3. **Check build settings**  
+   **Settings** → **General**:
+   - **Build Command:** `npm run build` (must run Vite + API bundle).
+   - **Output Directory:** `dist`.
+   - **Root Directory:** leave blank (repo root). If set to a subfolder, `package.json` and `vercel.json` must be inside it.
+
+4. **Check the latest deployment**  
+   **Deployments** → open the top deployment. If **Building** or **Error**, production won’t change. Fix any build errors in the logs. If **Ready**, the new build is live; hard-refresh the site (Ctrl+Shift+R / Cmd+Shift+R) or try in an incognito window.
+
+5. **Confirm new build is served**  
+   On the live site, right-click the footer → **Inspect**. In the HTML, the `<footer>` should have `data-deploy-version="2025-03-14"` (or the date we set). If you don’t see it, the browser or CDN is still serving an old bundle.
+
+---
+
 ## Frontend and API on Vercel
 
 - **Frontend:** Static build (`dist/`) is served from the project root. Build command: `npm run build` (runs Vite then the API bundle script). In Vercel → Settings → General, **Build Command** should be `npm run build` and **Output Directory** `dist`.
