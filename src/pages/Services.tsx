@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code2, Calculator, Bot, Cloud, Layout as LayoutIcon, BarChart3 } from 'lucide-react';
 import Layout from '@/components/Layout';
@@ -11,7 +11,7 @@ const serviceIcons = [Code2, Calculator, Bot, Cloud, LayoutIcon, BarChart3];
 const FALLBACK_SERVICES = [
     { id: '1', name: 'Custom Business Software', description: 'You have a workflow nobody\'s software fits. We build the one that does.', priceHint: 'From Rs.15K', isComingSoon: false },
     { id: '2', name: 'Billing & ERP Systems', description: 'Stop reconciling invoices by hand. VAT-ready for India and Gulf.', priceHint: 'From Rs.60K', isComingSoon: false },
-    { id: '3', name: 'AI & Automation', description: 'That task your team does 40 times a day — we automate it.', priceHint: 'From Rs.75K', isComingSoon: false },
+    { id: '3', name: 'AI & Automation', description: 'That task your team does 40 times a day â€” we automate it.', priceHint: 'From Rs.75K', isComingSoon: false },
     { id: '4', name: 'SaaS Product Build', description: 'Wireframe to live product. Architecture, build, launch.', priceHint: 'Custom', isComingSoon: false },
     { id: '5', name: 'Cloud & Hosting', description: 'Your software shouldn\'t go down on your busiest day.', priceHint: 'Custom', isComingSoon: false },
     { id: '6', name: 'Software Audit & Fix', description: 'Slow system? Expensive stack? We find what\'s wasting your money.', priceHint: 'Custom', isComingSoon: false },
@@ -41,17 +41,18 @@ export default function Services() {
     return (
         <Layout>
             <SEO
-                title="Software Development Services Kerala | POS, Billing, AI | HexaStack"
-                description="Custom software, POS systems, billing, AI automation. Kerala and UAE. From Rs.15,000."
-                keywords="software development Kerala, custom software development Thrissur, POS system development, billing software development UAE, web development company Kerala, ERP development India, AI automation services, SaaS development Kerala, mobile app development Thrissur, business software solutions, software company Thrissur, Vadanappally Thrissur Kerala, software company Vadanappally, web development Vadanappally, POS software Vadanappally Thrissur"
+                title="Software Development Services in Kerala for India, US and UAE Businesses | HexaStack"
+                description="Custom software, websites, POS systems, billing, ERP, and AI automation from a Kerala-based team serving India, the United States, and the UAE."
+                keywords="software development services Kerala, custom software development Thrissur, web development company Kerala, software development company united states partner, billing software development UAE, ERP development India, AI automation services, SaaS development Kerala, mobile app development Thrissur, business software solutions, software company Thrissur"
                 canonical="/services"
+                localeAlternates={['en_US']}
                 schema={{
                     '@context': 'https://schema.org',
                     '@type': 'ProfessionalService',
                     name: 'HexaStack Solutions',
-                    description: 'Custom ERP, SaaS platforms, and automation systems built for modern businesses across India and the Gulf.',
+                    description: 'Custom ERP, SaaS platforms, websites, and automation systems built for modern businesses across India, the United States, and the Gulf.',
                     url: 'https://www.hexastacksolutions.com/services',
-                    areaServed: [{ '@type': 'Place', name: 'Thrissur, Kerala' }, { '@type': 'Place', name: 'UAE' }],
+                    areaServed: [{ '@type': 'Place', name: 'Thrissur, Kerala' }, { '@type': 'Place', name: 'India' }, { '@type': 'Place', name: 'United States' }, { '@type': 'Place', name: 'UAE' }],
                     serviceType: ['Web Development', 'POS Software', 'Custom Software', 'AI Solutions', 'SaaS Development', 'Business Software', 'Mobile App Development'],
                 }}
             />
@@ -63,7 +64,7 @@ export default function Services() {
                         Stop losing money to broken workflows.
                     </h1>
                     <p className="text-[var(--muted-foreground)] text-base sm:text-lg md:text-xl max-w-2xl mb-8 leading-relaxed break-words">
-                        We build custom software that replaces manual billing, paper records, and expensive SaaS subscriptions. Kerala and Gulf. Delivered in 4–6 weeks.
+                        We build custom software that replaces manual billing, paper records, and expensive SaaS subscriptions. Kerala-based delivery for India, United States, and Gulf businesses.
                     </p>
                     <div className="flex flex-col w-full md:w-auto md:flex-row gap-3 md:gap-4">
                         <Link to="/work" className="flex items-center justify-center h-12 w-full md:w-auto px-8 rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold hover:opacity-95 transition-opacity">
@@ -186,10 +187,10 @@ export default function Services() {
                         </div>
                         <div className="md:w-1/2 flex flex-col justify-center">
                             <ul className="space-y-4 text-[var(--foreground)]">
-                                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full shrink-0"></span> You talk to the developer directly — no account managers</li>
-                                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full shrink-0"></span> We&apos;ve built real POS, billing, and AI tools in production — not demos</li>
-                                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full shrink-0"></span> VAT-compliant from day one — India and Gulf</li>
-                                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full shrink-0"></span> Fixed price, fixed timeline — not open-ended billing</li>
+                                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full shrink-0"></span> You talk to the developer directly â€” no account managers</li>
+                                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full shrink-0"></span> We&apos;ve built real POS, billing, and AI tools in production â€” not demos</li>
+                                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full shrink-0"></span> India, United States, and Gulf delivery experience with compliance-aware builds</li>
+                                <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full shrink-0"></span> Fixed price, fixed timeline â€” not open-ended billing</li>
                                 <li className="flex items-center gap-4"><span className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full shrink-0"></span> WhatsApp reply in 2 hours, not 2 days</li>
                             </ul>
                         </div>
@@ -215,3 +216,4 @@ export default function Services() {
         </Layout>
     );
 }
+

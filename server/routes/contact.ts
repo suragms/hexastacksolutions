@@ -15,6 +15,25 @@ const sanitize = (str: string | undefined | null): string => {
     return str.trim().slice(0, 1000); // Limit length
 };
 
+const getSupportInboxEmail = async (): Promise<string> => {
+    try {
+        const settings = await db.companySettings.findFirst({
+            select: { supportEmail: true, primaryEmail: true },
+        });
+
+        return (
+            settings?.supportEmail?.trim() ||
+            settings?.primaryEmail?.trim() ||
+            process.env.SUPPORT_EMAIL ||
+            process.env.ADMIN_EMAIL ||
+            'supporthexastack@hexastacksolutions.com'
+        );
+    } catch (error) {
+        console.error('[SUPPORT_EMAIL_LOOKUP]', error);
+        return process.env.SUPPORT_EMAIL || process.env.ADMIN_EMAIL || 'supporthexastack@hexastacksolutions.com';
+    }
+};
+
 // Send email notification to admin (using Web3Forms - free service)
 const sendEmailNotification = async (
     name: string,
@@ -26,7 +45,7 @@ const sendEmailNotification = async (
     try {
         // Web3Forms is a free email API - no signup needed for basic usage
         // Alternative: User can replace with their own SMTP or email service
-        const adminEmail = process.env.ADMIN_EMAIL || 'supporthexastack@hexastacksolutions.com';
+        const adminEmail = await getSupportInboxEmail();
         
         // Log the notification (email can be configured later)
         console.log(`\n========================================`);
@@ -257,6 +276,7 @@ router.post('/:id/reply', async (req, res) => {
 
         // Send email via Resend if configured
         if (process.env.RESEND_API_KEY) {
+            const supportEmail = await getSupportInboxEmail();
             const response = await fetch('https://api.resend.com/emails', {
                 method: 'POST',
                 headers: {
@@ -279,7 +299,7 @@ router.post('/:id/reply', async (req, res) => {
                                 <p style="color: #64748b; margin: 0; font-size: 14px;">${enquiry.requirement}</p>
                             </div>
                             <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
-                            <p style="color: #64748b; font-size: 12px;">Best regards,<br>HexaStack Solutions<br>supporthexastack@hexastacksolutions.com</p>
+                            <p style="color: #64748b; font-size: 12px;">Best regards,<br>HexaStack Solutions<br>${supportEmail}</p>
                         </div>
                     `,
                 }),

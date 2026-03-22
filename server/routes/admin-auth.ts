@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
         if (!password || !String(password).trim()) return res.status(400).json({ error: 'Password is required' });
 
         const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-        const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'supporthexastack@hexastacksolutions.com').trim();
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'hexastacksolutions@gmail.com').trim();
         const JWT_SECRET = process.env.JWT_SECRET;
 
         if (!ADMIN_PASSWORD?.trim() || !JWT_SECRET?.trim()) {

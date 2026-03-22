@@ -1,24 +1,72 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Phone, Mail, MapPin, CheckCircle, MessageCircle, ExternalLink } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ArrowRight, CheckCircle, ExternalLink, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
 import { API_URL } from '@/lib/utils';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { GlassCard } from '@/components/GlassCard';
+import { ScrollReveal, ScrollRevealStagger } from '@/components/ScrollReveal';
 
 interface CompanySettings {
     primaryEmail?: string;
+    supportEmail?: string | null;
     primaryWhatsApp?: string;
     secondaryWhatsApp?: string | null;
     address?: string | null;
 }
 
-const serviceOptions = ['I\'m not sure', 'Website', 'Web App / Business Software', 'POS / Billing', 'ERP / Inventory', 'AI / SaaS', 'Other'];
-const budgetOptions = ['Under Rs.15K', 'Rs.15K – Rs.60K', 'Rs.60K – Rs.1.5L', 'Rs.1.5L – Rs.2L', 'Rs.2L+', 'Not sure'];
+const serviceOptions = [
+    'Not sure yet',
+    'Website Design / SEO',
+    'Custom Web App',
+    'POS / Billing Software',
+    'ERP / Inventory',
+    'AI Automation',
+    'Maintenance / Support',
+];
 
-/** Public contact email shown on Contact page and in mailto links. */
-const CONTACT_EMAIL = 'supporthexastack@hexastacksolutions.com';
+const budgetOptions = [
+    'Not sure yet',
+    'Under Rs. 25K',
+    'Rs. 25K - Rs. 75K',
+    'Rs. 75K - Rs. 2L',
+    'Rs. 2L - Rs. 5L',
+    'Above Rs. 5L',
+];
+
+const CONTACT_EMAIL = 'hexastacksolutions@gmail.com';
+
+const nextSteps = [
+    'We review your message and understand the scope.',
+    'We reply with the right next step, questions, or a rough direction on cost and approach.',
+    'If the project is a fit, we move to a clearer discussion and planning stage.',
+];
+
+const fitPoints = [
+    'Business websites and landing pages',
+    'Custom software and operational tools',
+    'POS, billing and inventory systems',
+    'AI workflows and automation ideas',
+];
+
+function normalizeService(service: string | null) {
+    if (!service) {
+        return '';
+    }
+
+    const value = service.toLowerCase();
+    if (value.includes('website') || value.includes('seo')) return 'Website Design / SEO';
+    if (value.includes('web app') || value.includes('portal') || value.includes('custom')) return 'Custom Web App';
+    if (value.includes('pos') || value.includes('billing')) return 'POS / Billing Software';
+    if (value.includes('erp') || value.includes('inventory')) return 'ERP / Inventory';
+    if (value.includes('ai') || value.includes('automation')) return 'AI Automation';
+    if (value.includes('support') || value.includes('maintenance')) return 'Maintenance / Support';
+    return 'Not sure yet';
+}
 
 export default function Contact() {
+    const location = useLocation();
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -26,13 +74,12 @@ export default function Contact() {
         service: '',
         budget: '',
         requirement: '',
-        website: '', // honeypot
+        website: '',
     });
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [error, setError] = useState('');
-    const [showWhatsApp, setShowWhatsApp] = useState(false);
     const [settings, setSettings] = useState<CompanySettings | null>(null);
 
     useEffect(() => {
@@ -42,372 +89,521 @@ export default function Contact() {
             .catch(() => { });
     }, []);
 
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const requestedService = normalizeService(params.get('service'));
+        const demo = params.get('demo');
+
+        setFormData((current) => {
+            const next = { ...current };
+            let changed = false;
+
+            if (requestedService && !current.service) {
+                next.service = requestedService;
+                changed = true;
+            }
+
+            if (demo && !current.requirement) {
+                if (demo === 'hexabill' || demo === '1') {
+                    next.service = current.service || 'POS / Billing Software';
+                    next.requirement = 'I would like a demo of HexaBill for my business.';
+                } else {
+                    next.requirement = 'I would like to discuss a software or website project.';
+                }
+                changed = true;
+            } else if (requestedService && !current.requirement) {
+                next.requirement = `I would like to discuss ${requestedService.toLowerCase()} for my business.`;
+                changed = true;
+            }
+
+            return changed ? next : current;
+        });
+    }, [location.search]);
+
     const primaryPhone = settings?.primaryWhatsApp || '+917591999365';
     const secondaryPhone = settings?.secondaryWhatsApp || '+917012714150';
-    const email = CONTACT_EMAIL;
+    const primaryEmail = settings?.primaryEmail || CONTACT_EMAIL;
+    const supportEmail = settings?.supportEmail || primaryEmail;
     const address = settings?.address || 'Vadanappally, Thrissur, Kerala 680614, India';
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const normalizePhoneForLink = (value: string) => value.replace(/[^+\d]/g, '');
+    const normalizePhoneForWhatsApp = (value: string) => value.replace(/\D/g, '');
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
         if (formData.website) {
             setSubmitted(true);
             return;
         }
-        setLoading(true);
-        setError('');
-        const submitData = {
+
+        const payload = {
             name: formData.name.trim(),
             requirement: formData.requirement.trim(),
-            email: formData.email?.trim() || undefined,
-            whatsapp: formData.whatsapp?.trim() || undefined,
+            email: formData.email.trim() || undefined,
+            whatsapp: formData.whatsapp.trim() || undefined,
             service: formData.service || undefined,
             budget: formData.budget || undefined,
         };
-        if (!submitData.name || submitData.name.length < 2) {
+
+        if (!payload.name || payload.name.length < 2) {
             setError('Please enter your full name.');
-            setLoading(false);
             return;
         }
-        if (!submitData.requirement) {
-            setError('Please describe what you need.');
-            setLoading(false);
+
+        if (!payload.requirement) {
+            setError('Please describe your requirement.');
             return;
         }
+
+        setLoading(true);
+        setError('');
+
         try {
-            const url = `${API_URL}/api/contact`.replace(/([^:])\/\/+/, '$1/'); // avoid double slash
-            const response = await fetch(url, {
+            const response = await fetch(`${API_URL}/api/contact`.replace(/([^:])\/\/+/, '$1/'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(submitData),
+                body: JSON.stringify(payload),
             });
+
             let data: { error?: string; message?: string } = {};
             try {
                 data = await response.json();
             } catch {
-                // Server returned non-JSON (e.g. HTML error page)
-                setError(response.ok ? 'Something went wrong.' : `Server error (${response.status}). Please try again.`);
-                setLoading(false);
+                setError(response.ok ? 'Something went wrong. Please try again.' : `Server error (${response.status}). Please try again.`);
                 return;
             }
+
             if (!response.ok) {
-                const msg = data.message || data.error || (response.status === 429 ? 'Too many enquiries. Please try again in an hour.' : 'Failed to submit. Please try again.');
-                setError(msg);
-                setLoading(false);
+                const message =
+                    data.message ||
+                    data.error ||
+                    (response.status === 429
+                        ? 'Too many enquiries were sent recently. Please try again in an hour.'
+                        : 'Failed to submit the form. Please try again.');
+                setError(message);
                 return;
             }
-            setFormData({ name: '', email: '', whatsapp: '', service: '', budget: '', requirement: '', website: '' });
+
+            setFormData({
+                name: '',
+                email: '',
+                whatsapp: '',
+                service: '',
+                budget: '',
+                requirement: '',
+                website: '',
+            });
             setShowSuccessPopup(true);
-        } catch (err) {
-            console.error('[Contact submit]', err);
-            setError('Network error. Check your connection and try again.');
+        } catch (submitError) {
+            console.error('[Contact submit]', submitError);
+            setError('Network error. Please check your connection and try again.');
         } finally {
             setLoading(false);
         }
     };
 
-    const whatsappContacts = [
-        { number: primaryPhone, label: 'Line 1' },
-        ...(secondaryPhone ? [{ number: secondaryPhone, label: 'Line 2' }] : []),
-    ];
-
     if (submitted) {
         return (
             <Layout>
-                <SEO title="Message Received | HexaStack Solutions" description="We got your message. Expect a reply within 2 hours." />
-                <div className="min-h-[80vh] flex items-center justify-center py-16 sm:py-20 px-4 sm:px-6">
-                    <div className="max-w-lg w-full text-center">
-                        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-8 sm:p-10 shadow-sm">
-                            <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-6">
-                                <CheckCircle className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
-                            </div>
-                            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 text-[var(--foreground)]">We got it!</h1>
-                            <p className="text-[var(--muted-foreground)] mb-2 leading-relaxed">Expect a reply within 2 hours.</p>
-                            <p className="text-sm text-[var(--muted-foreground)] mb-8 leading-relaxed max-w-sm mx-auto">
-                                1. We&apos;ll read your message · 2. We&apos;ll tell you if we can build it · 3. We&apos;ll give you a rough cost — no obligation.
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                                <a href={`tel:${primaryPhone.replace(/\D/g, '')}`} className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full border border-[var(--border)] text-[var(--foreground)] font-semibold hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors">
-                                    <Phone className="w-4 h-4" /> Call
-                                </a>
-                                <button type="button" onClick={() => setShowWhatsApp(true)} className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full bg-[#25D366] text-white font-semibold hover:bg-[#20BA5A] transition-colors">
-                                    <MessageCircle className="w-5 h-5" /> WhatsApp Us
-                                </button>
-                            </div>
-                            <Link to="/" className="inline-block mt-8 text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
-                                ← Back to Home
-                            </Link>
+                <SEO
+                    title="Thanks for Contacting HexaStack Solutions"
+                    description="Your message has been received by HexaStack Solutions."
+                    canonical="/contact"
+                />
+                <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
+                    <div className="surface-panel rounded-[32px] px-6 py-10 text-center sm:px-10 md:py-12">
+                        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
+                            <CheckCircle className="h-8 w-8" />
                         </div>
+                        <h1 className="mt-6 text-3xl font-bold tracking-tight text-[var(--foreground)] md:text-4xl">
+                            Your enquiry has been received
+                        </h1>
+                        <p className="mx-auto mt-4 max-w-xl text-base leading-8 text-[var(--muted-foreground)]">
+                            Thank you for reaching out. We will review your requirement and get back to you with the
+                            next step as soon as possible.
+                        </p>
+                        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                            <a
+                                href={`tel:${normalizePhoneForLink(primaryPhone)}`}
+                                className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--border)] bg-white px-6 py-3.5 text-sm font-semibold text-[var(--foreground)] transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                            >
+                                <Phone className="h-4 w-4" />
+                                Call us
+                            </a>
+                            <a
+                                href={`https://wa.me/${normalizePhoneForWhatsApp(primaryPhone)}?text=${encodeURIComponent('Hi HexaStack, I just submitted an enquiry and wanted to follow up.')}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-semibold text-white"
+                            >
+                                <MessageCircle className="h-4 w-4" />
+                                WhatsApp us
+                            </a>
+                        </div>
+                        <Link to="/" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--primary)]">
+                            Back to Home
+                            <ArrowRight className="h-4 w-4" />
+                        </Link>
                     </div>
                 </div>
-
-                {showWhatsApp && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowWhatsApp(false)}>
-                        <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 sm:p-8 max-w-sm w-full shadow-xl" onClick={(e) => e.stopPropagation()}>
-                            <h3 className="text-lg font-semibold tracking-tight mb-5 text-[var(--foreground)]">Choose a number</h3>
-                            <div className="space-y-2">
-                                {whatsappContacts.map((c) => (
-                                    <a key={c.number} href={`https://wa.me/${c.number.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-4 rounded-xl bg-[var(--muted)]/50 border border-[var(--border)] hover:border-[var(--primary)] hover:bg-[var(--muted)]/80 transition-all">
-                                        <span className="font-medium text-[var(--foreground)] text-sm">{c.label}</span>
-                                        <span className="text-[var(--muted-foreground)] font-mono text-xs">{c.number}</span>
-                                    </a>
-                                ))}
-                            </div>
-                            <button type="button" onClick={() => setShowWhatsApp(false)} className="mt-5 w-full py-2.5 text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors rounded-lg">
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                )}
             </Layout>
         );
     }
 
-    const inputClass = "w-full min-h-[48px] bg-[var(--background)] px-4 py-3 border border-[var(--border)] rounded-xl text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 focus:border-[var(--primary)] transition-all text-sm";
-    const selectClass = inputClass + " appearance-none cursor-pointer pr-10";
-    const labelClass = "block text-xs font-medium text-[var(--foreground)] mb-2";
+    const schemaOrg = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'ContactPage',
+                name: 'Contact HexaStack Solutions',
+                url: 'https://www.hexastacksolutions.com/contact',
+            },
+            {
+                '@type': 'Organization',
+                name: 'HexaStack Solutions',
+                url: 'https://www.hexastacksolutions.com',
+                telephone: primaryPhone,
+                email: primaryEmail,
+            },
+            {
+                '@type': 'ContactPoint',
+                contactType: 'sales',
+                telephone: primaryPhone,
+                email: primaryEmail,
+                areaServed: ['IN', 'AE', 'US'],
+                availableLanguage: ['English'],
+            },
+            {
+                '@type': 'ContactPoint',
+                contactType: 'customer support',
+                telephone: primaryPhone,
+                email: supportEmail,
+                areaServed: ['IN', 'AE', 'US'],
+                availableLanguage: ['English'],
+            },
+        ],
+    };
+
+    const inputClass =
+        'w-full rounded-2xl border border-[var(--border)] bg-white px-4 py-3.5 text-sm text-[var(--foreground)] outline-none transition-colors placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] focus:ring-4 focus:ring-[var(--primary)]/10';
+    const labelClass = 'mb-2 block text-sm font-medium text-[var(--foreground)]';
 
     return (
         <Layout>
             <SEO
-                title="Contact HexaStack | Free Quote | Software Kerala & UAE"
-                description="Get a free quote in 2 hours. WhatsApp or form. Custom software, POS, billing, AI. Thrissur, Kerala."
-                keywords="contact HexaStack, free quote software Kerala, get quote Thrissur, software quote Kerala, request demo POS, contact software company Thrissur, WhatsApp software enquiry, free consultation Kerala UAE, contact software company Vadanappally, software quote Vadanappally Thrissur"
+                title="Contact HexaStack Solutions | Software Company in Thrissur, Kerala"
+                description="Contact HexaStack Solutions for website development, custom software, POS, billing systems and AI automation. Reach our Thrissur, Kerala team for projects across India, the United States, and the UAE."
+                keywords="contact HexaStack Solutions, software company Thrissur contact, website development enquiry Kerala, custom software quote India, software development company united states contact, POS software demo Thrissur, billing software company Kerala, AI automation consultation Kerala"
                 canonical="/contact"
-                schema={{
-                    '@context': 'https://schema.org',
-                    '@type': 'ContactPage',
-                    name: 'Contact HexaStack Solutions',
-                    mainEntity: {
-                        '@type': 'ContactPoint',
-                        telephone: primaryPhone,
-                        contactType: 'sales',
-                        email,
-                        areaServed: ['IN', 'AE'],
-                    },
-                }}
+                localeAlternates={['en_US']}
+                meta={[
+                    { name: 'geo.region', content: 'IN-KL' },
+                    { name: 'geo.placename', content: 'Thrissur, Kerala' },
+                ]}
+                schema={schemaOrg}
             />
-            <div className="min-h-0 flex-1">
-                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-16">
-                    {/* Hero */}
-                    <div className="mb-8 sm:mb-10">
-                        <div className="flex flex-col-reverse sm:flex-row sm:items-end sm:justify-between gap-4">
-                            <div className="max-w-2xl">
-                                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-2">
-                                    Tell us what you need. We&apos;ll tell you if we can build it.
-                                </h1>
-                                <p className="text-base text-[var(--muted-foreground)] leading-relaxed">
-                                    No sales pitch. A direct answer on scope and cost — usually within 2 hours.
-                                </p>
-                            </div>
-                            <Link to="/" className="text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors sm:shrink-0 self-start sm:self-auto">
-                                ← Back to Home
-                            </Link>
-                        </div>
-                    </div>
 
-                    {/* Contact trust banner (avoid "WhatsApp-only" feel) */}
-                    <div className="w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 sm:p-6 mb-8 sm:mb-10">
-                        <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
-                            <div className="min-w-0">
-                                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted-foreground)] mb-2">
-                                    Contact
-                                </p>
-                                <p className="text-sm sm:text-base text-[var(--foreground)] font-semibold mb-1">
-                                    Call / WhatsApp: <a className="text-[var(--primary)] hover:underline" href={`tel:${primaryPhone.replace(/\D/g, '')}`}>+91 75919 99365</a>
-                                </p>
-                                <p className="text-sm text-[var(--muted-foreground)]">
-                                    Email: <a className="text-[var(--primary)] hover:underline break-all" href={`mailto:${email}`}>{email}</a>
-                                </p>
-                                <p className="text-xs text-[var(--muted-foreground)] mt-2">
-                                    We serve clients across Kerala, India and UAE.
-                                </p>
-                            </div>
-                            <div className="flex flex-col sm:flex-row gap-3">
-                                <a
-                                    href={`tel:${primaryPhone.replace(/\D/g, '')}`}
-                                    className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-xl border border-[var(--border)] text-[var(--foreground)] font-semibold hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors text-sm"
-                                >
-                                    <Phone className="w-4 h-4" />
-                                    Call now
-                                </a>
-                                <a
-                                    href={`https://wa.me/${primaryPhone.replace(/\D/g, '')}?text=${encodeURIComponent('Hi HexaStack! I want to discuss a project with you.')}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-xl bg-[#25D366] text-white font-semibold hover:bg-[#20BA5A] transition-colors text-sm"
-                                >
-                                    <MessageCircle className="w-5 h-5 shrink-0" />
-                                    WhatsApp
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+            <section className="page-shell overflow-hidden border-b border-[var(--border)] py-16 md:py-20">
+                <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                        background:
+                            'radial-gradient(circle at 12% 10%, rgba(37,99,235,0.15), transparent 28%), radial-gradient(circle at 88% 18%, rgba(14,165,233,0.12), transparent 22%)',
+                    }}
+                />
+                <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+                    <ScrollReveal>
+                        <span className="section-kicker">Contact</span>
+                        <h1 className="mt-6 max-w-4xl text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl lg:text-[3.5rem]">
+                            Tell us what you want to build, improve, or launch next.
+                        </h1>
+                        <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--muted-foreground)] sm:text-lg">
+                            Use this page for business websites, custom software, POS, billing platforms, or AI
+                            automation ideas. We are based in Thrissur, Kerala and work with businesses across Kerala,
+                            India, the United States, and the UAE.
+                        </p>
+                    </ScrollReveal>
 
-                    <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-                        {/* Form */}
-                        <div className="lg:col-span-7">
-                            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 sm:p-8">
-                                <h2 className="text-lg font-semibold text-[var(--foreground)] mb-6">Send a message</h2>
-                                <form onSubmit={handleSubmit} className="space-y-5">
-                                    <div className="grid sm:grid-cols-2 gap-5">
+                    <ScrollRevealStagger className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+                        <GlassCard className="p-5">
+                            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Call</p>
+                            <a href={`tel:${normalizePhoneForLink(primaryPhone)}`} className="mt-3 block text-lg font-semibold text-[var(--foreground)]">
+                                {primaryPhone}
+                            </a>
+                        </GlassCard>
+                        <GlassCard className="p-5">
+                            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Primary email</p>
+                            <a href={`mailto:${primaryEmail}`} className="mt-3 block break-all text-lg font-semibold text-[var(--foreground)]">
+                                {primaryEmail}
+                            </a>
+                        </GlassCard>
+                        <GlassCard className="p-5">
+                            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Support email</p>
+                            <a href={`mailto:${supportEmail}`} className="mt-3 block break-all text-lg font-semibold text-[var(--foreground)]">
+                                {supportEmail}
+                            </a>
+                        </GlassCard>
+                        <GlassCard className="p-5">
+                            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Location</p>
+                            <p className="mt-3 text-lg font-semibold text-[var(--foreground)]">Thrissur, Kerala</p>
+                            <p className="mt-1 text-sm text-[var(--muted-foreground)]">{address}</p>
+                        </GlassCard>
+                        <GlassCard className="p-5">
+                            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Quick message</p>
+                            <a
+                                href={`https://wa.me/${normalizePhoneForWhatsApp(primaryPhone)}?text=${encodeURIComponent('Hi HexaStack, I would like to discuss a project.')}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-3 inline-flex items-center gap-2 text-lg font-semibold text-[var(--foreground)]"
+                            >
+                                WhatsApp
+                                <ArrowRight className="h-4 w-4" />
+                            </a>
+                        </GlassCard>
+                    </ScrollRevealStagger>
+                </div>
+            </section>
+
+            <section className="py-16 md:py-20">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6">
+                    <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+                        <ScrollReveal>
+                            <div id="enquiry-form" className="surface-panel rounded-[30px] p-6 sm:p-8">
+                                <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                                    <div>
+                                        <span className="section-kicker">Send an enquiry</span>
+                                        <h2 className="mt-5 text-3xl font-bold tracking-tight text-[var(--foreground)]">
+                                            Share your requirement
+                                        </h2>
+                                        <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--muted-foreground)]">
+                                            A good message can be simple: tell us what you need, who it is for, and what
+                                            kind of result you want.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+                                    <div className="grid gap-5 sm:grid-cols-2">
                                         <div>
-                                            <label htmlFor="name" className={labelClass}>Name <span className="text-red-500">*</span></label>
-                                            <input type="text" id="name" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className={inputClass} placeholder="Your name" />
+                                            <label htmlFor="name" className={labelClass}>Full name</label>
+                                            <input
+                                                id="name"
+                                                type="text"
+                                                value={formData.name}
+                                                onChange={(event) => setFormData({ ...formData, name: event.target.value })}
+                                                className={inputClass}
+                                                placeholder="Your name"
+                                                required
+                                            />
                                         </div>
                                         <div>
                                             <label htmlFor="email" className={labelClass}>Email</label>
-                                            <input type="email" id="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className={inputClass} placeholder="you@example.com" />
+                                            <input
+                                                id="email"
+                                                type="email"
+                                                value={formData.email}
+                                                onChange={(event) => setFormData({ ...formData, email: event.target.value })}
+                                                className={inputClass}
+                                                placeholder="you@example.com"
+                                            />
                                         </div>
                                     </div>
+
                                     <div>
-                                        <label htmlFor="whatsapp" className={labelClass}>Phone / WhatsApp</label>
-                                        <input type="tel" id="whatsapp" value={formData.whatsapp} onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })} className={inputClass} placeholder="e.g. +91 98765 43210" />
+                                        <label htmlFor="whatsapp" className={labelClass}>Phone or WhatsApp</label>
+                                        <input
+                                            id="whatsapp"
+                                            type="tel"
+                                            value={formData.whatsapp}
+                                            onChange={(event) => setFormData({ ...formData, whatsapp: event.target.value })}
+                                            className={inputClass}
+                                            placeholder="+91 98765 43210"
+                                        />
                                     </div>
-                                    <div className="grid sm:grid-cols-2 gap-5">
+
+                                    <div className="grid gap-5 sm:grid-cols-2">
                                         <div>
                                             <label htmlFor="service" className={labelClass}>Service</label>
-                                            <select id="service" value={formData.service} onChange={(e) => setFormData({ ...formData, service: e.target.value })} className={selectClass}>
-                                                <option value="">Select...</option>
-                                                {serviceOptions.map((opt) => (
-                                                    <option key={opt} value={opt}>{opt}</option>
+                                            <select
+                                                id="service"
+                                                value={formData.service}
+                                                onChange={(event) => setFormData({ ...formData, service: event.target.value })}
+                                                className={inputClass}
+                                            >
+                                                <option value="">Select a service</option>
+                                                {serviceOptions.map((option) => (
+                                                    <option key={option} value={option}>{option}</option>
                                                 ))}
                                             </select>
                                         </div>
                                         <div>
                                             <label htmlFor="budget" className={labelClass}>Budget</label>
-                                            <select id="budget" value={formData.budget} onChange={(e) => setFormData({ ...formData, budget: e.target.value })} className={selectClass}>
-                                                <option value="">Select...</option>
-                                                {budgetOptions.map((opt) => (
-                                                    <option key={opt} value={opt}>{opt}</option>
+                                            <select
+                                                id="budget"
+                                                value={formData.budget}
+                                                onChange={(event) => setFormData({ ...formData, budget: event.target.value })}
+                                                className={inputClass}
+                                            >
+                                                <option value="">Select a budget</option>
+                                                {budgetOptions.map((option) => (
+                                                    <option key={option} value={option}>{option}</option>
                                                 ))}
                                             </select>
                                         </div>
                                     </div>
+
                                     <div>
-                                        <label htmlFor="requirement" className={labelClass}>What do you need? <span className="text-red-500">*</span></label>
-                                        <textarea id="requirement" required rows={4} value={formData.requirement} onChange={(e) => setFormData({ ...formData, requirement: e.target.value })} className={inputClass + ' min-h-[120px] resize-none'} placeholder="E.g. I need a POS system for my restaurant in Dubai with VAT billing" />
+                                        <label htmlFor="requirement" className={labelClass}>Requirement</label>
+                                        <textarea
+                                            id="requirement"
+                                            value={formData.requirement}
+                                            onChange={(event) => setFormData({ ...formData, requirement: event.target.value })}
+                                            className={`${inputClass} min-h-[160px] resize-y`}
+                                            placeholder="Describe your project, business, or what you want to improve."
+                                            required
+                                        />
                                     </div>
-                                    <input type="text" name="website" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+
+                                    <input
+                                        type="text"
+                                        name="website"
+                                        value={formData.website}
+                                        onChange={(event) => setFormData({ ...formData, website: event.target.value })}
+                                        className="hidden"
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                        aria-hidden="true"
+                                    />
 
                                     {error && (
-                                        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
-                                            <p className="text-sm font-medium text-red-600 dark:text-red-400">{error}</p>
+                                        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                                            {error}
                                         </div>
                                     )}
 
-                                    <div className="pt-1">
-                                        <button type="submit" disabled={loading} className="w-full h-12 rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold hover:opacity-95 disabled:opacity-50 flex items-center justify-center gap-2 text-sm transition-all">
-                                            {loading ? 'Sending...' : "Send — we'll reply in 2 hours"}
-                                            {!loading && <ArrowRight className="w-4 h-4" />}
+                                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                        <button
+                                            type="submit"
+                                            disabled={loading}
+                                            className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary)] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(37,99,235,0.24)] transition-opacity hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+                                        >
+                                            {loading ? 'Sending enquiry...' : 'Send enquiry'}
+                                            {!loading && <ArrowRight className="h-4 w-4" />}
                                         </button>
-                                        <p className="mt-3 text-center text-xs text-[var(--muted-foreground)]">Your data is sent securely.</p>
+                                        <p className="text-sm text-[var(--muted-foreground)]">
+                                            Your message is sent securely to our team.
+                                        </p>
                                     </div>
                                 </form>
-
-                                {/* Confirmation popup after successful send */}
-                                {showSuccessPopup && (
-                                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="success-title">
-                                        <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-xl text-center">
-                                            <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4">
-                                                <CheckCircle className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
-                                            </div>
-                                            <h2 id="success-title" className="text-xl font-bold tracking-tight mb-2 text-[var(--foreground)]">Message sent successfully</h2>
-                                            <p className="text-[var(--muted-foreground)] mb-6">We&apos;ve received your details and will get back to you within 2 hours.</p>
-                                            <button
-                                                type="button"
-                                                onClick={() => { setShowSuccessPopup(false); setSubmitted(true); }}
-                                                className="w-full h-12 rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold hover:opacity-95 transition-opacity"
-                                            >
-                                                OK
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
                             </div>
-                        </div>
+                        </ScrollReveal>
 
-                        {/* Contact info sidebar */}
-                        <div className="lg:col-span-5">
-                            <div className="lg:sticky lg:top-28 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 sm:p-8">
-                                <h2 className="text-lg font-semibold text-[var(--foreground)] mb-6">Contact info</h2>
-                                {/* Clear business address & contact (visible for Google / citations) */}
-                                <div className="mb-6 p-4 rounded-xl bg-[var(--muted)]/30 border border-[var(--border)]">
-                                    <p className="font-semibold text-[var(--foreground)] mb-2">HexaStack Solutions</p>
-                                    <p className="text-sm text-[var(--muted-foreground)] leading-relaxed mb-2">
-                                        Vadanappally, Thrissur<br />
-                                        Kerala 680614<br />
-                                        India
-                                    </p>
-                                    <p className="text-sm mt-3">
-                                        Phone: <a href="tel:+917591999365" className="font-medium text-[var(--primary)] hover:underline">+91 75919 99365</a>
-                                    </p>
-                                    <p className="text-sm mt-1">
-                                        Email: <a href={`mailto:${email}`} className="font-medium text-[var(--primary)] hover:underline break-all">{email}</a>
-                                    </p>
-                                </div>
-                                <div className="space-y-5">
-                                    <div>
-                                        <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)] mb-3">Direct lines</p>
-                                        <div className="space-y-2.5">
-                                            <a href="tel:+917591999365" className="group flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--muted)]/50 transition-colors">
-                                                <div className="w-10 h-10 rounded-xl bg-[var(--muted)]/60 flex items-center justify-center shrink-0 group-hover:bg-[var(--primary)]/10 transition-colors">
-                                                    <Phone className="w-5 h-5 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
-                                                </div>
-                                                <span className="font-medium text-sm text-[var(--foreground)]">+91 75919 99365</span>
-                                            </a>
-                                            <a href={`https://wa.me/${primaryPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--muted)]/50 transition-colors">
-                                                <div className="w-10 h-10 rounded-xl bg-[var(--muted)]/60 flex items-center justify-center shrink-0 group-hover:bg-[var(--primary)]/10 transition-colors">
-                                                    <MessageCircle className="w-5 h-5 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
-                                                </div>
-                                                <span className="font-medium text-sm text-[var(--foreground)]">WhatsApp</span>
-                                            </a>
-                                            {secondaryPhone && (
-                                                <a href={`https://wa.me/${secondaryPhone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--muted)]/50 transition-colors">
-                                                    <div className="w-10 h-10 rounded-xl bg-[var(--muted)]/60 flex items-center justify-center shrink-0 group-hover:bg-[var(--primary)]/10 transition-colors">
-                                                        <MessageCircle className="w-5 h-5 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
-                                                    </div>
-                                                    <span className="font-medium text-sm text-[var(--foreground)]">{secondaryPhone}</span>
-                                                </a>
-                                            )}
-                                            <a href={`mailto:${email}`} className="group flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--muted)]/50 transition-colors">
-                                                <div className="w-10 h-10 rounded-xl bg-[var(--muted)]/60 flex items-center justify-center shrink-0 group-hover:bg-[var(--primary)]/10 transition-colors">
-                                                    <Mail className="w-5 h-5 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
-                                                </div>
-                                                <span className="text-sm text-[var(--foreground)] break-all">{email}</span>
-                                            </a>
+                        <div className="space-y-6">
+                            <ScrollReveal>
+                                <GlassCard className="p-6">
+                                    <div className="flex items-start gap-3">
+                                        <ShieldCheck className="mt-1 h-5 w-5 shrink-0 text-[var(--primary)]" />
+                                        <div>
+                                            <h3 className="text-xl font-semibold text-[var(--foreground)]">What happens next</h3>
+                                            <div className="mt-4 space-y-3">
+                                                {nextSteps.map((item, index) => (
+                                                    <p key={item} className="text-sm leading-7 text-[var(--muted-foreground)]">
+                                                        <span className="font-semibold text-[var(--foreground)]">{index + 1}.</span> {item}
+                                                    </p>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)] mb-3">Office</p>
-                                        <div className="flex items-start gap-3 p-3 rounded-xl">
-                                            <div className="w-10 h-10 rounded-xl bg-[var(--muted)]/60 flex items-center justify-center shrink-0">
-                                                <MapPin className="w-5 h-5 text-[var(--muted-foreground)]" />
+                                </GlassCard>
+                            </ScrollReveal>
+
+                            <ScrollReveal>
+                                <GlassCard className="p-6">
+                                    <h3 className="text-xl font-semibold text-[var(--foreground)]">Good fit enquiries</h3>
+                                    <div className="mt-4 space-y-3">
+                                        {fitPoints.map((item) => (
+                                            <div key={item} className="flex items-start gap-3 text-sm leading-7 text-[var(--muted-foreground)]">
+                                                <CheckCircle className="mt-1 h-4 w-4 shrink-0 text-[var(--primary)]" />
+                                                <span>{item}</span>
                                             </div>
-                                            <span className="text-sm text-[var(--muted-foreground)] leading-relaxed pt-1.5">
-                                                Vadanappally, Thrissur<br />
-                                                Kerala 680614, India
-                                            </span>
-                                        </div>
+                                        ))}
                                     </div>
-                                    <div>
-                                        <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)] mb-3">More</p>
-                                        <a href="https://share.google/cnsKSTykx8sjMzNxC" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--muted)]/50 transition-colors">
-                                            <div className="w-10 h-10 rounded-xl bg-[var(--muted)]/60 flex items-center justify-center shrink-0 group-hover:bg-[var(--primary)]/10 transition-colors">
-                                                <ExternalLink className="w-5 h-5 text-[var(--muted-foreground)] group-hover:text-[var(--primary)]" />
-                                            </div>
-                                            <span className="font-medium text-sm text-[var(--foreground)]">Google</span>
+                                </GlassCard>
+                            </ScrollReveal>
+
+                            <ScrollReveal>
+                                <GlassCard className="p-6">
+                                    <h3 className="text-xl font-semibold text-[var(--foreground)]">Direct contact details</h3>
+                                    <div className="mt-5 space-y-4 text-sm text-[var(--foreground)]">
+                                        <a href={`tel:${normalizePhoneForLink(primaryPhone)}`} className="flex items-center gap-3">
+                                            <Phone className="h-4 w-4 text-[var(--primary)]" />
+                                            <span>{primaryPhone}</span>
+                                        </a>
+                                        {secondaryPhone && (
+                                            <a
+                                                href={`https://wa.me/${normalizePhoneForWhatsApp(secondaryPhone)}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-3"
+                                            >
+                                                <MessageCircle className="h-4 w-4 text-[var(--primary)]" />
+                                                <span>{secondaryPhone}</span>
+                                            </a>
+                                        )}
+                                        <a href={`mailto:${primaryEmail}`} className="flex items-center gap-3 break-all">
+                                            <Mail className="h-4 w-4 text-[var(--primary)]" />
+                                            <span>Primary: {primaryEmail}</span>
+                                        </a>
+                                        <a href={`mailto:${supportEmail}`} className="flex items-center gap-3 break-all">
+                                            <Mail className="h-4 w-4 text-[var(--primary)]" />
+                                            <span>Support: {supportEmail}</span>
+                                        </a>
+                                        <div className="flex items-start gap-3">
+                                            <MapPin className="mt-1 h-4 w-4 shrink-0 text-[var(--primary)]" />
+                                            <span className="text-[var(--muted-foreground)]">{address}</span>
+                                        </div>
+                                        <a
+                                            href="https://share.google/cnsKSTykx8sjMzNxC"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 font-medium text-[var(--primary)]"
+                                        >
+                                            View Google profile
+                                            <ExternalLink className="h-4 w-4" />
                                         </a>
                                     </div>
-                                </div>
-                                <div className="mt-6 pt-6 border-t border-[var(--border)] flex items-center gap-2.5">
-                                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                                    <span className="text-xs font-medium text-[var(--foreground)]">Available for new projects</span>
-                                </div>
-                            </div>
+                                </GlassCard>
+                            </ScrollReveal>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            {showSuccessPopup && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/55 px-4 backdrop-blur-sm">
+                    <div className="w-full max-w-md rounded-[28px] border border-[var(--border)] bg-white p-6 text-center shadow-2xl">
+                        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
+                            <CheckCircle className="h-7 w-7" />
+                        </div>
+                        <h2 className="mt-5 text-2xl font-bold tracking-tight text-[var(--foreground)]">
+                            Message sent successfully
+                        </h2>
+                        <p className="mt-3 text-sm leading-7 text-[var(--muted-foreground)]">
+                            Thanks for contacting HexaStack Solutions. We have received your details.
+                        </p>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setShowSuccessPopup(false);
+                                setSubmitted(true);
+                            }}
+                            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--primary)] px-5 py-3 text-sm font-semibold text-white"
+                        >
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            )}
         </Layout>
     );
 }

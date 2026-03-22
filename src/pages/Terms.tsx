@@ -1,100 +1,233 @@
+import { Link } from 'react-router-dom';
+import { ArrowRight, BadgeCheck, BriefcaseBusiness, FileText, Scale, ShieldAlert } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
-import { motion } from 'framer-motion';
+import { GlassCard } from '@/components/GlassCard';
+import { ScrollReveal, ScrollRevealStagger } from '@/components/ScrollReveal';
+
+const effectiveDate = new Date('2026-03-22').toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+});
+
+const highlights = [
+    {
+        icon: FileText,
+        title: 'Clear service framework',
+        description: 'These terms outline the basic rules that apply when you use our website, products, or services.',
+    },
+    {
+        icon: BriefcaseBusiness,
+        title: 'Business engagement context',
+        description: 'They are written for client work such as websites, custom software, SaaS, billing, and consulting.',
+    },
+    {
+        icon: Scale,
+        title: 'Reasonable legal baseline',
+        description: 'They set expectations around ownership, payments, usage, support, and limits of liability.',
+    },
+];
+
+const sections = [
+    {
+        title: '1. Agreement to Terms',
+        body: [
+            'These Terms of Service govern your use of the HexaStack Solutions website, products, software, and services. By using our website or engaging our services, you agree to these terms unless a separate written agreement applies to your engagement.',
+        ],
+    },
+    {
+        title: '2. Services and Deliverables',
+        body: [
+            'HexaStack Solutions may provide website development, custom software development, SaaS access, billing or POS systems, automation, integrations, consulting, and related support services.',
+            'The exact scope of deliverables, timelines, support, and ownership terms may be further defined in proposals, statements of work, invoices, or separate written agreements.',
+        ],
+    },
+    {
+        title: '3. Client Responsibilities',
+        body: [
+            'Clients are responsible for providing accurate business requirements, timely feedback, required content, approvals, lawful use of the delivered systems, and payment according to the agreed schedule.',
+            'Delays in inputs, approvals, access, or third-party dependencies may affect project timelines and delivery expectations.',
+        ],
+    },
+    {
+        title: '4. Payments and Commercial Terms',
+        body: [
+            'Fees, milestones, subscription terms, and billing structures are defined based on the agreed engagement. Unless otherwise stated in writing, invoices are due according to the schedule shared in the project or commercial document.',
+            'HexaStack Solutions may pause work, support, or service access if payments remain overdue beyond a reasonable period.',
+        ],
+    },
+    {
+        title: '5. Ownership and Intellectual Property',
+        body: [
+            'For custom project work, ownership and handover terms depend on the scope agreed with the client and may become effective only after applicable payments are completed.',
+            'HexaStack Solutions retains ownership of internal frameworks, reusable components, methods, and general know-how unless explicitly transferred in writing.',
+            'For SaaS or hosted products, access is typically provided as a limited license for business use and does not transfer source-code ownership.',
+        ],
+    },
+    {
+        title: '6. Acceptable Use and Restrictions',
+        body: [
+            'You agree not to misuse our website, software, or services. This includes attempting unauthorized access, disrupting service availability, infringing intellectual property, reselling licensed products without permission, or using our systems for unlawful activity.',
+        ],
+    },
+    {
+        title: '7. Availability, Support, and Changes',
+        body: [
+            'We aim to provide reliable service and reasonable support, but continuous availability cannot be guaranteed unless separately agreed in a service-level commitment.',
+            'We may update, improve, maintain, or modify our services where necessary for security, performance, compliance, or product evolution.',
+        ],
+    },
+    {
+        title: '8. Liability and Disclaimers',
+        body: [
+            'To the extent permitted by law, our website, products, and services are provided on an as-available basis unless a separate written agreement states otherwise.',
+            'HexaStack Solutions is not liable for indirect, incidental, or consequential losses arising from website use, service interruptions, third-party failures, or misuse outside the agreed scope of service.',
+        ],
+    },
+    {
+        title: '9. Governing Law and Contact',
+        body: [
+            'These Terms are governed by the laws applicable in India, with business operations based in Kerala, unless a separate agreement specifies otherwise.',
+            'If you need clarification about these Terms, please contact HexaStack Solutions through our contact page or at supporthexastack@hexastacksolutions.com.',
+        ],
+    },
+];
 
 export default function Terms() {
+    const schema = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'WebPage',
+                name: 'Terms of Service | HexaStack Solutions',
+                url: 'https://www.hexastacksolutions.com/terms',
+                description: 'Terms of Service for HexaStack Solutions.',
+            },
+        ],
+    };
+
     return (
         <Layout>
             <SEO
-                title="Terms of Service | HEXASTACK SOLUTIONS"
-                description="Terms, conditions, and service agreements for HexaStack Solutions."
+                title="Terms of Service | HexaStack Solutions"
+                description="Read the Terms of Service for HexaStack Solutions, including service scope, payments, ownership, usage rules, and liability limits."
+                keywords="terms of service HexaStack Solutions, software company terms Kerala, website development terms, SaaS terms HexaStack, legal terms software services"
+                canonical="/terms"
+                schema={schema}
             />
-            <div className="bg-[var(--background)] text-[var(--foreground)] font-sans antialiased min-h-screen py-20 md:py-32">
-                <div className="max-w-4xl mx-auto px-6">
-                    <motion.div
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">Terms of Service</h1>
-                        <p className="text-[var(--muted-foreground)] mb-12 text-sm tracking-wide uppercase">Effective Date: {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
 
-                        <div className="space-y-12 prose prose-invert max-w-none">
-                            <section>
-                                <h2 className="text-2xl font-medium tracking-tight mb-4 text-white">1. Agreement to Terms</h2>
-                                <p className="text-[var(--muted-foreground)] leading-relaxed">
-                                    These Terms of Service ("Terms") constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you," "Client"), and HexaStack Solutions ("we," "us," or "our"), concerning your access to and use of our deployed enterprise software, platforms, and technical consulting services.
-                                </p>
-                            </section>
+            <section className="page-shell overflow-hidden border-b border-[var(--border)] py-16 md:py-20">
+                <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                        background:
+                            'radial-gradient(circle at 12% 10%, rgba(37,99,235,0.14), transparent 28%), radial-gradient(circle at 88% 18%, rgba(14,165,233,0.1), transparent 22%)',
+                    }}
+                />
+                <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+                    <ScrollReveal>
+                        <span className="section-kicker">Terms</span>
+                        <h1 className="mt-6 max-w-4xl text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl lg:text-[3.4rem]">
+                            Terms of Service redesigned to feel clear, modern, and easier to read.
+                        </h1>
+                        <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--muted-foreground)] sm:text-lg">
+                            These terms explain the basic conditions for using the HexaStack Solutions website and for
+                            engaging our company for software, website, SaaS, billing, POS, and automation services.
+                        </p>
+                    </ScrollReveal>
 
-                            <section>
-                                <h2 className="text-2xl font-medium tracking-tight mb-4 text-white">2. Enterprise Software Licenses (SaaS & Custom Deliverables)</h2>
-                                <h3 className="text-lg font-medium text-white mb-2 mt-6">2.1 Custom Engineering</h3>
-                                <p className="text-[var(--muted-foreground)] leading-relaxed">
-                                    For fully custom architectures, intellectual property rights to the final application layer are strictly transferred upon full clearance of all developmental invoices, unless otherwise stated via a secondary contract. HexaStack retains ownership of internal foundational boilerplates, proprietary components, and libraries.
-                                </p>
-                                <h3 className="text-lg font-medium text-white mb-2 mt-8">2.2 SaaS Subscriptions (e.g., HexaBill)</h3>
-                                <p className="text-[var(--muted-foreground)] leading-relaxed">
-                                    Access to HexaBill or similar subscription-based Software-as-a-Service is provided on a non-exclusive, non-transferable, revocable license strictly for your internal business operations. No source-code ownership is granted under SaaS models.
-                                </p>
-                            </section>
+                    <ScrollRevealStagger className="mt-10 grid gap-5 md:grid-cols-3">
+                        {highlights.map((item) => {
+                            const Icon = item.icon;
+                            return (
+                                <GlassCard key={item.title} className="p-6">
+                                    <div className="w-fit rounded-2xl bg-[var(--secondary)] p-3 text-[var(--primary)]">
+                                        <Icon className="h-5 w-5" />
+                                    </div>
+                                    <h2 className="mt-5 text-xl font-semibold text-[var(--foreground)]">{item.title}</h2>
+                                    <p className="mt-3 text-sm leading-7 text-[var(--muted-foreground)]">{item.description}</p>
+                                </GlassCard>
+                            );
+                        })}
+                    </ScrollRevealStagger>
 
-                            <section>
-                                <h2 className="text-2xl font-medium tracking-tight mb-4 text-white">3. System Usage & Restrictions</h2>
-                                <p className="text-[var(--muted-foreground)] leading-relaxed mb-4">
-                                    You represent, warrant, and agree that you will not use any provided platform to:
-                                </p>
-                                <ul className="list-disc pl-6 text-[var(--muted-foreground)] space-y-2">
-                                    <li>Reverse engineer, decompile, or attempt to extract source code from compiled SaaS platforms.</li>
-                                    <li>Interfere with, disrupt, or bypass the security or performance of our cloud infrastructure.</li>
-                                    <li>Process illegal transactions or utilize the platforms for criminal enterprises.</li>
-                                    <li>Resell or lease access to HexaStack-owned platforms without formal White-Label authorization.</li>
-                                </ul>
-                            </section>
-
-                            <section>
-                                <h2 className="text-2xl font-medium tracking-tight mb-4 text-white">4. Deployments and Maintenance</h2>
-                                <p className="text-[var(--muted-foreground)] leading-relaxed">
-                                    HexaStack Solutions strives for 99.9% uptime for cloud deployments. However, the systems are provided "as-is", and scheduled maintenance or emergency security patching may result in strictly monitored, minimal downtime. We will not be liable for revenue losses attributed directly to infrastructure interruptions unless enforced via a discrete enterprise SLA (Service Level Agreement).
-                                </p>
-                            </section>
-
-                            <section>
-                                <h2 className="text-2xl font-medium tracking-tight mb-4 text-white">5. Payments and Billing</h2>
-                                <p className="text-[var(--muted-foreground)] leading-relaxed">
-                                    All invoices for consulting phases, development milestones, and SaaS subscriptions are due effectively upon receipt or as structured in the formal Statement of Work (SOW). HexaStack reserves the right to suspend platform access, API connections, and database read/write queries instantly if account balances remain perpetually past due.
-                                </p>
-                            </section>
-
-                            <section>
-                                <h2 className="text-2xl font-medium tracking-tight mb-4 text-white">6. Refund and Return Policy</h2>
-                                <h3 className="text-lg font-medium text-white mb-2 mt-6">6.1 SaaS Subscriptions & Digital Products</h3>
-                                <p className="text-[var(--muted-foreground)] leading-relaxed">
-                                    Due to the immediate access to digital infrastructure and intellectual property granted upon purchase, all sales of Software-as-a-Service subscriptions (including HexaBill), digital modules, and pre-built platforms are strictly <strong>non-refundable and non-returnable</strong> under any circumstances. We highly encourage clients to thoroughly evaluate demonstrations or trial periods prior to executing a final purchase.
-                                </p>
-                                <h3 className="text-lg font-medium text-white mb-2 mt-8">6.2 Custom Engineering Engagements</h3>
-                                <p className="text-[var(--muted-foreground)] leading-relaxed">
-                                    Payments made for custom development milestones, deployment phases, or hourly technical consulting are compensating labor output and are inherently <strong>non-refundable</strong>. If a project is terminated prematurely by the client, they forfeit access to any incomplete source code unless previously cleared invoices cover specific feature deliverables.
-                                </p>
-                            </section>
-
-                            <section>
-                                <h2 className="text-2xl font-medium tracking-tight mb-4 text-white">7. Limitation of Liability</h2>
-                                <p className="text-[var(--muted-foreground)] leading-relaxed">
-                                    IN NO EVENT WILL HEXASTACK SOLUTIONS, ITS DIRECTORS, OR EMPLOYEES BE LIABLE FOR ANY DIRECT, INDIRECT, CONSEQUENTIAL, INCIDENTAL, OR PUNITIVE DAMAGES, INCLUDING LOST PROFITS, LOST DATA, OR BUSINESS DISRUPTION, ARISING FROM YOUR USE OF OUR SOFTWARE OR SERVICES.
-                                </p>
-                            </section>
-
-                            <section>
-                                <h2 className="text-2xl font-medium tracking-tight mb-4 text-white">8. Governing Law</h2>
-                                <p className="text-[var(--muted-foreground)] leading-relaxed">
-                                    These Terms shall be governed by and constructed in accordance with the laws of India, specifically within the jurisdiction of Kerala operations, without regard to conflict of law principles.
-                                </p>
-                            </section>
+                    <ScrollReveal>
+                        <div className="mt-8 inline-flex rounded-full border border-[var(--border)] bg-white px-5 py-2.5 text-sm font-medium text-[var(--foreground)] shadow-sm">
+                            Effective date: {effectiveDate}
                         </div>
-                    </motion.div>
+                    </ScrollReveal>
                 </div>
-            </div>
+            </section>
+
+            <section className="py-16 md:py-20">
+                <div className="mx-auto max-w-5xl px-4 sm:px-6">
+                    <ScrollReveal>
+                        <div className="surface-panel rounded-[30px] p-6 sm:p-8">
+                            <div className="grid gap-4 sm:grid-cols-3">
+                                <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
+                                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Applies to</p>
+                                    <p className="mt-3 text-base font-semibold text-[var(--foreground)]">Website, services, software, products</p>
+                                </div>
+                                <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
+                                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Business type</p>
+                                    <p className="mt-3 text-base font-semibold text-[var(--foreground)]">Client projects and platform use</p>
+                                </div>
+                                <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
+                                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Need help?</p>
+                                    <Link to="/contact" className="mt-3 inline-flex items-center gap-2 text-base font-semibold text-[var(--foreground)]">
+                                        <BadgeCheck className="h-4 w-4 text-[var(--primary)]" />
+                                        Contact our team
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </ScrollReveal>
+
+                    <ScrollRevealStagger className="mt-10 space-y-6">
+                        {sections.map((section) => (
+                            <GlassCard key={section.title} className="p-6 sm:p-8">
+                                <h2 className="text-2xl font-semibold tracking-tight text-[var(--foreground)]">{section.title}</h2>
+                                <div className="mt-4 space-y-4">
+                                    {section.body.map((paragraph) => (
+                                        <p key={paragraph} className="text-sm leading-8 text-[var(--muted-foreground)] sm:text-base">
+                                            {paragraph}
+                                        </p>
+                                    ))}
+                                </div>
+                            </GlassCard>
+                        ))}
+                    </ScrollRevealStagger>
+
+                    <ScrollReveal>
+                        <div className="mt-10 surface-panel rounded-[30px] px-6 py-10 text-center sm:px-10">
+                            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--secondary)] text-[var(--primary)]">
+                                <ShieldAlert className="h-7 w-7" />
+                            </div>
+                            <h2 className="mt-6 text-3xl font-bold tracking-tight text-[var(--foreground)]">Need clarification before starting a project?</h2>
+                            <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-[var(--muted-foreground)]">
+                                If you want help understanding ownership, payments, support, or service scope before
+                                working with HexaStack Solutions, reach out and we will clarify it directly.
+                            </p>
+                            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                                <Link
+                                    to="/contact"
+                                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary)] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(37,99,235,0.24)]"
+                                >
+                                    Contact Us
+                                    <ArrowRight className="h-4 w-4" />
+                                </Link>
+                                <Link
+                                    to="/privacy"
+                                    className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-white px-6 py-3.5 text-sm font-semibold text-[var(--foreground)] transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                                >
+                                    View Privacy Policy
+                                </Link>
+                            </div>
+                        </div>
+                    </ScrollReveal>
+                </div>
+            </section>
         </Layout>
     );
 }

@@ -60,6 +60,7 @@ interface CompanySettings {
     companyName: string;
     logoUrl?: string | null;
     primaryEmail: string;
+    supportEmail: string;
     primaryWhatsApp: string;
     secondaryWhatsApp: string;
     leadName1: string;
@@ -76,11 +77,12 @@ interface CompanySettings {
 const DEFAULT_COMPANY_SETTINGS: CompanySettings = {
     companyName: 'HexaStack Solutions',
     logoUrl: '',
-    primaryEmail: 'supporthexastack@hexastacksolutions.com',
+    primaryEmail: 'hexastacksolutions@gmail.com',
+    supportEmail: 'supporthexastack@hexastacksolutions.com',
     primaryWhatsApp: '+917591999365',
     secondaryWhatsApp: '+917012714150',
     leadName1: 'Anandu Krishna',
-    leadEmail1: 'supporthexastack@hexastacksolutions.com',
+    leadEmail1: 'hexastacksolutions@gmail.com',
     leadWhatsApp1: '+917591999365',
     leadName2: 'Surag',
     leadEmail2: 'officialsurag@gmail.com',
@@ -923,28 +925,35 @@ export default function Admin() {
     // Login Screen
     if (!isAuthenticated) {
         return (
-            <div className="min-h-screen bg-slate-50 font-sans flex items-center justify-center px-6">
+            <div
+                className="min-h-screen font-sans flex items-center justify-center px-4 py-8 sm:px-6"
+                style={{
+                    background:
+                        'radial-gradient(circle at 12% 10%, rgba(37,99,235,0.14), transparent 28%), radial-gradient(circle at 88% 18%, rgba(14,165,233,0.1), transparent 22%), linear-gradient(180deg, #f8fbff 0%, #ffffff 24%)',
+                }}
+            >
                 <SEO title="Admin Login | HexaStack" description="Secure admin access" noindex />
-                <div className="w-full max-w-sm">
-                    <div className="bg-white rounded-lg border border-slate-200 p-8 shadow-sm">
+                <div className="w-full max-w-md">
+                    <div className="surface-panel rounded-[32px] border border-slate-200 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] sm:p-8">
                         <div className="text-center mb-8">
+                            <img src="/logo-dark.svg" alt="HexaStack Solutions" className="mx-auto mb-5 h-12 w-auto" />
                             <div className="w-16 h-16 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <Shield className="w-8 h-8 text-white" />
                             </div>
-                            <h1 className="text-xl font-semibold text-slate-900">Admin Access</h1>
-                            <p className="text-sm text-slate-500 mt-1">Enter password to continue</p>
+                            <h1 className="text-2xl font-semibold text-slate-900">Admin Access</h1>
+                            <p className="text-sm text-slate-500 mt-1">Secure entry for the HexaStack admin console</p>
                         </div>
 
                         <form onSubmit={handleLogin} className="space-y-4">
                             <div>
                                 <div className="relative">
-                                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                                    <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                                     <input
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         disabled={isLocked}
-                                        className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 text-slate-900 disabled:bg-slate-100"
+                                        className="w-full rounded-2xl border border-slate-200 bg-white py-3.5 pl-11 pr-4 text-slate-900 outline-none transition-colors focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 disabled:bg-slate-100"
                                         placeholder="Enter password"
                                         autoFocus
                                     />
@@ -952,7 +961,7 @@ export default function Admin() {
                             </div>
 
                             {loginError && (
-                                <div className="bg-red-50 border border-red-200 text-red-700 text-sm p-3 rounded-md">
+                                <div className="rounded-2xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
                                     {loginError}
                                 </div>
                             )}
@@ -960,14 +969,14 @@ export default function Admin() {
                             <button
                                 type="submit"
                                 disabled={isLocked || !password}
-                                className="w-full bg-slate-900 text-white py-3 px-4 rounded-md hover:bg-slate-800 font-medium disabled:opacity-50"
+                                className="w-full rounded-full bg-slate-900 px-4 py-3.5 font-medium text-white transition-opacity hover:bg-slate-800 disabled:opacity-50"
                             >
                                 {isLocked ? 'Locked' : 'Access Admin'}
                             </button>
                         </form>
 
                         <div className="mt-6 text-center">
-                            <Link to="/" className="text-sm text-slate-500 hover:text-slate-700">← Back to website</Link>
+                            <Link to="/" className="text-sm font-medium text-slate-500 hover:text-slate-700">Back to website</Link>
                         </div>
 
                         <div className="mt-8 pt-6 border-t border-slate-200">
@@ -998,7 +1007,7 @@ export default function Admin() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 font-sans">
+        <div className="min-h-screen bg-[#f7fbff] font-sans text-slate-900">
             <SEO title="Admin Dashboard | HexaStack" description="Manage your website" noindex />
             {/* Notification */}
             {notification && (
@@ -1010,36 +1019,43 @@ export default function Admin() {
             )}
 
             {/* Header */}
-            <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
-                <div className="max-w-6xl mx-auto px-6 py-4">
-                    <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-4">
-                            <Link to="/" className="text-slate-500 hover:text-slate-700">
+            <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/92 backdrop-blur-xl">
+                <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                        <div className="flex items-start gap-4">
+                            <Link
+                                to="/"
+                                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition-colors hover:border-slate-300 hover:text-slate-700"
+                            >
                                 <ArrowLeft className="w-5 h-5" />
                             </Link>
                             <div>
-                                <h1 className="text-xl font-semibold text-slate-900">Admin Dashboard</h1>
+                                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Admin workspace</p>
+                                <h1 className="mt-1 text-2xl font-semibold text-slate-900">Admin Dashboard</h1>
                                 <p className="text-sm text-slate-500">Manage your website</p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-4">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                             <a
                                 href="https://search.google.com/search-console?resource_id=https%3A%2F%2Fwww.hexastacksolutions.com%2F"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900"
+                                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-600 transition-colors hover:border-slate-300 hover:text-slate-900"
                             >
                                 <Globe className="w-4 h-4" />
                                 Search Console
                                 <ExternalLink className="w-3 h-3 opacity-70" />
                             </a>
                             {unreadCount > 0 && (
-                                <span className="flex items-center gap-1 text-sm text-orange-600 bg-orange-50 px-3 py-1 rounded-full">
+                                <span className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-3 py-2 text-sm text-orange-600">
                                     <Bell className="w-4 h-4" />
                                     {unreadCount} new
                                 </span>
                             )}
-                            <button onClick={handleLogout} className="flex items-center gap-2 text-sm text-red-600 hover:text-red-700">
+                            <button
+                                onClick={handleLogout}
+                                className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-white px-4 py-2.5 text-sm text-red-600 transition-colors hover:bg-red-50 hover:text-red-700"
+                            >
                                 <LogOut className="w-4 h-4" />
                                 Logout
                             </button>
@@ -1049,9 +1065,9 @@ export default function Admin() {
             </header>
 
             {/* Tabs */}
-            <div className="bg-white border-b border-slate-200">
-                <div className="max-w-6xl mx-auto px-6">
-                    <div className="flex gap-1">
+            <div className="border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="flex gap-2 overflow-x-auto py-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                         {[
                             { id: 'analytics', label: 'Analytics', icon: BarChart3 },
                             { id: 'enquiries', label: 'Enquiries', icon: Mail, count: unreadCount },
@@ -1065,9 +1081,9 @@ export default function Admin() {
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id as TabType)}
-                                className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === tab.id
-                                    ? 'border-slate-900 text-slate-900'
-                                    : 'border-transparent text-slate-500 hover:text-slate-700'
+                                className={`inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium transition-colors ${activeTab === tab.id
+                                    ? 'bg-slate-900 text-white shadow-sm'
+                                    : 'border border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-700'
                                     }`}
                             >
                                 <tab.icon className="w-4 h-4" />
@@ -1082,7 +1098,7 @@ export default function Admin() {
             </div>
 
             {/* Content */}
-            <div className="max-w-6xl mx-auto px-6 py-8">
+            <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
                 {/* ANALYTICS TAB */}
                 {activeTab === 'analytics' && (
@@ -1103,7 +1119,7 @@ export default function Admin() {
                         ) : analytics ? (
                             <div className="space-y-6">
                                 {/* Today's Stats */}
-                                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
                                     <div className="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
                                         <div className="flex items-center gap-2 mb-2">
                                             <Eye className="w-5 h-5 text-blue-600" />
@@ -1144,7 +1160,7 @@ export default function Admin() {
                                 {/* Page Breakdown */}
                                 <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
                                     <h3 className="text-lg font-semibold text-slate-900 mb-4">Page Views (Last 30 Days)</h3>
-                                    <div className="grid grid-cols-3 gap-4">
+                                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                                         <div className="text-center p-4 bg-slate-50 rounded-lg">
                                             <p className="text-2xl font-bold text-slate-900">{analytics.last30Days.homeViews}</p>
                                             <p className="text-sm text-slate-500">Home Page</p>
@@ -1163,7 +1179,7 @@ export default function Admin() {
                                 {/* Conversion Rate */}
                                 <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
                                     <h3 className="text-lg font-semibold text-slate-900 mb-4">Conversion Metrics</h3>
-                                    <div className="grid grid-cols-2 gap-6">
+                                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                                         <div>
                                             <p className="text-sm text-slate-500 mb-1">Contact Page → Form Submit (30 days)</p>
                                             <p className="text-2xl font-bold text-emerald-600">
@@ -1185,7 +1201,7 @@ export default function Admin() {
                                     {analytics.recentViews.length > 0 ? (
                                         <div className="space-y-2 max-h-[300px] overflow-y-auto">
                                             {analytics.recentViews.map((view, idx) => (
-                                                <div key={idx} className="flex items-center justify-between py-2 px-3 bg-slate-50 rounded text-sm">
+                                                <div key={idx} className="flex flex-col gap-2 rounded bg-slate-50 px-3 py-3 text-sm sm:flex-row sm:items-center sm:justify-between">
                                                     <div className="flex items-center gap-3">
                                                         <span className={`w-2 h-2 rounded-full ${view.page === '/' ? 'bg-blue-500' :
                                                             view.page === '/work' ? 'bg-emerald-500' :
@@ -1239,8 +1255,8 @@ export default function Admin() {
                                 <p className="text-slate-500">New enquiries will appear here.</p>
                             </div>
                         ) : (
-                            <div className="grid md:grid-cols-3 gap-6">
-                                <div className="md:col-span-1 space-y-2 max-h-[600px] overflow-y-auto">
+                            <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)]">
+                                <div className="space-y-2 max-h-[420px] overflow-y-auto xl:max-h-[600px]">
                                     {enquiries.map((enquiry) => (
                                         <div
                                             key={enquiry.id}
@@ -1270,7 +1286,7 @@ export default function Admin() {
                                     ))}
                                 </div>
 
-                                <div className="md:col-span-2">
+                                <div className="min-w-0">
                                     {selectedEnquiry ? (
                                         <div className="bg-white rounded-lg border border-slate-200 p-6">
                                             <div className="flex justify-between items-start mb-6">
@@ -1342,7 +1358,7 @@ export default function Admin() {
                                                 <p className="text-xs text-slate-400 mt-2 text-center">Reply will be sent to {selectedEnquiry.email}</p>
                                             </div>
 
-                                            <div className="pt-6 border-t border-slate-100 flex gap-3">
+                                            <div className="pt-6 border-t border-slate-100 flex flex-col gap-3 sm:flex-row">
                                                 <a href={`mailto:${selectedEnquiry.email}`} className="flex-1 text-center bg-slate-900 text-white py-3 px-4 rounded-md hover:bg-slate-800 text-sm font-medium">
                                                     Reply via Email
                                                 </a>
@@ -1599,6 +1615,7 @@ export default function Admin() {
                             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 text-sm">
                                 <div><span className="text-slate-500">Company</span><br /><span className="text-slate-900 font-medium">{settings?.companyName || settingsForm.companyName || '—'}</span></div>
                                 <div><span className="text-slate-500">Primary email</span><br /><span className="text-slate-900">{settings?.primaryEmail || settingsForm.primaryEmail || '—'}</span></div>
+                                <div><span className="text-slate-500">Support email</span><br /><span className="text-slate-900">{settings?.supportEmail || settingsForm.supportEmail || settingsForm.primaryEmail || '—'}</span></div>
                                 <div><span className="text-slate-500">Primary WhatsApp</span><br /><span className="text-slate-900">{settings?.primaryWhatsApp || settingsForm.primaryWhatsApp || '—'}</span></div>
                                 <div><span className="text-slate-500">Secondary WhatsApp</span><br /><span className="text-slate-900">{(settings?.secondaryWhatsApp ?? settingsForm.secondaryWhatsApp) || '—'}</span></div>
                                 <div><span className="text-slate-500">Lead 1</span><br /><span className="text-slate-900">{[settings?.leadName1 || settingsForm.leadName1, (settings?.leadEmail1 || settingsForm.leadEmail1) && `(${settings?.leadEmail1 || settingsForm.leadEmail1})`].filter(Boolean).join(' ') || '—'}</span></div>
@@ -1696,6 +1713,16 @@ export default function Admin() {
                                         type="email"
                                         value={settingsForm.primaryEmail}
                                         onChange={(e) => setSettingsForm({ ...settingsForm, primaryEmail: e.target.value })}
+                                        disabled={!editingSettings}
+                                        className="w-full px-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-50"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Support Email</label>
+                                    <input
+                                        type="email"
+                                        value={settingsForm.supportEmail}
+                                        onChange={(e) => setSettingsForm({ ...settingsForm, supportEmail: e.target.value })}
                                         disabled={!editingSettings}
                                         className="w-full px-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-50"
                                     />

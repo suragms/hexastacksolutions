@@ -1024,6 +1024,15 @@ export const SEO_LOCATION_PAGES: SeoLocationPageEntry[] = [
     { location: 'Warangal', locationSlug: 'warangal', service: 'Website Design', serviceSlug: 'website-design', title: 'Website Design Warangal | HexaStack', description: 'Website design in Warangal. Responsive, SEO-friendly.', h1: 'Website Design in Warangal' },
     { location: 'Warangal', locationSlug: 'warangal', service: 'Billing Software', serviceSlug: 'billing-software', title: 'Billing Software Warangal | HexaStack', description: 'GST billing software for Warangal. Invoicing, reports, multi-branch.', h1: 'Billing Software in Warangal' },
     { location: 'Warangal', locationSlug: 'warangal', service: 'E-commerce', serviceSlug: 'ecommerce', title: 'E-commerce Development Warangal | HexaStack', description: 'E-commerce and online store development in Warangal. Payments, inventory.', h1: 'E-commerce Development in Warangal' },
+    // United States market pages
+    { location: 'United States', locationSlug: 'united-states', service: 'Web Development', serviceSlug: 'web-development', title: 'Web Development Company United States | HexaStack Solutions', description: 'Web development company for United States businesses. Custom websites, portals, and product builds from a Kerala-based software team.', h1: 'Web Development Company for United States Businesses' },
+    { location: 'United States', locationSlug: 'united-states', service: 'Website Design', serviceSlug: 'website-design', title: 'Website Design Company United States | HexaStack Solutions', description: 'Professional website design for United States businesses that need modern UX, stronger SEO foundations, and better enquiry conversion.', h1: 'Website Design for United States Businesses' },
+    { location: 'United States', locationSlug: 'united-states', service: 'Custom Software', serviceSlug: 'custom-software', title: 'Custom Software Development United States | HexaStack Solutions', description: 'Custom software development for United States companies. Dashboards, portals, automation, and internal tools delivered by HexaStack.', h1: 'Custom Software Development for the United States' },
+    { location: 'United States', locationSlug: 'united-states', service: 'Mobile App Development', serviceSlug: 'mobile-app-development', title: 'Mobile App Development United States | HexaStack Solutions', description: 'Mobile app development for United States startups and businesses. Cross-platform product builds with clear delivery and support.', h1: 'Mobile App Development for United States Companies' },
+    { location: 'United States', locationSlug: 'united-states', service: 'AI Solutions', serviceSlug: 'ai-solutions', title: 'AI Solutions United States | HexaStack Solutions', description: 'AI solutions for United States businesses including automation, assistants, and workflow integrations built for practical use.', h1: 'AI Solutions for United States Businesses' },
+    { location: 'United States', locationSlug: 'united-states', service: 'CRM', serviceSlug: 'crm', title: 'CRM Software United States | HexaStack Solutions', description: 'CRM software for United States teams that need better lead tracking, pipeline visibility, and customer workflows.', h1: 'CRM Software for United States Teams' },
+    { location: 'United States', locationSlug: 'united-states', service: 'ERP Software', serviceSlug: 'erp-software', title: 'ERP Software United States | HexaStack Solutions', description: 'ERP software and internal operations systems for United States businesses that need cleaner reporting, inventory, and process control.', h1: 'ERP Software for United States Businesses' },
+    { location: 'United States', locationSlug: 'united-states', service: 'POS Software', serviceSlug: 'pos-software', title: 'POS Software United States | HexaStack Solutions', description: 'POS software for United States retail and hospitality teams. Billing, reporting, and business workflows shaped around practical operations.', h1: 'POS Software for United States Businesses' },
 ];
 
 /** Paths for sitemap and prerender: /seo/:locationSlug/:serviceSlug */
@@ -1047,6 +1056,8 @@ const GULF_LOCATION_SLUGS = new Set([
     'riyadh', 'jeddah',
 ]);
 
+const UNITED_STATES_LOCATION_SLUGS = new Set(['united-states']);
+
 /** All Kerala SEO pages (one per district×service). For /kerala hub. */
 export function getKeralaSeoPages(): SeoLocationPageEntry[] {
     return SEO_LOCATION_PAGES.filter((e) => KERALA_LOCATION_SLUGS.has(e.locationSlug));
@@ -1068,4 +1079,9 @@ export function getGulfVatPages(): SeoLocationPageEntry[] {
     return SEO_LOCATION_PAGES.filter(
         (e) => GULF_LOCATION_SLUGS.has(e.locationSlug) && e.serviceSlug === 'vat-billing'
     );
+}
+
+/** United States SEO pages for the /united-states hub. */
+export function getUnitedStatesSeoPages(): SeoLocationPageEntry[] {
+    return SEO_LOCATION_PAGES.filter((e) => UNITED_STATES_LOCATION_SLUGS.has(e.locationSlug));
 }

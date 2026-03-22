@@ -25,6 +25,7 @@ import LocationServicePage from '@/pages/LocationServicePage';
 import SEOLocationPage from '@/pages/seo/SEOLocationPage';
 import KeralaHubPage from '@/pages/KeralaHubPage';
 import GulfVatPage from '@/pages/GulfVatPage';
+import UnitedStatesHubPage from '@/pages/UnitedStatesHubPage';
 import Portfolio from '@/pages/Portfolio';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -87,6 +88,7 @@ function App() {
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/kerala" element={<KeralaHubPage />} />
+                <Route path="/united-states" element={<UnitedStatesHubPage />} />
                 <Route path="/gulf-vat" element={<GulfVatPage />} />
                 <Route path="/seo/:locationSlug/:serviceSlug" element={<LocationServicePage />} />
                 <Route path="/services/:seoSlug" element={<SEOLocationPage />} />

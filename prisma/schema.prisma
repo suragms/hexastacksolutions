@@ -98,11 +98,12 @@ model CompanySettings {
   id                  String   @id @default(auto()) @map("_id") @db.ObjectId
   companyName         String   @default("HexaStack Solutions")
   logoUrl             String?  // Brand logo (display); optional, fallback to /logo.svg
-  primaryEmail        String   @default("supporthexastack@hexastacksolutions.com")
+  primaryEmail        String   @default("hexastacksolutions@gmail.com")
+  supportEmail        String?  @default("supporthexastack@hexastacksolutions.com")
   primaryWhatsApp     String   @default("+917591999365")
   secondaryWhatsApp   String?  @default("+917012714150")
   leadName1           String   @default("Anandu Krishna")
-  leadEmail1          String   @default("supporthexastack@hexastacksolutions.com")
+  leadEmail1          String   @default("hexastacksolutions@gmail.com")
   leadWhatsApp1       String   @default("+917591999365")
   leadName2           String   @default("Surag")
   leadEmail2          String   @default("officialsurag@gmail.com")

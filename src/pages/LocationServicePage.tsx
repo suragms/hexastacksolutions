@@ -25,6 +25,22 @@ export default function LocationServicePage() {
     }
 
     const canonical = `/seo/${entry.locationSlug}/${entry.serviceSlug}`;
+    const isUnitedStatesMarket = entry.locationSlug === 'united-states';
+    const keywords = [
+        `${entry.service} ${entry.location}`,
+        `${entry.service} company ${entry.location}`,
+        `${entry.service.toLowerCase()} for ${entry.location}`,
+        'HexaStack Solutions',
+    ].join(', ');
+    const schemaOrg = {
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        name: 'HexaStack Solutions',
+        url: `https://www.hexastacksolutions.com${canonical}`,
+        areaServed: [entry.location, 'Kerala', 'India', 'United States', 'United Arab Emirates'],
+        serviceType: entry.service,
+        description: entry.description,
+    };
 
     return (
         <Layout>
@@ -32,25 +48,28 @@ export default function LocationServicePage() {
                 title={entry.title}
                 description={entry.description}
                 canonical={canonical}
-                keywords={`${entry.service} ${entry.location}, HexaStack Solutions`}
+                keywords={keywords}
+                locale={isUnitedStatesMarket ? 'en_US' : 'en_IN'}
+                localeAlternates={isUnitedStatesMarket ? ['en_IN'] : ['en_US']}
+                schema={schemaOrg}
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">
                     {entry.h1}
                 </h1>
                 <p className="text-[var(--muted-foreground)] mb-8 leading-relaxed">
-                    HexaStack Solutions offers {entry.service.toLowerCase()} for businesses in {entry.location} and beyond. We are a Thrissur-based team building custom software, websites, POS, and digital solutions for clients across Kerala, India, and the Gulf.
+                    HexaStack Solutions offers {entry.service.toLowerCase()} for businesses in {entry.location} and beyond. We are a Thrissur-based team building custom software, websites, POS, and digital solutions for clients across Kerala, India, the United States, and Gulf markets.
                 </p>
                 <section className="space-y-6 mb-10">
                     <h2 className="text-xl font-semibold text-[var(--foreground)]">Why choose us</h2>
                     <p className="text-[var(--foreground)] leading-relaxed">
-                        We deliver end-to-end: you work directly with the developers, no middle layers. Our projects include VAT-compliant POS for UAE restaurants, medical lab software in Kerala, and AI-powered apps. Whether you need a new website, billing system, or custom application in {entry.location}, we can scope it and give you a clear timeline and price.
+                        We deliver end-to-end: you work directly with the developers, no middle layers. Our projects include VAT-compliant POS for UAE restaurants, medical lab software in Kerala, SEO-aware business websites, and AI-powered apps. Whether you need a new website, billing system, or custom application in {entry.location}, we can scope it and give you a clear timeline and price.
                     </p>
                 </section>
                 <section className="space-y-6 mb-10">
                     <h2 className="text-xl font-semibold text-[var(--foreground)]">Get in touch</h2>
                     <p className="text-[var(--foreground)] leading-relaxed">
-                        Tell us your requirements via the contact page or WhatsApp. We will respond with an honest assessment and a no-obligation quote. We serve {entry.location} and surrounding areas with the same quality we deliver for Gulf and pan-India clients.
+                        Tell us your requirements via the contact page or WhatsApp. We will respond with an honest assessment and a no-obligation quote. We serve {entry.location} with the same quality we bring to businesses across Kerala, India, the United States, and the Gulf.
                     </p>
                 </section>
                 <div className="pt-8 border-t border-[var(--border)]">

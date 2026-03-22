@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
@@ -6,10 +6,10 @@ import SEO from '@/components/SEO';
 import { API_URL } from '@/lib/utils';
 
 const FALLBACK_BUSINESS = [
-    { title: 'HexaBill', subtitle: 'Billing & POS for Kerala and Gulf', hook: 'Your restaurant or shop, without the billing chaos.', description: 'Invoicing, POS, inventory, multi-branch, VAT-ready — India and Gulf. Used by businesses in UAE and Kerala right now.', cta: 'Request Demo', ctaLink: '/contact?demo=hexabill', to: '/products/hexabill', isExternal: false },
+    { title: 'HexaBill', subtitle: 'Billing & POS for Kerala and Gulf', hook: 'Your restaurant or shop, without the billing chaos.', description: 'Invoicing, POS, inventory, multi-branch, VAT-ready â€” India and Gulf. Used by businesses in UAE and Kerala right now.', cta: 'Request Demo', ctaLink: '/contact?demo=hexabill', to: '/products/hexabill', isExternal: false },
 ];
 const FALLBACK_FREE = [
-    { title: 'HexaCV', description: 'Your resume is probably getting rejected before a human sees it. Find out your ATS score — free.', cta: 'Try HexaCV Free', ctaLink: 'https://www.hexacv.online/', isExternal: true },
+    { title: 'HexaCV', description: 'Your resume is probably getting rejected before a human sees it. Find out your ATS score â€” free.', cta: 'Try HexaCV Free', ctaLink: 'https://www.hexacv.online/', isExternal: true },
     { title: 'Hexa AI Tool Suite', description: 'ATS checker, JD vs resume comparison, bullet improver, section checker. Part of HexaCV.', cta: 'Explore Tools', ctaLink: 'https://www.hexacv.online/free-tools', isExternal: true },
     { title: 'Student Tools', description: 'CGPA, attendance deficit, internal marks. Built for Kerala university students.', cta: 'Open Student Tools', ctaLink: 'https://studentshub-gold.vercel.app/', isExternal: true },
 ];
@@ -52,10 +52,11 @@ export default function Products() {
     return (
         <Layout>
             <SEO
-                title="Products | HexaStack — HexaBill, HexaCV, Student Tools"
-                description="HexaBill for billing and POS in Kerala and Gulf. HexaCV for ATS resumes. Student calculators and PDF tools. Built in Thrissur."
-                keywords="HexaBill, HexaCV, billing software Kerala, POS UAE, free ATS resume builder, student CGPA calculator, GST billing software, VAT POS Dubai, ATS resume checker free, resume optimization tool, inventory software Kerala, POS for restaurant UAE, billing software Vadanappally, HexaBill Vadanappally Thrissur"
+                title="Products | HexaStack - HexaBill, HexaCV, Student Tools"
+                description="Explore HexaStack products including HexaBill for billing and POS, HexaCV for ATS resumes, and utility tools built by our Kerala-based software team."
+                keywords="HexaBill, HexaCV, billing software Kerala, POS software India, software product company Kerala, free ATS resume builder, student CGPA calculator, GST billing software, ATS resume checker free, inventory software Kerala, POS for restaurant UAE, software tools by HexaStack"
                 canonical="/products"
+                localeAlternates={['en_US']}
             />
 
             {/* Hero */}
@@ -71,7 +72,7 @@ export default function Products() {
                 </div>
             </section>
 
-            {/* Business Software — HexaBill */}
+            {/* Business Software â€” HexaBill */}
             <section className="py-8 md:py-12 border-t border-[var(--border)]">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6">
                     <span className="text-xs font-semibold uppercase tracking-wider text-[var(--primary)]">Business Software</span>
@@ -82,7 +83,7 @@ export default function Products() {
                                 className="p-6 md:p-10 rounded-2xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--primary)] hover:shadow-[0_4px_12px_rgba(29,78,216,0.08)] transition-all duration-150 flex flex-col md:flex-row md:items-center gap-8"
                             >
                                 <div className="flex-1">
-                                    <h2 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-2">{p.title}{p.subtitle ? ` — ${p.subtitle}` : ''}</h2>
+                                    <h2 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] mb-2">{p.title}{p.subtitle ? ` â€” ${p.subtitle}` : ''}</h2>
                                     {p.hook && <p className="text-[var(--foreground)] font-medium mb-2">{p.hook}</p>}
                                     <p className="text-sm text-[var(--muted-foreground)] leading-relaxed mb-6">{p.description}</p>
                                     {p.isExternal ? (
@@ -109,7 +110,7 @@ export default function Products() {
             {/* Free tools */}
             <section className="py-12 md:py-20 border-t border-[var(--border)]">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted-foreground)]">Free tools — no login, no payment</span>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted-foreground)]">Free tools â€” no login, no payment</span>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                         {freeTools.map((p) => (
                             <div
@@ -147,3 +148,4 @@ export default function Products() {
         </Layout>
     );
 }
+

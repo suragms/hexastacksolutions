@@ -1,5 +1,11 @@
 import { useEffect } from 'react';
 
+interface SEOMetaTag {
+    name?: string;
+    property?: string;
+    content: string;
+}
+
 interface SEOProps {
     title: string;
     description: string;
@@ -8,95 +14,139 @@ interface SEOProps {
     ogType?: string;
     noindex?: boolean;
     canonical?: string;
-    schema?: object;
+    schema?: object | object[];
+    ogImageAlt?: string;
+    locale?: string;
+    localeAlternates?: string[];
+    meta?: SEOMetaTag[];
 }
 
 const CANONICAL_BASE = 'https://www.hexastacksolutions.com';
-// Use 1200×630 public/og-image.png for best shares; pass ogImage prop or add the file and set default to /og-image.png
 const DEFAULT_OG_IMAGE = `${CANONICAL_BASE}/logo-full-white.png`;
+const DEFAULT_OG_ALT = 'HexaStack Solutions website preview';
+const SCHEMA_SCRIPT_ID = 'hexastack-structured-data';
 
-export default function SEO({ title, description, keywords, ogImage = DEFAULT_OG_IMAGE, ogType = 'website', noindex = false, canonical, schema }: SEOProps) {
+export default function SEO({
+    title,
+    description,
+    keywords,
+    ogImage = DEFAULT_OG_IMAGE,
+    ogType = 'website',
+    noindex = false,
+    canonical,
+    schema,
+    ogImageAlt = DEFAULT_OG_ALT,
+    locale = 'en_IN',
+    localeAlternates = [],
+    meta = [],
+}: SEOProps) {
+    const schemaJson = schema ? JSON.stringify(schema) : '';
+
     useEffect(() => {
         document.title = title;
 
-        // Canonical URL — critical for SEO, avoid duplicate content
-        const canonicalUrl = canonical ? (canonical.startsWith('http') ? canonical : `${CANONICAL_BASE}${canonical === '/' ? '' : canonical}`) : `${CANONICAL_BASE}${window.location.pathname || ''}`;
-        let linkCanonical = document.querySelector('link[rel="canonical"]');
-        if (!linkCanonical) {
-            linkCanonical = document.createElement('link');
-            linkCanonical.setAttribute('rel', 'canonical');
-            document.head.appendChild(linkCanonical);
-        }
-        linkCanonical.setAttribute('href', canonicalUrl);
+        const canonicalUrl = canonical
+            ? (canonical.startsWith('http') ? canonical : `${CANONICAL_BASE}${canonical === '/' ? '' : canonical}`)
+            : `${CANONICAL_BASE}${window.location.pathname || ''}`;
 
-        // Update Schema.org (JSON-LD)
+        const updateNamedMeta = (name: string, content: string) => {
+            let tag = document.querySelector(`meta[name="${name}"]`);
+            if (!tag) {
+                tag = document.createElement('meta');
+                tag.setAttribute('name', name);
+                document.head.appendChild(tag);
+            }
+            tag.setAttribute('content', content);
+        };
+
+        const updatePropertyMeta = (property: string, content: string) => {
+            let tag = document.querySelector(`meta[property="${property}"]`);
+            if (!tag) {
+                tag = document.createElement('meta');
+                tag.setAttribute('property', property);
+                document.head.appendChild(tag);
+            }
+            tag.setAttribute('content', content);
+        };
+
+        const cleanupManagedMeta = (selector: string) => {
+            document.querySelectorAll(selector).forEach((tag) => tag.remove());
+        };
+
+        let canonicalLink = document.querySelector('link[rel="canonical"]');
+        if (!canonicalLink) {
+            canonicalLink = document.createElement('link');
+            canonicalLink.setAttribute('rel', 'canonical');
+            document.head.appendChild(canonicalLink);
+        }
+        canonicalLink.setAttribute('href', canonicalUrl);
+
         if (schema) {
-            let script = document.querySelector('script[type="application/ld+json"]');
+            let script = document.getElementById(SCHEMA_SCRIPT_ID) as HTMLScriptElement | null;
             if (!script) {
                 script = document.createElement('script');
+                script.id = SCHEMA_SCRIPT_ID;
                 script.setAttribute('type', 'application/ld+json');
                 document.head.appendChild(script);
             }
-            script.innerHTML = JSON.stringify(schema);
-        }
-
-        // Update robots
-        let metaRobots = document.querySelector('meta[name="robots"]');
-        if (noindex) {
-            if (!metaRobots) {
-                metaRobots = document.createElement('meta');
-                metaRobots.setAttribute('name', 'robots');
-                document.head.appendChild(metaRobots);
-            }
-            metaRobots.setAttribute('content', 'noindex, nofollow');
-        } else if (metaRobots) {
-            metaRobots.setAttribute('content', 'index, follow');
-        }
-
-        // Update description
-        const metaDescription = document.querySelector('meta[name="description"]');
-        if (metaDescription) {
-            metaDescription.setAttribute('content', description);
+            script.textContent = schemaJson;
         } else {
-            const descriptionElement = document.createElement('meta');
-            descriptionElement.name = 'description';
-            descriptionElement.content = description;
-            document.head.appendChild(descriptionElement);
+            document.getElementById(SCHEMA_SCRIPT_ID)?.remove();
         }
 
-        // Update keywords
+        updateNamedMeta('description', description);
+        updateNamedMeta('robots', noindex ? 'noindex, nofollow' : 'index, follow');
+        updateNamedMeta('author', 'HexaStack Solutions');
+        updateNamedMeta('theme-color', '#0f172a');
+        updateNamedMeta('twitter:card', 'summary_large_image');
+        updateNamedMeta('twitter:title', title);
+        updateNamedMeta('twitter:description', description);
+        updateNamedMeta('twitter:image', ogImage);
+        updateNamedMeta('twitter:image:alt', ogImageAlt);
+        updateNamedMeta('twitter:url', canonicalUrl);
+
         if (keywords) {
-            const metaKeywords = document.querySelector('meta[name="keywords"]');
-            if (metaKeywords) {
-                metaKeywords.setAttribute('content', keywords);
-            } else {
-                const keywordsElement = document.createElement('meta');
-                keywordsElement.name = 'keywords';
-                keywordsElement.content = keywords;
-                document.head.appendChild(keywordsElement);
-            }
+            updateNamedMeta('keywords', keywords);
+        } else {
+            document.querySelector('meta[name="keywords"]')?.remove();
         }
 
-        // Update OG tags
-        const updateOgTag = (property: string, content: string) => {
-            const tag = document.querySelector(`meta[property="${property}"]`);
-            if (tag) {
-                tag.setAttribute('content', content);
-            } else {
-                const element = document.createElement('meta');
-                element.setAttribute('property', property);
-                element.content = content;
-                document.head.appendChild(element);
+        updatePropertyMeta('og:site_name', 'HexaStack Solutions');
+        updatePropertyMeta('og:locale', locale);
+        updatePropertyMeta('og:title', title);
+        updatePropertyMeta('og:description', description);
+        updatePropertyMeta('og:type', ogType);
+        updatePropertyMeta('og:image', ogImage);
+        updatePropertyMeta('og:image:alt', ogImageAlt);
+        updatePropertyMeta('og:url', canonicalUrl);
+
+        cleanupManagedMeta('meta[data-hexastack-locale-alt="true"]');
+        localeAlternates.forEach((alternate) => {
+            const tag = document.createElement('meta');
+            tag.setAttribute('property', 'og:locale:alternate');
+            tag.setAttribute('content', alternate);
+            tag.setAttribute('data-hexastack-locale-alt', 'true');
+            document.head.appendChild(tag);
+        });
+
+        cleanupManagedMeta('meta[data-hexastack-extra-meta="true"]');
+        meta.forEach((entry) => {
+            if (!entry.content || (!entry.name && !entry.property)) {
+                return;
             }
-        };
 
-        updateOgTag('og:title', title);
-        updateOgTag('og:description', description);
-        updateOgTag('og:type', ogType);
-        updateOgTag('og:image', ogImage);
-        updateOgTag('og:url', canonicalUrl);
-
-    }, [title, description, keywords, ogImage, ogType, noindex, canonical, schema]);
+            const tag = document.createElement('meta');
+            if (entry.name) {
+                tag.setAttribute('name', entry.name);
+            }
+            if (entry.property) {
+                tag.setAttribute('property', entry.property);
+            }
+            tag.setAttribute('content', entry.content);
+            tag.setAttribute('data-hexastack-extra-meta', 'true');
+            document.head.appendChild(tag);
+        });
+    }, [title, description, keywords, ogImage, ogType, noindex, canonical, schema, schemaJson, ogImageAlt, locale, localeAlternates, meta]);
 
     return null;
 }

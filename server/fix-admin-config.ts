@@ -45,10 +45,11 @@ async function fixAdminConfiguration() {
             await db.companySettings.create({
                 data: {
                     companyName: 'HexaStack Solutions',
-                    primaryEmail: 'supporthexastack@hexastacksolutions.com',
+                    primaryEmail: 'hexastacksolutions@gmail.com',
+                    supportEmail: 'supporthexastack@hexastacksolutions.com',
                     primaryWhatsApp: '+917591999365',
                     leadName1: 'Anandu Krishna',
-                    leadEmail1: 'supporthexastack@hexastacksolutions.com',
+                    leadEmail1: 'hexastacksolutions@gmail.com',
                     leadWhatsApp1: '+917591999365',
                     leadName2: 'Surag',
                     leadEmail2: 'officialsurag@gmail.com',
@@ -63,11 +64,12 @@ async function fixAdminConfiguration() {
             await db.companySettings.update({
                 where: { id: settings.id },
                 data: {
-                    primaryEmail: 'supporthexastack@hexastacksolutions.com',
-                    leadEmail1: 'supporthexastack@hexastacksolutions.com',
+                    primaryEmail: 'hexastacksolutions@gmail.com',
+                    supportEmail: 'supporthexastack@hexastacksolutions.com',
+                    leadEmail1: 'hexastacksolutions@gmail.com',
                 },
             });
-            console.log('Company settings updated (primaryEmail, leadEmail1 → supporthexastack@hexastacksolutions.com).');
+            console.log('Company settings updated (primaryEmail -> hexastacksolutions@gmail.com, supportEmail -> supporthexastack@hexastacksolutions.com, leadEmail1 -> hexastacksolutions@gmail.com).');
         }
 
         console.log('\n=== Configuration Summary ===');
@@ -75,7 +77,6 @@ async function fixAdminConfiguration() {
         console.log('Admin Password:', adminPassword);
         console.log('Role:', 'SUPER_ADMIN');
         console.log('=============================');
-
     } catch (error) {
         console.error('Error fixing admin configuration:', error);
     } finally {
