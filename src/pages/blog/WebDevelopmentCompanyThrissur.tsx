@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function WebDevelopmentCompanyThrissur() {
     return (
@@ -11,6 +12,12 @@ export default function WebDevelopmentCompanyThrissur() {
                 description="How to choose a web development company in Thrissur: scope, pricing, support, and working with a local team that serves Kerala and Gulf."
                 keywords="web development company Thrissur, website developer Thrissur, Kerala web design"
                 canonical="/blog/web-development-company-thrissur"
+                schema={createArticleSchema({
+                    headline: 'Web Development Company in Thrissur - What to Look For',
+                    description: 'How to choose a web development company in Thrissur: scope, pricing, support, and working with a local team that serves Kerala and Gulf.',
+                    path: '/blog/web-development-company-thrissur',
+                    datePublished: '2026-03-23',
+                })}
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">

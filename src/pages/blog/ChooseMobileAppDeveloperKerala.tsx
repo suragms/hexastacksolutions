@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function ChooseMobileAppDeveloperKerala() {
     return (
@@ -11,6 +12,12 @@ export default function ChooseMobileAppDeveloperKerala() {
                 description="What to look for when choosing a mobile app developer in Kerala: portfolio, platform, cost, and support. Practical tips for 2026."
                 keywords="mobile app developer Kerala, app development Thrissur, Kerala app developer"
                 canonical="/blog/choose-mobile-app-developer-kerala"
+                schema={createArticleSchema({
+                    headline: 'How to Choose a Mobile App Developer in Kerala',
+                    description: 'What to look for when choosing a mobile app developer in Kerala: portfolio, platform, cost, and support. Practical tips for 2026.',
+                    path: '/blog/choose-mobile-app-developer-kerala',
+                    datePublished: '2026-03-23',
+                })}
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">

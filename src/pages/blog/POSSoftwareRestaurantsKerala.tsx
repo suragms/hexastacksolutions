@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function POSSoftwareRestaurantsKerala() {
     return (
@@ -11,6 +12,12 @@ export default function POSSoftwareRestaurantsKerala() {
                 description="What to look for in restaurant POS software in Kerala in 2026 — billing, GST, table management, and custom solutions from Thrissur."
                 keywords="POS software restaurants Kerala 2026, restaurant billing Kerala, GST POS"
                 canonical="/blog/pos-software-restaurants-kerala-2026"
+                schema={createArticleSchema({
+                    headline: 'POS Software for Restaurants in Kerala in 2026',
+                    description: 'What to look for in restaurant POS software in Kerala in 2026 - billing, GST, table management, and custom solutions from Thrissur.',
+                    path: '/blog/pos-software-restaurants-kerala-2026',
+                    datePublished: '2026-03-23',
+                })}
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function WhatsAppBusinessSetupKerala() {
     return (
@@ -11,6 +12,12 @@ export default function WhatsAppBusinessSetupKerala() {
                 description="How to set up WhatsApp Business in Kerala in 2026 — API, catalog, automation, and using WhatsApp for orders and support."
                 keywords="WhatsApp Business Kerala 2026, WhatsApp API Kerala, business WhatsApp setup"
                 canonical="/blog/whatsapp-business-setup-kerala-2026"
+                schema={createArticleSchema({
+                    headline: 'WhatsApp Business Setup in Kerala in 2026',
+                    description: 'How to set up WhatsApp Business in Kerala in 2026 - API, catalog, automation, and using WhatsApp for orders and support.',
+                    path: '/blog/whatsapp-business-setup-kerala-2026',
+                    datePublished: '2026-03-23',
+                })}
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">

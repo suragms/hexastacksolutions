@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function NutriScanAIFoodRecognition() {
     return (
@@ -11,6 +12,12 @@ export default function NutriScanAIFoodRecognition() {
                 description="NutriScan AI uses GPT-4 Vision to recognise food from a photo and give nutritional insights. Built by HexaStack Solutions, Thrissur."
                 keywords="NutriScan AI, food recognition app, GPT-4 Vision, nutrition app Kerala"
                 canonical="/blog/nutriscan-ai-food-recognition-app"
+                schema={createArticleSchema({
+                    headline: 'NutriScan AI - Food Recognition App with GPT-4 Vision',
+                    description: 'NutriScan AI uses GPT-4 Vision to recognise food from a photo and give nutritional insights. Built by HexaStack Solutions, Thrissur.',
+                    path: '/blog/nutriscan-ai-food-recognition-app',
+                    datePublished: '2026-03-23',
+                })}
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">

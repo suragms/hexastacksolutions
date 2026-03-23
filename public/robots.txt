@@ -6,4 +6,4 @@ Disallow: /login
 Disallow: /register
 Disallow: /api/
 
-Sitemap: https://www.hexastacksolutions.com/sitemap.xml
+Sitemap: https://hexastacksolutions.com/sitemap.xml

@@ -21,7 +21,7 @@ interface SEOProps {
     meta?: SEOMetaTag[];
 }
 
-const CANONICAL_BASE = 'https://www.hexastacksolutions.com';
+const CANONICAL_BASE = 'https://hexastacksolutions.com';
 const DEFAULT_OG_IMAGE = `${CANONICAL_BASE}/logo-full-white.png`;
 const DEFAULT_OG_ALT = 'HexaStack Solutions website preview';
 const SCHEMA_SCRIPT_ID = 'hexastack-structured-data';

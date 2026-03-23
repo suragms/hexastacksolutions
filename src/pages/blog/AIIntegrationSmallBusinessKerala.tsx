@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function AIIntegrationSmallBusinessKerala() {
     return (
@@ -11,6 +12,12 @@ export default function AIIntegrationSmallBusinessKerala() {
                 description="Practical ways to use AI in your Kerala small business: chatbots, automation, and custom AI tools without huge budgets."
                 keywords="AI integration small business Kerala, AI for business Kerala, automation Kerala"
                 canonical="/blog/ai-integration-small-business-kerala"
+                schema={createArticleSchema({
+                    headline: 'AI Integration for Small Business Kerala',
+                    description: 'Practical ways to use AI in your Kerala small business: chatbots, automation, and custom AI tools without huge budgets.',
+                    path: '/blog/ai-integration-small-business-kerala',
+                    datePublished: '2026-03-23',
+                })}
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">

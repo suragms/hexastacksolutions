@@ -3,33 +3,53 @@ import { ArrowRight, MapPin } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { getKeralaDistricts } from '@/data/seoLocationPages';
+import { createBreadcrumbSchema } from '@/lib/seoSchemas';
 
-/**
- * When users search "Kerala" or "software Kerala" they land here.
- * Lists all Kerala districts with links to real SEO pages (/seo/thrissur/web-development etc.).
- */
 export default function KeralaHubPage() {
     const districts = getKeralaDistricts();
+
+    const schemaOrg = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'CollectionPage',
+                name: 'Kerala software pages',
+                url: 'https://hexastacksolutions.com/kerala',
+            },
+            createBreadcrumbSchema([
+                { name: 'Home', item: '/' },
+                { name: 'Kerala', item: '/kerala' },
+            ]),
+        ],
+    };
 
     return (
         <Layout>
             <SEO
-                title="Software & Web Development Kerala | HexaStack Solutions"
-                description="Web development, POS, billing, and custom software across Kerala. Thrissur, Ernakulam, Kozhikode, and all 14 districts. Talk to the developer."
+                title="Software Company Kerala | District Pages | HexaStack Solutions"
+                description="Kerala district pages for websites, POS software, billing systems, and custom software from a Thrissur team."
                 canonical="/kerala"
-                keywords="software company Kerala, web development Kerala, POS Kerala, billing software Kerala, HexaStack, Thrissur software, Ernakulam web development, Kozhikode POS, software all districts Kerala, custom software Kerala 14 districts, Vadanappally Thrissur Kerala, software company Vadanappally, web development Vadanappally Thrissur"
+                keywords="software company Kerala, web development Kerala, POS software Kerala, billing software Kerala, Thrissur software company"
+                schema={schemaOrg}
             />
-            <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">
-                    Software & Web Development in Kerala
-                </h1>
-                <p className="text-[var(--muted-foreground)] mb-10 leading-relaxed">
-                    We serve all 14 districts of Kerala: websites, POS, billing software, and custom apps. Thrissur-based team — you talk directly to the developer. Reply in 2 hours on WhatsApp.
-                </p>
-                <section>
+
+            <section className="border-b border-[var(--border)] bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.12),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.94))] py-14 md:py-18">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--primary)]">Kerala pages</p>
+                    <h1 className="mt-4 max-w-4xl text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl md:text-[3.35rem] md:leading-[1.05]">
+                        Kerala software pages from a Thrissur team
+                    </h1>
+                    <p className="mt-5 max-w-3xl text-base leading-8 text-[var(--muted-foreground)] sm:text-lg">
+                        Choose your district if you want a local landing page for websites, software, or direct contact with HexaStack.
+                    </p>
+                </div>
+            </section>
+
+            <section className="py-14 md:py-16">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6">
                     <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4 flex items-center gap-2">
                         <MapPin className="w-5 h-5" aria-hidden />
-                        Choose your district
+                        Kerala districts
                     </h2>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {districts.map((entry) => (
@@ -44,17 +64,18 @@ export default function KeralaHubPage() {
                             </li>
                         ))}
                     </ul>
-                </section>
-                <div className="mt-10 pt-8 border-t border-[var(--border)]">
-                    <Link
-                        to="/contact"
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--primary)] text-white font-semibold hover:opacity-90 transition-opacity"
-                    >
-                        Get a quote for Kerala
-                        <ArrowRight className="w-4 h-4" />
-                    </Link>
+
+                    <div className="mt-10 pt-8 border-t border-[var(--border)]">
+                        <Link
+                            to="/contact"
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--primary)] text-white font-semibold hover:opacity-90 transition-opacity"
+                        >
+                            Get a Kerala quote
+                            <ArrowRight className="w-4 h-4" />
+                        </Link>
+                    </div>
                 </div>
-            </article>
+            </section>
         </Layout>
     );
 }

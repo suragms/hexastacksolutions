@@ -89,7 +89,7 @@ const sections = [
         title: '9. Governing Law and Contact',
         body: [
             'These Terms are governed by the laws applicable in India, with business operations based in Kerala, unless a separate agreement specifies otherwise.',
-            'If you need clarification about these Terms, please contact HexaStack Solutions through our contact page or at supporthexastack@hexastacksolutions.com.',
+            'If you need clarification about these Terms, please contact HexaStack Solutions through our contact page or at hexastacksolutions@gmail.com.',
         ],
     },
 ];
@@ -101,7 +101,7 @@ export default function Terms() {
             {
                 '@type': 'WebPage',
                 name: 'Terms of Service | HexaStack Solutions',
-                url: 'https://www.hexastacksolutions.com/terms',
+                url: 'https://hexastacksolutions.com/terms',
                 description: 'Terms of Service for HexaStack Solutions.',
             },
         ],

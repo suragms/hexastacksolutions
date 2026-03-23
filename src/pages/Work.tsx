@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
@@ -30,16 +30,16 @@ interface CaseStudy {
 }
 
 const FALLBACK_CASE_STUDIES: CaseStudy[] = [
-    { id: 'healit', title: 'HEALit Medical', description: 'Paper registers. 200+ samples/month tracked manually. We built a lab management system — intake to final report. Reporting time cut 60%.', techStack: 'React, Node, PostgreSQL', projectUrl: null, tags: ['Kerala', 'Healthcare'], results: 'Reporting time cut 60%.', location: 'Kerala', clientType: 'Healthcare', problem: 'Paper registers. 200+ samples/month tracked manually.', build: 'Lab management system — intake to final report.' },
+    { id: 'healit', title: 'HEALit Medical', description: 'Paper registers. 200+ samples/month tracked manually. We built a lab management system â€” intake to final report. Reporting time cut 60%.', techStack: 'React, Node, PostgreSQL', projectUrl: null, tags: ['Kerala', 'Healthcare'], results: 'Reporting time cut 60%.', location: 'Kerala', clientType: 'Healthcare', problem: 'Paper registers. 200+ samples/month tracked manually.', build: 'Lab management system â€” intake to final report.' },
     { id: 'hexabill-b2b', title: 'HexaBill B2B', description: 'Trading company reconciling 200+ invoices by hand each month. We built automated billing, inventory, and multi-branch ERP. Manual work reduced 70%.', techStack: 'React, Node, Cloud DB', projectUrl: null, liveUrl: null, tags: ['UAE', 'Kerala', 'Billing'], results: 'Manual work reduced 70%.', location: 'UAE', clientType: 'Trading', problem: 'Trading company reconciling 200+ invoices by hand each month.', build: 'Automated billing, inventory, and multi-branch ERP.' },
     { id: 'uae-restaurant', title: 'UAE Restaurant POS', description: 'Orders lost between floors. Cash reconciled manually at close. We built POS with live inventory sync, VAT billing, multi-branch. Zero manual reconciliation.', techStack: 'React, Node', projectUrl: null, tags: ['UAE', 'Restaurant'], results: 'Zero manual reconciliation.', location: 'UAE', clientType: 'Restaurant', problem: 'Orders lost between floors. Cash reconciled manually at close.', build: 'POS with live inventory sync, VAT billing, multi-branch.' },
-    { id: 'nutriscan', title: 'NutriScan AI', description: 'Founder had an idea — photo your food, get nutrition data. We built GPT-4o Vision + SaaS platform from architecture to launch. Live and growing.', techStack: 'React, GPT-4o Vision, Node', projectUrl: null, liveUrl: 'https://nutriscan-ai.vercel.app', tags: ['AI', 'SaaS'], results: 'Live and growing.', location: null, clientType: 'SaaS', problem: 'Founder had an idea — photo your food, get nutrition data.', build: 'GPT-4o Vision + SaaS platform — architecture to launch.' },
-    { id: 'studenthub', title: 'Student Hub', description: 'Academic productivity SaaS: CGPA calculator, attendance, internal marks, PDF tools. Student-focused product. Live app in use.', techStack: 'React, Vercel', projectUrl: null, liveUrl: 'https://studentshub-gold.vercel.app', tags: ['Kerala', 'SaaS'], results: 'Live app in use', location: 'Kerala', clientType: 'SaaS', problem: 'Students needed CGPA, attendance, and PDF tools in one place.', build: 'Academic productivity SaaS — all tools in browser.' },
+    { id: 'nutriscan', title: 'NutriScan AI', description: 'Founder had an idea â€” photo your food, get nutrition data. We built GPT-4o Vision + SaaS platform from architecture to launch. Live and growing.', techStack: 'React, GPT-4o Vision, Node', projectUrl: null, liveUrl: 'https://nutriscan-ai.vercel.app', tags: ['AI', 'SaaS'], results: 'Live and growing.', location: null, clientType: 'SaaS', problem: 'Founder had an idea â€” photo your food, get nutrition data.', build: 'GPT-4o Vision + SaaS platform â€” architecture to launch.' },
+    { id: 'studenthub', title: 'Student Hub', description: 'Academic productivity SaaS: CGPA calculator, attendance, internal marks, PDF tools. Student-focused product. Live app in use.', techStack: 'React, Vercel', projectUrl: null, liveUrl: 'https://studentshub-gold.vercel.app', tags: ['Kerala', 'SaaS'], results: 'Live app in use', location: 'Kerala', clientType: 'SaaS', problem: 'Students needed CGPA, attendance, and PDF tools in one place.', build: 'Academic productivity SaaS â€” all tools in browser.' },
 ];
 
 export default function Work() {
-    const [apiProjects, setApiProjects] = useState<CaseStudy[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [apiProjects, setApiProjects] = useState<CaseStudy[]>(FALLBACK_CASE_STUDIES);
+    const [loading, setLoading] = useState(false);
     const [activeFilter, setActiveFilter] = useState<FilterTab>('All');
     const [selectedProject, setSelectedProject] = useState<CaseStudy | null>(null);
 
@@ -47,7 +47,7 @@ export default function Work() {
         fetch(`${API_URL}/api/portfolio`)
             .then((res) => (res.ok ? res.json() : []))
             .then((data) => setApiProjects(Array.isArray(data) ? data : []))
-            .catch(() => setApiProjects([]))
+            .catch(() => setApiProjects(FALLBACK_CASE_STUDIES))
             .finally(() => setLoading(false));
     }, []);
 
@@ -80,7 +80,7 @@ export default function Work() {
         <Layout>
             <SEO
                 title="Portfolio | Software Projects Kerala & UAE | HexaStack Solutions"
-                description="Case studies: Restaurant POS UAE, Medical Lab Kerala, NutriScan AI. Custom software delivered in 4–6 weeks."
+                description="Case studies: Restaurant POS UAE, Medical Lab Kerala, NutriScan AI. Custom software delivered in 4â€“6 weeks."
                 keywords="software portfolio Kerala, POS system UAE case study, medical software Kerala, AI SaaS project India, HexaStack projects, custom software examples, restaurant POS Dubai case study, billing software success story, software company portfolio Thrissur, software company Vadanappally, projects Vadanappally Thrissur"
                 canonical="/work"
             />
@@ -97,11 +97,11 @@ export default function Work() {
                     {/* Stats bar */}
                     <div className="flex flex-wrap gap-4 mb-10 p-4 rounded-xl bg-[var(--card)] border border-[var(--border)]">
                         <span className="text-sm font-medium text-[var(--foreground)]">5 projects delivered</span>
-                        <span className="text-sm text-[var(--muted-foreground)]">·</span>
+                        <span className="text-sm text-[var(--muted-foreground)]">Â·</span>
                         <span className="text-sm font-medium text-[var(--foreground)]">2 countries</span>
-                        <span className="text-sm text-[var(--muted-foreground)]">·</span>
-                        <span className="text-sm font-medium text-[var(--foreground)]">4–6 weeks average delivery</span>
-                        <span className="text-sm text-[var(--muted-foreground)]">·</span>
+                        <span className="text-sm text-[var(--muted-foreground)]">Â·</span>
+                        <span className="text-sm font-medium text-[var(--foreground)]">4â€“6 weeks average delivery</span>
+                        <span className="text-sm text-[var(--muted-foreground)]">Â·</span>
                         <span className="text-sm font-medium text-[var(--foreground)]">70% avg. manual work reduction</span>
                     </div>
 
@@ -242,7 +242,7 @@ export default function Work() {
                 <section className="px-4 py-12 md:py-16 border-t border-[var(--border)] bg-[var(--background)]">
                     <div className="max-w-6xl mx-auto text-center">
                         <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-4 text-[var(--foreground)]">Want a system like this for your business?</h2>
-                        <p className="text-[var(--muted-foreground)] mb-6 max-w-xl mx-auto">Restaurant like the UAE project? Medical system like HEALit? Tell us — we&apos;ll tell you if we can build it.</p>
+                        <p className="text-[var(--muted-foreground)] mb-6 max-w-xl mx-auto">Restaurant like the UAE project? Medical system like HEALit? Tell us â€” we&apos;ll tell you if we can build it.</p>
                         <div className="flex flex-wrap justify-center gap-4">
                             <a href={`https://wa.me/917591999365?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 h-12 px-8 rounded-full bg-[#25D366] text-white font-semibold hover:bg-[#20BA5A] transition-colors">
                                 <MessageCircle className="w-5 h-5" /> WhatsApp
@@ -257,3 +257,4 @@ export default function Work() {
         </Layout>
     );
 }
+

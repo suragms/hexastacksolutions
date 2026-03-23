@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function MedicalLabSoftwareKerala() {
     return (
@@ -11,6 +12,12 @@ export default function MedicalLabSoftwareKerala() {
                 description="What to expect from medical lab software in Kerala: patient management, reports, billing, and how custom solutions compare on features and pricing."
                 keywords="medical lab software Kerala, lab management software, pathology software Kerala"
                 canonical="/blog/medical-lab-software-kerala"
+                schema={createArticleSchema({
+                    headline: 'Medical Lab Software Kerala - Features and Pricing',
+                    description: 'What to expect from medical lab software in Kerala: patient management, reports, billing, and how custom solutions compare on features and pricing.',
+                    path: '/blog/medical-lab-software-kerala',
+                    datePublished: '2026-03-23',
+                })}
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">

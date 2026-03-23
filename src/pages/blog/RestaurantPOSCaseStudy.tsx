@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function RestaurantPOSCaseStudy() {
     return (
@@ -11,6 +12,12 @@ export default function RestaurantPOSCaseStudy() {
                 description="How a custom POS system solved billing, VAT, and multi-branch operations for a restaurant in the UAE. Built by HexaStack from Kerala."
                 keywords="restaurant POS UAE, VAT compliant POS, UAE billing software case study"
                 canonical="/blog/restaurant-pos-uae-case-study"
+                schema={createArticleSchema({
+                    headline: 'UAE Restaurant POS Case Study',
+                    description: 'How a custom POS system solved billing, VAT, and multi-branch operations for a restaurant in the UAE. Built by HexaStack from Kerala.',
+                    path: '/blog/restaurant-pos-uae-case-study',
+                    datePublished: '2026-03-23',
+                })}
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">

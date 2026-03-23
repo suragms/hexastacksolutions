@@ -76,7 +76,7 @@ const sections = [
     {
         title: '7. Contact',
         body: [
-            'If you have questions about this Privacy Policy or about how HexaStack Solutions handles information, please contact us at supporthexastack@hexastacksolutions.com or through our contact page.',
+            'If you have questions about this Privacy Policy or about how HexaStack Solutions handles information, please contact us at hexastacksolutions@gmail.com or through our contact page.',
         ],
     },
 ];
@@ -88,7 +88,7 @@ export default function Privacy() {
             {
                 '@type': 'WebPage',
                 name: 'Privacy Policy | HexaStack Solutions',
-                url: 'https://www.hexastacksolutions.com/privacy',
+                url: 'https://hexastacksolutions.com/privacy',
                 description: 'Privacy policy for HexaStack Solutions.',
             },
         ],
@@ -162,7 +162,7 @@ export default function Privacy() {
                                 </div>
                                 <div className="rounded-2xl border border-[var(--border)] bg-white p-5">
                                     <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Contact</p>
-                                    <a href="mailto:supporthexastack@hexastacksolutions.com" className="mt-3 inline-flex items-center gap-2 text-base font-semibold text-[var(--foreground)]">
+                                    <a href="mailto:hexastacksolutions@gmail.com" className="mt-3 inline-flex items-center gap-2 text-base font-semibold text-[var(--foreground)]">
                                         <Mail className="h-4 w-4 text-[var(--primary)]" />
                                         Email us
                                     </a>

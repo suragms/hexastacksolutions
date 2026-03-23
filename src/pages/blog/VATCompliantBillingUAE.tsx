@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function VATCompliantBillingUAE() {
     return (
@@ -11,6 +12,12 @@ export default function VATCompliantBillingUAE() {
                 description="A practical guide to VAT-compliant invoicing and billing software for UAE and Gulf businesses. What to look for and how custom solutions help."
                 keywords="VAT compliant billing UAE, UAE invoicing software, Gulf VAT billing"
                 canonical="/blog/vat-compliant-billing-software-uae"
+                schema={createArticleSchema({
+                    headline: 'VAT-Compliant Billing Software for UAE Businesses',
+                    description: 'A practical guide to VAT-compliant invoicing and billing software for UAE and Gulf businesses. What to look for and how custom solutions help.',
+                    path: '/blog/vat-compliant-billing-software-uae',
+                    datePublished: '2026-03-23',
+                })}
             />
             <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">

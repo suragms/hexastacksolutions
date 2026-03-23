@@ -9,4 +9,4 @@ export function cn(...inputs: ClassValue[]) {
 export const API_URL = import.meta.env.VITE_API_URL || '';
 
 // Website URL for QR code and sharing (canonical domain)
-export const SITE_URL = 'https://www.hexastacksolutions.com';
+export const SITE_URL = 'https://hexastacksolutions.com';

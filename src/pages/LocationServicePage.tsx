@@ -1,8 +1,22 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, MessageCircle, Phone } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { findSeoLocationPage } from '@/data/seoLocationPages';
+import { createBreadcrumbSchema } from '@/lib/seoSchemas';
+
+function getCommercialDetails(serviceSlug: string) {
+    switch (serviceSlug) {
+        case 'pos-software':
+        case 'billing-software':
+        case 'vat-billing':
+            return { price: 'From Rs.60,000', timeline: '4 to 6 weeks' };
+        case 'custom-software':
+            return { price: 'From Rs.75,000', timeline: '4 to 8 weeks' };
+        default:
+            return { price: 'From Rs.25,000', timeline: '2 to 4 weeks' };
+    }
+}
 
 export default function LocationServicePage() {
     const { locationSlug, serviceSlug } = useParams<{ locationSlug: string; serviceSlug: string }>();
@@ -25,21 +39,32 @@ export default function LocationServicePage() {
     }
 
     const canonical = `/seo/${entry.locationSlug}/${entry.serviceSlug}`;
-    const isUnitedStatesMarket = entry.locationSlug === 'united-states';
+    const details = getCommercialDetails(entry.serviceSlug);
     const keywords = [
         `${entry.service} ${entry.location}`,
-        `${entry.service} company ${entry.location}`,
-        `${entry.service.toLowerCase()} for ${entry.location}`,
+        `${entry.service.toLowerCase()} ${entry.location}`,
         'HexaStack Solutions',
     ].join(', ');
+
     const schemaOrg = {
         '@context': 'https://schema.org',
-        '@type': 'ProfessionalService',
-        name: 'HexaStack Solutions',
-        url: `https://www.hexastacksolutions.com${canonical}`,
-        areaServed: [entry.location, 'Kerala', 'India', 'United States', 'United Arab Emirates'],
-        serviceType: entry.service,
-        description: entry.description,
+        '@graph': [
+            {
+                '@type': 'Service',
+                serviceType: entry.service,
+                areaServed: [entry.location, 'Thrissur', 'Kerala', 'UAE', 'Kuwait', 'Bahrain'],
+                provider: {
+                    '@type': 'LocalBusiness',
+                    name: 'HexaStack Solutions',
+                    telephone: '+91-75919-99365',
+                },
+                description: entry.description,
+            },
+            createBreadcrumbSchema([
+                { name: 'Home', item: '/' },
+                { name: entry.location, item: canonical },
+            ]),
+        ],
     };
 
     return (
@@ -49,35 +74,55 @@ export default function LocationServicePage() {
                 description={entry.description}
                 canonical={canonical}
                 keywords={keywords}
-                locale={isUnitedStatesMarket ? 'en_US' : 'en_IN'}
-                localeAlternates={isUnitedStatesMarket ? ['en_IN'] : ['en_US']}
                 schema={schemaOrg}
             />
-            <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
+            <article className="max-w-4xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">
                     {entry.h1}
                 </h1>
                 <p className="text-[var(--muted-foreground)] mb-8 leading-relaxed">
-                    HexaStack Solutions offers {entry.service.toLowerCase()} for businesses in {entry.location} and beyond. We are a Thrissur-based team building custom software, websites, POS, and digital solutions for clients across Kerala, India, the United States, and Gulf markets.
+                    HexaStack Solutions builds {entry.service.toLowerCase()} for businesses in {entry.location}. The team works from Vadanappally, Thrissur and handles Kerala and Gulf projects directly on WhatsApp.
                 </p>
-                <section className="space-y-6 mb-10">
-                    <h2 className="text-xl font-semibold text-[var(--foreground)]">Why choose us</h2>
+
+                <div className="flex flex-wrap gap-3 mb-10">
+                    <a
+                        href="https://wa.me/917591999365?text=Hi%20HexaStack%2C%20I%20need%20help%20with%20this%20service."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white hover:bg-[#20BA5A]"
+                    >
+                        <MessageCircle className="h-4 w-4" />
+                        WhatsApp now
+                    </a>
+                    <a
+                        href="tel:+917591999365"
+                        className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                    >
+                        <Phone className="h-4 w-4" />
+                        Call 75919 99365
+                    </a>
+                </div>
+
+                <section className="space-y-4 mb-10">
+                    <h2 className="text-xl font-semibold text-[var(--foreground)]">Pricing and timeline</h2>
                     <p className="text-[var(--foreground)] leading-relaxed">
-                        We deliver end-to-end: you work directly with the developers, no middle layers. Our projects include VAT-compliant POS for UAE restaurants, medical lab software in Kerala, SEO-aware business websites, and AI-powered apps. Whether you need a new website, billing system, or custom application in {entry.location}, we can scope it and give you a clear timeline and price.
+                        {entry.service} projects usually start {details.price} and take {details.timeline}. We scope the work first and then give you a clear next step.
                     </p>
                 </section>
-                <section className="space-y-6 mb-10">
-                    <h2 className="text-xl font-semibold text-[var(--foreground)]">Get in touch</h2>
+
+                <section className="space-y-4 mb-10">
+                    <h2 className="text-xl font-semibold text-[var(--foreground)]">What clients usually ask for</h2>
                     <p className="text-[var(--foreground)] leading-relaxed">
-                        Tell us your requirements via the contact page or WhatsApp. We will respond with an honest assessment and a no-obligation quote. We serve {entry.location} with the same quality we bring to businesses across Kerala, India, the United States, and the Gulf.
+                        Most buyers ask for a faster billing flow, a clearer website, or an internal tool that saves staff time. We keep the conversation simple and tell you quickly if the fit is right.
                     </p>
                 </section>
+
                 <div className="pt-8 border-t border-[var(--border)]">
                     <Link
                         to="/contact"
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--primary)] text-white font-semibold hover:opacity-90 transition-opacity"
                     >
-                        Contact us
+                        Start the conversation
                         <ArrowRight className="w-4 h-4" />
                     </Link>
                 </div>

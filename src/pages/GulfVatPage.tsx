@@ -2,56 +2,111 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
+import { GlassCard } from '@/components/GlassCard';
 import { getGulfVatPages } from '@/data/seoLocationPages';
+import { createBreadcrumbSchema } from '@/lib/seoSchemas';
 
-/**
- * When users search "Gulf VAT" or "VAT billing UAE/Dubai" they land here.
- * Lists all Gulf VAT billing SEO pages (UAE, Dubai, Abu Dhabi, etc.).
- */
+const highlights = [
+    'VAT-ready billing for UAE restaurant and retail workflows.',
+    'Built from Thrissur with direct WhatsApp support.',
+    'Good for UAE, Kuwait, and Bahrain businesses that need cleaner reporting.',
+];
+
 export default function GulfVatPage() {
     const vatPages = getGulfVatPages();
+
+    const schemaOrg = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'Service',
+                serviceType: 'VAT billing software',
+                provider: {
+                    '@type': 'LocalBusiness',
+                    name: 'HexaStack Solutions',
+                    telephone: '+91-75919-99365',
+                    address: {
+                        '@type': 'PostalAddress',
+                        addressLocality: 'Thrissur',
+                        addressRegion: 'Kerala',
+                        addressCountry: 'IN',
+                    },
+                },
+                areaServed: ['UAE', 'Dubai', 'Kuwait', 'Bahrain'],
+                description: 'VAT-ready billing software and POS support for UAE and Gulf businesses from a Thrissur software team.',
+            },
+            createBreadcrumbSchema([
+                { name: 'Home', item: '/' },
+                { name: 'Gulf VAT', item: '/gulf-vat' },
+            ]),
+        ],
+    };
 
     return (
         <Layout>
             <SEO
-                title="VAT Billing Software Gulf | UAE, Dubai, Abu Dhabi | HexaStack"
-                description="VAT-compliant billing and invoicing software for Gulf: UAE, Dubai, Abu Dhabi, Sharjah, Riyadh, Jeddah. TRN, reports. Built by Kerala team."
+                title="VAT Billing Software UAE | POS Gulf | HexaStack Solutions Thrissur"
+                description="VAT-ready billing software for UAE and Gulf businesses. Built in Thrissur for billing, POS, and daily reporting."
                 canonical="/gulf-vat"
-                keywords="Gulf VAT billing, VAT software UAE, VAT billing Dubai, VAT compliant UAE, HexaStack, TRN billing UAE, Saudi VAT software, invoicing software Dubai, POS VAT Gulf, billing software Abu Dhabi Sharjah"
+                keywords="VAT billing software UAE, POS software Dubai restaurant, billing software Gulf, Kuwait billing software, Bahrain billing software"
+                schema={schemaOrg}
             />
-            <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">
-                    VAT Billing Software for the Gulf
-                </h1>
-                <p className="text-[var(--muted-foreground)] mb-10 leading-relaxed">
-                    VAT-compliant billing and invoicing for UAE, Saudi Arabia, and the Gulf. TRN support, multi-currency, reports. We’ve built restaurant POS and billing for UAE clients — you talk to the developer.
-                </p>
-                <section>
-                    <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">VAT billing by location</h2>
-                    <ul className="space-y-3">
+
+            <section className="border-b border-[var(--border)] bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.12),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.94))] py-14 md:py-18">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--primary)]">Gulf billing</p>
+                    <h1 className="mt-4 max-w-4xl text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl md:text-[3.35rem] md:leading-[1.05]">
+                        VAT-Ready Billing Software for UAE & Gulf Businesses
+                    </h1>
+                    <p className="mt-5 max-w-3xl text-base leading-8 text-[var(--muted-foreground)] sm:text-lg">
+                        We build billing and POS systems for Gulf businesses from Thrissur, Kerala. Start with UAE, Kuwait, or Bahrain if you need VAT-ready sales and reporting.
+                    </p>
+                </div>
+            </section>
+
+            <section className="border-b border-[var(--border)] py-14 md:py-16">
+                <div className="mx-auto grid max-w-6xl gap-6 px-4 sm:px-6 md:grid-cols-3">
+                    {highlights.map((item) => (
+                        <GlassCard key={item} className="p-6">
+                            <p className="text-sm leading-7 text-[var(--foreground)]">{item}</p>
+                        </GlassCard>
+                    ))}
+                </div>
+            </section>
+
+            <section className="py-14 md:py-16">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6">
+                    <h2 className="text-3xl font-bold tracking-tight text-[var(--foreground)] md:text-4xl">
+                        Gulf locations we support first
+                    </h2>
+                    <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
                         {vatPages.map((entry) => (
-                            <li key={`${entry.locationSlug}-${entry.serviceSlug}`}>
+                            <GlassCard key={`${entry.locationSlug}-${entry.serviceSlug}`} className="p-6">
+                                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">{entry.location}</p>
+                                <h3 className="mt-4 text-xl font-semibold text-[var(--foreground)]">{entry.service}</h3>
+                                <p className="mt-3 text-sm leading-7 text-[var(--muted-foreground)]">{entry.description}</p>
                                 <Link
                                     to={`/seo/${entry.locationSlug}/${entry.serviceSlug}`}
-                                    className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--muted)] transition-colors text-[var(--foreground)]"
+                                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--primary)]"
                                 >
-                                    <span className="font-medium">{entry.h1}</span>
-                                    <ArrowRight className="w-4 h-4 text-[var(--muted-foreground)] shrink-0" aria-hidden />
+                                    View page
+                                    <ArrowRight className="h-4 w-4" />
                                 </Link>
-                            </li>
+                            </GlassCard>
                         ))}
-                    </ul>
-                </section>
-                <div className="mt-10 pt-8 border-t border-[var(--border)]">
-                    <Link
-                        to="/contact"
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--primary)] text-white font-semibold hover:opacity-90 transition-opacity"
-                    >
-                        Get VAT billing quote for Gulf
-                        <ArrowRight className="w-4 h-4" />
-                    </Link>
+                    </div>
+
+                    <div className="mt-10">
+                        <Link
+                            to="/contact"
+                            className="inline-flex items-center gap-2 rounded-full bg-[var(--primary)] px-6 py-3 text-sm font-semibold text-white hover:opacity-95"
+                        >
+                            Get a Gulf billing quote
+                            <ArrowRight className="h-4 w-4" />
+                        </Link>
+                    </div>
                 </div>
-            </article>
+            </section>
         </Layout>
     );
 }
