@@ -79,7 +79,7 @@ function App() {
                         <Route path="/blog/vat-billing-software-uae-2026" element={<VATCompliantBillingUAE />} />
                         <Route path="/blog/web-development-company-thrissur" element={<WebDevelopmentCompanyThrissur />} />
                         <Route path="/blog/medical-lab-software-kerala" element={<MedicalLabSoftwareKerala />} />
-                        <Route path="/blog/medical-lab-software-kerala-2026" element={<MedicalLabSoftwareKerala />} />
+                        <Route path="/blog/medical-lab-software-kerala-2026" element={<Navigate to="/blog/medical-lab-software-kerala" replace />} />
                         <Route path="/blog/whatsapp-business-setup-kerala-2026" element={<WhatsAppBusinessSetupKerala />} />
                         <Route path="/blog/ai-integration-small-business-kerala" element={<AIIntegrationSmallBusinessKerala />} />
                         <Route path="/blog/choose-mobile-app-developer-kerala" element={<ChooseMobileAppDeveloperKerala />} />

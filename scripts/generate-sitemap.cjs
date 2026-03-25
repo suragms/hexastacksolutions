@@ -1,11 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const { ALL_PUBLIC_PATHS } = require('./public-routes.cjs');
+const { SITEMAP_PATHS } = require('./public-routes.cjs');
 
 const BASE = 'https://hexastacksolutions.com';
 const lastmod = new Date().toISOString().split('T')[0];
 
-const urls = ALL_PUBLIC_PATHS.map((route) => ({
+const urls = SITEMAP_PATHS.map((route) => ({
     loc: `${BASE}${route}`,
     lastmod,
     priority:

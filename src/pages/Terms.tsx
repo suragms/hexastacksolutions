@@ -114,6 +114,7 @@ export default function Terms() {
                 description="Read the Terms of Service for HexaStack Solutions, including service scope, payments, ownership, usage rules, and liability limits."
                 keywords="terms of service HexaStack Solutions, software company terms Kerala, website development terms, SaaS terms HexaStack, legal terms software services"
                 canonical="/terms"
+                noindex
                 schema={schema}
             />
 

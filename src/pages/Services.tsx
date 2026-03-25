@@ -1,3 +1,5 @@
+import { useLayoutEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ArrowRight, MessageCircle, Phone } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
@@ -6,6 +8,7 @@ import { createBreadcrumbSchema } from '@/lib/seoSchemas';
 
 const services = [
     {
+        id: 'websites-seo',
         title: 'Website & SEO - Kerala & Gulf',
         description: 'Built to rank in Google for your city and get you calls.',
         price: 'From Rs.25,000',
@@ -13,6 +16,7 @@ const services = [
         whatsappText: 'Hi HexaStack, I need a website and SEO quote.',
     },
     {
+        id: 'pos-billing',
         title: 'POS & Billing Software',
         description: 'VAT-ready for India and Gulf. Works offline. Runs on any device.',
         price: 'From Rs.60,000',
@@ -20,6 +24,7 @@ const services = [
         whatsappText: 'Hi HexaStack, I need POS or billing software.',
     },
     {
+        id: 'custom-apps',
         title: 'Custom Software & Apps',
         description: 'Replace your spreadsheets, paper records, and manual billing.',
         price: 'From Rs.75,000',
@@ -27,6 +32,7 @@ const services = [
         whatsappText: 'Hi HexaStack, I need custom software for my workflow.',
     },
     {
+        id: 'automation',
         title: 'AI & WhatsApp Automation',
         description: 'Automate bookings, reminders, and customer replies on WhatsApp.',
         price: 'From Rs.40,000',
@@ -63,6 +69,15 @@ const schemaOrg = {
 };
 
 export default function Services() {
+    const location = useLocation();
+
+    useLayoutEffect(() => {
+        const id = location.hash.replace(/^#/, '');
+        if (!id) return;
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, [location.hash, location.pathname]);
+
     return (
         <Layout>
             <SEO
@@ -99,7 +114,7 @@ export default function Services() {
                 <div className="mx-auto max-w-6xl px-4 sm:px-6">
                     <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
                         {services.map((service) => (
-                            <GlassCard key={service.title} className="p-6">
+                            <GlassCard key={service.title} id={service.id} className="scroll-mt-28 p-6">
                                 <h2 className="text-xl font-semibold text-[var(--foreground)]">{service.title}</h2>
                                 <p className="mt-3 text-sm leading-7 text-[var(--muted-foreground)]">{service.description}</p>
                                 <div className="mt-5 space-y-2 text-sm text-[var(--foreground)]">

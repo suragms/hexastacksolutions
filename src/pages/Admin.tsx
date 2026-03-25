@@ -59,6 +59,8 @@ interface CompanySettings {
     id?: string;
     companyName: string;
     logoUrl?: string | null;
+    heroDesktopImageUrl?: string | null;
+    heroMobileImageUrl?: string | null;
     primaryEmail: string;
     supportEmail: string;
     primaryWhatsApp: string;
@@ -77,6 +79,8 @@ interface CompanySettings {
 const DEFAULT_COMPANY_SETTINGS: CompanySettings = {
     companyName: 'HexaStack Solutions',
     logoUrl: '',
+    heroDesktopImageUrl: '',
+    heroMobileImageUrl: '',
     primaryEmail: 'hexastacksolutions@gmail.com',
     supportEmail: 'supporthexastack@hexastacksolutions.com',
     primaryWhatsApp: '+917591999365',
@@ -1690,6 +1694,114 @@ export default function Admin() {
                                         )}
                                     </div>
                                 </div>
+
+                                <div className="md:col-span-2 grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Home hero — desktop image</label>
+                                        <p className="text-xs text-slate-500 mb-2">Wide screenshot (e.g. HexaBill dashboard). Shown in the large frame on the home page.</p>
+                                        <div className="flex items-start gap-3 flex-wrap">
+                                            {settingsForm.heroDesktopImageUrl ? (
+                                                <div className="relative w-full max-w-xs aspect-video rounded border border-slate-200 overflow-hidden bg-slate-50">
+                                                    <img src={settingsForm.heroDesktopImageUrl} alt="Hero desktop" className="w-full h-full object-cover" />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setSettingsForm({ ...settingsForm, heroDesktopImageUrl: '' })}
+                                                        disabled={!editingSettings}
+                                                        className="absolute top-0 right-0 bg-red-500 text-white rounded-bl p-1 hover:bg-red-600 disabled:opacity-50"
+                                                    >
+                                                        <X className="w-3 h-3" />
+                                                    </button>
+                                                </div>
+                                            ) : null}
+                                            {editingSettings && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        const input = document.createElement('input');
+                                                        input.type = 'file';
+                                                        input.accept = 'image/*';
+                                                        input.onchange = async (e) => {
+                                                            const file = (e.target as HTMLInputElement).files?.[0];
+                                                            if (!file) return;
+                                                            setUploading(true);
+                                                            try {
+                                                                const formData = new FormData();
+                                                                formData.append('file', file);
+                                                                const res = await fetch(`${API_URL}/api/upload`, { method: 'POST', headers: getAdminAuthHeaders(false), body: formData });
+                                                                if (res.ok) {
+                                                                    const data = await res.json();
+                                                                    setSettingsForm({ ...settingsForm, heroDesktopImageUrl: data.url });
+                                                                    showNotification('success', 'Desktop hero image uploaded');
+                                                                }
+                                                            } catch {
+                                                                showNotification('error', 'Upload failed');
+                                                            } finally {
+                                                                setUploading(false);
+                                                            }
+                                                        };
+                                                        input.click();
+                                                    }}
+                                                    className="px-3 py-2 border border-dashed border-slate-300 rounded-md text-sm text-slate-600 hover:border-slate-400"
+                                                >
+                                                    {uploading ? 'Uploading…' : 'Upload desktop'}
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Home hero — mobile image</label>
+                                        <p className="text-xs text-slate-500 mb-2">Tall screenshot (e.g. sales / growth). Shown in the small overlapping phone frame.</p>
+                                        <div className="flex items-start gap-3 flex-wrap">
+                                            {settingsForm.heroMobileImageUrl ? (
+                                                <div className="relative w-full max-w-[140px] aspect-[9/16] rounded border border-slate-200 overflow-hidden bg-slate-50">
+                                                    <img src={settingsForm.heroMobileImageUrl} alt="Hero mobile" className="w-full h-full object-cover" />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setSettingsForm({ ...settingsForm, heroMobileImageUrl: '' })}
+                                                        disabled={!editingSettings}
+                                                        className="absolute top-0 right-0 bg-red-500 text-white rounded-bl p-1 hover:bg-red-600 disabled:opacity-50"
+                                                    >
+                                                        <X className="w-3 h-3" />
+                                                    </button>
+                                                </div>
+                                            ) : null}
+                                            {editingSettings && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        const input = document.createElement('input');
+                                                        input.type = 'file';
+                                                        input.accept = 'image/*';
+                                                        input.onchange = async (e) => {
+                                                            const file = (e.target as HTMLInputElement).files?.[0];
+                                                            if (!file) return;
+                                                            setUploading(true);
+                                                            try {
+                                                                const formData = new FormData();
+                                                                formData.append('file', file);
+                                                                const res = await fetch(`${API_URL}/api/upload`, { method: 'POST', headers: getAdminAuthHeaders(false), body: formData });
+                                                                if (res.ok) {
+                                                                    const data = await res.json();
+                                                                    setSettingsForm({ ...settingsForm, heroMobileImageUrl: data.url });
+                                                                    showNotification('success', 'Mobile hero image uploaded');
+                                                                }
+                                                            } catch {
+                                                                showNotification('error', 'Upload failed');
+                                                            } finally {
+                                                                setUploading(false);
+                                                            }
+                                                        };
+                                                        input.click();
+                                                    }}
+                                                    className="px-3 py-2 border border-dashed border-slate-300 rounded-md text-sm text-slate-600 hover:border-slate-400"
+                                                >
+                                                    {uploading ? 'Uploading…' : 'Upload mobile'}
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 mb-1">Company Name</label>
                                     <input

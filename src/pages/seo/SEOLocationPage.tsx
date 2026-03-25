@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowRight, MessageCircle } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
-import { getSeoPageByPath } from '@/data/seoRoutes';
+import { getSeoPageByPath, isIndexableSeoPath } from '@/data/seoRoutes';
 import { createBreadcrumbSchema } from '@/lib/seoSchemas';
 
 export default function SEOLocationPage() {
@@ -22,7 +22,8 @@ export default function SEOLocationPage() {
         );
     }
 
-    const description = `${page.service} in ${page.location}. ${page.price}. ${page.timeline}. Built in Thrissur for Kerala and Gulf buyers.`;
+    const indexable = isIndexableSeoPath(page.path);
+    const description = `${page.service} in ${page.location}. ${page.quoteLine}. Typical timeline ${page.timeline}. Built in Thrissur for Kerala and Gulf buyers.`;
 
     const schemaOrg = {
         '@context': 'https://schema.org',
@@ -54,6 +55,7 @@ export default function SEOLocationPage() {
                 canonical={page.path}
                 keywords={`${page.keyword} ${page.location}, software company Thrissur, HexaStack Solutions`}
                 schema={schemaOrg}
+                noindex={!indexable}
             />
             <article className="bg-[var(--background)] text-[var(--foreground)]">
                 <section className="hero-parallax pt-12 pb-16 md:pt-24 md:pb-24 px-4 sm:px-6">
@@ -62,7 +64,7 @@ export default function SEOLocationPage() {
                             {page.service} in {page.location}
                         </h1>
                         <p className="text-lg text-[var(--muted-foreground)] mb-6 max-w-2xl">
-                            {page.price}. {page.timeline}. Built in Thrissur for teams in {page.location} that want fewer manual steps and clearer day-to-day operations.
+                            {page.quoteLine}. Typical delivery window: {page.timeline}. Built in Thrissur for teams in {page.location} that want fewer manual steps and clearer day-to-day operations.
                         </p>
                         <a
                             href="https://wa.me/917591999365?text=Hi%20HexaStack!%20I%20need%20help%20with%20a%20software%20project."
@@ -80,7 +82,7 @@ export default function SEOLocationPage() {
                     <div className="max-w-4xl mx-auto px-4 sm:px-6">
                         <h2 className="text-2xl font-bold tracking-tight text-[var(--foreground)] mb-4">What you get</h2>
                         <p className="text-[var(--muted-foreground)] leading-8">
-                            We scope the work, give you a price range, and build around the workflow your team already uses. That works better than forcing your staff into a tool they do not like.
+                            We scope the work, agree a plan, and build around the workflow your team already uses. That works better than forcing your staff into a tool they do not like.
                         </p>
                     </div>
                 </section>

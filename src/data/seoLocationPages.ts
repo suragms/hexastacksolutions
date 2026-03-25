@@ -46,7 +46,7 @@ const TARGETED_KERALA_PAGES: SeoLocationPageEntry[] = [
         service: 'POS Software',
         serviceSlug: 'pos-software',
         title: 'POS Software Thrissur | HexaStack Solutions',
-        description: 'POS and billing software for Thrissur businesses. From Rs.60,000 with Kerala-ready workflows and direct support.',
+        description: 'POS and billing software for Thrissur businesses. Kerala-ready workflows, clear reporting, and direct support after scoping.',
         h1: 'POS Software in Thrissur, Kerala',
     },
     {

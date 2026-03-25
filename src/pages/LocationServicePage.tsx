@@ -5,17 +5,9 @@ import SEO from '@/components/SEO';
 import { findSeoLocationPage } from '@/data/seoLocationPages';
 import { createBreadcrumbSchema } from '@/lib/seoSchemas';
 
-function getCommercialDetails(serviceSlug: string) {
-    switch (serviceSlug) {
-        case 'pos-software':
-        case 'billing-software':
-        case 'vat-billing':
-            return { price: 'From Rs.60,000', timeline: '4 to 6 weeks' };
-        case 'custom-software':
-            return { price: 'From Rs.75,000', timeline: '4 to 8 weeks' };
-        default:
-            return { price: 'From Rs.25,000', timeline: '2 to 4 weeks' };
-    }
+/** Only Thrissur district templates are indexable; other districts and Gulf /seo paths use noindex. */
+function isIndexableLocationPage(locationSlug: string): boolean {
+    return locationSlug === 'thrissur';
 }
 
 export default function LocationServicePage() {
@@ -39,7 +31,7 @@ export default function LocationServicePage() {
     }
 
     const canonical = `/seo/${entry.locationSlug}/${entry.serviceSlug}`;
-    const details = getCommercialDetails(entry.serviceSlug);
+    const indexable = isIndexableLocationPage(entry.locationSlug);
     const keywords = [
         `${entry.service} ${entry.location}`,
         `${entry.service.toLowerCase()} ${entry.location}`,
@@ -75,6 +67,7 @@ export default function LocationServicePage() {
                 canonical={canonical}
                 keywords={keywords}
                 schema={schemaOrg}
+                noindex={!indexable}
             />
             <article className="max-w-4xl mx-auto px-4 sm:px-6 py-12 md:py-20">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] mb-6">
@@ -104,9 +97,9 @@ export default function LocationServicePage() {
                 </div>
 
                 <section className="space-y-4 mb-10">
-                    <h2 className="text-xl font-semibold text-[var(--foreground)]">Pricing and timeline</h2>
+                    <h2 className="text-xl font-semibold text-[var(--foreground)]">How we quote</h2>
                     <p className="text-[var(--foreground)] leading-relaxed">
-                        {entry.service} projects usually start {details.price} and take {details.timeline}. We scope the work first and then give you a clear next step.
+                        We confirm scope, integrations, and rollout steps first, then share a clear written plan. No surprise line items; pricing is agreed before build starts.
                     </p>
                 </section>
 

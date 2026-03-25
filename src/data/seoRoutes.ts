@@ -1,7 +1,8 @@
 export interface ServiceItem {
     slug: string;
     label: string;
-    price: string;
+    /** Short scope line (no rupee amounts on public SEO templates). */
+    quoteLine: string;
     keyword: string;
     timeline: string;
 }
@@ -10,7 +11,7 @@ export interface SEOPageProps {
     location: string;
     service: string;
     serviceSlug: string;
-    price: string;
+    quoteLine: string;
     keyword: string;
     timeline: string;
     type: 'kerala' | 'gulf';
@@ -18,10 +19,10 @@ export interface SEOPageProps {
 }
 
 const SERVICES: ServiceItem[] = [
-    { slug: 'website-development', label: 'Website Development', price: 'From Rs.25,000', keyword: 'website development', timeline: '2 to 4 weeks' },
-    { slug: 'pos-software', label: 'POS Software', price: 'From Rs.60,000', keyword: 'POS software', timeline: '4 to 6 weeks' },
-    { slug: 'billing-software', label: 'Billing Software', price: 'From Rs.60,000', keyword: 'billing software', timeline: '4 to 6 weeks' },
-    { slug: 'custom-software', label: 'Custom Software', price: 'From Rs.75,000', keyword: 'custom software', timeline: '4 to 8 weeks' },
+    { slug: 'website-development', label: 'Website Development', quoteLine: 'Scoped to your pages, forms, and integrations', keyword: 'website development', timeline: '2 to 4 weeks' },
+    { slug: 'pos-software', label: 'POS Software', quoteLine: 'Tailored to your counters, branches, and reporting needs', keyword: 'POS software', timeline: '4 to 6 weeks' },
+    { slug: 'billing-software', label: 'Billing Software', quoteLine: 'Aligned to GST or VAT profile after discovery', keyword: 'billing software', timeline: '4 to 6 weeks' },
+    { slug: 'custom-software', label: 'Custom Software', quoteLine: 'Fixed plan agreed before build', keyword: 'custom software', timeline: '4 to 8 weeks' },
 ];
 
 const KERALA_LOCATIONS = [
@@ -42,7 +43,7 @@ function createKeralaPaths(): SEOPageProps[] {
             location: location.name,
             service: service.label,
             serviceSlug: service.slug,
-            price: service.price,
+            quoteLine: service.quoteLine,
             keyword: service.keyword,
             timeline: service.timeline,
             type: 'kerala' as const,
@@ -57,7 +58,7 @@ function createGulfPaths(): SEOPageProps[] {
             location: location.name,
             service: service.label,
             serviceSlug: service.slug,
-            price: service.price,
+            quoteLine: service.quoteLine,
             keyword: service.keyword,
             timeline: service.timeline,
             type: 'gulf' as const,
@@ -77,4 +78,9 @@ export function getSeoPageByPath(path: string): SEOPageProps | null {
 
 export function getAllSeoPaths(): string[] {
     return allPaths.map((page) => page.path);
+}
+
+/** Index /services/:slug in search only for Thrissur Kerala landing pages. */
+export function isIndexableSeoPath(path: string): boolean {
+    return path.includes('-thrissur-kerala');
 }

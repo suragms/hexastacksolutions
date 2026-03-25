@@ -111,6 +111,10 @@ model CompanySettings {
   address             String?  @default("Vadanappally, Thrissur, Kerala 680614, India")
   tagline             String?  @default("Building Digital Excellence")
   description         String?  @default("We create innovative web applications, mobile solutions, and AI-powered tools that transform your business ideas into reality.")
+  /// Home hero: wide screenshot (e.g. HexaBill desktop). Set from Admin Settings.
+  heroDesktopImageUrl String?
+  /// Home hero: phone screenshot overlapped on corner (e.g. sales / growth). Set from Admin Settings.
+  heroMobileImageUrl  String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }

@@ -101,6 +101,7 @@ export default function Privacy() {
                 description="Read the privacy policy for HexaStack Solutions, including how we collect, use, protect, and manage business and contact information."
                 keywords="privacy policy HexaStack Solutions, data privacy software company Kerala, privacy policy website development company, HexaStack legal"
                 canonical="/privacy"
+                noindex
                 schema={schema}
             />
 

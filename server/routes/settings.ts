@@ -16,7 +16,25 @@ router.get('/', async (_req, res) => {
 
 router.patch('/', async (req, res) => {
     try {
-        const allowed = ['companyName', 'logoUrl', 'primaryEmail', 'supportEmail', 'primaryWhatsApp', 'secondaryWhatsApp', 'leadName1', 'leadEmail1', 'leadWhatsApp1', 'leadName2', 'leadEmail2', 'leadWhatsApp2', 'address', 'tagline', 'description'];
+        const allowed = [
+            'companyName',
+            'logoUrl',
+            'primaryEmail',
+            'supportEmail',
+            'primaryWhatsApp',
+            'secondaryWhatsApp',
+            'leadName1',
+            'leadEmail1',
+            'leadWhatsApp1',
+            'leadName2',
+            'leadEmail2',
+            'leadWhatsApp2',
+            'address',
+            'tagline',
+            'description',
+            'heroDesktopImageUrl',
+            'heroMobileImageUrl',
+        ];
         const data: Record<string, unknown> = {};
         for (const key of allowed) {
             if (req.body[key] !== undefined) data[key] = req.body[key];
