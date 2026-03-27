@@ -1,0 +1,3616 @@
+{
+  "generatedAt": "2026-03-26T09:15:04.782Z",
+  "summary": {
+    "totalProcessed": 77,
+    "projectsGrouped": 66,
+    "folders": [
+      "tourism",
+      "ecommerce",
+      "healthcare",
+      "events",
+      "corporate",
+      "portfolio",
+      "ai",
+      "education",
+      "finance",
+      "web",
+      "mobile",
+      "dashboard"
+    ]
+  },
+  "records": [
+    {
+      "originalRelative": "14caed5f77ba2511c1df05b85da49f7e.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-01.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-01.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept 14caed5f77ba2511c1df05b8"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-0541dbf96d",
+      "projectTitle": "UI concept 14caed5f77ba2511c1df05b8"
+    },
+    {
+      "originalRelative": "1faaff15f14b913145b7ca3b6aba537b.jpg",
+      "publicPath": "/assets/images/tourism/mobile-app-tourism-01.jpg",
+      "folder": "tourism",
+      "filename": "mobile-app-tourism-01.jpg",
+      "width": 752,
+      "height": 564,
+      "classification": {
+        "assetCategory": "mobile",
+        "uiType": "app",
+        "industry": "tourism",
+        "uiStyle": "light-modern",
+        "components": [
+          "navigation",
+          "cards",
+          "product-grid",
+          "hero"
+        ],
+        "projectTitle": "Luxury stay booking & discovery"
+      },
+      "portfolioCategory": "Tourism / Travel",
+      "projectGroupId": "asset-7c81a015e8",
+      "projectTitle": "Luxury stay booking & discovery"
+    },
+    {
+      "originalRelative": "5f2a8a3c2264b3ddf71d0fd122735b5c.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-02.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-02.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept 5f2a8a3c2264b3ddf71d0fd1"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-338fd27d3d",
+      "projectTitle": "UI concept 5f2a8a3c2264b3ddf71d0fd1"
+    },
+    {
+      "originalRelative": "64edc9038996e8d051b99e5f_637003349b96f71c1aed48c4_thumbnail.jpeg",
+      "publicPath": "/assets/images/ecommerce/web-store-ecommerce-01.jpg",
+      "folder": "ecommerce",
+      "filename": "web-store-ecommerce-01.jpg",
+      "width": 576,
+      "height": 720,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "store",
+        "industry": "ecommerce",
+        "uiStyle": "light-minimal",
+        "components": [
+          "navbar",
+          "hero",
+          "product-grid",
+          "footer"
+        ],
+        "projectTitle": "Fashion retail storefront template"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "asset-83cb660ca3",
+      "projectTitle": "Fashion retail storefront template"
+    },
+    {
+      "originalRelative": "9f96b6e12bae810c0c1a684e42de2cf0.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-03.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-03.jpg",
+      "width": 640,
+      "height": 480,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept 9f96b6e12bae810c0c1a684e"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-4726fea8ed",
+      "projectTitle": "UI concept 9f96b6e12bae810c0c1a684e"
+    },
+    {
+      "originalRelative": "a138faba151ee78cfe30a22610166545.png",
+      "publicPath": "/assets/images/healthcare/mobile-app-healthcare-01.jpg",
+      "folder": "healthcare",
+      "filename": "mobile-app-healthcare-01.jpg",
+      "width": 3200,
+      "height": 2400,
+      "classification": {
+        "assetCategory": "mobile",
+        "uiType": "app",
+        "industry": "healthcare",
+        "uiStyle": "light-minimal",
+        "components": [
+          "hero",
+          "cards",
+          "charts",
+          "navigation"
+        ],
+        "projectTitle": "Smart vitals & health analysis (mobile)"
+      },
+      "portfolioCategory": "Healthcare / Medical",
+      "projectGroupId": "asset-fbf576634e",
+      "projectTitle": "Smart vitals & health analysis (mobile)"
+    },
+    {
+      "originalRelative": "af5a61cc02d7599b02ebe04fd3476d01.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-04.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-04.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept af5a61cc02d7599b02ebe04f"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-93e547c9d1",
+      "projectTitle": "UI concept af5a61cc02d7599b02ebe04f"
+    },
+    {
+      "originalRelative": "b44e8a172861077.6486edc76c7f3.jpg",
+      "publicPath": "/assets/images/events/mobile-app-events-01.jpg",
+      "folder": "events",
+      "filename": "mobile-app-events-01.jpg",
+      "width": 1400,
+      "height": 1050,
+      "classification": {
+        "assetCategory": "mobile",
+        "uiType": "app",
+        "industry": "events",
+        "uiStyle": "dark-gradient",
+        "components": [
+          "navigation",
+          "cards",
+          "hero",
+          "forms"
+        ],
+        "projectTitle": "Event discovery & digital ticketing"
+      },
+      "portfolioCategory": "Event Management",
+      "projectGroupId": "asset-31317317f6",
+      "projectTitle": "Event discovery & digital ticketing"
+    },
+    {
+      "originalRelative": "b5367eaaa3be6d49f0c5ae6c9dd90a2d.png",
+      "publicPath": "/assets/images/tourism/web-landing-tourism-02.jpg",
+      "folder": "tourism",
+      "filename": "web-landing-tourism-02.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "tourism",
+        "uiStyle": "dark-luxury",
+        "components": [
+          "navbar",
+          "hero",
+          "cards",
+          "gallery"
+        ],
+        "projectTitle": "Luxury island tourism & experiences"
+      },
+      "portfolioCategory": "Tourism / Travel",
+      "projectGroupId": "asset-6b23016893",
+      "projectTitle": "Luxury island tourism & experiences"
+    },
+    {
+      "originalRelative": "cf0840a78628d7f597420df281c5e7de.jpg",
+      "publicPath": "/assets/images/healthcare/dashboard-saas-healthcare-02.jpg",
+      "folder": "healthcare",
+      "filename": "dashboard-saas-healthcare-02.jpg",
+      "width": 752,
+      "height": 564,
+      "classification": {
+        "assetCategory": "dashboard",
+        "uiType": "saas",
+        "industry": "healthcare",
+        "uiStyle": "light-corporate",
+        "components": [
+          "sidebar",
+          "charts",
+          "cards",
+          "forms"
+        ],
+        "projectTitle": "Clinical patient insights console"
+      },
+      "portfolioCategory": "Healthcare / Medical",
+      "projectGroupId": "asset-33c7b01bd4",
+      "projectTitle": "Clinical patient insights console"
+    },
+    {
+      "originalRelative": "e61cb7896c5b97d1bdee48368bdb112f.jpg",
+      "publicPath": "/assets/images/corporate/web-landing-corporate-01.jpg",
+      "folder": "corporate",
+      "filename": "web-landing-corporate-01.jpg",
+      "width": 752,
+      "height": 564,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "corporate",
+        "uiStyle": "light-corporate",
+        "components": [
+          "navbar",
+          "hero",
+          "cards",
+          "stats"
+        ],
+        "projectTitle": "Corporate & advisory services landing"
+      },
+      "portfolioCategory": "Corporate / Business",
+      "projectGroupId": "asset-f293a3a925",
+      "projectTitle": "Corporate & advisory services landing"
+    },
+    {
+      "originalRelative": "original-0a2ba3c6dd8a133111981eb7414e28a8.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-05.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-05.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-0a2ba3c6dd8a133"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-864b743d83",
+      "projectTitle": "UI concept original-0a2ba3c6dd8a133"
+    },
+    {
+      "originalRelative": "original-42bed9fdd7a4f9de00d5c166746faacc.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-06.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-06.jpg",
+      "width": 640,
+      "height": 480,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-42bed9fdd7a4f9d"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-a24168da90",
+      "projectTitle": "UI concept original-42bed9fdd7a4f9d"
+    },
+    {
+      "originalRelative": "original-5a40d548b0bd366be32aebe44e5a6fae.jpg",
+      "publicPath": "/assets/images/healthcare/web-landing-healthcare-03.jpg",
+      "folder": "healthcare",
+      "filename": "web-landing-healthcare-03.jpg",
+      "width": 3200,
+      "height": 2400,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "healthcare",
+        "uiStyle": "light-modern",
+        "components": [
+          "navbar",
+          "hero",
+          "search",
+          "forms"
+        ],
+        "projectTitle": "Healthcare appointment & clinic marketing"
+      },
+      "portfolioCategory": "Healthcare / Medical",
+      "projectGroupId": "asset-bd86643cb5",
+      "projectTitle": "Healthcare appointment & clinic marketing"
+    },
+    {
+      "originalRelative": "original-6cba657fa618083bf2a46fbc7b838ab1.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-07.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-07.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-6cba657fa618083"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-7d9fe642fc",
+      "projectTitle": "UI concept original-6cba657fa618083"
+    },
+    {
+      "originalRelative": "original-85517643324f5a877b272dcdc8052574.webp",
+      "publicPath": "/assets/images/tourism/web-landing-tourism-03.jpg",
+      "folder": "tourism",
+      "filename": "web-landing-tourism-03.jpg",
+      "width": 640,
+      "height": 480,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "tourism",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-85517643324f5a8"
+      },
+      "portfolioCategory": "Tourism / Travel",
+      "projectGroupId": "asset-31d8e982ef",
+      "projectTitle": "UI concept original-85517643324f5a8"
+    },
+    {
+      "originalRelative": "original-8a4f96605432e3f8963a463be0c43ef3.webp",
+      "publicPath": "/assets/images/tourism/web-landing-tourism-04.jpg",
+      "folder": "tourism",
+      "filename": "web-landing-tourism-04.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "tourism",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-8a4f96605432e3f"
+      },
+      "portfolioCategory": "Tourism / Travel",
+      "projectGroupId": "asset-78f1871601",
+      "projectTitle": "UI concept original-8a4f96605432e3f"
+    },
+    {
+      "originalRelative": "original-8adc3094c70b3de0cc2c6c84aaaa965d.webp",
+      "publicPath": "/assets/images/tourism/web-landing-tourism-05.jpg",
+      "folder": "tourism",
+      "filename": "web-landing-tourism-05.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "tourism",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-8adc3094c70b3de"
+      },
+      "portfolioCategory": "Tourism / Travel",
+      "projectGroupId": "asset-1379601284",
+      "projectTitle": "UI concept original-8adc3094c70b3de"
+    },
+    {
+      "originalRelative": "original-8eafa0094548d03c56d3430a2425f1a9.webp",
+      "publicPath": "/assets/images/tourism/web-landing-tourism-06.jpg",
+      "folder": "tourism",
+      "filename": "web-landing-tourism-06.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "tourism",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-8eafa0094548d03"
+      },
+      "portfolioCategory": "Tourism / Travel",
+      "projectGroupId": "asset-1be87c9ed3",
+      "projectTitle": "UI concept original-8eafa0094548d03"
+    },
+    {
+      "originalRelative": "original-984fe7e21092e5ec9c056bf22bb1cb78.webp",
+      "publicPath": "/assets/images/tourism/web-landing-tourism-07.jpg",
+      "folder": "tourism",
+      "filename": "web-landing-tourism-07.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "tourism",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-984fe7e21092e5e"
+      },
+      "portfolioCategory": "Tourism / Travel",
+      "projectGroupId": "asset-c9b3cbe449",
+      "projectTitle": "UI concept original-984fe7e21092e5e"
+    },
+    {
+      "originalRelative": "original-9d4439fa8e684e338243a417ae8cbefc.webp",
+      "publicPath": "/assets/images/tourism/web-landing-tourism-08.jpg",
+      "folder": "tourism",
+      "filename": "web-landing-tourism-08.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "tourism",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-9d4439fa8e684e3"
+      },
+      "portfolioCategory": "Tourism / Travel",
+      "projectGroupId": "asset-d72c7ec186",
+      "projectTitle": "UI concept original-9d4439fa8e684e3"
+    },
+    {
+      "originalRelative": "original-a173d6747938931ba2ee033a4174d3c3.jpg",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-08.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-08.jpg",
+      "width": 4800,
+      "height": 3600,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "light-modern",
+        "components": [
+          "navbar",
+          "hero",
+          "cards",
+          "stats"
+        ],
+        "projectTitle": "Creative studio portfolio system"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-30b9b822ff",
+      "projectTitle": "Creative studio portfolio system"
+    },
+    {
+      "originalRelative": "original-a19841623cabec36bb59bf977d747c45.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-09.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-09.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-a19841623cabec3"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-81ca91b445",
+      "projectTitle": "UI concept original-a19841623cabec3"
+    },
+    {
+      "originalRelative": "original-a60540922380c2791e9e58173fc977f0.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-10.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-10.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-a60540922380c27"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-42f28b6a2c",
+      "projectTitle": "UI concept original-a60540922380c27"
+    },
+    {
+      "originalRelative": "original-ac226efaec3194dcca31b1a28ebd969c.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-11.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-11.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-ac226efaec3194d"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-11af7d8a40",
+      "projectTitle": "UI concept original-ac226efaec3194d"
+    },
+    {
+      "originalRelative": "original-c2799a713ef14377b8e4a9828322b1c5.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-12.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-12.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-c2799a713ef1437"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-59c8e0226a",
+      "projectTitle": "UI concept original-c2799a713ef1437"
+    },
+    {
+      "originalRelative": "original-c3b2247979cd988470642f54d1202a33.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-13.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-13.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-c3b2247979cd988"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-eb6503561c",
+      "projectTitle": "UI concept original-c3b2247979cd988"
+    },
+    {
+      "originalRelative": "original-c91e5bd66978749ff418b53442ce382b.png",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-14.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-14.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "light-modern",
+        "components": [
+          "navbar",
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "Developer portfolio & project grid"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-ef1fc5eca7",
+      "projectTitle": "Developer portfolio & project grid"
+    },
+    {
+      "originalRelative": "original-cbd2c8167335f664460001cb5764792d.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-15.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-15.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-cbd2c8167335f66"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-d51dd36540",
+      "projectTitle": "UI concept original-cbd2c8167335f66"
+    },
+    {
+      "originalRelative": "original-fca9d854534b8535f7ecf666915b0803.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-16.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-16.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-fca9d854534b853"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-92efdeef03",
+      "projectTitle": "UI concept original-fca9d854534b853"
+    },
+    {
+      "originalRelative": "ss/01-home.png",
+      "publicPath": "/assets/images/portfolio/dashboard-saas-portfolio-17.jpg",
+      "folder": "portfolio",
+      "filename": "dashboard-saas-portfolio-17.jpg",
+      "width": 1280,
+      "height": 800,
+      "classification": {
+        "assetCategory": "dashboard",
+        "uiType": "saas",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept 01-home"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-89c5a89213",
+      "projectTitle": "UI concept 01-home"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275149-1.webp",
+      "publicPath": "/assets/images/events/mobile-app-events-02.jpg",
+      "folder": "events",
+      "filename": "mobile-app-events-02.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "mobile",
+        "uiType": "app",
+        "industry": "events",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275149-1"
+      },
+      "portfolioCategory": "Event Management",
+      "projectGroupId": "frame-1171275149",
+      "projectTitle": "UI concept Frame-1171275149-1"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275149-2-min.webp",
+      "publicPath": "/assets/images/events/mobile-app-events-03.jpg",
+      "folder": "events",
+      "filename": "mobile-app-events-03.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "mobile",
+        "uiType": "app",
+        "industry": "events",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275149-2-min"
+      },
+      "portfolioCategory": "Event Management",
+      "projectGroupId": "frame-1171275149",
+      "projectTitle": "UI concept Frame-1171275149-2-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275149-2.webp",
+      "publicPath": "/assets/images/events/mobile-app-events-04.jpg",
+      "folder": "events",
+      "filename": "mobile-app-events-04.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "mobile",
+        "uiType": "app",
+        "industry": "events",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275149-2"
+      },
+      "portfolioCategory": "Event Management",
+      "projectGroupId": "frame-1171275149",
+      "projectTitle": "UI concept Frame-1171275149-2"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275149-3.webp",
+      "publicPath": "/assets/images/events/mobile-app-events-05.jpg",
+      "folder": "events",
+      "filename": "mobile-app-events-05.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "mobile",
+        "uiType": "app",
+        "industry": "events",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275149-3"
+      },
+      "portfolioCategory": "Event Management",
+      "projectGroupId": "frame-1171275149",
+      "projectTitle": "UI concept Frame-1171275149-3"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275149-4.webp",
+      "publicPath": "/assets/images/events/mobile-app-events-06.jpg",
+      "folder": "events",
+      "filename": "mobile-app-events-06.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "mobile",
+        "uiType": "app",
+        "industry": "events",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275149-4"
+      },
+      "portfolioCategory": "Event Management",
+      "projectGroupId": "frame-1171275149",
+      "projectTitle": "UI concept Frame-1171275149-4"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275149-5.webp",
+      "publicPath": "/assets/images/events/mobile-app-events-07.jpg",
+      "folder": "events",
+      "filename": "mobile-app-events-07.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "mobile",
+        "uiType": "app",
+        "industry": "events",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275149-5"
+      },
+      "portfolioCategory": "Event Management",
+      "projectGroupId": "frame-1171275149",
+      "projectTitle": "UI concept Frame-1171275149-5"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275150-2-min.webp",
+      "publicPath": "/assets/images/events/mobile-app-events-08.jpg",
+      "folder": "events",
+      "filename": "mobile-app-events-08.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "mobile",
+        "uiType": "app",
+        "industry": "events",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275150-2-min"
+      },
+      "portfolioCategory": "Event Management",
+      "projectGroupId": "frame-1171275150",
+      "projectTitle": "UI concept Frame-1171275150-2-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275151-2-min-1.webp",
+      "publicPath": "/assets/images/events/mobile-app-events-09.jpg",
+      "folder": "events",
+      "filename": "mobile-app-events-09.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "mobile",
+        "uiType": "app",
+        "industry": "events",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275151-2-min-1"
+      },
+      "portfolioCategory": "Event Management",
+      "projectGroupId": "frame-1171275151",
+      "projectTitle": "UI concept Frame-1171275151-2-min-1"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275152-2-min.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-02.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-02.jpg",
+      "width": 1644,
+      "height": 1644,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275152-2-min"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275152",
+      "projectTitle": "UI concept Frame-1171275152-2-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275153-1-min-1.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-03.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-03.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275153-1-min-1"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275153",
+      "projectTitle": "UI concept Frame-1171275153-1-min-1"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275154-1-min.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-04.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-04.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275154-1-min"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275154",
+      "projectTitle": "UI concept Frame-1171275154-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275155-1-min.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-05.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-05.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275155-1-min"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275155",
+      "projectTitle": "UI concept Frame-1171275155-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275157-1-min.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-06.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-06.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275157-1-min"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275157",
+      "projectTitle": "UI concept Frame-1171275157-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275158-1-min.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-07.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-07.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275158-1-min"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275158",
+      "projectTitle": "UI concept Frame-1171275158-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275159-1.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-08.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-08.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275159-1"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275159",
+      "projectTitle": "UI concept Frame-1171275159-1"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275159-2.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-09.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-09.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275159-2"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275159",
+      "projectTitle": "UI concept Frame-1171275159-2"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275159-5.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-10.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-10.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275159-5"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275159",
+      "projectTitle": "UI concept Frame-1171275159-5"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275160-1-min.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-11.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-11.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275160-1-min"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275160",
+      "projectTitle": "UI concept Frame-1171275160-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275160-2 (1).webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-12.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-12.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275160-2 (1)"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275160",
+      "projectTitle": "UI concept Frame-1171275160-2 (1)"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275160-3.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-13.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-13.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275160-3"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275160",
+      "projectTitle": "UI concept Frame-1171275160-3"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275160-4.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-14.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-14.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275160-4"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275160",
+      "projectTitle": "UI concept Frame-1171275160-4"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275160.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-15.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-15.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275160"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275160",
+      "projectTitle": "UI concept Frame-1171275160"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275161.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-16.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-16.jpg",
+      "width": 1080,
+      "height": 1080,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275161"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275161",
+      "projectTitle": "UI concept Frame-1171275161"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275163-1-min.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-17.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-17.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275163-1-min"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275163",
+      "projectTitle": "UI concept Frame-1171275163-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275164-1-min (1).webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-18.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-18.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275164-1-min ("
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275164",
+      "projectTitle": "UI concept Frame-1171275164-1-min ("
+    },
+    {
+      "originalRelative": "ss/Frame-1171275165-1-min.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-19.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-19.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275165-1-min"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275165",
+      "projectTitle": "UI concept Frame-1171275165-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275169-1-min.webp",
+      "publicPath": "/assets/images/ecommerce/web-landing-ecommerce-20.jpg",
+      "folder": "ecommerce",
+      "filename": "web-landing-ecommerce-20.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "ecommerce",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275169-1-min"
+      },
+      "portfolioCategory": "E-commerce",
+      "projectGroupId": "frame-1171275169",
+      "projectTitle": "UI concept Frame-1171275169-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275170-1-min.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-18.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-18.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275170-1-min"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "frame-1171275170",
+      "projectTitle": "UI concept Frame-1171275170-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275171-1-min.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-19.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-19.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275171-1-min"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "frame-1171275171",
+      "projectTitle": "UI concept Frame-1171275171-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275174-1-min.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-20.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-20.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275174-1-min"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "frame-1171275174",
+      "projectTitle": "UI concept Frame-1171275174-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275176-1-min.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-21.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-21.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275176-1-min"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "frame-1171275176",
+      "projectTitle": "UI concept Frame-1171275176-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275177-1-min.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-22.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-22.jpg",
+      "width": 1644,
+      "height": 1644,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275177-1-min"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "frame-1171275177",
+      "projectTitle": "UI concept Frame-1171275177-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275183-1-min.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-23.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-23.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275183-1-min"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "frame-1171275183",
+      "projectTitle": "UI concept Frame-1171275183-1-min"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275223.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-24.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-24.jpg",
+      "width": 1540,
+      "height": 1540,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275223"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "frame-1171275223",
+      "projectTitle": "UI concept Frame-1171275223"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275225-2-min-1.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-25.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-25.jpg",
+      "width": 1887,
+      "height": 1479,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275225-2-min-1"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "frame-1171275225",
+      "projectTitle": "UI concept Frame-1171275225-2-min-1"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275226-min-1-1.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-26.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-26.jpg",
+      "width": 1911,
+      "height": 1503,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275226-min-1-1"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "frame-1171275226",
+      "projectTitle": "UI concept Frame-1171275226-min-1-1"
+    },
+    {
+      "originalRelative": "ss/Frame-1171275227-min-1.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-27.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-27.jpg",
+      "width": 1887,
+      "height": 1479,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1171275227-min-1"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "frame-1171275227",
+      "projectTitle": "UI concept Frame-1171275227-min-1"
+    },
+    {
+      "originalRelative": "ss/Frame-1618873232.webp",
+      "publicPath": "/assets/images/corporate/web-landing-corporate-02.jpg",
+      "folder": "corporate",
+      "filename": "web-landing-corporate-02.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "corporate",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1618873232"
+      },
+      "portfolioCategory": "Corporate / Business",
+      "projectGroupId": "frame-1618873232",
+      "projectTitle": "UI concept Frame-1618873232"
+    },
+    {
+      "originalRelative": "ss/Frame-1618873241.webp",
+      "publicPath": "/assets/images/corporate/web-landing-corporate-03.jpg",
+      "folder": "corporate",
+      "filename": "web-landing-corporate-03.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "corporate",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1618873241"
+      },
+      "portfolioCategory": "Corporate / Business",
+      "projectGroupId": "frame-1618873241",
+      "projectTitle": "UI concept Frame-1618873241"
+    },
+    {
+      "originalRelative": "ss/Frame-1618873244.webp",
+      "publicPath": "/assets/images/corporate/web-landing-corporate-04.jpg",
+      "folder": "corporate",
+      "filename": "web-landing-corporate-04.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "corporate",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept Frame-1618873244"
+      },
+      "portfolioCategory": "Corporate / Business",
+      "projectGroupId": "frame-1618873244",
+      "projectTitle": "UI concept Frame-1618873244"
+    },
+    {
+      "originalRelative": "ss/original-0d3ca45ac3f94c3d57b3a166d2fc1b7c.webp",
+      "publicPath": "/assets/images/portfolio/web-landing-portfolio-28.jpg",
+      "folder": "portfolio",
+      "filename": "web-landing-portfolio-28.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "portfolio",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept original-0d3ca45ac3f94c3"
+      },
+      "portfolioCategory": "Portfolio / Personal",
+      "projectGroupId": "asset-82f35737f7",
+      "projectTitle": "UI concept original-0d3ca45ac3f94c3"
+    },
+    {
+      "originalRelative": "ss/shrunk-Frame-1618873229-1.webp",
+      "publicPath": "/assets/images/corporate/web-landing-corporate-05.jpg",
+      "folder": "corporate",
+      "filename": "web-landing-corporate-05.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "corporate",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept shrunk-Frame-1618873229-"
+      },
+      "portfolioCategory": "Corporate / Business",
+      "projectGroupId": "frame-1618873229",
+      "projectTitle": "UI concept shrunk-Frame-1618873229-"
+    },
+    {
+      "originalRelative": "ss/shrunk-Frame-1618873230-1.webp",
+      "publicPath": "/assets/images/corporate/web-landing-corporate-06.jpg",
+      "folder": "corporate",
+      "filename": "web-landing-corporate-06.jpg",
+      "width": 1620,
+      "height": 1620,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "corporate",
+        "uiStyle": "modern",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept shrunk-Frame-1618873230-"
+      },
+      "portfolioCategory": "Corporate / Business",
+      "projectGroupId": "frame-1618873230",
+      "projectTitle": "UI concept shrunk-Frame-1618873230-"
+    },
+    {
+      "originalRelative": "ss/still-b2e0e130ea30a98ab0f937397ab5282b.webp",
+      "publicPath": "/assets/images/tourism/web-landing-tourism-09.jpg",
+      "folder": "tourism",
+      "filename": "web-landing-tourism-09.jpg",
+      "width": 640,
+      "height": 480,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "tourism",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept still-b2e0e130ea30a98ab0"
+      },
+      "portfolioCategory": "Tourism / Travel",
+      "projectGroupId": "asset-9dd41a1dd3",
+      "projectTitle": "UI concept still-b2e0e130ea30a98ab0"
+    },
+    {
+      "originalRelative": "ss/still-ed6ae31ef080597d6630f313119e0383.webp",
+      "publicPath": "/assets/images/tourism/web-landing-tourism-10.jpg",
+      "folder": "tourism",
+      "filename": "web-landing-tourism-10.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "tourism",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept still-ed6ae31ef080597d66"
+      },
+      "portfolioCategory": "Tourism / Travel",
+      "projectGroupId": "asset-331fd0c924",
+      "projectTitle": "UI concept still-ed6ae31ef080597d66"
+    },
+    {
+      "originalRelative": "ss/still-fc903bb220a0746203642bc9bce89e08.webp",
+      "publicPath": "/assets/images/tourism/web-landing-tourism-11.jpg",
+      "folder": "tourism",
+      "filename": "web-landing-tourism-11.jpg",
+      "width": 400,
+      "height": 300,
+      "classification": {
+        "assetCategory": "web",
+        "uiType": "landing",
+        "industry": "tourism",
+        "uiStyle": "minimal",
+        "components": [
+          "hero",
+          "cards"
+        ],
+        "projectTitle": "UI concept still-fc903bb220a0746203"
+      },
+      "portfolioCategory": "Tourism / Travel",
+      "projectGroupId": "asset-915f109305",
+      "projectTitle": "UI concept still-fc903bb220a0746203"
+    }
+  ],
+  "projects": [
+    {
+      "id": "asset-0541dbf96d",
+      "title": "UI concept 14caed5f77ba2511c1df05b8",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-01.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-7c81a015e8",
+      "title": "Luxury stay booking & discovery",
+      "category": "Tourism / Travel",
+      "industry": "tourism",
+      "uiType": "app",
+      "assetCategory": "mobile",
+      "uiStyle": "light-modern",
+      "components": [
+        "navigation",
+        "cards",
+        "product-grid",
+        "hero"
+      ],
+      "images": [
+        "/assets/images/tourism/mobile-app-tourism-01.jpg"
+      ],
+      "description": "MOBILE · light-modern · navigation, cards, product-grid, hero",
+      "features": [
+        "Layout: mobile (app)",
+        "Industry focus: tourism",
+        "Visible patterns: navigation, cards, product-grid, hero"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-338fd27d3d",
+      "title": "UI concept 5f2a8a3c2264b3ddf71d0fd1",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-02.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-83cb660ca3",
+      "title": "Fashion retail storefront template",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "store",
+      "assetCategory": "web",
+      "uiStyle": "light-minimal",
+      "components": [
+        "navbar",
+        "hero",
+        "product-grid",
+        "footer"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-store-ecommerce-01.jpg"
+      ],
+      "description": "WEB · light-minimal · navbar, hero, product-grid, footer",
+      "features": [
+        "Layout: web (store)",
+        "Industry focus: ecommerce",
+        "Visible patterns: navbar, hero, product-grid, footer"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-4726fea8ed",
+      "title": "UI concept 9f96b6e12bae810c0c1a684e",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-03.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-fbf576634e",
+      "title": "Smart vitals & health analysis (mobile)",
+      "category": "Healthcare / Medical",
+      "industry": "healthcare",
+      "uiType": "app",
+      "assetCategory": "mobile",
+      "uiStyle": "light-minimal",
+      "components": [
+        "hero",
+        "cards",
+        "charts",
+        "navigation"
+      ],
+      "images": [
+        "/assets/images/healthcare/mobile-app-healthcare-01.jpg"
+      ],
+      "description": "MOBILE · light-minimal · hero, cards, charts, navigation",
+      "features": [
+        "Layout: mobile (app)",
+        "Industry focus: healthcare",
+        "Visible patterns: hero, cards, charts, navigation"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-93e547c9d1",
+      "title": "UI concept af5a61cc02d7599b02ebe04f",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-04.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-31317317f6",
+      "title": "Event discovery & digital ticketing",
+      "category": "Event Management",
+      "industry": "events",
+      "uiType": "app",
+      "assetCategory": "mobile",
+      "uiStyle": "dark-gradient",
+      "components": [
+        "navigation",
+        "cards",
+        "hero",
+        "forms"
+      ],
+      "images": [
+        "/assets/images/events/mobile-app-events-01.jpg"
+      ],
+      "description": "MOBILE · dark-gradient · navigation, cards, hero, forms",
+      "features": [
+        "Layout: mobile (app)",
+        "Industry focus: events",
+        "Visible patterns: navigation, cards, hero, forms"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-6b23016893",
+      "title": "Luxury island tourism & experiences",
+      "category": "Tourism / Travel",
+      "industry": "tourism",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "dark-luxury",
+      "components": [
+        "navbar",
+        "hero",
+        "cards",
+        "gallery"
+      ],
+      "images": [
+        "/assets/images/tourism/web-landing-tourism-02.jpg"
+      ],
+      "description": "WEB · dark-luxury · navbar, hero, cards, gallery",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: tourism",
+        "Visible patterns: navbar, hero, cards, gallery"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-33c7b01bd4",
+      "title": "Clinical patient insights console",
+      "category": "Healthcare / Medical",
+      "industry": "healthcare",
+      "uiType": "saas",
+      "assetCategory": "dashboard",
+      "uiStyle": "light-corporate",
+      "components": [
+        "sidebar",
+        "charts",
+        "cards",
+        "forms"
+      ],
+      "images": [
+        "/assets/images/healthcare/dashboard-saas-healthcare-02.jpg"
+      ],
+      "description": "DASHBOARD · light-corporate · sidebar, charts, cards, forms",
+      "features": [
+        "Layout: dashboard (saas)",
+        "Industry focus: healthcare",
+        "Visible patterns: sidebar, charts, cards, forms"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-f293a3a925",
+      "title": "Corporate & advisory services landing",
+      "category": "Corporate / Business",
+      "industry": "corporate",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "light-corporate",
+      "components": [
+        "navbar",
+        "hero",
+        "cards",
+        "stats"
+      ],
+      "images": [
+        "/assets/images/corporate/web-landing-corporate-01.jpg"
+      ],
+      "description": "WEB · light-corporate · navbar, hero, cards, stats",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: corporate",
+        "Visible patterns: navbar, hero, cards, stats"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-864b743d83",
+      "title": "UI concept original-0a2ba3c6dd8a133",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-05.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-a24168da90",
+      "title": "UI concept original-42bed9fdd7a4f9d",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-06.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-bd86643cb5",
+      "title": "Healthcare appointment & clinic marketing",
+      "category": "Healthcare / Medical",
+      "industry": "healthcare",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "light-modern",
+      "components": [
+        "navbar",
+        "hero",
+        "search",
+        "forms"
+      ],
+      "images": [
+        "/assets/images/healthcare/web-landing-healthcare-03.jpg"
+      ],
+      "description": "WEB · light-modern · navbar, hero, search, forms",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: healthcare",
+        "Visible patterns: navbar, hero, search, forms"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-7d9fe642fc",
+      "title": "UI concept original-6cba657fa618083",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-07.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-31d8e982ef",
+      "title": "UI concept original-85517643324f5a8",
+      "category": "Tourism / Travel",
+      "industry": "tourism",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/tourism/web-landing-tourism-03.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: tourism",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-78f1871601",
+      "title": "UI concept original-8a4f96605432e3f",
+      "category": "Tourism / Travel",
+      "industry": "tourism",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/tourism/web-landing-tourism-04.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: tourism",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-1379601284",
+      "title": "UI concept original-8adc3094c70b3de",
+      "category": "Tourism / Travel",
+      "industry": "tourism",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/tourism/web-landing-tourism-05.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: tourism",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-1be87c9ed3",
+      "title": "UI concept original-8eafa0094548d03",
+      "category": "Tourism / Travel",
+      "industry": "tourism",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/tourism/web-landing-tourism-06.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: tourism",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-c9b3cbe449",
+      "title": "UI concept original-984fe7e21092e5e",
+      "category": "Tourism / Travel",
+      "industry": "tourism",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/tourism/web-landing-tourism-07.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: tourism",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-d72c7ec186",
+      "title": "UI concept original-9d4439fa8e684e3",
+      "category": "Tourism / Travel",
+      "industry": "tourism",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/tourism/web-landing-tourism-08.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: tourism",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-30b9b822ff",
+      "title": "Creative studio portfolio system",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "light-modern",
+      "components": [
+        "navbar",
+        "hero",
+        "cards",
+        "stats"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-08.jpg"
+      ],
+      "description": "WEB · light-modern · navbar, hero, cards, stats",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: navbar, hero, cards, stats"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-81ca91b445",
+      "title": "UI concept original-a19841623cabec3",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-09.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-42f28b6a2c",
+      "title": "UI concept original-a60540922380c27",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-10.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-11af7d8a40",
+      "title": "UI concept original-ac226efaec3194d",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-11.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-59c8e0226a",
+      "title": "UI concept original-c2799a713ef1437",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-12.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-eb6503561c",
+      "title": "UI concept original-c3b2247979cd988",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-13.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-ef1fc5eca7",
+      "title": "Developer portfolio & project grid",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "light-modern",
+      "components": [
+        "navbar",
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-14.jpg"
+      ],
+      "description": "WEB · light-modern · navbar, hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: navbar, hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-d51dd36540",
+      "title": "UI concept original-cbd2c8167335f66",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-15.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-92efdeef03",
+      "title": "UI concept original-fca9d854534b853",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-16.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-89c5a89213",
+      "title": "UI concept 01-home",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "saas",
+      "assetCategory": "dashboard",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/dashboard-saas-portfolio-17.jpg"
+      ],
+      "description": "DASHBOARD · minimal · hero, cards",
+      "features": [
+        "Layout: dashboard (saas)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275149",
+      "title": "UI concept Frame-1171275149-1",
+      "category": "Event Management",
+      "industry": "events",
+      "uiType": "app",
+      "assetCategory": "mobile",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/events/mobile-app-events-02.jpg",
+        "/assets/images/events/mobile-app-events-03.jpg",
+        "/assets/images/events/mobile-app-events-04.jpg",
+        "/assets/images/events/mobile-app-events-05.jpg",
+        "/assets/images/events/mobile-app-events-06.jpg",
+        "/assets/images/events/mobile-app-events-07.jpg"
+      ],
+      "description": "MOBILE · modern · hero, cards",
+      "features": [
+        "Layout: mobile (app)",
+        "Industry focus: events",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275150",
+      "title": "UI concept Frame-1171275150-2-min",
+      "category": "Event Management",
+      "industry": "events",
+      "uiType": "app",
+      "assetCategory": "mobile",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/events/mobile-app-events-08.jpg"
+      ],
+      "description": "MOBILE · modern · hero, cards",
+      "features": [
+        "Layout: mobile (app)",
+        "Industry focus: events",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275151",
+      "title": "UI concept Frame-1171275151-2-min-1",
+      "category": "Event Management",
+      "industry": "events",
+      "uiType": "app",
+      "assetCategory": "mobile",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/events/mobile-app-events-09.jpg"
+      ],
+      "description": "MOBILE · modern · hero, cards",
+      "features": [
+        "Layout: mobile (app)",
+        "Industry focus: events",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275152",
+      "title": "UI concept Frame-1171275152-2-min",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-02.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275153",
+      "title": "UI concept Frame-1171275153-1-min-1",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-03.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275154",
+      "title": "UI concept Frame-1171275154-1-min",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-04.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275155",
+      "title": "UI concept Frame-1171275155-1-min",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-05.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275157",
+      "title": "UI concept Frame-1171275157-1-min",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-06.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275158",
+      "title": "UI concept Frame-1171275158-1-min",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-07.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275159",
+      "title": "UI concept Frame-1171275159-1",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-08.jpg",
+        "/assets/images/ecommerce/web-landing-ecommerce-09.jpg",
+        "/assets/images/ecommerce/web-landing-ecommerce-10.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275160",
+      "title": "UI concept Frame-1171275160-1-min",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-11.jpg",
+        "/assets/images/ecommerce/web-landing-ecommerce-12.jpg",
+        "/assets/images/ecommerce/web-landing-ecommerce-13.jpg",
+        "/assets/images/ecommerce/web-landing-ecommerce-14.jpg",
+        "/assets/images/ecommerce/web-landing-ecommerce-15.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275161",
+      "title": "UI concept Frame-1171275161",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-16.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275163",
+      "title": "UI concept Frame-1171275163-1-min",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-17.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275164",
+      "title": "UI concept Frame-1171275164-1-min (",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-18.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275165",
+      "title": "UI concept Frame-1171275165-1-min",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-19.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275169",
+      "title": "UI concept Frame-1171275169-1-min",
+      "category": "E-commerce",
+      "industry": "ecommerce",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/ecommerce/web-landing-ecommerce-20.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: ecommerce",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275170",
+      "title": "UI concept Frame-1171275170-1-min",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-18.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275171",
+      "title": "UI concept Frame-1171275171-1-min",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-19.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275174",
+      "title": "UI concept Frame-1171275174-1-min",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-20.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275176",
+      "title": "UI concept Frame-1171275176-1-min",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-21.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275177",
+      "title": "UI concept Frame-1171275177-1-min",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-22.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275183",
+      "title": "UI concept Frame-1171275183-1-min",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-23.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275223",
+      "title": "UI concept Frame-1171275223",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-24.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275225",
+      "title": "UI concept Frame-1171275225-2-min-1",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-25.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275226",
+      "title": "UI concept Frame-1171275226-min-1-1",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-26.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1171275227",
+      "title": "UI concept Frame-1171275227-min-1",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-27.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1618873232",
+      "title": "UI concept Frame-1618873232",
+      "category": "Corporate / Business",
+      "industry": "corporate",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/corporate/web-landing-corporate-02.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: corporate",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1618873241",
+      "title": "UI concept Frame-1618873241",
+      "category": "Corporate / Business",
+      "industry": "corporate",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/corporate/web-landing-corporate-03.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: corporate",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1618873244",
+      "title": "UI concept Frame-1618873244",
+      "category": "Corporate / Business",
+      "industry": "corporate",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/corporate/web-landing-corporate-04.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: corporate",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-82f35737f7",
+      "title": "UI concept original-0d3ca45ac3f94c3",
+      "category": "Portfolio / Personal",
+      "industry": "portfolio",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/portfolio/web-landing-portfolio-28.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: portfolio",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1618873229",
+      "title": "UI concept shrunk-Frame-1618873229-",
+      "category": "Corporate / Business",
+      "industry": "corporate",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/corporate/web-landing-corporate-05.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: corporate",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "frame-1618873230",
+      "title": "UI concept shrunk-Frame-1618873230-",
+      "category": "Corporate / Business",
+      "industry": "corporate",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "modern",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/corporate/web-landing-corporate-06.jpg"
+      ],
+      "description": "WEB · modern · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: corporate",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-9dd41a1dd3",
+      "title": "UI concept still-b2e0e130ea30a98ab0",
+      "category": "Tourism / Travel",
+      "industry": "tourism",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/tourism/web-landing-tourism-09.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: tourism",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-331fd0c924",
+      "title": "UI concept still-ed6ae31ef080597d66",
+      "category": "Tourism / Travel",
+      "industry": "tourism",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/tourism/web-landing-tourism-10.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: tourism",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    },
+    {
+      "id": "asset-915f109305",
+      "title": "UI concept still-fc903bb220a0746203",
+      "category": "Tourism / Travel",
+      "industry": "tourism",
+      "uiType": "landing",
+      "assetCategory": "web",
+      "uiStyle": "minimal",
+      "components": [
+        "hero",
+        "cards"
+      ],
+      "images": [
+        "/assets/images/tourism/web-landing-tourism-11.jpg"
+      ],
+      "description": "WEB · minimal · hero, cards",
+      "features": [
+        "Layout: web (landing)",
+        "Industry focus: tourism",
+        "Visible patterns: hero, cards"
+      ],
+      "techStack": [
+        "React / Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Figma handoff"
+      ]
+    }
+  ]
+}

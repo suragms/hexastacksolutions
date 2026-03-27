@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-label="HexaBill POS preview">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff7ed"/>
+      <stop offset="100%" style="stop-color:#ffedd5"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="600" fill="url(#bg)"/>
+  <rect x="48" y="48" width="864" height="72" rx="12" fill="#fed7aa" opacity=".9"/>
+  <rect x="48" y="144" width="280" height="408" rx="12" fill="#ffffff" stroke="#fdba74" stroke-width="2"/>
+  <rect x="352" y="144" width="560" height="408" rx="12" fill="#ffffff" stroke="#fdba74" stroke-width="2"/>
+  <rect x="80" y="188" width="216" height="40" rx="6" fill="#ffedd5"/>
+  <rect x="80" y="248" width="216" height="40" rx="6" fill="#fed7aa"/>
+  <rect x="80" y="308" width="216" height="40" rx="6" fill="#ffedd5"/>
+  <rect x="392" y="188" width="200" height="120" rx="8" fill="#fb923c" opacity=".25"/>
+  <rect x="612" y="188" width="280" height="56" rx="8" fill="#f97316" opacity=".35"/>
+  <rect x="392" y="328" width="500" height="48" rx="8" fill="#ffedd5"/>
+  <rect x="392" y="392" width="500" height="48" rx="8" fill="#fed7aa"/>
+  <text x="72" y="112" fill="#9a3412" font-family="system-ui,sans-serif" font-size="22" font-weight="700">POS &amp; checkout</text>
+</svg>

@@ -1,0 +1,8 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Disallow admin UI from polite crawlers (optional; not a security boundary)
+Disallow: /admin
+
+Sitemap: https://www.hexastacksolutions.com/sitemap.xml

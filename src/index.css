@@ -1,0 +1,149 @@
+@import 'tailwindcss';
+
+/* Light agency: white surfaces, orange accents (Quixta-style) */
+@theme {
+  --font-sans: 'Inter', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --color-background: #ffffff;
+  --color-surface: #fafafa;
+  --color-card: #ffffff;
+  --color-border: #e4e4e7;
+  --color-text-primary: #18181b;
+  --color-text-muted: #71717a;
+  --color-accent-orange: #ea580c;
+  /** Primary accent for labels, links, focus rings */
+  --color-accent: #ea580c;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: clip;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply m-0 min-h-svh bg-background font-sans text-text-primary antialiased;
+    overflow-x: clip;
+  }
+
+  #root {
+    @apply min-h-svh w-full min-w-0 overflow-x-clip;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-border;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent;
+  }
+
+  .glow-btn {
+    box-shadow:
+      0 0 32px -8px rgba(234, 88, 12, 0.35),
+      0 8px 24px -12px rgba(234, 88, 12, 0.25);
+  }
+
+  .btn-gradient-primary {
+    @apply bg-orange-600 text-white shadow-lg transition hover:scale-[1.02] hover:bg-orange-700 active:scale-[0.99];
+  }
+
+  .btn-gradient-primary:focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-orange-500;
+  }
+
+  /** Solutions: soft cream, fine warm grid (not heavy “small boxes”) */
+  .bg-services-warm {
+    background-color: #fffdfb;
+    background-image:
+      linear-gradient(to right, rgba(234, 88, 12, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(234, 88, 12, 0.045) 1px, transparent 1px),
+      radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 247, 237, 0.9) 0%, transparent 45%),
+      radial-gradient(ellipse 480px 240px at 8% 90%, rgba(255, 237, 213, 0.35) 0%, transparent 55%),
+      radial-gradient(ellipse 400px 200px at 92% 15%, rgba(254, 215, 170, 0.22) 0%, transparent 50%);
+    background-size: 28px 28px, 28px 28px, 100% 100%, 100% 100%, 100% 100%;
+  }
+
+  /** Light grid + soft peach highlights (reference-style hero) */
+  .bg-hero-grid-light {
+    background-color: #ffffff;
+    background-image:
+      linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      radial-gradient(ellipse 280px 180px at 85% 15%, rgba(255, 237, 213, 0.65) 0%, transparent 55%),
+      radial-gradient(ellipse 240px 160px at 12% 55%, rgba(255, 237, 213, 0.45) 0%, transparent 50%);
+    background-size: 48px 48px, 48px 48px, 100% 100%, 100% 100%;
+  }
+
+  @keyframes marquee-x {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee-x 45s linear infinite;
+  }
+
+  /** Hero dual strips: speed via --marquee-duration; direction via --marquee-direction */
+  .marquee-track {
+    animation: marquee-x var(--marquee-duration, 50s) linear infinite;
+    animation-direction: var(--marquee-direction, normal);
+  }
+
+  .marquee-wrap:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee,
+    .marquee-track {
+      animation: none;
+    }
+  }
+
+  /* Portfolio auto-scroll carousel */
+  @keyframes portfolio-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /** Continuous horizontal drift (one full list per duration; hover pauses) */
+  .portfolio-track {
+    animation: portfolio-scroll var(--portfolio-marquee-duration, 72s) linear infinite;
+    will-change: transform;
+  }
+
+  .portfolio-marquee-wrap:hover .portfolio-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portfolio-track {
+      animation: none;
+    }
+  }
+}
