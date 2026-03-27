@@ -1,0 +1,285 @@
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "rhel-openssl-1.0.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  name      String
+  password  String
+  role      UserRole @default(STAFF)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projects     Project[]
+  tasks        Task[]
+  feedbacks    Feedback[]
+}
+
+model Project {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  overview    String
+  techStack   String?
+  status      ProjectStatus @default(IN_PROGRESS)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  createdBy   User @relation(fields: [createdById], references: [id])
+  createdById String @db.ObjectId
+
+  media       ProjectMedia[]
+  feedbacks   Feedback[]
+  tasks       Task[]
+}
+
+model ProjectMedia {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  type       MediaType
+  url        String
+  projectId  String @db.ObjectId
+  project    Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+}
+
+model Feedback {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  company    String?
+  content    String
+  rating     Int
+  isPublic   Boolean      @default(false)
+  isApproved Boolean      @default(false)
+  linkToken  String?      @unique
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  projectId  String @db.ObjectId
+  project    Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  submittedBy User? @relation(fields: [submittedById], references: [id])
+  submittedById String? @db.ObjectId
+}
+
+model Task {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  status      TaskStatus @default(PENDING)
+  deadline    DateTime?
+  notes       String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime @updatedAt
+
+  projectId   String @db.ObjectId
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  assignedTo  User? @relation(fields: [assignedToId], references: [id])
+  assignedToId String? @db.ObjectId
+}
+
+model WebsiteContent {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  page      String
+  section   String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CompanySettings {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  companyName         String   @default("HexaStack Solutions")
+  logoUrl             String?  // Brand logo (display); optional, fallback to /logo.svg
+  primaryEmail        String   @default("hexastacksolutions@gmail.com")
+  supportEmail        String?  @default("supporthexastack@hexastacksolutions.com")
+  primaryWhatsApp     String   @default("+917591999365")
+  secondaryWhatsApp   String?  @default("+917012714150")
+  leadName1           String   @default("Anandu Krishna")
+  leadEmail1          String   @default("hexastacksolutions@gmail.com")
+  leadWhatsApp1       String   @default("+917591999365")
+  leadName2           String   @default("Surag")
+  leadEmail2          String   @default("officialsurag@gmail.com")
+  leadWhatsApp2       String   @default("+917012714150")
+  address             String?  @default("Vadanappally, Thrissur, Kerala 680614, India")
+  tagline             String?  @default("Building Digital Excellence")
+  description         String?  @default("We create innovative web applications, mobile solutions, and AI-powered tools that transform your business ideas into reality.")
+  /// Home hero: wide screenshot (e.g. HexaBill desktop). Set from Admin Settings.
+  heroDesktopImageUrl String?
+  /// Home hero: phone screenshot overlapped on corner (e.g. sales / growth). Set from Admin Settings.
+  heroMobileImageUrl  String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Portfolio {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  description     String
+  techStack       String?
+  projectUrl      String?
+  featured        Boolean  @default(false)
+  displayOrder    Int      @default(0)
+  location        String?  // e.g. "UAE", "Thrissur, Kerala", "India", "SaaS (Global)"
+  clientType      String?  // e.g. "Restaurant", "Healthcare", "SaaS / Health Tech"
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  media           PortfolioMedia[]
+  teamMembers     PortfolioTeamMember[]
+}
+
+model PortfolioMedia {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  type        MediaType
+  url         String
+  portfolioId String @db.ObjectId
+  portfolio   Portfolio   @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
+}
+
+model PortfolioTeamMember {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  role        String?
+  linkedIn    String?
+  profileUrl  String?
+  portfolioId String @db.ObjectId
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  STAFF
+}
+
+enum ProjectStatus {
+  IN_PROGRESS
+  DELIVERED
+  COMPLETED
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+model ContactMessage {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  email             String?  // optional: doc uses Name, WhatsApp, Service, Budget, Requirement only
+  phone             String?
+  requirement       String
+  companyName       String?
+  country           String?
+  industry          String?
+  serviceOrProduct  String?
+  budget            String?
+  timeline          String?
+  numberOfBranches  String?
+  currentSystem     String?
+  isRead            Boolean  @default(false)
+  isStarred         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Client {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  company   String?
+  email     String   @unique
+  whatsapp  String?
+  password  String
+  status    String   @default("pending") // pending | approved
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PageView {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  page      String
+  userAgent String?
+  ip        String?
+  referrer  String?
+  createdAt DateTime @default(now())
+}
+
+model Analytics {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  date           String   @unique
+  totalViews     Int      @default(0)
+  homeViews      Int      @default(0)
+  workViews      Int      @default(0)
+  contactViews   Int      @default(0)
+  formSubmissions Int     @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Service {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  icon         String   // URL to the JPG/PNG file
+  description  String?
+  link         String?
+  isComingSoon Boolean  @default(false)
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Product {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  link         String?
+  description  String
+  features     String[] // Array of features
+  category     String?  // "business" | "free" — Business Software vs Free Tools
+  isComingSoon Boolean  @default(false)
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SeoLocationPage {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  location     String
+  locationSlug String
+  service      String
+  serviceSlug  String
+  title        String
+  description  String
+  h1           String
+  region       String?  // KERALA | GULF | INDIA | OTHER
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Backlink {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  sourceUrl   String   // Page URL that links to us
+  targetUrl   String?  // Our URL they link to (optional)
+  sourceSite  String?  // Domain or site name
+  linkType    String?  // directory | guest_post | partner | press | other
+  daDr        String?  // e.g. "DA 45" or "DR 30"
+  notes       String?
+  status      String?  // active | pending | lost | review
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
