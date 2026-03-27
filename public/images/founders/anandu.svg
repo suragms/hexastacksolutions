@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-labelledby="title desc">
+  <title id="title">Anandu Krishna</title>
+  <desc id="desc">Default founder avatar for Anandu Krishna</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" rx="200" fill="url(#bg)"/>
+  <circle cx="200" cy="152" r="78" fill="#ffffff" fill-opacity="0.94"/>
+  <path d="M84 352c18-70 66-112 116-112s98 42 116 112" fill="#ffffff" fill-opacity="0.94"/>
+  <text x="200" y="382" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#7c2d12">AK</text>
+</svg>

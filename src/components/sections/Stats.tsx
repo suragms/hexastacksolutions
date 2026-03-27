@@ -25,9 +25,9 @@ const gulfCountries = [
 ]
 
 const stats = [
-  { value: '120+', label: 'Projects delivered' },
-  { value: '14+', label: 'Countries served' },
-  { value: '6+', label: 'Years shipping products' },
+  { value: '40+', label: 'Projects delivered' },
+  { value: '4+', label: 'Countries served' },
+  { value: '2+', label: 'Years shipping products' },
   { value: '12+', label: 'Industries covered' },
 ]
 
