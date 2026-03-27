@@ -72,7 +72,7 @@ export function Testimonials() {
     setFormOk(false)
     const r = appendPublicTestimonial(name, msg)
     if (!r.ok) {
-      setFormErr(r.reason)
+      setFormErr('reason' in r ? r.reason : 'Could not submit review.')
       return
     }
     setFormOk(true)

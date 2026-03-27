@@ -35,7 +35,6 @@ export function PortfolioCard({
 
   return (
     <GlassCard
-      as="article"
       className={cn(
         'relative flex flex-col h-full p-6 focus-within:ring-2 focus-within:ring-[var(--primary)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--background)] outline-none transition-transform duration-200 ease-out',
         'hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]',
