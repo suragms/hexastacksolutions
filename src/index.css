@@ -125,25 +125,25 @@
     }
   }
 
-  /* Portfolio auto-scroll carousel */
+  /* Portfolio auto-scroll: duplicated flex row; -50% = one full pass (React hides strip when reduce-motion). */
   @keyframes portfolio-scroll {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
   }
 
-  /** Continuous horizontal drift (one full list per duration; hover pauses) */
   .portfolio-track {
     animation: portfolio-scroll var(--portfolio-marquee-duration, 72s) linear infinite;
     will-change: transform;
+    backface-visibility: hidden;
   }
 
-  .portfolio-marquee-wrap:hover .portfolio-track {
-    animation-play-state: paused;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .portfolio-track {
-      animation: none;
+  @media (hover: hover) and (pointer: fine) {
+    .portfolio-marquee-wrap:hover .portfolio-track {
+      animation-play-state: paused;
     }
   }
 }

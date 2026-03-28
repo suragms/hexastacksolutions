@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
 import { PortfolioFilters } from '../portfolio/PortfolioFilters'
 import { ProjectLightbox } from '../portfolio/ProjectLightbox'
 import type { PortfolioCategory } from '../../data/portfolioManifest'
@@ -14,25 +15,22 @@ type Project = (typeof portfolioProjects)[0]
 function PortfolioCard({
   project: p,
   onOpen,
-  ariaHidden,
+  imageLoading = 'lazy',
 }: {
   project: Project
   onOpen: () => void
-  ariaHidden?: boolean
+  imageLoading?: 'lazy' | 'eager'
 }) {
   return (
-    <article
-      aria-hidden={ariaHidden || undefined}
-      className="group relative w-[min(85vw,380px)] max-w-[calc(100vw-2rem)] shrink-0 overflow-hidden rounded-2xl border border-border bg-card shadow-md transition-shadow duration-300 hover:shadow-xl md:w-[min(380px,65vw)] md:max-w-none"
-    >
+    <article className="group relative w-[min(85vw,380px)] max-w-[calc(100vw-2rem)] shrink-0 overflow-hidden rounded-2xl border border-border bg-card shadow-md transition-shadow duration-300 hover:shadow-xl md:w-[min(380px,65vw)] md:max-w-none">
       <button type="button" onClick={onOpen} className="block w-full text-left">
         <div className="relative aspect-[16/10] overflow-hidden">
           <img
             src={p.image}
-            alt={ariaHidden ? '' : p.imageAlt}
+            alt={p.imageAlt}
             width={760}
             height={475}
-            loading="lazy"
+            loading={imageLoading}
             decoding="async"
             className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:group-hover:scale-100"
           />
@@ -60,6 +58,8 @@ function PortfolioCard({
 export function Portfolio() {
   const [category, setCategory] = useState<'all' | PortfolioCategory>('all')
   const [lightbox, setLightbox] = useState<Project | null>(null)
+  const prefersReducedMotion = usePrefersReducedMotion()
+  const scrollerRef = useRef<HTMLDivElement>(null)
 
   const availableCategories = useMemo(
     () => [...new Set(portfolioProjects.map((p) => p.category))].sort(),
@@ -71,6 +71,69 @@ export function Portfolio() {
     return portfolioProjects.filter((p) => p.category === category)
   }, [category])
 
+  /** One full pass (start → end) in seconds; slower when the list is long or reduce-motion is preferred. */
+  const loopDurationSec = useMemo(() => {
+    const base = Math.min(100, Math.max(36, filtered.length * 2.8))
+    return prefersReducedMotion ? Math.min(240, Math.round(base * 2.2)) : base
+  }, [filtered.length, prefersReducedMotion])
+
+  useEffect(() => {
+    scrollerRef.current?.scrollTo({ left: 0 })
+  }, [category])
+
+  useEffect(() => {
+    const el = scrollerRef.current
+    if (!el) return
+
+    let raf = 0
+    let last = performance.now()
+    let hoverPaused = false
+    let tabHidden = document.hidden
+
+    const onEnter = () => {
+      hoverPaused = true
+    }
+    const onLeave = () => {
+      hoverPaused = false
+    }
+    el.addEventListener('pointerenter', onEnter)
+    el.addEventListener('pointerleave', onLeave)
+
+    const maxScroll = () => Math.max(0, el.scrollWidth - el.clientWidth)
+
+    const tick = (now: number) => {
+      const dt = Math.min(80, now - last)
+      last = now
+      const range = maxScroll()
+      const allowScroll = !hoverPaused && !tabHidden && range > 1
+      if (allowScroll) {
+        const pxPerMs = range / (loopDurationSec * 1000)
+        el.scrollLeft += pxPerMs * dt
+        if (el.scrollLeft >= range - 0.5) el.scrollLeft = 0
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+
+    const onVis = () => {
+      tabHidden = document.hidden
+    }
+    document.addEventListener('visibilitychange', onVis)
+
+    const ro = new ResizeObserver(() => {
+      if (el.scrollLeft > maxScroll()) el.scrollLeft = 0
+    })
+    ro.observe(el)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      ro.disconnect()
+      document.removeEventListener('visibilitychange', onVis)
+      el.removeEventListener('pointerenter', onEnter)
+      el.removeEventListener('pointerleave', onLeave)
+    }
+  }, [filtered, loopDurationSec])
+
   return (
     <Section id="work" className="!py-14 md:!py-24">
       <Container>
@@ -81,7 +144,8 @@ export function Portfolio() {
               Selected Work
             </h2>
             <p className="mt-2 max-w-md text-text-muted">
-              Real clients, real industries: scroll sideways to browse, or open any card for full case notes.
+              Real clients, real industries: this row scrolls horizontally on a loop (hover to pause). Drag or swipe
+              anytime. Open any card for full case notes.
             </p>
           </div>
           <Link
@@ -94,7 +158,7 @@ export function Portfolio() {
         <PortfolioFilters active={category} onChange={setCategory} available={availableCategories} />
       </Container>
 
-      {/* Single horizontal row (no duplicated strip: avoids identical cards side by side). */}
+      {/* Single row (no DOM duplication); auto-scroll via rAF, pause on hover. */}
       <FadeInView variant="fadeIn" className="mt-8 w-full px-4 sm:px-6 lg:px-8">
         <div className="relative mx-auto w-full max-w-[min(100%,92rem)]">
           <div
@@ -109,12 +173,21 @@ export function Portfolio() {
           {filtered.length === 0 ? (
             <p className="py-8 text-center text-sm text-text-muted">No projects in this category yet.</p>
           ) : (
-            <div className="scrollbar-thin flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 scroll-px-4 md:gap-6 md:scroll-px-6">
-              {filtered.map((p) => (
-                <div key={p.id} className="snap-start">
-                  <PortfolioCard project={p} onOpen={() => setLightbox(p)} />
-                </div>
-              ))}
+            <div className="min-w-0 overflow-hidden pb-4">
+              <div
+                ref={scrollerRef}
+                className="scrollbar-thin flex w-full min-w-0 flex-nowrap gap-5 overflow-x-auto overscroll-x-contain pb-1 md:gap-6"
+                style={{ scrollBehavior: 'auto' }}
+              >
+                {filtered.map((p, i) => (
+                  <PortfolioCard
+                    key={p.id}
+                    project={p}
+                    onOpen={() => setLightbox(p)}
+                    imageLoading={i < 8 ? 'eager' : 'lazy'}
+                  />
+                ))}
+              </div>
             </div>
           )}
         </div>
