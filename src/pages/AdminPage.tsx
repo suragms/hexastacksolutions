@@ -541,8 +541,8 @@ export function AdminPage() {
         {tabBtn('help', 'Help')}
       </div>
 
-      <main className="mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col overflow-hidden px-4 md:px-6">
-        <div className="mx-auto min-h-0 w-full max-w-7xl flex-1 overflow-y-auto overscroll-y-contain py-6 [-webkit-overflow-scrolling:touch]">
+      <main className="mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col overflow-hidden px-4 pb-8 md:px-6">
+        <div className="mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col overflow-y-auto overscroll-y-contain py-6 [-webkit-overflow-scrolling:touch]">
 
         {adminTab === 'analytics' && visits.length === 0 && (
           <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-800">

@@ -1,6 +1,4 @@
 import { ArrowUpRight } from 'lucide-react'
-import { useReducedMotion } from 'framer-motion'
-import type { CSSProperties } from 'react'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PortfolioFilters } from '../portfolio/PortfolioFilters'
@@ -62,7 +60,6 @@ function PortfolioCard({
 export function Portfolio() {
   const [category, setCategory] = useState<'all' | PortfolioCategory>('all')
   const [lightbox, setLightbox] = useState<Project | null>(null)
-  const reduceMotion = useReducedMotion()
 
   const availableCategories = useMemo(
     () => [...new Set(portfolioProjects.map((p) => p.category))].sort(),
@@ -84,8 +81,7 @@ export function Portfolio() {
               Selected Work
             </h2>
             <p className="mt-2 max-w-md text-text-muted">
-              Real clients, real industries: the row scrolls automatically — hover to pause — click any card for
-              full case notes.
+              Real clients, real industries: scroll sideways to browse, or open any card for full case notes.
             </p>
           </div>
           <Link
@@ -98,7 +94,7 @@ export function Portfolio() {
         <PortfolioFilters active={category} onChange={setCategory} available={availableCategories} />
       </Container>
 
-      {/* Infinite horizontal marquee (duplicate strip = seamless loop). Reduced motion: manual scroll. */}
+      {/* Single horizontal row (no duplicated strip: avoids identical cards side by side). */}
       <FadeInView variant="fadeIn" className="mt-8 w-full px-4 sm:px-6 lg:px-8">
         <div className="relative mx-auto w-full max-w-[min(100%,92rem)]">
           <div
@@ -112,29 +108,13 @@ export function Portfolio() {
 
           {filtered.length === 0 ? (
             <p className="py-8 text-center text-sm text-text-muted">No projects in this category yet.</p>
-          ) : reduceMotion === true ? (
-            <div className="scrollbar-thin flex gap-5 overflow-x-auto pb-4 md:gap-6">
-              {filtered.map((p) => (
-                <PortfolioCard key={p.id} project={p} onOpen={() => setLightbox(p)} />
-              ))}
-            </div>
           ) : (
-            <div
-              className="portfolio-marquee-wrap group overflow-hidden pb-4"
-              style={
-                {
-                  '--portfolio-marquee-duration': `${Math.min(120, Math.max(48, filtered.length * 5))}s`,
-                } as CSSProperties
-              }
-            >
-              <div className="portfolio-track flex w-max gap-5 md:gap-6">
-                {filtered.map((p) => (
-                  <PortfolioCard key={`${p.id}-a`} project={p} onOpen={() => setLightbox(p)} />
-                ))}
-                {filtered.map((p) => (
-                  <PortfolioCard key={`${p.id}-b`} project={p} onOpen={() => setLightbox(p)} ariaHidden />
-                ))}
-              </div>
+            <div className="scrollbar-thin flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 scroll-px-4 md:gap-6 md:scroll-px-6">
+              {filtered.map((p) => (
+                <div key={p.id} className="snap-start">
+                  <PortfolioCard project={p} onOpen={() => setLightbox(p)} />
+                </div>
+              ))}
             </div>
           )}
         </div>

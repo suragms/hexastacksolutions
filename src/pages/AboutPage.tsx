@@ -67,18 +67,18 @@ export function AboutPage() {
                 A Kerala software studio with a product mindset
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-text-muted">
-                {site.name} is based in {site.area}, {site.city}, {site.region}. We build marketing sites, internal
-                tools, POS and billing flows, and custom software for teams across {site.serviceAreasLabel}, with
-                clear scope, SEO-aware delivery, and support after launch.
+                {site.name} works from {site.area}, {site.city}, {site.region}. We ship marketing sites, internal tools,
+                POS and billing, and bespoke software for teams in {site.serviceAreasLabel}, with fixed scope per phase,
+                SEO-ready structure, and support after go-live.
               </p>
               <div className="mt-10 space-y-6 leading-relaxed text-text-muted">
                 <p>
-                  For Gulf B2B teams we focus on VAT, invoicing, and operational software that matches how finance and
-                  store teams actually work, whether you are in UAE, Saudi Arabia, or scaling from Kerala to the Gulf.
+                  Gulf-facing work stays practical: VAT-ready invoicing, stock and branch flows, and UIs that match how
+                  finance and store staff work day to day, from UAE and Saudi to Kerala-based teams exporting to the Gulf.
                 </p>
                 <p>
-                  Our stack favours maintainability: modern front ends, typed code where it pays off, and documentation
-                  your team can extend, not a black box.
+                  We bias toward code you can own: clear components, typed logic where it helps, and handover notes so your
+                  team or the next vendor is not guessing.
                 </p>
               </div>
             </FadeInView>
@@ -89,10 +89,8 @@ export function AboutPage() {
                 Anandu Krishna and Surag stay on the work
               </h2>
               <p className="mt-3 max-w-2xl text-text-muted">
-                You work directly with founders, with no layers of account managers. That keeps decisions fast and
-                quality consistent. Add photos as <code className="rounded bg-zinc-100 px-1 text-xs">anandu.jpg</code>{' '}
-                and <code className="rounded bg-zinc-100 px-1 text-xs">surag.jpg</code> under{' '}
-                <code className="rounded bg-zinc-100 px-1 text-xs">public/images/founders</code>, or upload in Admin.
+                You work with the founders directly, so scope and quality stay aligned without a chain of account
+                managers. Headshots can be updated anytime from the site Admin.
               </p>
 
               <div className="mt-10 grid gap-6 md:grid-cols-2 md:gap-8">
@@ -105,10 +103,12 @@ export function AboutPage() {
                   />
                   <div>
                     <h3 className="text-lg font-bold text-text-primary">Anandu Krishna</h3>
-                    <p className="text-sm font-medium text-text-muted">Co-founder &amp; developer</p>
+                    <p className="text-sm font-medium text-text-muted">Co-founder &amp; Product Lead</p>
                     <p className="mt-3 text-sm leading-relaxed text-text-muted">
-                      Leads frontend delivery, UI decisions, and product implementation, so what you approve in design is
-                      what ships in the browser.
+                      Leads client communication, product strategy, UI/UX decisions, and overall execution. From
+                      understanding business needs to delivering production-ready solutions, Anandu handles the full
+                      cycle including client calls, updates, scaling, and ongoing maintenance. Every major decision and
+                      risk is owned and handled directly.
                     </p>
                   </div>
                 </article>
@@ -122,10 +122,11 @@ export function AboutPage() {
                   />
                   <div>
                     <h3 className="text-lg font-bold text-text-primary">Surag</h3>
-                    <p className="text-sm font-medium text-text-muted">Co-founder &amp; developer</p>
+                    <p className="text-sm font-medium text-text-muted">Co-founder &amp; Full Stack Developer</p>
                     <p className="mt-3 text-sm leading-relaxed text-text-muted">
-                      Owns backend planning, architecture, integrations, and direct client communication, so timelines
-                      and technical risk stay visible.
+                      Focuses on backend architecture and frontend, system stability, integrations, and technical
+                      implementation. Surag designs and plans ensuring the system is scalable, reliable, and performs
+                      efficiently. From fixing issues to building core systems, he ensures smooth technical execution.
                     </p>
                   </div>
                 </article>

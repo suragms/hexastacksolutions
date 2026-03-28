@@ -25,13 +25,13 @@ function BlogCard({ post }: { post: BlogPost }) {
           decoding="async"
           className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-orange-950/75 via-orange-900/15 to-transparent" />
-        <span className="absolute bottom-24 left-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-orange-800 shadow-sm backdrop-blur-sm">
-          {post.category}
-        </span>
-        <div className="absolute bottom-0 left-0 right-0 p-4 pt-12">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-orange-950/80 via-orange-900/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-2 p-4 pt-16">
+          <span className="w-fit rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-orange-800 shadow-sm backdrop-blur-sm">
+            {post.category}
+          </span>
           <h2 className="text-lg font-bold leading-snug text-white drop-shadow-sm md:text-xl">{post.title}</h2>
-          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-white/90">{post.excerpt}</p>
+          <p className="line-clamp-2 text-sm leading-relaxed text-white/90">{post.excerpt}</p>
         </div>
       </div>
       <div className="flex flex-1 flex-col justify-end border-t border-border px-4 py-3">
@@ -40,7 +40,7 @@ function BlogCard({ post }: { post: BlogPost }) {
           <a href={site.siteUrl} className="hover:underline" target="_blank" rel="noopener noreferrer">
             {siteLine}
           </a>{' '}
-          <span className="text-text-muted">— share this site when you discuss the topic.</span>
+          <span className="text-text-muted">Share this site when you discuss the topic.</span>
         </p>
         <Link
           to="/contact"
