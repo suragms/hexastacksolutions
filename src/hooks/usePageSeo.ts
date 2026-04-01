@@ -4,15 +4,44 @@ import { site } from '../data/site'
 
 const META_NAME = 'description'
 const CANONICAL_ID = 'hs-canonical'
+const baseUrl = site.siteUrl.replace(/\/$/, '')
+
+function absoluteUrl(pathOrUrl: string): string {
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl
+  const path = pathOrUrl.startsWith('/') ? pathOrUrl : `/${pathOrUrl}`
+  return `${baseUrl}${path}`
+}
+
+function setMetaProperty(property: string, content: string) {
+  let el = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement | null
+  if (!el) {
+    el = document.createElement('meta')
+    el.setAttribute('property', property)
+    document.head.appendChild(el)
+  }
+  el.setAttribute('content', content)
+}
+
+function setMetaName(name: string, content: string) {
+  let el = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null
+  if (!el) {
+    el = document.createElement('meta')
+    el.setAttribute('name', name)
+    document.head.appendChild(el)
+  }
+  el.setAttribute('content', content)
+}
 
 type Options = {
   title: string
   description: string
   /** Path including leading slash, e.g. /services/web-design */
   canonicalPath?: string
+  /** Overrides default OG/Twitter image (absolute URL or site path starting with /) */
+  ogImage?: string
 }
 
-export function usePageSeo({ title, description, canonicalPath }: Options) {
+export function usePageSeo({ title, description, canonicalPath, ogImage }: Options) {
   const { pathname } = useLocation()
   const path = canonicalPath ?? pathname
 
@@ -28,7 +57,7 @@ export function usePageSeo({ title, description, canonicalPath }: Options) {
     }
     meta.setAttribute('content', description)
 
-    const canonicalHref = `${site.siteUrl.replace(/\/$/, '')}${path}`
+    const canonicalHref = `${baseUrl}${path}`
     let link = document.getElementById(CANONICAL_ID) as HTMLLinkElement | null
     if (!link) {
       link = document.createElement('link')
@@ -38,8 +67,18 @@ export function usePageSeo({ title, description, canonicalPath }: Options) {
     }
     link.href = canonicalHref
 
-    return () => {
-      // Leave meta/canonical in place; next page effect overwrites. Avoid flash on unmount.
-    }
-  }, [title, description, path])
+    const imageAbs = absoluteUrl(ogImage ?? site.defaultOgImage)
+
+    setMetaProperty('og:type', 'website')
+    setMetaProperty('og:title', fullTitle)
+    setMetaProperty('og:description', description)
+    setMetaProperty('og:url', canonicalHref)
+    setMetaProperty('og:image', imageAbs)
+    setMetaProperty('og:locale', 'en_IN')
+
+    setMetaName('twitter:card', 'summary_large_image')
+    setMetaName('twitter:title', fullTitle)
+    setMetaName('twitter:description', description)
+    setMetaName('twitter:image', imageAbs)
+  }, [title, description, path, ogImage])
 }

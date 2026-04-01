@@ -1,7 +1,15 @@
 import { LegalDocument } from '../components/legal/LegalDocument'
 import { site } from '../data/site'
+import { usePageSeo } from '../hooks/usePageSeo'
 
 export function PrivacyPage() {
+  usePageSeo({
+    title: 'Privacy Policy',
+    description:
+      'Privacy Policy for HexaStack Solutions: how we collect, use, and protect contact, project, and technical data when you use our site and services from Thrissur, Kerala.',
+    canonicalPath: '/privacy',
+  })
+
   return (
     <LegalDocument title="Privacy Policy" updated="26 March 2026">
       <p>

@@ -1,8 +1,16 @@
 import { Link } from 'react-router-dom'
 import { LegalDocument } from '../components/legal/LegalDocument'
 import { site } from '../data/site'
+import { usePageSeo } from '../hooks/usePageSeo'
 
 export function RefundPolicyPage() {
+  usePageSeo({
+    title: 'Refund Policy',
+    description:
+      'Refund and cancellation policy for HexaStack Solutions: deposits, milestones, and how fees apply to software and creative services.',
+    canonicalPath: '/refund-policy',
+  })
+
   return (
     <LegalDocument title="No Refund Policy" updated="26 March 2026">
       <p>

@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { usePageSeo } from '../hooks/usePageSeo'
 import { PortfolioFilters } from '../components/portfolio/PortfolioFilters'
 import { ProjectLightbox } from '../components/portfolio/ProjectLightbox'
 import { Container } from '../components/ui/Container'
@@ -10,6 +11,13 @@ import type { PortfolioCategory } from '../data/portfolioManifest'
 import { portfolioProjects } from '../data/portfolioManifest'
 
 export function WorkPage() {
+  usePageSeo({
+    title: 'Our Work & Portfolio',
+    description:
+      'Websites and products we have shipped: marketing sites, dashboards, e-commerce, and industry builds across Kerala, the Gulf, and global clients. Browse by category and open case notes.',
+    canonicalPath: '/work',
+  })
+
   const [category, setCategory] = useState<'all' | PortfolioCategory>('all')
   const [lightbox, setLightbox] = useState<(typeof portfolioProjects)[0] | null>(null)
 

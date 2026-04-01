@@ -1,0 +1,18 @@
+{
+  "name": "HexaStack Solutions",
+  "short_name": "HexaStack",
+  "description": "Websites, POS, billing, and custom software for Kerala, Gulf, and global businesses.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ea580c",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ]
+}

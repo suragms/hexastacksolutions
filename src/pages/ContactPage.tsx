@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { usePageSeo } from '../hooks/usePageSeo'
 import { Container } from '../components/ui/Container'
 import { FadeInView } from '../components/ui/FadeInView'
 import { GradientButton } from '../components/ui/GradientButton'
@@ -12,6 +13,13 @@ const mapsEmbedSrc =
   'https://www.google.com/maps?q=Vadanappally+Thrissur+Kerala+680614&output=embed'
 
 export function ContactPage() {
+  usePageSeo({
+    title: 'Contact & Request a Quote',
+    description:
+      'Contact HexaStack Solutions in Vadanappally, Thrissur, Kerala. Request a quote for web design, custom software, POS, VAT-aware billing, and Gulf-ready B2B projects. Phone, email, and WhatsApp.',
+    canonicalPath: '/contact',
+  })
+
   const [sent, setSent] = useState(false)
   const [searchParams] = useSearchParams()
   const productHint = searchParams.get('product')?.trim() ?? ''

@@ -1,37 +1,12 @@
 import { ChevronDown } from 'lucide-react'
 import { useId, useState } from 'react'
+import { homePageFaqs } from '../../data/faq'
 import { Container } from '../ui/Container'
 import { FadeInView } from '../ui/FadeInView'
 import { Section } from '../ui/Section'
 
-const faqs = [
-  {
-    q: 'How do you price projects?',
-    a: 'We scope milestones with fixed deliverables for clarity. Larger programs can run in monthly product increments with a shared roadmap.',
-  },
-  {
-    q: 'What is a typical timeline?',
-    a: 'Marketing sites often land in 4–8 weeks. Product work depends on integrations and compliance needs; we’ll give you a week-by-week plan after discovery.',
-  },
-  {
-    q: 'Which stack do you use?',
-    a: 'We usually ship with modern React ecosystems and a pragmatic backend choice for your scale, prioritizing maintainability, observability, and performance.',
-  },
-  {
-    q: 'Do you provide ongoing support?',
-    a: 'Yes: launch is the beginning. We offer retainers for improvements, monitoring, and iterative releases.',
-  },
-  {
-    q: 'Can you work with our internal team?',
-    a: 'Absolutely. We integrate with your designers and engineers, document decisions, and keep workflows transparent.',
-  },
-  {
-    q: 'How do we get started?',
-    a: 'Book a short call. We’ll confirm fit, outline next steps, and share a proposal with assumptions and milestones.',
-  },
-]
-
 export function FAQ() {
+  const faqs = homePageFaqs
   const [open, setOpen] = useState<number | null>(0)
   const baseId = useId()
 

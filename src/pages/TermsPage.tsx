@@ -1,6 +1,14 @@
 import { LegalDocument } from '../components/legal/LegalDocument'
+import { usePageSeo } from '../hooks/usePageSeo'
 
 export function TermsPage() {
+  usePageSeo({
+    title: 'Terms of Service',
+    description:
+      'Terms of Service for HexaStack Solutions: web design, development, SEO, POS and billing integrations, and consulting for clients in Kerala, GCC, and worldwide.',
+    canonicalPath: '/terms',
+  })
+
   return (
     <LegalDocument title="Terms of Service" updated="26 March 2026">
       <p>

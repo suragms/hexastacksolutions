@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import { FaqJsonLd } from '../components/seo/FaqJsonLd'
+import { usePageSeo } from '../hooks/usePageSeo'
 import { Comparison } from '../components/sections/Comparison'
 import { CTASection } from '../components/sections/CTASection'
 import { FAQ } from '../components/sections/FAQ'
@@ -16,6 +18,14 @@ import { ValueProp } from '../components/sections/ValueProp'
 export function HomePage() {
   const { hash, pathname } = useLocation()
 
+  usePageSeo({
+    title:
+      'HexaStack Solutions — Web Design Kerala & Web Development Thrissur | SEO | Gulf UAE & Global',
+    description:
+      'HexaStack Solutions — web design & web development Thrissur, Kerala; custom software for India, UAE, Saudi Arabia, GCC & global clients. POS, billing, VAT/GST-aware products, SEO, healthcare & tourism sites. Co‑founders Anandu Krishna & Surag. Vadanappally, Thrissur.',
+    canonicalPath: '/',
+  })
+
   useEffect(() => {
     if (pathname !== '/') return
     if (!hash) return
@@ -27,6 +37,7 @@ export function HomePage() {
 
   return (
     <>
+      <FaqJsonLd />
       <Hero />
       <Portfolio />
       <ValueProp />

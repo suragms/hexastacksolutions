@@ -1,8 +1,16 @@
 import { Link } from 'react-router-dom'
 import { LegalDocument } from '../components/legal/LegalDocument'
 import { site } from '../data/site'
+import { usePageSeo } from '../hooks/usePageSeo'
 
 export function RulesPage() {
+  usePageSeo({
+    title: 'Project & Communication Rules',
+    description:
+      'How we work with clients: communication channels, scope changes, approvals, and delivery expectations for HexaStack Solutions engagements in Kerala and abroad.',
+    canonicalPath: '/rules',
+  })
+
   return (
     <LegalDocument title="Project &amp; Communication Rules" updated="26 March 2026">
       <p>

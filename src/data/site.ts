@@ -35,14 +35,24 @@ export const site = {
   email: 'hexastacksolutions@gmail.com',
   phones: ['+91 75919 99365', '+91 70127 14150'] as const,
   whatsappUrl: 'https://wa.me/917591999365',
+  /** Generic fallbacks for footer/UI only — not used in JSON-LD sameAs. */
   social: {
     x: 'https://twitter.com',
     linkedin: 'https://linkedin.com',
     github: 'https://github.com',
   },
+  /** Default Open Graph / Twitter preview image (absolute URL). Matches index.html og:image. */
+  defaultOgImage:
+    'https://www.hexastacksolutions.com/images/portfolio/oripio-healthcare-doctor-booking-web-ui.jpg',
   /** Public site URL for JSON-LD and canonical URLs */
   siteUrl: 'https://www.hexastacksolutions.com',
 } as const
+
+/**
+ * Real public profile URLs for Organization `sameAs` in JSON-LD.
+ * Append X, LinkedIn, GitHub company URLs when ready; leave empty to omit (avoids placeholder domains).
+ */
+export const brandSocialProfileUrls: readonly string[] = []
 
 /** Primary phrases for on-page copy (Services section, etc.). */
 export const coreSeoKeywords = [

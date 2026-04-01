@@ -1,7 +1,15 @@
 import { LegalDocument } from '../components/legal/LegalDocument'
 import { site } from '../data/site'
+import { usePageSeo } from '../hooks/usePageSeo'
 
 export function SecurityPage() {
+  usePageSeo({
+    title: 'Security Practices',
+    description:
+      'Security practices for HexaStack Solutions projects: access control, HTTPS, deployment hygiene, and safe handling of credentials for clients in India and the Gulf.',
+    canonicalPath: '/security',
+  })
+
   return (
     <LegalDocument title="Security Practices" updated="26 March 2026">
       <p>
