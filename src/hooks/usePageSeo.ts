@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom'
 import { site } from '../data/site'
 
 const META_NAME = 'description'
-const CANONICAL_ID = 'hs-canonical'
 const baseUrl = site.siteUrl.replace(/\/$/, '')
 
 function absoluteUrl(pathOrUrl: string): string {
@@ -58,10 +57,9 @@ export function usePageSeo({ title, description, canonicalPath, ogImage }: Optio
     meta.setAttribute('content', description)
 
     const canonicalHref = `${baseUrl}${path}`
-    let link = document.getElementById(CANONICAL_ID) as HTMLLinkElement | null
+    let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null
     if (!link) {
       link = document.createElement('link')
-      link.id = CANONICAL_ID
       link.rel = 'canonical'
       document.head.appendChild(link)
     }
