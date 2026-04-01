@@ -26,7 +26,7 @@ export function Hero() {
         >
           {/* Credibility line; SEO-relevant */}
           <p className="mb-4 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-zinc-500 sm:mb-5 sm:text-xs md:text-sm">
-            Web design · Web applications · SEO · Thrissur, Kerala
+            HexaStack Solutions · Web design · Web applications · SEO · Thrissur, Kerala
           </p>
 
           <h1 className="break-words text-3xl font-bold leading-[1.12] tracking-tight text-text-primary sm:text-5xl md:text-6xl lg:text-7xl lg:text-[4.75rem]">
