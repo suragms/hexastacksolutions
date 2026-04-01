@@ -1,5 +1,15 @@
 # SEO implementation changelog
 
+## Google Search Console — sitemap
+
+After each deploy, confirm the live sitemap loads: `https://www.hexastacksolutions.com/sitemap.xml`
+
+1. Open [Google Search Console](https://search.google.com/search-console) → property **URL prefix**: `https://www.hexastacksolutions.com/`
+2. **Sitemaps** (left menu) → add `sitemap.xml` (or full URL above) → **Submit**
+3. [`public/robots.txt`](../public/robots.txt) already references the sitemap; no change needed there unless the domain changes
+
+`lastmod` in the sitemap is bumped when you ship meaningful URL updates so crawlers see fresh signals.
+
 ## 2026-03-28
 
 ### Per-route meta (SPA)
@@ -13,7 +23,7 @@
 
 ### Sitemap & manifest
 
-- [`public/sitemap.xml`](../public/sitemap.xml): `lastmod` set to **2026-03-28**; URLs aligned with public app routes (admin excluded).
+- [`public/sitemap.xml`](../public/sitemap.xml): `lastmod` set to **2026-04-01** (re-bump after major deploys); URLs aligned with public app routes (admin excluded).
 - [`public/manifest.json`](../public/manifest.json): minimal web app manifest; linked from [`index.html`](../index.html).
 
 ### Structured data
