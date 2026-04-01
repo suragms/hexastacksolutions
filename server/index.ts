@@ -17,6 +17,7 @@ import seoPagesRouter from './routes/seo-pages';
 import backlinksRouter from './routes/backlinks';
 import adminAuthRouter from './routes/admin-auth';
 import clientAuthRouter from './routes/client-auth';
+import syncStubRouter from './routes/syncStub';
 
 // Triggering server restart for new routes...
 dotenv.config();
@@ -34,10 +35,15 @@ if (process.env.NETLIFY || process.env.VERCEL) {
 }
 
 app.use(cors());
-// On Vercel, req.body can be pre-set by the runtime; express.json() then reads an already-consumed stream and can overwrite with {}. Preserve Vercel's body.
+// On Vercel, req.body can be {} before express.json runs; empty object must not skip the parser (see api/index.js ensureBody).
 app.use((req, res, next) => {
     const preBody = req.body;
-    if (process.env.VERCEL && preBody != null && typeof preBody === 'object' && !Array.isArray(preBody) && Object.keys(preBody).length > 0) {
+    const preBodyPopulated =
+        preBody != null &&
+        typeof preBody === 'object' &&
+        !Array.isArray(preBody) &&
+        Object.keys(preBody as object).length > 0;
+    if (process.env.VERCEL && preBodyPopulated) {
         return next();
     }
     express.json({ limit: '50mb' })(req, res, next);
@@ -86,8 +92,11 @@ app.get('/api/health', async (_req, res) => {
 
 const contactLimiter = rateLimit({
     windowMs: 60 * 60 * 1000,
-    max: 5,
-    message: { error: 'Too many enquiries. Please try again in an hour.' },
+    max: 30,
+    message: {
+        error: 'Too many enquiries',
+        message: 'Too many submissions from this network. Please try again in an hour or email us directly.',
+    },
     standardHeaders: true,
     skip: (req) => req.method !== 'POST',
 });
@@ -114,6 +123,7 @@ app.use('/api/seo-pages', seoPagesRouter as any);
 app.use('/api/backlinks', backlinksRouter as any);
 app.use('/api/admin', adminLoginLimiter, adminAuthRouter as any);
 app.use('/api/client', clientAuthRouter as any);
+app.use('/api/sync', syncStubRouter as any);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Route not found', path: req.path, originalUrl: req.originalUrl });

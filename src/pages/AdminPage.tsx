@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { VisitRecord } from '../components/layout/Layout'
 import type { FounderKey } from '../lib/founderPhotos'
 import { persistFounderPhoto, readFounderPhotos } from '../lib/founderPhotos'
@@ -13,6 +13,11 @@ import {
   upsertOperationalProduct,
   type OperationalProduct,
 } from '../lib/adminContent'
+import {
+  fetchContactEnquiriesFromApi,
+  markContactReadOnApi,
+  mergeApiAndLocalInbox,
+} from '../lib/contactApi'
 import { hydrateContactInboxFromServer, markContactRead, readContactMessages, type ContactMessage } from '../lib/contactInbox'
 import {
   addAdminTestimonial,
@@ -162,6 +167,17 @@ export function AdminPage() {
   const [tick, setTick] = useState(0)
   const [founderPhotos, setFounderPhotos] = useState(() => readFounderPhotos())
   const [inbox, setInbox] = useState<ContactMessage[]>(() => readContactMessages())
+
+  const refreshInbox = useCallback(async () => {
+    const local = readContactMessages()
+    const fromApi = await fetchContactEnquiriesFromApi()
+    if (fromApi !== null) {
+      setInbox(mergeApiAndLocalInbox(fromApi, local))
+      return
+    }
+    await hydrateContactInboxFromServer()
+    setInbox(readContactMessages())
+  }, [])
   const [adminCatList, setAdminCatList] = useState(() => readAdminCategories())
   const [newCatInput, setNewCatInput] = useState('')
   const [opList, setOpList] = useState<OperationalProduct[]>(() => readOperationalProducts())
@@ -190,16 +206,16 @@ export function AdminPage() {
 
   useEffect(() => {
     function syncInbox() {
-      setInbox(readContactMessages())
+      void refreshInbox()
     }
     window.addEventListener('hs-contact-inbox-updated', syncInbox)
     return () => window.removeEventListener('hs-contact-inbox-updated', syncInbox)
-  }, [])
+  }, [refreshInbox])
 
   useEffect(() => {
     function onStorage(e: StorageEvent) {
       if (e.key === 'hs_contact_inbox') {
-        setInbox(readContactMessages())
+        void refreshInbox()
         return
       }
       if (e.key === 'hs_admin_blog_categories' || e.key === 'hs_operational_products') {
@@ -217,15 +233,14 @@ export function AdminPage() {
     }
     window.addEventListener('storage', onStorage)
     return () => window.removeEventListener('storage', onStorage)
-  }, [])
+  }, [refreshInbox])
 
   useEffect(() => {
     if (!authed) return
-    setInbox(readContactMessages())
-    void hydrateContactInboxFromServer()
+    void refreshInbox()
     void hydrateTestimonialsFromServer()
     void hydrateAdminContentFromServer()
-  }, [authed, tick])
+  }, [authed, tick, refreshInbox])
 
   useEffect(() => {
     function syncContent() {
@@ -559,10 +574,8 @@ export function AdminPage() {
           </h2>
           <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
             <p className="mb-4 text-sm text-zinc-600">
-              Submissions from the Contact page are stored in{' '}
-              <code className="rounded bg-zinc-100 px-1 text-xs">localStorage</code> in this browser. If you submit the
-              form in <strong>another tab</strong>, this dashboard updates via storage sync. Mark as read after you
-              reply. Production: connect email or a form API.
+              Contact form submissions are loaded from the site API (<code className="rounded bg-zinc-100 px-1 text-xs">GET /api/contact</code>
+              ). Messages saved only in this browser (offline fallback) are merged in. Mark as read after you reply.
             </p>
             {inbox.length === 0 ? (
               <p className="text-sm text-zinc-400">No messages yet. Submit the contact form on the site to test.</p>
@@ -591,8 +604,17 @@ export function AdminPage() {
                           <button
                             type="button"
                             onClick={() => {
-                              markContactRead(m.id)
-                              setInbox(readContactMessages())
+                              void (async () => {
+                                if (m.id.startsWith('m-')) {
+                                  markContactRead(m.id)
+                                  await refreshInbox()
+                                  return
+                                }
+                                const ok = await markContactReadOnApi(m.id)
+                                if (ok) {
+                                  setInbox((prev) => prev.map((x) => (x.id === m.id ? { ...x, read: true } : x)))
+                                }
+                              })()
                             }}
                             className="text-xs font-semibold text-orange-700 hover:underline"
                           >
@@ -603,7 +625,7 @@ export function AdminPage() {
                     </div>
                     <p className="mt-3 whitespace-pre-wrap text-sm text-zinc-700">{m.message}</p>
                     <p className="mt-2 text-xs text-zinc-500">
-                      Next: reply by email, then mark read. For production, connect Formspree, Resend, or your API.
+                      Reply by email or WhatsApp, then mark read. Ensure <code className="rounded bg-zinc-100 px-0.5">DATABASE_URL</code> is set on the API host so submissions persist.
                     </p>
                   </li>
                 ))}

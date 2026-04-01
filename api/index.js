@@ -65,10 +65,18 @@ if (process.env.NODE_ENV !== 'production' && (devApp || app)?.listen) {
 
 const handlerTarget = devApp || app || apiHandler;
 
-/** On Vercel, same-origin requests sometimes have empty req.body. Read stream and set req.body so Express gets it. */
+/** True when body is missing or Vercel pre-set an empty object (stream not yet parsed). */
+function needsJsonBodyParse(req) {
+  const b = req.body;
+  if (b == null) return true;
+  if (typeof b === 'object' && !Array.isArray(b) && Object.keys(b).length === 0) return true;
+  return false;
+}
+
+/** On Vercel, req.body is often `{}` or unset while JSON waits on the stream — must read or POST handlers see empty fields. */
 function ensureBody(req) {
   return new Promise((resolve) => {
-    if (!process.env.VERCEL || req.body != null) return resolve();
+    if (!process.env.VERCEL || !needsJsonBodyParse(req)) return resolve();
     const method = (req.method || '').toUpperCase();
     if (method !== 'POST' && method !== 'PUT' && method !== 'PATCH') return resolve();
     const ct = (req.headers['content-type'] || '').toLowerCase();
@@ -80,7 +88,9 @@ function ensureBody(req) {
       try {
         const raw = Buffer.concat(chunks).toString('utf8');
         if (raw.trim()) req.body = JSON.parse(raw);
-      } catch (_) { /* leave req.body undefined */ }
+      } catch (_) {
+        /* leave as-is; route validation will respond */
+      }
       resolve();
     });
     req.on('error', () => resolve());

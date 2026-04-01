@@ -1,4 +1,16 @@
-const API_BASE = String(import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:4000/api').replace(/\/+$/, '')
+/**
+ * Same-origin `/api` in dev (Vite proxies to the backend). Override with
+ * `VITE_API_BASE_URL` only if the API is on another origin.
+ */
+function defaultApiBase(): string {
+  const raw = import.meta.env.VITE_API_BASE_URL
+  if (raw !== undefined && String(raw).trim() !== '') {
+    return String(raw).replace(/\/+$/, '')
+  }
+  return '/api'
+}
+
+const API_BASE = defaultApiBase()
 
 async function req<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {

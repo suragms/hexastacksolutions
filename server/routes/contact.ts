@@ -15,6 +15,11 @@ const sanitize = (str: string | undefined | null): string => {
     return str.trim().slice(0, 1000); // Limit length
 };
 
+const sanitizeLong = (str: string, max: number): string => {
+    if (str == null || typeof str !== 'string') return '';
+    return str.trim().slice(0, max);
+};
+
 const getSupportInboxEmail = async (): Promise<string> => {
     try {
         const settings = await db.companySettings.findFirst({
@@ -115,7 +120,12 @@ router.post('/', async (req, res) => {
     try {
         const body = req.body || {};
         const name = body.name != null ? String(body.name) : '';
-        const requirement = body.requirement != null ? String(body.requirement) : '';
+        const requirement =
+            body.requirement != null
+                ? String(body.requirement)
+                : body.message != null
+                  ? String(body.message)
+                  : '';
         const email = body.email != null ? String(body.email).trim() : '';
         const phone = body.phone != null ? String(body.phone) : '';
         const whatsapp = body.whatsapp != null ? String(body.whatsapp) : '';
@@ -145,7 +155,7 @@ router.post('/', async (req, res) => {
             name: sanitize(name).slice(0, 200),
             email: contactEmail ? contactEmail.slice(0, 255) : null,
             phone: contactPhone ? sanitize(contactPhone).slice(0, 50) : null,
-            requirement: sanitize(requirement).slice(0, 5000),
+            requirement: sanitizeLong(requirement, 5000),
             companyName: companyName ? sanitize(String(companyName)).slice(0, 200) : null,
             country: country ? sanitize(String(country)).slice(0, 100) : null,
             industry: industry ? sanitize(String(industry)).slice(0, 100) : null,

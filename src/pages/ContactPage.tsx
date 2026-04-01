@@ -8,6 +8,7 @@ import { GradientButton } from '../components/ui/GradientButton'
 import { Section } from '../components/ui/Section'
 import { site } from '../data/site'
 import { appendContactMessage } from '../lib/contactInbox'
+import { API_URL } from '../lib/utils'
 
 const mapsEmbedSrc =
   'https://www.google.com/maps?q=Vadanappally+Thrissur+Kerala+680614&output=embed'
@@ -21,23 +22,85 @@ export function ContactPage() {
   })
 
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [searchParams] = useSearchParams()
   const productHint = searchParams.get('product')?.trim() ?? ''
+  const serviceHint = searchParams.get('service')?.trim() ?? ''
+  const contextHint = productHint || serviceHint
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
     const name = String(fd.get('name') ?? '').trim()
     const email = String(fd.get('email') ?? '').trim()
     const message = String(fd.get('message') ?? '').trim()
     if (!name || !email || !message) return
-    appendContactMessage({
+
+    setSubmitting(true)
+    setSubmitError('')
+
+    const contactUrl = `${API_URL}/api/contact`.replace(/([^:])\/\/+/g, '$1/')
+    const payload = {
       name,
       email,
+      requirement: message,
       message,
-      product: productHint || undefined,
-    })
-    setSent(true)
+      ...(contextHint ? { serviceOrProduct: contextHint } : {}),
+    }
+
+    try {
+      const res = await fetch(contactUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const raw = await res.text()
+      let data = {} as { message?: string; error?: string }
+      try {
+        if (raw) data = JSON.parse(raw) as { message?: string; error?: string }
+      } catch {
+        /* non-JSON (e.g. HTML error page) */
+      }
+
+      if (res.ok) {
+        setSent(true)
+        return
+      }
+
+      const msg =
+        data.message ||
+        data.error ||
+        (res.status === 404
+          ? 'Contact form is not reachable from this site. Please email us or use WhatsApp.'
+          : res.status === 503
+            ? 'Service temporarily unavailable. Please try again in a few minutes or email us.'
+            : res.status === 429
+              ? 'Too many submissions from your network. Please wait an hour or email us directly.'
+              : raw && raw.length > 0 && raw.length < 280 && !raw.trim().startsWith('<')
+                ? raw
+                : 'Could not send your message. Please try again.')
+      setSubmitError(msg)
+      // If the server is down, keep a copy in this browser so /admin on the same device still sees it
+      if (res.status >= 500 || res.status === 429) {
+        appendContactMessage({
+          name,
+          email,
+          message,
+          product: contextHint || undefined,
+        })
+      }
+    } catch {
+      setSubmitError('Network error. Your message was saved only in this browser — open Admin here or email us directly.')
+      appendContactMessage({
+        name,
+        email,
+        message,
+        product: contextHint || undefined,
+      })
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -151,12 +214,17 @@ export function ContactPage() {
                     />
                   </div>
                 </div>
-                <GradientButton type="submit" className="mt-6 w-full">
-                  Send message
+                {submitError && (
+                  <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
+                    {submitError}
+                  </p>
+                )}
+                <GradientButton type="submit" className="mt-6 w-full" disabled={submitting}>
+                  {submitting ? 'Sending…' : 'Send message'}
                 </GradientButton>
                 <p className="mt-4 text-center text-xs text-text-muted">
-                  Messages are saved in this browser for the admin dashboard (local storage). Add email or a
-                  form backend for production.
+                  Submissions are stored on our server and appear in the admin Messages tab when the API is
+                  reachable. If the server is unavailable, a copy may be kept in this browser only.
                 </p>
               </form>
             )}
