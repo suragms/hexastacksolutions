@@ -24,6 +24,20 @@ If you pushed but production still shows the old design:
 5. **Confirm new build is served**  
    On the live site, right-click the footer → **Inspect**. In the HTML, the `<footer>` should have `data-deploy-version="2025-03-14"` (or the date we set). If you don’t see it, the browser or CDN is still serving an old bundle.
 
+### Build failed: timed out (45 minutes)
+
+Vercel caps build duration (often **45 minutes** on Hobby). A timeout usually means the build **stuck** (open handles, a hung step), not that the project needs 45 minutes to compile.
+
+**Prerender on Vercel:** The repo skips the Vite prerender plugin when `VERCEL=1` (set automatically by Vercel) so `vite build` does not run route-by-route SSR during the deploy. That avoids long or stuck prerender steps and keeps builds short. The site is still a normal SPA with client-side routing and your SEO hooks (`usePageSeo`, JSON-LD, etc.).
+
+| Variable | Effect |
+|----------|--------|
+| *(default on Vercel)* | Prerender **off** — fast, reliable builds. |
+| `ENABLE_PRERENDER=1` | Turn prerender **on** for Vercel (only if you need static HTML per route and builds complete). |
+| `SKIP_PRERENDER=1` | Force prerender **off** (any environment). |
+
+If builds are still slow after this, check the log for the last step printed (e.g. `tsc`, `vite build`, `[build-api-bundle]`). **Enhanced Builds** on Vercel can increase CPU/RAM but will not fix a true hang.
+
 ---
 
 ## Frontend and API on Vercel
