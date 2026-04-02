@@ -29,7 +29,7 @@ If you pushed but production still shows the old design:
 ## Frontend and API on Vercel
 
 - **Frontend:** Static build (`dist/`) is served from the project root. Build command: `npm run build` (runs Vite then the API bundle script). In Vercel → Settings → General, **Build Command** should be `npm run build` and **Output Directory** `dist`.
-- **API:** All `/api/*` requests are routed to the serverless function `api/index.js` (ESM). That file loads the Express app from `api/server-bundle.cjs`, which is created by `npm run build` (runs `vite build && node scripts/build-api-bundle.cjs`). `vercel.json` has `functions["api/index.js"].includeFiles = "api/server-bundle.cjs"` so the generated bundle is included in the deployment. The root `package.json` has `"type": "module"` so `api/index.js` uses `import`/`export`; the bundle stays CommonJS. If the bundle fails to load, the API returns 503 JSON instead of crashing.
+- **API:** All `/api/*` requests are rewritten to the serverless function `api/index.js` (ESM). That file loads the Express app from `api/server-bundle.cjs`, produced by **`npm run build`** (`tsc -b && vite build && node scripts/build-api-bundle.cjs`). `vercel.json` uses **`functions["api/index.js"].includeFiles`** so the bundle is shipped with the function (no legacy `builds` array — Dashboard **Build Command** / **Output Directory** now apply; root `vercel.json` sets `buildCommand` and `outputDirectory` to match). The repo has `"type": "module"` so `api/index.js` uses ESM; the bundle is CommonJS. If the bundle is missing, the API returns 503 JSON instead of crashing.
 
 ---
 

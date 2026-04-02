@@ -11,6 +11,9 @@ export default defineConfig(({ mode }) => {
   const apiTarget = env.VITE_DEV_API_PROXY || 'http://localhost:3001'
 
   return {
+    build: {
+      chunkSizeWarningLimit: 700,
+    },
     plugins: [
       react(),
       tailwindcss(),
