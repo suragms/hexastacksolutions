@@ -12,7 +12,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     build: {
-      chunkSizeWarningLimit: 700,
+      // Prerender bundle (prerender-*.js) is ~900kB+; expected for SSR-like script
+      chunkSizeWarningLimit: 1200,
     },
     plugins: [
       react(),
