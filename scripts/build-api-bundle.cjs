@@ -21,16 +21,22 @@ const makeNodeModulesExternal = {
 
 async function main() {
   try {
+    console.log('[build-api-bundle] START');
+    console.log('[build-api-bundle] NODE_ENV=', process.env.NODE_ENV || '(unset)');
+    console.log('[build-api-bundle] cwd=', process.cwd());
+
     // Ensure Prisma client exists for server code imports
     const prismaClientDir = path.join(__dirname, '..', 'node_modules', '.prisma', 'client');
     if (!fs.existsSync(prismaClientDir)) {
       try {
+        console.log('[build-api-bundle] prisma client missing, running `npx prisma generate`...');
         childProcess.execSync('npx prisma generate', { stdio: 'inherit' });
       } catch {
         throw new Error('prisma generate failed');
       }
     }
 
+    console.log('[build-api-bundle] running esbuild bundling...');
     await esbuild.build({
       entryPoints: [path.join(__dirname, '..', 'server', 'index.ts')],
       bundle: true,
@@ -44,6 +50,9 @@ async function main() {
     console.log('api/server-bundle.cjs created');
   } catch (err) {
     console.error('build-api-bundle failed:', err);
+    if (err && typeof err === 'object' && 'stack' in err) {
+      console.error(String(err.stack));
+    }
     process.exit(1);
   }
 }
