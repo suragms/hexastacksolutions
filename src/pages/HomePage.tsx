@@ -20,9 +20,9 @@ export function HomePage() {
 
   usePageSeo({
     title:
-      'HexaStack Solutions — Web Design Kerala & Web Development Thrissur | SEO | Gulf UAE & Global',
+      'HexaStack Solutions — Web Design Kerala & Web Development Thrissur | SEO & Digital Marketing | Gulf & Global',
     description:
-      'HexaStack Solutions — web design & web development Thrissur, Kerala; custom software for India, UAE, Saudi Arabia, GCC & global clients. POS, billing, VAT/GST-aware products, SEO, healthcare & tourism sites. Co‑founders Anandu Krishna & Surag. Vadanappally, Thrissur.',
+      'HexaStack Solutions — web design, web development, SEO, and digital marketing from Thrissur, Kerala for India, UAE, Saudi Arabia, Oman, Kuwait, Bahrain, Qatar, GCC & global clients. Custom software, POS, VAT/GST-aware billing, healthcare & tourism sites. Co‑founders Anandu Krishna & Surag. Vadanappally, Thrissur.',
     canonicalPath: '/',
   })
 

@@ -12,9 +12,9 @@ import { portfolioProjects } from '../data/portfolioManifest'
 
 export function WorkPage() {
   usePageSeo({
-    title: 'Our Work & Portfolio',
+    title: 'Portfolio & case studies | Web design & software | Kerala, Gulf & global',
     description:
-      'Websites and products we have shipped: marketing sites, dashboards, e-commerce, and industry builds across Kerala, the Gulf, and global clients. Browse by category and open case notes.',
+      'Selected websites, dashboards, e‑commerce, and custom software delivered for Kerala, UAE, Saudi Arabia, GCC, and global clients. Browse by category and read case notes.',
     canonicalPath: '/work',
   })
 

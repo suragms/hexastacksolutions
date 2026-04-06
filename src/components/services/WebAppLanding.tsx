@@ -100,9 +100,9 @@ const faq = [
 
 export function WebAppLanding() {
   usePageSeo({
-    title: 'Custom software development',
+    title: 'Custom web applications & software | Thrissur, Kerala | MVPs & B2B portals',
     description:
-      'Custom software and web applications for Kerala and global teams: MVPs, portals, and scalable products. HexaStack Solutions, Thrissur.',
+      'Custom web applications and software for Kerala, GCC, and global teams: MVPs, internal portals, dashboards, and scalable products. HexaStack Solutions, Thrissur.',
     canonicalPath: '/services/web-applications',
   })
 

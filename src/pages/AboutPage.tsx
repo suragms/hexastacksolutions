@@ -50,9 +50,9 @@ export function AboutPage() {
   const founderPhotos = useFounderPhotos()
 
   usePageSeo({
-    title: 'About HexaStack Solutions | Kerala & Gulf software studio',
+    title: 'About HexaStack Solutions | Web & software studio Thrissur, Kerala | UAE & GCC clients',
     description:
-      'HexaStack builds VAT-aware POS, billing, and web products for Kerala, UAE, and Gulf B2B teams. Meet the founders and how we work.',
+      'Meet the HexaStack team: VAT-aware POS, billing, web apps, SEO, and digital marketing for Kerala, UAE, Saudi Arabia, Oman, Kuwait, Bahrain, Qatar, and global B2B teams. Based in Vadanappally, Thrissur.',
     canonicalPath: '/about',
   })
 

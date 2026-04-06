@@ -107,9 +107,9 @@ export function BlogPage() {
   const mergedCats = useMergedCategories()
 
   usePageSeo({
-    title: 'Blog | HexaStack Solutions — VAT, POS, and web delivery',
+    title: 'Blog | VAT, POS, ERP, SEO & digital marketing | HexaStack Kerala & Gulf',
     description:
-      'Notes on VAT software UAE, POS system UAE, ERP rollout, and fast marketing sites for Gulf B2B. 2026 trends and practical SEO.',
+      'Articles on VAT billing UAE, POS and ERP rollout, technical SEO, web performance, and digital marketing for Kerala, UAE, Saudi Arabia, GCC, and global B2B teams.',
     canonicalPath: '/blog',
   })
 

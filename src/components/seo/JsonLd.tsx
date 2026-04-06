@@ -17,6 +17,7 @@ export function JsonLd() {
     email: site.email,
     telephone: [...site.phones],
     logo: { '@type': 'ImageObject', url: `${base}/favicon.svg` },
+    image: site.defaultOgImage,
     address: {
       '@type': 'PostalAddress',
       streetAddress: `${site.area}, ${site.city}`,
@@ -49,6 +50,11 @@ export function JsonLd() {
       description: site.tagline,
       inLanguage: ['en-IN', 'en'],
       publisher: { '@id': orgId },
+      potentialAction: {
+        '@type': 'ContactAction',
+        name: 'Contact or request a quote',
+        target: `${base}/contact`,
+      },
     },
     {
       '@type': 'ProfessionalService',

@@ -97,9 +97,9 @@ const faq = [
 
 export function WebDesignLanding() {
   usePageSeo({
-    title: 'Website design & development',
+    title: 'Website design & development Thrissur & Kerala | UAE & GCC | HexaStack',
     description:
-      'Custom website design and development for Kerala and Gulf businesses: SEO-ready, fast, conversion-focused. HexaStack Solutions, Thrissur.',
+      'Custom website design and development for Kerala, UAE, Saudi Arabia, Oman, Kuwait, Bahrain, Qatar, and global teams: fast, SEO-ready, conversion-focused. HexaStack Solutions, Thrissur.',
     canonicalPath: '/services/web-design',
   })
 

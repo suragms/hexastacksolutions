@@ -15,9 +15,9 @@ const mapsEmbedSrc =
 
 export function ContactPage() {
   usePageSeo({
-    title: 'Contact & Request a Quote',
+    title: 'Contact HexaStack | Request a quote | Thrissur, Kerala | UAE & GCC projects',
     description:
-      'Contact HexaStack Solutions in Vadanappally, Thrissur, Kerala. Request a quote for web design, custom software, POS, VAT-aware billing, and Gulf-ready B2B projects. Phone, email, and WhatsApp.',
+      'Contact HexaStack Solutions in Vadanappally, Thrissur, Kerala. Quotes for web design, web development, SEO, digital marketing, custom software, POS, and VAT-aware billing for India, Gulf (UAE, Saudi Arabia, Oman, Kuwait, Bahrain, Qatar), and worldwide. Phone, email, WhatsApp.',
     canonicalPath: '/contact',
   })
 

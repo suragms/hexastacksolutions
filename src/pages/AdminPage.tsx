@@ -19,6 +19,7 @@ import {
   mergeApiAndLocalInbox,
 } from '../lib/contactApi'
 import { hydrateContactInboxFromServer, markContactRead, readContactMessages, type ContactMessage } from '../lib/contactInbox'
+import { usePageSeo } from '../hooks/usePageSeo'
 import {
   addAdminTestimonial,
   approveTestimonial,
@@ -159,6 +160,13 @@ function KpiCard({ label, value, sub }: { label: string; value: string | number;
 // --- Main page ---
 
 export function AdminPage() {
+  usePageSeo({
+    title: 'Admin',
+    description: 'Sign in to the HexaStack admin dashboard to manage enquiries, testimonials, and content.',
+    canonicalPath: '/admin',
+    robots: 'noindex, nofollow',
+  })
+
   const [authed, setAuthed] = useState(() => localStorage.getItem(AUTH_KEY) === '1')
   const [pw, setPw] = useState('')
   const [userId, setUserId] = useState('')

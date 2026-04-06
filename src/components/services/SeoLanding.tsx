@@ -73,9 +73,9 @@ const heroImage = portfolio.webDesign.seoPerf
 
 export function SeoLanding() {
   usePageSeo({
-    title: 'Search engine optimization',
+    title: 'SEO services Kerala & Gulf | technical SEO, content & local visibility',
     description:
-      'Technical SEO, on-page optimization, and content strategy for Kerala and Gulf businesses, with transparent reporting from HexaStack Solutions, Thrissur.',
+      'Technical SEO, on-page optimization, content strategy, and digital marketing visibility for Kerala, UAE, Saudi Arabia, GCC, and India-wide queries — with transparent reporting. HexaStack Solutions, Thrissur.',
     canonicalPath: '/services/seo',
   })
 

@@ -11,8 +11,9 @@ const hubServices = getHubServices()
 
 export function ServicesPage() {
   usePageSeo({
-    title: 'Services: end-to-end product delivery',
-    description: `${coreSeoKeywords.slice(0, 4).join(', ')}. Web, mobile, POS, and SaaS delivery from HexaStack Solutions, Thrissur, Kerala.`,
+    title: 'Web design, development & SEO services | Thrissur, Kerala | Gulf & global',
+    description:
+      'End-to-end delivery: website design, custom web applications, technical SEO, and digital marketing for Kerala, UAE, Saudi Arabia, GCC, and remote clients worldwide. HexaStack Solutions, Thrissur.',
     canonicalPath: '/services',
   })
 

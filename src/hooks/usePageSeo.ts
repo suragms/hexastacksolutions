@@ -31,6 +31,8 @@ function setMetaName(name: string, content: string) {
   el.setAttribute('content', content)
 }
 
+const DEFAULT_ROBOTS = 'index, follow, max-image-preview:large'
+
 type Options = {
   title: string
   description: string
@@ -38,9 +40,20 @@ type Options = {
   canonicalPath?: string
   /** Overrides default OG/Twitter image (absolute URL or site path starting with /) */
   ogImage?: string
+  /** Alt text for social previews (accessibility + LinkedIn/Facebook) */
+  ogImageAlt?: string
+  /** e.g. `noindex, nofollow` for /admin */
+  robots?: string
 }
 
-export function usePageSeo({ title, description, canonicalPath, ogImage }: Options) {
+export function usePageSeo({
+  title,
+  description,
+  canonicalPath,
+  ogImage,
+  ogImageAlt,
+  robots,
+}: Options) {
   const { pathname } = useLocation()
   const path = canonicalPath ?? pathname
 
@@ -66,17 +79,28 @@ export function usePageSeo({ title, description, canonicalPath, ogImage }: Optio
     link.href = canonicalHref
 
     const imageAbs = absoluteUrl(ogImage ?? site.defaultOgImage)
+    const imageAlt =
+      ogImageAlt?.trim() ||
+      `${site.name} — ${fullTitle.replace(/\s*\|\s*HexaStack Solutions\s*$/i, '').trim()}`
+
+    setMetaName('robots', robots ?? DEFAULT_ROBOTS)
 
     setMetaProperty('og:type', 'website')
+    setMetaProperty('og:site_name', site.name)
     setMetaProperty('og:title', fullTitle)
     setMetaProperty('og:description', description)
     setMetaProperty('og:url', canonicalHref)
     setMetaProperty('og:image', imageAbs)
+    setMetaProperty('og:image:secure_url', imageAbs)
+    setMetaProperty('og:image:width', '1200')
+    setMetaProperty('og:image:height', '630')
+    setMetaProperty('og:image:alt', imageAlt)
     setMetaProperty('og:locale', 'en_IN')
 
     setMetaName('twitter:card', 'summary_large_image')
     setMetaName('twitter:title', fullTitle)
     setMetaName('twitter:description', description)
     setMetaName('twitter:image', imageAbs)
-  }, [title, description, path, ogImage])
+    setMetaName('twitter:image:alt', imageAlt)
+  }, [title, description, path, ogImage, ogImageAlt, robots])
 }

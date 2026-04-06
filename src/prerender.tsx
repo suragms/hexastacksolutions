@@ -8,34 +8,34 @@ type PrerenderInput = { url: string }
 const routeMeta: Record<string, { title: string; description: string }> = {
   '/': {
     title:
-      'HexaStack Solutions — Web Design Kerala & Web Development Thrissur | SEO | Gulf UAE & Global',
+      'HexaStack Solutions — Web Design Kerala & Web Development Thrissur | SEO & Digital Marketing | Gulf & Global',
     description:
-      'HexaStack Solutions — web design & web development Thrissur, Kerala; custom software for India, UAE, Saudi Arabia, GCC & global clients.',
+      'HexaStack Solutions — web design, web development, SEO, and digital marketing from Thrissur, Kerala for India, UAE, Saudi Arabia, Oman, Kuwait, Bahrain, Qatar, GCC & global clients.',
   },
   '/work': {
-    title: 'Our Work & Portfolio',
+    title: 'Portfolio & case studies | Web design & software | Kerala, Gulf & global',
     description:
-      'Websites and products we have shipped across Kerala, the Gulf, and global clients. Browse categories and case studies.',
+      'Selected websites, dashboards, e‑commerce, and custom software delivered for Kerala, UAE, Saudi Arabia, GCC, and global clients.',
   },
   '/services': {
-    title: 'Services',
+    title: 'Web design, development & SEO services | Thrissur, Kerala | Gulf & global',
     description:
-      'Website design, web app development, and SEO services by HexaStack Solutions for Kerala, GCC, and global businesses.',
+      'End-to-end delivery: website design, custom web applications, technical SEO, and digital marketing for Kerala, UAE, Saudi Arabia, GCC, and remote clients worldwide.',
   },
   '/services/web-design': {
-    title: 'Website Design & Development',
+    title: 'Website design & development Thrissur & Kerala | UAE & GCC | HexaStack',
     description:
-      'Conversion-focused web design and development for Kerala and Gulf businesses, from strategy to launch.',
+      'Custom website design and development for Kerala, UAE, Saudi Arabia, Oman, Kuwait, Bahrain, Qatar, and global teams: fast, SEO-ready, conversion-focused.',
   },
   '/services/web-applications': {
-    title: 'Web Application Development',
+    title: 'Custom web applications & software | Thrissur, Kerala | MVPs & B2B portals',
     description:
-      'Custom web applications, dashboards, and portals built for reliability, scale, and measurable outcomes.',
+      'Custom web applications and software for Kerala, GCC, and global teams: MVPs, internal portals, dashboards, and scalable products.',
   },
   '/services/seo': {
-    title: 'SEO Services',
+    title: 'SEO services Kerala & Gulf | technical SEO, content & local visibility',
     description:
-      'Technical SEO, on-page optimization, and content strategy to improve visibility and qualified enquiries.',
+      'Technical SEO, on-page optimization, content strategy, and digital marketing visibility for Kerala, UAE, Saudi Arabia, GCC, and India-wide queries.',
   },
   '/products/hexabill': {
     title: 'HexaBill',
@@ -43,19 +43,19 @@ const routeMeta: Record<string, { title: string; description: string }> = {
       'HexaBill: POS, ERP, and VAT-ready billing software for retail and Gulf-facing businesses.',
   },
   '/about': {
-    title: 'About HexaStack Solutions',
+    title: 'About HexaStack Solutions | Web & software studio Thrissur, Kerala | UAE & GCC clients',
     description:
-      'Meet the founders and approach behind HexaStack Solutions, a Kerala software studio serving Gulf and global teams.',
+      'Meet the HexaStack team: VAT-aware POS, billing, web apps, SEO, and digital marketing for Kerala, UAE, Saudi Arabia, Oman, Kuwait, Bahrain, Qatar, and global B2B teams.',
   },
   '/blog': {
-    title: 'Blog',
+    title: 'Blog | VAT, POS, ERP, SEO & digital marketing | HexaStack Kerala & Gulf',
     description:
-      'Practical articles on VAT, POS, ERP, SEO, and digital product execution for Kerala and Gulf business teams.',
+      'Articles on VAT billing UAE, POS and ERP rollout, technical SEO, web performance, and digital marketing for Kerala, UAE, Saudi Arabia, GCC, and global B2B teams.',
   },
   '/contact': {
-    title: 'Contact & Request a Quote',
+    title: 'Contact HexaStack | Request a quote | Thrissur, Kerala | UAE & GCC projects',
     description:
-      'Contact HexaStack Solutions in Vadanappally, Thrissur for websites, custom software, POS, and VAT-aware systems.',
+      'Contact HexaStack Solutions in Vadanappally, Thrissur, Kerala. Quotes for web design, web development, SEO, digital marketing, custom software, POS, and VAT-aware billing.',
   },
   '/terms': { title: 'Terms of Service', description: 'Terms of Service for HexaStack Solutions.' },
   '/privacy': { title: 'Privacy Policy', description: 'Privacy Policy for HexaStack Solutions.' },
@@ -74,6 +74,7 @@ export async function prerender({ url }: PrerenderInput) {
   const meta = routeMeta[url] ?? routeMeta['/']
   const fullTitle = meta.title.includes(site.name) ? meta.title : `${meta.title} | ${site.name}`
   const canonical = `${site.siteUrl.replace(/\/$/, '')}${url}`
+  const ogImageAlt = `${site.name} — ${fullTitle.replace(/\s*\|\s*HexaStack Solutions\s*$/i, '').trim()}`
 
   const html = renderToString(
     <MemoryRouter initialEntries={[url]}>
@@ -89,15 +90,20 @@ export async function prerender({ url }: PrerenderInput) {
       elements: new Set([
         { type: 'meta', props: { name: 'description', content: meta.description } },
         { type: 'link', props: { rel: 'canonical', href: canonical } },
+        { type: 'meta', props: { property: 'og:type', content: 'website' } },
+        { type: 'meta', props: { property: 'og:site_name', content: site.name } },
         { type: 'meta', props: { property: 'og:title', content: fullTitle } },
         { type: 'meta', props: { property: 'og:description', content: meta.description } },
         { type: 'meta', props: { property: 'og:url', content: canonical } },
         { type: 'meta', props: { property: 'og:image', content: site.defaultOgImage } },
+        { type: 'meta', props: { property: 'og:image:alt', content: ogImageAlt } },
+        { type: 'meta', props: { property: 'og:locale', content: 'en_IN' } },
+        { type: 'meta', props: { name: 'twitter:card', content: 'summary_large_image' } },
         { type: 'meta', props: { name: 'twitter:title', content: fullTitle } },
         { type: 'meta', props: { name: 'twitter:description', content: meta.description } },
         { type: 'meta', props: { name: 'twitter:image', content: site.defaultOgImage } },
+        { type: 'meta', props: { name: 'twitter:image:alt', content: ogImageAlt } },
       ]),
     },
   }
 }
-
