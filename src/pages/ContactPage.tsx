@@ -10,8 +10,12 @@ import { site } from '../data/site'
 import { appendContactMessage } from '../lib/contactInbox'
 import { API_URL } from '../lib/utils'
 
+/** Google Maps “Share” link (exact listing / pin); opens in new tab — not usable as iframe src. */
+const MAPS_SHARE_URL = 'https://share.google/cDkRNc3o75evBSqPB' as const
+
+/** Embed matches site geo (index.html / JSON-LD); zoom shows Vadanappally / Thrissur area. */
 const mapsEmbedSrc =
-  'https://www.google.com/maps?q=Vadanappally+Thrissur+Kerala+680614&output=embed'
+  'https://www.google.com/maps?q=10.787,76.23&z=16&hl=en&output=embed'
 
 export function ContactPage() {
   usePageSeo({
@@ -152,12 +156,22 @@ export function ContactPage() {
 
             <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
               <iframe
-                title="Map: Vadanappally, Thrissur"
+                title="Map: HexaStack Solutions, Vadanappally, Thrissur"
                 src={mapsEmbedSrc}
                 className="aspect-[16/10] h-56 w-full min-h-[240px] border-0 sm:h-64"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
+              <p className="border-t border-border bg-card px-3 py-2 text-center text-xs text-text-muted">
+                <a
+                  href={MAPS_SHARE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-orange-600 hover:text-orange-700"
+                >
+                  Open in Google Maps
+                </a>
+              </p>
             </div>
           </FadeInView>
 
