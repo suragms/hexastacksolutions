@@ -6,7 +6,7 @@ export const site = {
   shortName: 'Hexastack',
   legalName: 'HexaStack Solutions',
   tagline:
-    'Websites, POS, billing, and custom software for Kerala, Gulf, and global businesses: clear delivery and long-term support.',
+    'HexaStack Solutions — official web & software studio: websites, POS, billing, and custom software for Kerala, Gulf, and global businesses; clear delivery and long-term support.',
   city: 'Thrissur',
   region: 'Kerala',
   country: 'India',
@@ -56,6 +56,9 @@ export const brandSocialProfileUrls: readonly string[] = []
 
 /** Primary phrases for on-page copy (Services section, etc.). */
 export const coreSeoKeywords = [
+  'HexaStack Solutions official website',
+  'hexastack solutions Thrissur Kerala',
+  'hexastacksolutions.com',
   'custom software Thrissur',
   'web development company Kerala',
   'software company Thrissur',

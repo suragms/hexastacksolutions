@@ -3,6 +3,10 @@ export type FaqItem = { q: string; a: string }
 
 export const homePageFaqs: readonly FaqItem[] = [
   {
+    q: 'Is hexastacksolutions.com the official HexaStack Solutions website?',
+    a: 'Yes. https://www.hexastacksolutions.com is the official site for HexaStack Solutions — a web design, web development, and custom software studio in Vadanappally, Thrissur, Kerala. We are not affiliated with unrelated games or other brands that use similar names.',
+  },
+  {
     q: 'How do you price projects?',
     a: 'We scope milestones with fixed deliverables for clarity. Larger programs can run in monthly product increments with a shared roadmap.',
   },
