@@ -27,10 +27,8 @@
     <meta name="ICBM" content="10.787, 76.23" />
     <meta name="author" content="HexaStack Solutions" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
+    <!-- One href per language; avoid duplicate hreflang URLs (same page for every region hurts Lighthouse SEO). -->
     <link rel="alternate" hreflang="en-IN" href="https://www.hexastacksolutions.com/" />
-    <link rel="alternate" hreflang="en-AE" href="https://www.hexastacksolutions.com/" />
-    <link rel="alternate" hreflang="en-SA" href="https://www.hexastacksolutions.com/" />
-    <link rel="alternate" hreflang="en" href="https://www.hexastacksolutions.com/" />
     <link rel="alternate" hreflang="x-default" href="https://www.hexastacksolutions.com/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="HexaStack Solutions" />
@@ -69,10 +67,19 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Non-blocking font CSS (reduces render-blocking vs synchronous stylesheet). -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <title>HexaStack Solutions — Official Site | Web Design, UI/UX, Ecommerce & Development Kerala | SEO Thrissur</title>
   </head>
   <body>

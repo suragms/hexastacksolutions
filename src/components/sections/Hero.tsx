@@ -25,7 +25,7 @@ export function Hero() {
           className="mx-auto w-full max-w-[min(100%,85rem)] text-center"
         >
           {/* Credibility line; SEO-relevant */}
-          <p className="mb-4 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-zinc-500 sm:mb-5 sm:text-xs md:text-sm">
+          <p className="mb-4 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-zinc-600 sm:mb-5 sm:text-xs md:text-sm">
             HexaStack Solutions · Official site · Web design · Apps · SEO · Thrissur, Kerala
           </p>
 

@@ -16,10 +16,12 @@ function PortfolioCard({
   project: p,
   onOpen,
   imageLoading = 'lazy',
+  fetchPriority,
 }: {
   project: Project
   onOpen: () => void
   imageLoading?: 'lazy' | 'eager'
+  fetchPriority?: 'high' | 'low' | 'auto'
 }) {
   return (
     <article className="group relative w-[min(85vw,380px)] max-w-[calc(100vw-2rem)] shrink-0 overflow-hidden rounded-2xl border border-border bg-card shadow-md transition-shadow duration-300 hover:shadow-xl md:w-[min(380px,65vw)] md:max-w-none">
@@ -32,6 +34,7 @@ function PortfolioCard({
             height={475}
             loading={imageLoading}
             decoding="async"
+            fetchPriority={fetchPriority}
             className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:group-hover:scale-100"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-white/5 to-transparent" />
@@ -184,7 +187,8 @@ export function Portfolio() {
                     key={p.id}
                     project={p}
                     onOpen={() => setLightbox(p)}
-                    imageLoading={i < 8 ? 'eager' : 'lazy'}
+                    imageLoading={i < 2 ? 'eager' : 'lazy'}
+                    fetchPriority={i === 0 ? 'high' : undefined}
                   />
                 ))}
               </div>
