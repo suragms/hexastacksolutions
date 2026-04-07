@@ -11,6 +11,7 @@ export function JsonLd() {
     '@type': 'Organization',
     '@id': orgId,
     name: site.name,
+    alternateName: [site.shortName, 'Hexa Stack Solutions'],
     legalName: site.legalName,
     url: `${base}/`,
     description: site.tagline,

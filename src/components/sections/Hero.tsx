@@ -36,10 +36,11 @@ export function Hero() {
           <p className="mx-auto mt-6 max-w-[min(100%,52rem)] text-base leading-relaxed text-text-muted sm:mt-7 sm:text-lg md:text-xl">
             HexaStack Solutions delivers custom{' '}
             <strong className="font-semibold text-text-primary">web design Kerala</strong>,{' '}
-            <strong className="font-semibold text-text-primary">web development Thrissur</strong>, and
-            tailored software for teams in{' '}
+            <strong className="font-semibold text-text-primary">UI/UX</strong>,{' '}
+            <strong className="font-semibold text-text-primary">ecommerce</strong>, and{' '}
+            <strong className="font-semibold text-text-primary">web development Thrissur</strong>, and custom software for teams in{' '}
             <strong className="font-semibold text-text-primary">Ernakulam, Kozhikode, and Gulf states</strong>{' '}
-            (UAE, Saudi Arabia, Qatar, Bahrain). Fast sites, clear scope, measurable SEO, built to convert.
+            (UAE, Saudi Arabia, Qatar, Bahrain). Technical SEO, fast builds, clear scope—built to convert.
           </p>
 
           <div className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
