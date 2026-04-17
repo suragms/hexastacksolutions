@@ -139,7 +139,7 @@ export default function Products() {
                             to="/contact"
                             className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-white px-6 py-3.5 text-sm font-semibold text-[var(--foreground)] transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)]"
                         >
-                            Contact Us
+                            Start Your Project Today
                         </Link>
                     </div>
                 </div>

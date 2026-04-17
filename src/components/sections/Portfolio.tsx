@@ -147,8 +147,12 @@ export function Portfolio() {
               Selected Work
             </h2>
             <p className="mt-2 max-w-md text-text-muted">
-              Real clients, real industries: this row scrolls horizontally on a loop (hover to pause). Drag or swipe
-              anytime. Open any card for full case notes.
+              Real clients across Kerala, Thrissur, and the Gulf: this row scrolls horizontally on a loop (hover to
+              pause). Drag or swipe anytime—open any card for full case notes, or see{' '}
+              <Link to="/services" className="font-medium text-orange-600 hover:text-orange-700">
+                all services
+              </Link>
+              .
             </p>
           </div>
           <Link

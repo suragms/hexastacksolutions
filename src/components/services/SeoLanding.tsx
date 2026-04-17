@@ -73,9 +73,9 @@ const heroImage = portfolio.webDesign.seoPerf
 
 export function SeoLanding() {
   usePageSeo({
-    title: 'SEO services Kerala & Gulf | technical SEO, content & local visibility',
+    title: 'SEO Services Kerala | Local SEO & Technical Optimization | HexaStack Thrissur',
     description:
-      'Technical SEO, on-page optimization, content strategy, and digital marketing visibility for Kerala, UAE, Saudi Arabia, GCC, and India-wide queries — with transparent reporting. HexaStack Solutions, Thrissur.',
+      'HexaStack Solutions delivers SEO services in Kerala with technical SEO, local SEO, and conversion-focused content for businesses in Thrissur and across Kerala to increase leads and revenue.',
     canonicalPath: '/services/seo',
   })
 
@@ -122,15 +122,15 @@ export function SeoLanding() {
         <div className="mt-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <FadeInView>
             <h1 className="text-4xl font-bold tracking-tight text-text-primary md:text-5xl lg:text-[2.75rem] lg:leading-[1.1]">
-              Rank higher, get more traffic, grow faster.
+              SEO services in Kerala that turn rankings into revenue.
             </h1>
             <p className="mt-5 text-lg text-text-muted">
-              SEO isn’t a one-time checklist; it’s how you get in front of the right audience when they search. We
-              combine technical foundations, intent-aligned content, and clear reporting so growth is measurable, not
-              mysterious.
+              SEO is not a one-time checklist. We combine technical foundations, local intent targeting for Thrissur
+              and Kerala, and conversion-focused content so your business gets discovered by the right buyers and turns
+              search traffic into qualified enquiries.
             </p>
             <GradientLink to="/contact?service=seo" className="mt-8 inline-flex">
-              Get started
+              Get Free Consultation
             </GradientLink>
           </FadeInView>
           <FadeInView delay={0.06} className="overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
@@ -147,8 +147,8 @@ export function SeoLanding() {
 
         <FadeInView className="mx-auto mt-20 max-w-3xl text-center">
           <p className="text-xl font-semibold leading-snug text-text-primary md:text-2xl">
-            We don&apos;t do cookie-cutter playbooks. Every business has different buyers, markets, and proof. Our SEO
-            work focuses on clarity, structure, and content that earns trust, so your site doesn&apos;t just rank, it{' '}
+            We do not use cookie-cutter playbooks. Every business has different buyers, markets, and trust gaps. Our
+            SEO work focuses on clarity, structure, and credible content so your site does not just rank, it{' '}
             <span className="text-text-muted">converts visitors into real conversations.</span>
           </p>
         </FadeInView>
@@ -179,12 +179,12 @@ export function SeoLanding() {
             <div>
               <h2 className="text-2xl font-bold text-text-primary md:text-3xl">What we offer</h2>
               <p className="mt-2 max-w-2xl text-text-muted">
-                A comprehensive approach (technical health, on-page signals, content, and measurement) so improvements
-                compound instead of conflicting.
+                A complete local + technical SEO system covering website health, on-page relevance, content depth, and
+                measurement so gains compound over time.
               </p>
             </div>
             <GradientLink to="/contact?service=seo" className="shrink-0 self-start sm:self-auto">
-              Request a quote
+              Book a Demo
             </GradientLink>
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-2">
@@ -220,7 +220,7 @@ export function SeoLanding() {
             </Link>
           </div>
           <div className="mt-8">
-            <GradientLink to="/contact?service=seo">Book a discovery call</GradientLink>
+            <GradientLink to="/contact?service=seo">Start Your Project Today</GradientLink>
           </div>
         </FadeInView>
       </Container>

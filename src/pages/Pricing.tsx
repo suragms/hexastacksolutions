@@ -50,7 +50,7 @@ export default function Pricing() {
                                 <li>SEO-ready, contact form</li>
                                 <li>WhatsApp CTA</li>
                             </ul>
-                            <Link to="/contact" className="block w-full py-2.5 text-center rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold text-sm hover:opacity-90 transition-colors">Get Quote</Link>
+                            <Link to="/contact" className="block w-full py-2.5 text-center rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold text-sm hover:opacity-90 transition-colors">Get Free Website Consultation</Link>
                         </div>
                         <div className="p-6 rounded-2xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--primary)] transition-colors">
                             <h3 className="text-lg font-semibold text-[var(--foreground)] mb-1">Business App</h3>
@@ -62,7 +62,7 @@ export default function Pricing() {
                                 <li>Data management, reports</li>
                                 <li>Like medical lab / enquiry apps</li>
                             </ul>
-                            <Link to="/contact" className="block w-full py-2.5 text-center rounded-full border border-[var(--border)] text-[var(--foreground)] font-medium text-sm hover:bg-[var(--muted)] transition-colors">Get Quote</Link>
+                            <Link to="/contact" className="block w-full py-2.5 text-center rounded-full border border-[var(--border)] text-[var(--foreground)] font-medium text-sm hover:bg-[var(--muted)] transition-colors">Get Free Website Consultation</Link>
                         </div>
                         <div className="p-6 rounded-2xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--primary)] transition-colors">
                             <h3 className="text-lg font-semibold text-[var(--foreground)] mb-1">POS &amp; Billing</h3>
@@ -74,7 +74,7 @@ export default function Pricing() {
                                 <li>Kerala &amp; Gulf VAT-ready</li>
                                 <li>UAE restaurant case study</li>
                             </ul>
-                            <Link to="/contact" className="block w-full py-2.5 text-center rounded-full border border-[var(--border)] text-[var(--foreground)] font-medium text-sm hover:bg-[var(--muted)] transition-colors">Get Quote</Link>
+                            <Link to="/contact" className="block w-full py-2.5 text-center rounded-full border border-[var(--border)] text-[var(--foreground)] font-medium text-sm hover:bg-[var(--muted)] transition-colors">Get Free Website Consultation</Link>
                         </div>
                         <div className="p-6 rounded-2xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--primary)] transition-colors">
                             <h3 className="text-lg font-semibold text-[var(--foreground)] mb-1">Enterprise</h3>

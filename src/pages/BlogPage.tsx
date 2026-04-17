@@ -30,7 +30,11 @@ function BlogCard({ post }: { post: BlogPost }) {
           <span className="w-fit rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-orange-800 shadow-sm backdrop-blur-sm">
             {post.category}
           </span>
-          <h2 className="text-lg font-bold leading-snug text-white drop-shadow-sm md:text-xl">{post.title}</h2>
+          <h2 className="text-lg font-bold leading-snug text-white drop-shadow-sm md:text-xl">
+            <Link to={`/blog/${post.id}`} className="hover:underline focus-visible:underline">
+              {post.title}
+            </Link>
+          </h2>
           <p className="line-clamp-2 text-sm leading-relaxed text-white/90">{post.excerpt}</p>
         </div>
       </div>
@@ -42,11 +46,8 @@ function BlogCard({ post }: { post: BlogPost }) {
           </a>{' '}
           <span className="text-text-muted">Share this site when you discuss the topic.</span>
         </p>
-        <Link
-          to="/contact"
-          className="mt-2 text-sm font-semibold text-orange-600 hover:text-orange-700"
-        >
-          Discuss this topic →
+        <Link to={`/blog/${post.id}`} className="mt-2 text-sm font-semibold text-orange-600 hover:text-orange-700">
+          Read more →
         </Link>
       </div>
     </article>
@@ -165,7 +166,7 @@ export function BlogPage() {
                 />
               </div>
               <GradientLink to="/contact" className="justify-center sm:shrink-0">
-                Request a quote
+                Get Free Website Consultation
               </GradientLink>
             </div>
           </FadeInView>
@@ -263,12 +264,13 @@ export function BlogPage() {
           </div>
 
           <div className="mt-14 flex flex-col items-center gap-4 border-t border-border pt-10">
-            <GradientLink to="/contact">Start a project</GradientLink>
+            <GradientLink to="/contact">Start Your Project Today</GradientLink>
             <p className="text-center text-sm text-text-muted">
+              Guest posts or speaking—use the same{' '}
               <Link to="/contact" className="font-semibold text-orange-600 hover:text-orange-700">
-                Get in touch
+                contact form
               </Link>{' '}
-              for guest posts or speaking.
+              and we&apos;ll reply quickly.
             </p>
           </div>
         </Container>

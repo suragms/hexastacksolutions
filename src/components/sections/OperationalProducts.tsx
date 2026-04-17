@@ -42,7 +42,12 @@ export function OperationalProducts() {
               <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition hover:border-orange-200">
                 <div className="aspect-[16/10] bg-zinc-100">
                   {p.imageDataUrl ? (
-                    <img src={p.imageDataUrl} alt="" className="h-full w-full object-cover" loading="lazy" />
+                    <img
+                      src={p.imageDataUrl}
+                      alt={p.title ? `${p.title} — HexaStack operational product` : 'HexaStack operational product'}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
                   ) : (
                     <div className="flex h-full items-center justify-center bg-gradient-to-br from-orange-100 to-amber-50 text-sm font-medium text-orange-800/70">
                       No image

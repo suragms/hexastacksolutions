@@ -19,10 +19,9 @@ export function HomePage() {
   const { hash, pathname } = useLocation()
 
   usePageSeo({
-    title:
-      'HexaStack Solutions — Official Site | Web Design, UI/UX, Ecommerce & Development Kerala | SEO Thrissur',
+    title: 'Web Development Company in Kerala | Software Company in Thrissur | HexaStack Solutions',
     description:
-      'HexaStack Solutions — official website (hexastacksolutions.com). Web design, UI/UX, ecommerce, web development, technical SEO & digital marketing from Vadanappally, Thrissur, Kerala for India, UAE, Saudi Arabia, Oman, Kuwait, Bahrain, Qatar, GCC & global clients. Custom software, POS, VAT/GST-aware billing, healthcare & tourism, landing pages, remote delivery. Co‑founders Anandu Krishna & Surag. Kerala IT company; Thrissur web agency.',
+      'HexaStack Solutions is a web development company in Kerala and software company in Thrissur delivering mobile app development Kerala, ERP software Kerala, and AI automation services Kerala to help businesses save time and grow revenue.',
     canonicalPath: '/',
   })
 

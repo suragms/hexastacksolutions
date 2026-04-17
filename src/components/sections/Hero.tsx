@@ -22,36 +22,51 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, y: 28 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-          className="mx-auto w-full max-w-[min(100%,85rem)] text-center"
+          className="mx-auto flex w-full max-w-[min(100%,85rem)] flex-col text-center"
         >
-          {/* Credibility line; SEO-relevant */}
-          <p className="mb-4 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-zinc-600 sm:mb-5 sm:text-xs md:text-sm">
-            HexaStack Solutions · Official site · Web design · Apps · SEO · Thrissur, Kerala
-          </p>
-
-          <h1 className="break-words text-3xl font-bold leading-[1.12] tracking-tight text-text-primary sm:text-5xl md:text-6xl lg:text-7xl lg:text-[4.75rem]">
-            Building High&#8209;Performance Websites &amp; Software That Power Growing Businesses.
+          {/* DOM: H1 first for SEO; visual order unchanged via flex `order`. */}
+          <h1 className="order-2 break-words text-3xl font-bold leading-[1.12] tracking-tight text-text-primary sm:text-5xl md:text-6xl lg:text-7xl lg:text-[4.75rem]">
+            Grow Faster With a Web Development Company in Kerala That Builds for Revenue.
           </h1>
 
-          <p className="mx-auto mt-6 max-w-[min(100%,52rem)] text-base leading-relaxed text-text-muted sm:mt-7 sm:text-lg md:text-xl">
-            HexaStack Solutions delivers custom{' '}
-            <strong className="font-semibold text-text-primary">web design Kerala</strong>,{' '}
-            <strong className="font-semibold text-text-primary">UI/UX</strong>,{' '}
-            <strong className="font-semibold text-text-primary">ecommerce</strong>, and{' '}
-            <strong className="font-semibold text-text-primary">web development Thrissur</strong>, and custom software for teams in{' '}
-            <strong className="font-semibold text-text-primary">Ernakulam, Kozhikode, and Gulf states</strong>{' '}
-            (UAE, Saudi Arabia, Qatar, Bahrain). Technical SEO, fast builds, clear scope—built to convert.
+          <h2 className="order-1 mb-4 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-zinc-600 sm:mb-5 sm:text-xs md:text-sm">
+            HexaStack Solutions · Kerala &amp; Thrissur · Web, Mobile, ERP &amp; AI
+          </h2>
+
+          <h3 className="order-3 mt-5 text-base font-semibold leading-snug text-text-primary sm:mt-6 sm:text-lg md:text-xl">
+            Software company in Thrissur for scalable websites, apps, and business systems
+          </h3>
+
+          <p className="order-4 mx-auto mt-4 max-w-[min(100%,52rem)] text-base leading-relaxed text-text-muted sm:mt-5 sm:text-lg md:text-xl">
+            We help growth-focused teams in Kerala turn slow manual workflows into fast digital systems. As a{' '}
+            <Link to="/services/web-design" className="font-semibold text-text-primary underline decoration-orange-200 underline-offset-2 hover:text-orange-700">
+              web development company in Kerala
+            </Link>{' '}
+            and trusted{' '}
+            <strong className="font-semibold text-text-primary">software company in Thrissur</strong>, we deliver{' '}
+            <Link to="/services/web-applications" className="font-semibold text-text-primary underline decoration-orange-200 underline-offset-2 hover:text-orange-700">
+              mobile app development Kerala
+            </Link>
+            ,{' '} 
+            <Link to="/products/hexabill" className="font-semibold text-text-primary underline decoration-orange-200 underline-offset-2 hover:text-orange-700">
+              ERP software Kerala
+            </Link>
+            with POS, stock, billing, and reporting, plus{' '}
+            <Link to="/services/web-applications" className="font-semibold text-text-primary underline decoration-orange-200 underline-offset-2 hover:text-orange-700">
+              AI automation services Kerala
+            </Link>{' '}
+            so you can save time, increase revenue, and scale with confidence.
           </p>
 
-          <div className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
+          <div className="order-5 mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
             <Link
               to="/work"
               className="inline-flex w-full items-center justify-center rounded-xl border border-border bg-card px-7 py-3.5 text-sm font-semibold text-text-primary shadow-sm transition hover:border-orange-300 hover:bg-surface sm:w-auto"
             >
-              View Portfolio
+              Book a Demo
             </Link>
             <GradientLink to="/contact" className="w-full justify-center sm:w-auto">
-              Book A Call
+              Get Free Consultation
             </GradientLink>
           </div>
         </motion.div>

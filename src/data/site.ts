@@ -6,7 +6,7 @@ export const site = {
   shortName: 'Hexastack',
   legalName: 'HexaStack Solutions',
   tagline:
-    'HexaStack Solutions — official web & software studio: UI/UX, websites, ecommerce, POS, billing, SEO, and custom software for Kerala, Gulf, and global businesses; clear delivery and long-term support.',
+    'HexaStack Solutions — web development company in Kerala (Thrissur): websites, mobile app development Kerala, ERP software company Kerala, AI automation services Kerala, and Gulf (GCC) delivery with clear scope and support.',
   city: 'Thrissur',
   region: 'Kerala',
   country: 'India',
@@ -37,9 +37,10 @@ export const site = {
   whatsappUrl: 'https://wa.me/917591999365',
   /** Generic fallbacks for footer/UI only — not used in JSON-LD sameAs. */
   social: {
-    x: 'https://twitter.com',
-    linkedin: 'https://linkedin.com',
-    github: 'https://github.com',
+    x: 'https://x.com/hexastacksolutions',
+    linkedin: 'https://www.linkedin.com/company/hexastack-solutions',
+    github: 'https://github.com/hexastacksolutions',
+    instagram: 'https://www.instagram.com/hexastacksolutions',
   },
   /** Default Open Graph / Twitter preview image (absolute URL). Matches index.html og:image. */
   defaultOgImage:
@@ -52,10 +53,19 @@ export const site = {
  * Real public profile URLs for Organization `sameAs` in JSON-LD.
  * Append X, LinkedIn, GitHub company URLs when ready; leave empty to omit (avoids placeholder domains).
  */
-export const brandSocialProfileUrls: readonly string[] = []
+export const brandSocialProfileUrls: readonly string[] = [
+  'https://x.com/hexastacksolutions',
+  'https://www.linkedin.com/company/hexastack-solutions',
+  'https://github.com/hexastacksolutions',
+]
 
 /** Primary phrases for on-page copy (Services section, etc.). */
 export const coreSeoKeywords = [
+  'web development company in kerala',
+  'software company in thrissur',
+  'mobile app development kerala',
+  'ERP software company kerala',
+  'AI automation services kerala',
   'HexaStack Solutions official website',
   'hexastack solutions Thrissur Kerala',
   'hexastacksolutions.com',

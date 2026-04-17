@@ -5,16 +5,12 @@ import { defineConfig, loadEnv } from 'vite'
 import { vitePrerenderPlugin } from 'vite-prerender-plugin'
 
 /**
- * Prerender runs SSR for each route during `vite build`. On Vercel, builds have
- * been observed to hit the 45-minute limit (hang), so prerender is **off** on
- * Vercel unless `ENABLE_PRERENDER=1` (or `true`). Locally, prerender stays on.
- * Force off anywhere: `SKIP_PRERENDER=1`.
+ * Prerender runs SSR for each route during `vite build`.
+ * Default is ON everywhere (including Vercel) for SEO-friendly HTML output.
+ * Escape hatch: `SKIP_PRERENDER=1`.
  */
 function shouldUsePrerender(): boolean {
   if (process.env.SKIP_PRERENDER === '1') return false
-  if (process.env.VERCEL === '1') {
-    return process.env.ENABLE_PRERENDER === '1' || process.env.ENABLE_PRERENDER === 'true'
-  }
   return true
 }
 
@@ -30,7 +26,7 @@ export default defineConfig(({ mode }) => {
     buildStart() {
       if (!usePrerender) {
         console.log(
-          '[vite] Prerender plugin skipped (set ENABLE_PRERENDER=1 on Vercel to enable).',
+          '[vite] Prerender plugin skipped (set SKIP_PRERENDER=1 only when needed).',
         )
       }
     },
@@ -60,6 +56,20 @@ export default defineConfig(({ mode }) => {
                 '/products/hexabill',
                 '/about',
                 '/blog',
+                '/blog/vat-einvoice-2026',
+                '/blog/cwv-gulf-leads',
+                '/blog/pos-erp-narrative',
+                '/blog/seo-keywords-2026',
+                '/blog/restaurant-pos-case-study',
+                '/blog/medical-lab-software-kerala',
+                '/blog/ai-integration-small-business-kerala',
+                '/blog/website-cost-kerala',
+                '/blog/vat-billing-uae',
+                '/blog/web-development-company-thrissur',
+                '/blog/whatsapp-business-kerala',
+                '/blog/mobile-app-developer-kerala',
+                '/blog/pos-software-restaurants-kerala',
+                '/blog/nutriscan-ai-food-recognition',
                 '/contact',
                 '/terms',
                 '/privacy',

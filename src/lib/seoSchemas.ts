@@ -55,7 +55,7 @@ export function createArticleSchema({
             name: 'HexaStack Solutions',
             logo: {
                 '@type': 'ImageObject',
-                url: `${SITE_URL}/logo.svg`,
+                url: `${SITE_URL}/logo-brand.png`,
             },
         },
         mainEntityOfPage: {

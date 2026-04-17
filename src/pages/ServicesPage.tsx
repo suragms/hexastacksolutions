@@ -11,9 +11,9 @@ const hubServices = getHubServices()
 
 export function ServicesPage() {
   usePageSeo({
-    title: 'Web design, development & SEO services | Thrissur, Kerala | Gulf & global',
+    title: 'Web Development, Mobile Apps, ERP & AI Automation Services Kerala | HexaStack',
     description:
-      'End-to-end delivery: website design, custom web applications, technical SEO, and digital marketing for Kerala, UAE, Saudi Arabia, GCC, and remote clients worldwide. HexaStack Solutions, Thrissur.',
+      'HexaStack Solutions is a software company in Thrissur offering web development company in Kerala services, mobile app development Kerala, ERP software Kerala, and AI automation services Kerala with reliable delivery.',
     canonicalPath: '/services',
   })
 
@@ -27,11 +27,12 @@ export function ServicesPage() {
         <FadeInView className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">Services</p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
-            End-to-end product delivery
+            Complete digital services to scale your business in Kerala
           </h1>
           <p className="mt-4 text-text-muted">
-            Whether you need a revenue site or a product-grade web app, we scope honestly and ship in milestones.
-            Mobile apps, POS/ERP, and SEO are available too: tell us on{' '}
+            From revenue-focused websites to production-ready apps, we plan clearly and ship in milestones you can
+            trust. As a software company in Thrissur, we also deliver mobile app development Kerala, ERP software
+            Kerala, and AI automation services Kerala. Tell us your priority on{' '}
             <Link to="/contact" className="font-medium text-orange-600 hover:text-orange-700">
               contact
             </Link>
@@ -43,8 +44,9 @@ export function ServicesPage() {
           <FadeInView className="mx-auto mt-10 max-w-2xl rounded-2xl border border-border bg-card/80 p-6 text-center text-sm text-text-muted">
             <p className="font-medium text-text-primary">SEO focus (organic growth)</p>
             <p className="mt-2 leading-relaxed">
-              {coreSeoKeywords.join(' · ')}, woven into builds without stuffing pages. Ranking takes content +
-              performance + trust; we set the technical foundation and help you publish proof.
+              {coreSeoKeywords.join(' · ')}, woven naturally into pages without stuffing. Better rankings come from
+              useful content, technical performance, and trust signals; we build the foundation and help you convert
+              traffic into qualified leads.
             </p>
             <Link
               to="/services/seo"
@@ -74,7 +76,7 @@ export function ServicesPage() {
                   to={`/contact?service=${encodeURIComponent(s.slug)}`}
                   className="mt-2 text-sm font-semibold text-text-muted underline-offset-4 transition hover:text-orange-700 hover:underline"
                 >
-                  Request scope
+                  Get Free Consultation
                 </Link>
               </div>
             </FadeInView>
@@ -82,7 +84,7 @@ export function ServicesPage() {
         </div>
 
         <FadeInView className="mt-14 text-center">
-          <GradientLink to="/contact">Book a discovery call</GradientLink>
+          <GradientLink to="/contact">Book a Demo</GradientLink>
         </FadeInView>
       </Container>
     </Section>

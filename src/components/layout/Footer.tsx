@@ -27,6 +27,16 @@ function IconGitHub({ className }: { className?: string }) {
   )
 }
 
+function IconInstagram({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5a4.25 4.25 0 0 0 4.25 4.25h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5a4.25 4.25 0 0 0-4.25-4.25h-8.5z" />
+      <path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5z" />
+      <circle cx="17.35" cy="6.65" r="1.15" />
+    </svg>
+  )
+}
+
 const solutionLinks = [
   { label: 'Website design & development', to: '/services/web-design' },
   { label: 'Custom software development', to: '/services/web-applications' },
@@ -158,7 +168,7 @@ export function Footer() {
               rel="noreferrer"
               className="mt-4 inline-flex items-center justify-center rounded-full border border-orange-200 px-4 py-2 text-sm font-semibold text-orange-700 transition hover:bg-orange-50"
             >
-              WhatsApp
+              WhatsApp for Fast Help
             </a>
             <a
               href={`mailto:${site.email}`}
@@ -170,6 +180,8 @@ export function Footer() {
             <div className="mt-6 flex gap-3">
               <a
                 href={site.social.x}
+                target="_blank"
+                rel="noreferrer noopener"
                 className="rounded-lg border border-border p-2 text-text-muted transition hover:border-orange-200 hover:text-text-primary"
                 aria-label="X"
               >
@@ -177,6 +189,8 @@ export function Footer() {
               </a>
               <a
                 href={site.social.linkedin}
+                target="_blank"
+                rel="noreferrer noopener"
                 className="rounded-lg border border-border p-2 text-text-muted transition hover:border-orange-200 hover:text-text-primary"
                 aria-label="LinkedIn"
               >
@@ -184,10 +198,21 @@ export function Footer() {
               </a>
               <a
                 href={site.social.github}
+                target="_blank"
+                rel="noreferrer noopener"
                 className="rounded-lg border border-border p-2 text-text-muted transition hover:border-orange-200 hover:text-text-primary"
                 aria-label="GitHub"
               >
                 <IconGitHub className="h-4 w-4" />
+              </a>
+              <a
+                href={site.social.instagram}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="rounded-lg border border-border p-2 text-text-muted transition hover:border-orange-200 hover:text-text-primary"
+                aria-label="Instagram"
+              >
+                <IconInstagram className="h-4 w-4" />
               </a>
             </div>
           </div>

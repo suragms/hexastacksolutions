@@ -63,6 +63,12 @@ npm run preview   # preview static dist locally
 
 - **`vercel.json`**: `buildCommand`, `outputDirectory` (`dist`), `rewrites` for SPA + `/api`, `functions` include for `server-bundle.cjs`.
 - Set **`DATABASE_URL`** and other secrets in the Vercel project **Environment Variables**.
+- In Vercel dashboard, go to **Project Settings → Environment Variables** and set:
+  - **`ENABLE_PRERENDER=1`** (Production + Preview)
+  - **`NODE_ENV=production`**
+  - **`VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX`** (Production + Preview, for Google Analytics)
+
+Prerendering must be enabled on Vercel. Set `ENABLE_PRERENDER=1` in Vercel environment variables (Production). Without this, Googlebot receives empty HTML and the site will not rank.
 
 More detail: **`docs/VERCEL_DEPLOY.md`**.
 

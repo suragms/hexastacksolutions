@@ -26,11 +26,11 @@ export function Comparison() {
         <Container>
           <FadeInView className="mb-12 text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
-              Why would you want to settle for less?
+              Why growth-focused teams choose HexaStack
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-zinc-400">
-              Most web agencies in Kerala and the Gulf deliver the same template. Here's what's
-              different when you work with HexaStack Solutions.
+              Many vendors promise fast delivery but miss business outcomes. Here is what changes when you partner
+              with a reliability-first software company in Thrissur serving Kerala and beyond.
             </p>
           </FadeInView>
 

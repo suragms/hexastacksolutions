@@ -227,13 +227,13 @@ export function Navbar() {
             Contact
           </Link>
           <GradientLink to="/contact" className="!py-2.5 !px-5">
-            Request A Quote
+            Get Free Website Consultation
           </GradientLink>
         </nav>
 
         <div className="flex items-center gap-2 lg:hidden">
           <GradientLink to="/contact" className="!py-2 !px-3 text-xs sm:!px-4 sm:text-sm">
-            Quote
+            Start Your Project Today
           </GradientLink>
           <button
             type="button"
@@ -327,7 +327,7 @@ export function Navbar() {
               className="mt-3 w-full justify-center"
               onClick={() => setMobileOpen(false)}
             >
-              Request A Quote
+              Get Free Website Consultation
             </GradientLink>
           </nav>
         </div>

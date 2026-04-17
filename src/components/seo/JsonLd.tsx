@@ -17,7 +17,7 @@ export function JsonLd() {
     description: site.tagline,
     email: site.email,
     telephone: [...site.phones],
-    logo: { '@type': 'ImageObject', url: `${base}/favicon.svg` },
+    logo: { '@type': 'ImageObject', url: `${base}/brand-icon-512.png` },
     image: site.defaultOgImage,
     address: {
       '@type': 'PostalAddress',
@@ -41,8 +41,48 @@ export function JsonLd() {
     orgNode.sameAs = [...brandSocialProfileUrls]
   }
 
+  const serviceOfferings = [
+    {
+      '@type': 'Service',
+      '@id': `${base}/#service-web-development`,
+      name: 'Web development',
+      serviceType: 'Web development company in Kerala',
+      provider: { '@id': orgId },
+      areaServed: ['Thrissur', 'Kerala', 'India', 'GCC'],
+      url: `${base}/services/web-design`,
+    },
+    {
+      '@type': 'Service',
+      '@id': `${base}/#service-mobile-apps`,
+      name: 'Mobile app development',
+      serviceType: 'Mobile app development Kerala',
+      provider: { '@id': orgId },
+      areaServed: ['Thrissur', 'Kerala', 'India', 'GCC'],
+      url: `${base}/services/web-applications`,
+    },
+    {
+      '@type': 'Service',
+      '@id': `${base}/#service-erp`,
+      name: 'ERP software',
+      serviceType: 'ERP software company Kerala',
+      provider: { '@id': orgId },
+      areaServed: ['Thrissur', 'Kerala', 'India', 'GCC'],
+      url: `${base}/products/hexabill`,
+    },
+    {
+      '@type': 'Service',
+      '@id': `${base}/#service-ai-automation`,
+      name: 'AI automation',
+      serviceType: 'AI automation services Kerala',
+      provider: { '@id': orgId },
+      areaServed: ['Thrissur', 'Kerala', 'India', 'GCC'],
+      url: `${base}/services/web-applications`,
+    },
+  ]
+
   const graph = [
     orgNode,
+    ...serviceOfferings,
     {
       '@type': 'WebSite',
       '@id': websiteId,

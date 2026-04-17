@@ -940,7 +940,7 @@ export default function Admin() {
                 <div className="w-full max-w-md">
                     <div className="surface-panel rounded-[32px] border border-slate-200 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.08)] sm:p-8">
                         <div className="text-center mb-8">
-                            <img src="/logo-dark.svg" alt="HexaStack Solutions" className="mx-auto mb-5 h-12 w-auto" />
+                            <img src="/logo-brand.png" alt="HexaStack Solutions" className="mx-auto mb-5 h-12 w-auto" />
                             <div className="w-16 h-16 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <Shield className="w-8 h-8 text-white" />
                             </div>

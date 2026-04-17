@@ -9,10 +9,22 @@
   "lang": "en-IN",
   "icons": [
     {
-      "src": "/favicon.svg",
-      "type": "image/svg+xml",
-      "sizes": "any",
+      "src": "/favicon-new.png",
+      "type": "image/png",
+      "sizes": "256x256",
       "purpose": "any"
+    },
+    {
+      "src": "/brand-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/brand-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ]
 }

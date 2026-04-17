@@ -15,6 +15,7 @@ type ServiceItem = {
   icon: LucideIcon
   image: string
   imageAlt: string
+  detailTo: string
 }
 
 /** Websites, product UI & organic growth */
@@ -24,28 +25,36 @@ const coreServices: ServiceItem[] = [
     desc: 'Marketing and corporate sites that load fast, tell a clear story, and convert.',
     icon: Code2,
     image: `${P}/web-ecommerce-fashion-store-landing-01.jpg`,
-    imageAlt: 'Fashion e-commerce website design preview, marketing site example',
+    imageAlt:
+      'Web development company in Kerala — fashion ecommerce marketing site UI, Thrissur HexaStack portfolio preview',
+    detailTo: '/services/web-design',
   },
   {
     title: 'Web application development',
     desc: 'Workflow tools, customer portals, and internal apps with real permissions and scale.',
     icon: AppWindow,
     image: `${P}/web-rizeshift-hr-payroll-dashboard-dark-06.webp`,
-    imageAlt: 'HR and payroll SaaS dashboard, web application interface',
+    imageAlt:
+      'Custom web application dashboard for Kerala and GCC clients — HR payroll SaaS interface example, Thrissur team',
+    detailTo: '/services/web-applications',
   },
   {
     title: 'UI/UX design',
     desc: 'Research-backed IA, accessible UI, and design systems your team can extend.',
     icon: Palette,
     image: `${P}/web-interior-design-architecture-landing-01.webp`,
-    imageAlt: 'Interior design landing page, UI and visual design example',
+    imageAlt:
+      'UI UX design for websites and apps in Kerala — interior architecture landing page visual design, HexaStack Thrissur',
+    detailTo: '/services/web-design',
   },
   {
     title: 'SEO optimization',
     desc: 'Technical SEO, structured content, and performance work that supports growth.',
     icon: Search,
     image: `${P}/web-digital-marketing-agency-landing-modern-green-20.webp`,
-    imageAlt: 'Digital marketing and SEO-focused landing page preview',
+    imageAlt:
+      'Technical SEO and digital marketing landing page preview for Kerala and Gulf B2B visibility, Thrissur agency',
+    detailTo: '/services/seo',
   },
 ]
 
@@ -56,14 +65,18 @@ const mobileAndBusiness: ServiceItem[] = [
     desc: 'React Native and cross-platform apps for commerce, bookings, and field teams, offline-aware where it matters.',
     icon: Smartphone,
     image: `${P}/mobile-app-ecommerce-shopping-ui-01.webp`,
-    imageAlt: 'Mobile e-commerce shopping app UI, product discovery and checkout flows',
+    imageAlt:
+      'Mobile app development Kerala — ecommerce shopping app UI with product discovery and checkout, HexaStack Thrissur',
+    detailTo: '/services/web-applications',
   },
   {
     title: 'HexaBill POS & ERP',
     desc: 'All-in-one POS, advanced ERP, and VAT: stock, billing, branches, and reports in a single app for every business scale.',
     icon: Briefcase,
     image: '/images/hexabill/POS.png',
-    imageAlt: 'HexaBill POS and ERP: products, stock, and VAT-ready business screens',
+    imageAlt:
+      'ERP software company Kerala — HexaBill POS and ERP dashboard with stock, billing, and VAT-ready screens for UAE and India',
+    detailTo: '/products/hexabill',
   },
 ]
 
@@ -127,10 +140,10 @@ function ServiceCard({
           <h3 className="mt-4 text-lg font-semibold leading-snug text-text-primary">{item.title}</h3>
           <p className="mt-2 flex-1 text-sm leading-relaxed text-text-muted">{item.desc}</p>
           <Link
-            to="/contact"
+            to={item.detailTo}
             className="mt-4 inline-flex text-sm font-semibold text-orange-600 transition hover:text-orange-700"
           >
-            Contact us
+            See How We Can Help Your Business
           </Link>
         </div>
       </div>
@@ -152,11 +165,12 @@ export function Services() {
           <FadeInView className="max-w-2xl text-left lg:max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">Solutions</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-text-primary md:text-4xl lg:text-[2.5rem] lg:leading-tight">
-              Custom digital solutions, designed for growth
+              SEO-focused software services built to grow your business
             </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-text-muted">
-              Pick a lane to start; we often combine design, build, SEO, mobile, and business systems in one
-              roadmap for Kerala, Gulf, and global teams.
+              Start with one priority and scale from there. We combine design, development, mobile app development
+              Kerala, ERP software Kerala, and AI automation services Kerala into one practical roadmap for Thrissur
+              and businesses across Kerala.
             </p>
             <Link
               to="/services"
@@ -170,7 +184,7 @@ export function Services() {
             <div className="overflow-hidden rounded-2xl border border-orange-200/40 bg-white/80 shadow-lg shadow-orange-900/5 ring-1 ring-orange-100/80">
               <img
                 src={`${P}/web-saas-dashboard-landing-gradient-clean-ui-21.webp`}
-                alt="SaaS product dashboard and marketing UI showcase"
+                alt="SaaS product dashboard and marketing UI — web development company in Kerala portfolio showcase, Thrissur HexaStack"
                 width={760}
                 height={480}
                 loading="lazy"
@@ -188,7 +202,7 @@ export function Services() {
           <div className="overflow-hidden rounded-2xl border border-orange-200/40 bg-white/80 shadow-md ring-1 ring-orange-100/80">
             <img
               src={`${P}/web-interior-design-architecture-landing-01.webp`}
-              alt="Interior and architecture landing — different preview from desktop sidebar"
+              alt="Interior architecture landing page — web design Kerala preview, mobile layout variant, HexaStack Thrissur"
               width={760}
               height={480}
               loading="lazy"
@@ -224,7 +238,8 @@ export function Services() {
               Mobile apps &amp; business solutions
             </h3>
             <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-text-muted">
-              Same card size as the row above: mobile products plus HexaBill-style POS, ERP, and VAT in one stack.
+              Mobile products plus HexaBill-style POS, ERP, and VAT in one stack so teams spend less time on manual
+              operations and more time serving customers.
             </p>
           </FadeInView>
           <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:mt-6 lg:grid-cols-4 lg:gap-6">
@@ -240,7 +255,7 @@ export function Services() {
         </div>
 
         <FadeInView className="mt-14 text-center">
-          <GradientLink to="/contact">Discuss your project</GradientLink>
+          <GradientLink to="/contact">Start Your Project Today</GradientLink>
         </FadeInView>
       </Container>
     </Section>

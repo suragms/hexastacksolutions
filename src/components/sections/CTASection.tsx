@@ -21,25 +21,24 @@ export function CTASection() {
             />
             <div className="relative mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-text-primary md:text-4xl">
-                Let’s talk about your next release
+                Limited consultation slots this week - secure your growth roadmap
               </h2>
               <p className="mt-4 text-text-muted">
-                Schedule a discovery call or send a brief; we’ll reply with honest fit, scope, and
-                timelines.
+                Share your goals and get clear next steps to save time, increase revenue, and launch with confidence.
               </p>
               <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:justify-center">
                 <GradientLink to="/contact" className="w-full justify-center sm:w-auto">
-                  Book a call
+                  Get Free Consultation
                 </GradientLink>
                 <Link
                   to="/contact"
                   className="inline-flex w-full items-center justify-center rounded-xl border border-border bg-card px-6 py-3 text-sm font-semibold text-text-primary shadow-sm transition hover:border-orange-200 hover:bg-surface sm:w-auto"
                 >
-                  Request a quote
+                  Start Your Project Today
                 </Link>
               </div>
               <p className="mt-6 text-sm text-text-muted">
-                Prefer email?{' '}
+                Need a quick walkthrough? <Link to="/contact" className="font-medium text-orange-600 hover:text-orange-700">Book a Demo</Link> or email{' '}
                 <a href={`mailto:${site.email}`} className="font-medium text-orange-600 hover:text-orange-700">
                   {site.email}
                 </a>

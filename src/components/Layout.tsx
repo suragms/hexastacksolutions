@@ -18,7 +18,7 @@ const PRIMARY_EMAIL = 'hexastacksolutions@gmail.com';
 const SUPPORT_EMAIL = 'supporthexastack@hexastacksolutions.com';
 const ADDRESS = 'Vadanappally, Thrissur, Kerala 680614, India';
 const SERVICE_AREA_TEXT = 'Serving Kerala, India, the United States and the UAE';
-const LOGO_URL = '/logo-dark.svg';
+const LOGO_URL = '/logo-brand.png';
 const TAGLINE = 'Websites, POS, billing, and custom software for Kerala and Gulf businesses.';
 
 const navLinks = [

@@ -7,10 +7,9 @@ type PrerenderInput = { url: string }
 
 const routeMeta: Record<string, { title: string; description: string }> = {
   '/': {
-    title:
-      'HexaStack Solutions — Official Site | Web Design, UI/UX, Ecommerce & Development Kerala | SEO Thrissur',
+    title: 'HexaStack Solutions | Kerala Web, Apps & ERP',
     description:
-      'HexaStack Solutions — official website (hexastacksolutions.com). Web design, UI/UX, ecommerce, web development, technical SEO & digital marketing from Vadanappally, Thrissur, Kerala for India, UAE, Saudi Arabia, GCC & global clients. Kerala IT company; Thrissur web agency.',
+      'web development company in Kerala, mobile app development Kerala, ERP software company Kerala, AI automation services Kerala. Software company in Thrissur.',
   },
   '/work': {
     title: 'Portfolio & case studies | Web design & software | Kerala, Gulf & global',
