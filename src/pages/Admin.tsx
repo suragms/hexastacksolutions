@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { API_URL } from '@/lib/utils';
 import SEO from '@/components/SEO';
+import { FOUNDER_DEFAULT_IMAGES } from '../data/founderAssets';
 import {
     Trash2, Mail, Phone, Clock, ArrowLeft, RefreshCw, Lock, LogOut, Shield,
     FolderOpen, Settings, Bell, Plus, Edit2, Save, X, ExternalLink,
@@ -988,7 +989,7 @@ export default function Admin() {
                             <div className="flex justify-center gap-6">
                                 <div className="flex flex-col items-center gap-1.5">
                                     <img
-                                        src="https://media.licdn.com/dms/image/v2/D5603AQEiWUz1x8TqFA/profile-displayphoto-scale_400_400/B56ZnwzFGVJ4Ag-/0/1760681546981?e=1775088000&v=beta&t=7G-CHY_T7SR7QByvAS1uJFiPGt1W_Xfgx2iOc1ASj7s"
+                                        src={FOUNDER_DEFAULT_IMAGES.anandu}
                                         alt="Anandu"
                                         className="w-12 h-12 rounded-full object-cover border-2 border-slate-200"
                                     />
@@ -996,7 +997,7 @@ export default function Admin() {
                                 </div>
                                 <div className="flex flex-col items-center gap-1.5">
                                     <img
-                                        src="https://media.licdn.com/dms/image/v2/D5603AQH8pB2vlL3GeA/profile-displayphoto-scale_400_400/B56Zwxt2X8K4Ag-/0/1770360629769?e=1775088000&v=beta&t=TSADhSp0jRbM2Gu5BKIBdgES-cMj8DAiEAczRGWV-rs"
+                                        src={FOUNDER_DEFAULT_IMAGES.surag}
                                         alt="Surag"
                                         className="w-12 h-12 rounded-full object-cover border-2 border-slate-200"
                                     />

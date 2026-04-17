@@ -1,5 +1,8 @@
-Add founder headshots here for the About page:
-  anandu.jpg   (or .webp)
-  surag.jpg
+About page defaults use bundled SVGs (see src/data/founderAssets.ts):
+  anandu.svg
+  surag.svg
 
-Optional: Admin uploads still override these in the browser.
+To use real headshots instead, add e.g. anandu.webp + surag.webp under this folder,
+update founderAssets.ts paths, and redeploy.
+
+Optional: Admin uploads still override these in the browser (localStorage).
