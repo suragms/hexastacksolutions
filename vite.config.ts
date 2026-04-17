@@ -6,11 +6,14 @@ import { vitePrerenderPlugin } from 'vite-prerender-plugin'
 
 /**
  * Prerender runs SSR for each route during `vite build`.
- * Default is ON everywhere (including Vercel) for SEO-friendly HTML output.
- * Escape hatch: `SKIP_PRERENDER=1`.
+ * - Local / CI: ON by default (static HTML for public routes).
+ * - Vercel: OFF by default (faster, more reliable builds). Set `ENABLE_PRERENDER=1` in
+ *   Vercel Environment Variables (Production/Preview) to turn it on for that deploy.
+ * - Anywhere: `SKIP_PRERENDER=1` forces OFF.
  */
 function shouldUsePrerender(): boolean {
   if (process.env.SKIP_PRERENDER === '1') return false
+  if (process.env.VERCEL === '1' && process.env.ENABLE_PRERENDER !== '1') return false
   return true
 }
 

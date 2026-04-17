@@ -64,11 +64,11 @@ npm run preview   # preview static dist locally
 - **`vercel.json`**: `buildCommand`, `outputDirectory` (`dist`), `rewrites` for SPA + `/api`, `functions` include for `server-bundle.cjs`.
 - Set **`DATABASE_URL`** and other secrets in the Vercel project **Environment Variables**.
 - In Vercel dashboard, go to **Project Settings → Environment Variables** and set:
-  - **`ENABLE_PRERENDER=1`** (Production + Preview)
+  - **`ENABLE_PRERENDER=1`** (optional, Production + Preview) — turns on **route prerender** during `vite build` for static HTML per URL. Default on Vercel is **off** for faster, more reliable deploys; the SPA still ships with `usePageSeo` and JSON-LD at runtime.
   - **`NODE_ENV=production`**
   - **`VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX`** (Production + Preview, for Google Analytics)
 
-Prerendering must be enabled on Vercel. Set `ENABLE_PRERENDER=1` in Vercel environment variables (Production). Without this, Googlebot receives empty HTML and the site will not rank.
+If you need full static HTML for every public route on deploy, set **`ENABLE_PRERENDER=1`** and redeploy. Otherwise leave it unset for quicker builds.
 
 More detail: **`docs/VERCEL_DEPLOY.md`**.
 
