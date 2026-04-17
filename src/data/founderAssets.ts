@@ -4,6 +4,6 @@
  * Admin upload overrides via localStorage.
  */
 export const FOUNDER_DEFAULT_IMAGES = {
-  anandu: '/images/founders/anandu.svg',
-  surag: '/images/founders/surag.svg',
+  anandu: '/images/founders/anandu.jpg',
+  surag: '/images/founders/surag.jpg',
 } as const

@@ -1,8 +1,10 @@
-About page defaults use bundled SVGs (see src/data/founderAssets.ts):
-  anandu.svg
-  surag.svg
+About page defaults (see src/data/founderAssets.ts):
+  anandu.jpg
+  surag.jpg
 
-To use real headshots instead, add e.g. anandu.webp + surag.webp under this folder,
-update founderAssets.ts paths, and redeploy.
+Legacy SVG fallbacks (optional): anandu.svg, surag.svg
+
+Replace the JPGs when you refresh headshots, then redeploy. Prefer local files over
+LinkedIn URLs (they expire / block hotlinking).
 
 Optional: Admin uploads still override these in the browser (localStorage).
