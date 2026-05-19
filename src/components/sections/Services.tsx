@@ -153,7 +153,7 @@ function ServiceCard({
 
 export function Services() {
   return (
-    <Section id="services" className="relative !py-16 md:!py-24">
+    <Section id="services" className="relative !py-10 md:!py-16">
       <div className="bg-services-warm absolute inset-0 -z-10" aria-hidden />
       <div
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-orange-200/60 to-transparent"
@@ -255,7 +255,7 @@ export function Services() {
         </div>
 
         <FadeInView className="mt-14 text-center">
-          <GradientLink to="/contact">Start Your Project Today</GradientLink>
+          <GradientLink to="/contact">Request Pricing</GradientLink>
         </FadeInView>
       </Container>
     </Section>

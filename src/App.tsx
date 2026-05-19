@@ -23,6 +23,9 @@ const RefundPolicyPage = lazy(() =>
   import('./pages/RefundPolicyPage').then((m) => ({ default: m.RefundPolicyPage })),
 )
 
+/* ── Local SEO Landing Pages (code-split) ── */
+const LocalSeoPage = lazy(() => import('./pages/seo/LocalSeoPage'))
+
 function RouteFallback() {
   return (
     <div
@@ -58,6 +61,15 @@ function App() {
             <Route path="/security" element={<SecurityPage />} />
             <Route path="/rules" element={<RulesPage />} />
             <Route path="/refund-policy" element={<RefundPolicyPage />} />
+
+            {/* Local SEO Landing Pages — all 7 pages via single dynamic route */}
+            <Route path="/web-development-company-thrissur" element={<LocalSeoPage />} />
+            <Route path="/seo-company-thrissur" element={<LocalSeoPage />} />
+            <Route path="/software-company-kerala" element={<LocalSeoPage />} />
+            <Route path="/mobile-app-development-kerala" element={<LocalSeoPage />} />
+            <Route path="/erp-software-kerala" element={<LocalSeoPage />} />
+            <Route path="/ai-automation-company-kerala" element={<LocalSeoPage />} />
+            <Route path="/website-design-company-thrissur" element={<LocalSeoPage />} />
           </Route>
         </Routes>
       </Suspense>

@@ -14,14 +14,16 @@ import { Services } from '../components/sections/Services'
 import { Stats } from '../components/sections/Stats'
 import { Testimonials } from '../components/sections/Testimonials'
 import { ValueProp } from '../components/sections/ValueProp'
+import { FounderStory } from '../components/sections/FounderStory'
+import { TrustMetrics } from '../components/sections/TrustMetrics'
 
 export function HomePage() {
   const { hash, pathname } = useLocation()
 
   usePageSeo({
-    title: 'Web Development Company in Kerala | Software Company in Thrissur | HexaStack Solutions',
+    title: 'Web Development & AI Automation Company in Kerala | HexaStack Solutions',
     description:
-      'HexaStack Solutions is a web development company in Kerala and software company in Thrissur delivering mobile app development Kerala, ERP software Kerala, and AI automation services Kerala to help businesses save time and grow revenue.',
+      'HexaStack Solutions is a Kerala-based web development and AI automation company in Thrissur. We build custom websites, mobile apps, ERP systems, and business software that help companies save time, increase revenue, and scale with confidence.',
     canonicalPath: '/',
   })
 
@@ -40,8 +42,10 @@ export function HomePage() {
       <Hero />
       <Portfolio />
       <ValueProp />
+      <FounderStory />
       <Stats />
       <Testimonials />
+      <TrustMetrics />
       <Services />
       <OperationalProducts />
       <Comparison />

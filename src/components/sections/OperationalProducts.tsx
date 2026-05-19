@@ -27,7 +27,7 @@ export function OperationalProducts() {
   if (items.length === 0) return null
 
   return (
-    <Section className="border-t border-orange-100/80 bg-gradient-to-b from-orange-50/30 to-white !py-14 md:!py-20">
+    <Section className="border-t border-orange-100/80 bg-gradient-to-b from-orange-50/30 to-white !py-10 md:!py-16">
       <Container>
         <FadeInView className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">Operational products</p>

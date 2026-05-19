@@ -138,7 +138,7 @@ export function Portfolio() {
   }, [filtered, loopDurationSec])
 
   return (
-    <Section id="work" className="!py-14 md:!py-24">
+    <Section id="work" className="!py-10 md:!py-16">
       <Container>
         <FadeInView className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between md:mb-8">
           <div>

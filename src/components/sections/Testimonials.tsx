@@ -82,7 +82,7 @@ export function Testimonials() {
   }
 
   return (
-    <Section id="reviews" className="border-y border-orange-100/60 bg-gradient-to-b from-white via-orange-50/30 to-white !py-10 md:!py-20">
+    <Section id="reviews" className="border-y border-orange-100/60 bg-gradient-to-b from-white via-orange-50/30 to-white !py-8 md:!py-14">
       <Container>
         <FadeInView className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>

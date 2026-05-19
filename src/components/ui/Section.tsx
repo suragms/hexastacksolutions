@@ -9,7 +9,7 @@ type Props = {
 
 export function Section({ id, children, className = '', as: Tag = 'section' }: Props) {
   return (
-    <Tag id={id} className={`scroll-mt-20 py-12 md:py-24 ${className}`}>
+    <Tag id={id} className={`scroll-mt-20 py-8 md:py-16 ${className}`}>
       {children}
     </Tag>
   )

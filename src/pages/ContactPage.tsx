@@ -234,7 +234,7 @@ export function ContactPage() {
                   </p>
                 )}
                 <GradientButton type="submit" className="mt-6 w-full" disabled={submitting}>
-                  {submitting ? 'Sending…' : 'Send message'}
+                  {submitting ? 'Requesting…' : 'Request a Quote'}
                 </GradientButton>
                 <p className="mt-4 text-center text-xs text-text-muted">
                   Submissions are stored on our server and appear in the admin Messages tab when the API is

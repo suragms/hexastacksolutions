@@ -174,10 +174,10 @@ export function Navbar() {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${headerClass}`}>
-      <Container className="flex h-16 items-center justify-between md:h-[4.5rem]">
+      <Container className="flex h-14 items-center justify-between md:h-16">
         <BrandWordmark />
 
-        <nav className="hidden lg:flex items-center gap-5 lg:gap-7" aria-label="Primary">
+        <nav className="hidden lg:flex items-center gap-4 lg:gap-5" aria-label="Primary">
           <NavDropdown
             label="Our Work"
             items={workLinks}
@@ -226,14 +226,14 @@ export function Navbar() {
           >
             Contact
           </Link>
-          <GradientLink to="/contact" className="!py-2.5 !px-5">
-            Get Free Website Consultation
+          <GradientLink to="/contact" className="!py-2 !px-4 text-sm">
+            Get a Quote
           </GradientLink>
         </nav>
 
         <div className="flex items-center gap-2 lg:hidden">
-          <GradientLink to="/contact" className="!py-2 !px-3 text-xs sm:!px-4 sm:text-sm">
-            Start Your Project Today
+          <GradientLink to="/contact" className="!py-1.5 !px-3 text-xs sm:!px-3.5 sm:text-sm">
+            Request Pricing
           </GradientLink>
           <button
             type="button"
@@ -324,10 +324,10 @@ export function Navbar() {
             </Link>
             <GradientLink
               to="/contact"
-              className="mt-3 w-full justify-center"
+              className="mt-3 w-full justify-center !py-2.5 !px-4 text-sm"
               onClick={() => setMobileOpen(false)}
             >
-              Get Free Website Consultation
+              Get a Quote
             </GradientLink>
           </nav>
         </div>

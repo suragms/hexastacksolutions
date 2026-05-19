@@ -76,7 +76,7 @@ export function ServicesPage() {
                   to={`/contact?service=${encodeURIComponent(s.slug)}`}
                   className="mt-2 text-sm font-semibold text-text-muted underline-offset-4 transition hover:text-orange-700 hover:underline"
                 >
-                  Get Free Consultation
+                  Get a Quote
                 </Link>
               </div>
             </FadeInView>
@@ -84,7 +84,7 @@ export function ServicesPage() {
         </div>
 
         <FadeInView className="mt-14 text-center">
-          <GradientLink to="/contact">Book a Demo</GradientLink>
+          <GradientLink to="/contact">Request Pricing</GradientLink>
         </FadeInView>
       </Container>
     </Section>

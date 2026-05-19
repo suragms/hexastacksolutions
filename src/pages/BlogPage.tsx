@@ -166,7 +166,7 @@ export function BlogPage() {
                 />
               </div>
               <GradientLink to="/contact" className="justify-center sm:shrink-0">
-                Get Free Website Consultation
+                Get a Quote
               </GradientLink>
             </div>
           </FadeInView>
@@ -264,7 +264,7 @@ export function BlogPage() {
           </div>
 
           <div className="mt-14 flex flex-col items-center gap-4 border-t border-border pt-10">
-            <GradientLink to="/contact">Start Your Project Today</GradientLink>
+            <GradientLink to="/contact">Request Pricing</GradientLink>
             <p className="text-center text-sm text-text-muted">
               Guest posts or speaking—use the same{' '}
               <Link to="/contact" className="font-semibold text-orange-600 hover:text-orange-700">

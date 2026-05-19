@@ -33,7 +33,7 @@ const stats = [
 
 export function Stats() {
   return (
-    <Section id="stats" className="!py-16 md:!py-24 bg-surface/40">
+    <Section id="stats" className="!py-10 md:!py-16 bg-surface/40">
       <Container>
         {/* Header */}
         <FadeInView className="mb-10 text-center">

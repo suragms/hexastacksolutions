@@ -22,7 +22,7 @@ const ours = [
 export function Comparison() {
   return (
     <Section id="compare" className="!p-0 overflow-hidden">
-      <div className="bg-zinc-950 py-16 md:py-24">
+      <div className="bg-zinc-950 py-12 md:py-16">
         <Container>
           <FadeInView className="mb-12 text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">

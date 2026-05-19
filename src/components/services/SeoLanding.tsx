@@ -130,7 +130,7 @@ export function SeoLanding() {
               search traffic into qualified enquiries.
             </p>
             <GradientLink to="/contact?service=seo" className="mt-8 inline-flex">
-              Get Free Consultation
+              Get a Quote
             </GradientLink>
           </FadeInView>
           <FadeInView delay={0.06} className="overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
@@ -184,7 +184,7 @@ export function SeoLanding() {
               </p>
             </div>
             <GradientLink to="/contact?service=seo" className="shrink-0 self-start sm:self-auto">
-              Book a Demo
+              Request Pricing
             </GradientLink>
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-2">
@@ -220,7 +220,7 @@ export function SeoLanding() {
             </Link>
           </div>
           <div className="mt-8">
-            <GradientLink to="/contact?service=seo">Start Your Project Today</GradientLink>
+            <GradientLink to="/contact?service=seo">Request Pricing</GradientLink>
           </div>
         </FadeInView>
       </Container>

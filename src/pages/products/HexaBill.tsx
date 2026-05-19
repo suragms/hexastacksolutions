@@ -53,7 +53,7 @@ export default function HexaBill() {
                     </p>
                     <div className="flex flex-wrap gap-4">
                         <Link to="/contact?demo=1" className="px-6 py-3 rounded-full bg-[var(--primary)] text-white font-semibold hover:opacity-95">
-                            Book a Demo
+                            Request Pricing
                         </Link>
                         <a
                             href="https://wa.me/917591999365?text=Hi%20HexaStack%2C%20I%20want%20a%20HexaBill%20demo."

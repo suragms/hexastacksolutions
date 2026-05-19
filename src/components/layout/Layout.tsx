@@ -7,6 +7,9 @@ import { FloatingBookCall } from './FloatingBookCall'
 import { Footer } from './Footer'
 import { Navbar } from './Navbar'
 
+import { WhatsAppCTA } from '../WhatsAppCTA'
+import { ExitIntentPopup } from './ExitIntentPopup'
+
 const MAX_VISITS = 2000
 
 function getDevice(): 'Mobile' | 'Tablet' | 'Desktop' {
@@ -63,6 +66,8 @@ export function Layout() {
       </main>
       <Footer />
       <FloatingBookCall />
+      <WhatsAppCTA />
+      <ExitIntentPopup />
     </div>
   )
 }

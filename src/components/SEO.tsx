@@ -21,7 +21,7 @@ interface SEOProps {
     meta?: SEOMetaTag[];
 }
 
-const CANONICAL_BASE = 'https://hexastacksolutions.com';
+const CANONICAL_BASE = 'https://www.hexastacksolutions.com';
 const DEFAULT_OG_IMAGE = `${CANONICAL_BASE}/logo-full-white.png`;
 const DEFAULT_OG_ALT = 'HexaStack Solutions website preview';
 const SCHEMA_SCRIPT_ID = 'hexastack-structured-data';
@@ -97,7 +97,7 @@ export default function SEO({
         updateNamedMeta('description', description);
         updateNamedMeta('robots', noindex ? 'noindex, nofollow' : 'index, follow');
         updateNamedMeta('author', 'HexaStack Solutions');
-        updateNamedMeta('theme-color', '#0f172a');
+        updateNamedMeta('theme-color', '#ea580c');
         updateNamedMeta('twitter:card', 'summary_large_image');
         updateNamedMeta('twitter:title', title);
         updateNamedMeta('twitter:description', description);
