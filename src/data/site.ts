@@ -37,7 +37,7 @@ export const site = {
   whatsappUrl: 'https://wa.me/917591999365',
   /** Generic fallbacks for footer/UI only — not used in JSON-LD sameAs. */
   social: {
-    x: 'https://x.com/hexastacksolutions',
+    x: 'https://x.com/SolutionsHexa',
     linkedin: 'https://www.linkedin.com/company/hexastack-solutions',
     github: 'https://github.com/hexastacksolutions',
     instagram: 'https://www.instagram.com/hexastacksolutions',
@@ -54,7 +54,7 @@ export const site = {
  * Append X, LinkedIn, GitHub company URLs when ready; leave empty to omit (avoids placeholder domains).
  */
 export const brandSocialProfileUrls: readonly string[] = [
-  'https://x.com/hexastacksolutions',
+  'https://x.com/SolutionsHexa',
   'https://www.linkedin.com/company/hexastack-solutions',
   'https://github.com/hexastacksolutions',
 ]
