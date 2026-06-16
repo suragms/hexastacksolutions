@@ -6,7 +6,7 @@ export const WhatsAppCTA: React.FC = () => {
             href="https://wa.me/919074092490?text=Hi%20HexaStack%20Solutions,%20I%20would%20like%20to%20discuss%20a%20project."
             target="_blank"
             rel="noopener noreferrer"
-            className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-green-500 rounded-full shadow-lg hover:bg-green-600 hover:scale-110 transition-all duration-300 group"
+            className="fixed bottom-20 right-4 md:bottom-24 md:right-8 z-50 flex items-center justify-center w-14 h-14 bg-green-500 rounded-full shadow-lg hover:bg-green-600 hover:scale-110 transition-all duration-300 group"
             aria-label="Chat with us on WhatsApp"
         >
             <div className="absolute right-16 px-3 py-1 bg-white text-slate-800 text-sm font-semibold rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
