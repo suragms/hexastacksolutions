@@ -9,8 +9,10 @@ export function ExitIntentPopup() {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    // Only show once per session
-    if (sessionStorage.getItem('hs_exit_intent_shown')) return
+    // Only show once (persisted in localStorage)
+    try {
+      if (localStorage.getItem('hs_exit_intent_shown')) return
+    } catch {}
 
     // Don't show on admin or contact page
     if (pathname.startsWith('/admin') || pathname === '/contact') return
@@ -19,7 +21,9 @@ export function ExitIntentPopup() {
       // If mouse moves up towards the address bar/tabs
       if (e.clientY <= 0 || e.clientX <= 0 || (e.clientX >= window.innerWidth || e.clientY >= window.innerHeight)) {
         setIsOpen(true)
-        sessionStorage.setItem('hs_exit_intent_shown', 'true')
+        try {
+          localStorage.setItem('hs_exit_intent_shown', 'true')
+        } catch {}
       }
     }
 

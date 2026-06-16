@@ -103,7 +103,7 @@ export default function WebsiteNotifications() {
         setMounted(true);
 
         try {
-            if (window.sessionStorage.getItem(STORAGE_KEY) === '1') {
+            if (window.localStorage.getItem(STORAGE_KEY) === '1') {
                 setDismissed(true);
                 return;
             }
@@ -131,7 +131,7 @@ export default function WebsiteNotifications() {
     const dismissNotifications = () => {
         setDismissed(true);
         try {
-            window.sessionStorage.setItem(STORAGE_KEY, '1');
+            window.localStorage.setItem(STORAGE_KEY, '1');
         } catch {}
     };
 
