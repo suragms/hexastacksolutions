@@ -24,6 +24,7 @@ export function ExitIntentPopup() {
         try {
           localStorage.setItem('hs_exit_intent_shown', 'true')
         } catch {}
+        document.removeEventListener('mouseleave', handleMouseLeave)
       }
     }
 
