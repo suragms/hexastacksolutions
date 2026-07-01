@@ -151,6 +151,7 @@ export default function Home() {
                                 className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-white px-5 py-3 shadow-sm hover:border-[var(--primary)] hover:text-[var(--primary)]"
                             >
                                 <Phone className="h-4 w-4 text-[var(--primary)]" />
+                                <MessageCircle className="h-4 w-4 text-[#25D366]" />
                                 Call Us
                             </a>
                         </div>

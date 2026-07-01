@@ -40,8 +40,8 @@ const notifications: NotificationItem[] = [
         description: 'Call the primary number for quick enquiries or use the second line when you need another direct contact.',
         icon: Phone,
         actions: [
-            { label: '+91 75919 99365', href: 'tel:+917591999365', tone: 'primary', external: true },
-            { label: '+91 70127 14150', href: 'tel:+917012714150', tone: 'secondary', external: true },
+            { label: '+91 75919 99365 (Call/WhatsApp)', href: 'tel:+917591999365', tone: 'primary', external: true },
+            { label: '+91 94009 74150 (WhatsApp only)', href: 'https://wa.me/919400974150', tone: 'secondary', external: true },
         ],
     },
     {

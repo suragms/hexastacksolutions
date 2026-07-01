@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone } from 'lucide-react'
+import { Mail, MapPin, Phone, MessageCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { site } from '../../data/site'
 import { Container } from '../ui/Container'
@@ -150,17 +150,26 @@ export function Footer() {
           <div className="lg:col-span-2">
             <p className="text-sm font-semibold text-text-primary">Contact</p>
             <ul className="mt-4 space-y-2">
-              {site.phones.map((phone) => (
-                <li key={phone}>
-                  <a
-                    href={`tel:${phone.replace(/\s/g, '')}`}
-                    className="flex items-center gap-2 text-sm text-text-muted transition hover:text-orange-600"
-                  >
-                    <Phone className="h-4 w-4 shrink-0" aria-hidden />
-                    {phone}
-                  </a>
-                </li>
-              ))}
+              {site.phones.map((phone) => {
+                const isWhatsAppOnly = phone.includes('94009');
+                return (
+                  <li key={phone}>
+                    <a
+                      href={isWhatsAppOnly ? `https://wa.me/${phone.replace(/[\s+()]/g, '')}` : `tel:${phone.replace(/\s/g, '')}`}
+                      target={isWhatsAppOnly ? "_blank" : undefined}
+                      rel={isWhatsAppOnly ? "noopener noreferrer" : undefined}
+                      className="flex items-center gap-2 text-sm text-text-muted transition hover:text-orange-600"
+                    >
+                      {isWhatsAppOnly ? (
+                        <MessageCircle className="h-4 w-4 shrink-0" aria-hidden />
+                      ) : (
+                        <Phone className="h-4 w-4 shrink-0" aria-hidden />
+                      )}
+                      {phone} {isWhatsAppOnly ? '(WhatsApp only)' : ''}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
             <a
               href={site.whatsappUrl}

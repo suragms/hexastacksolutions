@@ -60,7 +60,7 @@ const WebDevelopmentThrissur: React.FC = () => {
                         <a href="#contact" className="w-full sm:w-auto px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-full font-semibold transition-all shadow-lg hover:shadow-orange-500/30">
                             Get Free Website Audit
                         </a>
-                        <a href="https://wa.me/919074092490" target="_blank" rel="noreferrer" className="w-full sm:w-auto px-8 py-4 bg-white border border-slate-200 hover:border-orange-200 hover:bg-orange-50 text-slate-800 rounded-full font-semibold transition-all flex items-center justify-center gap-2">
+                        <a href="https://wa.me/917591999365" target="_blank" rel="noreferrer" className="w-full sm:w-auto px-8 py-4 bg-white border border-slate-200 hover:border-orange-200 hover:bg-orange-50 text-slate-800 rounded-full font-semibold transition-all flex items-center justify-center gap-2">
                             Chat on WhatsApp
                         </a>
                     </div>
@@ -288,7 +288,7 @@ const WebDevelopmentThrissur: React.FC = () => {
                         <a href="mailto:hello@hexastacksolutions.com" className="w-full sm:w-auto px-8 py-4 bg-white text-orange-600 hover:bg-slate-50 rounded-full font-bold transition-all shadow-xl">
                             Request a Quote
                         </a>
-                        <a href="https://wa.me/919074092490" target="_blank" rel="noreferrer" className="w-full sm:w-auto px-8 py-4 bg-orange-700 hover:bg-orange-800 text-white border border-orange-500 rounded-full font-bold transition-all flex items-center justify-center gap-2">
+                        <a href="https://wa.me/917591999365" target="_blank" rel="noreferrer" className="w-full sm:w-auto px-8 py-4 bg-orange-700 hover:bg-orange-800 text-white border border-orange-500 rounded-full font-bold transition-all flex items-center justify-center gap-2">
                             Chat via WhatsApp
                         </a>
                     </div>

@@ -104,6 +104,7 @@ export default function Services() {
                         </a>
                         <a href="tel:+917591999365" className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)]">
                             <Phone className="h-4 w-4" />
+                            <MessageCircle className="h-4 w-4 text-[#25D366]" />
                             Call 75919 99365
                         </a>
                     </div>

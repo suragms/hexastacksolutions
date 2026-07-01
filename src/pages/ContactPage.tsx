@@ -127,14 +127,22 @@ export function ContactPage() {
                   {site.email}
                 </a>
               </li>
-              {site.phones.map((phone) => (
-                <li key={phone}>
-                  <span className="font-medium text-text-primary">Phone:</span>{' '}
-                  <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-orange-600 hover:text-orange-700">
-                    {phone}
-                  </a>
-                </li>
-              ))}
+              {site.phones.map((phone) => {
+                const isWhatsAppOnly = phone.includes('94009');
+                return (
+                  <li key={phone}>
+                    <span className="font-medium text-text-primary">{isWhatsAppOnly ? 'WhatsApp:' : 'Phone:'}</span>{' '}
+                    <a
+                      href={isWhatsAppOnly ? `https://wa.me/${phone.replace(/[\s+()]/g, '')}` : `tel:${phone.replace(/\s/g, '')}`}
+                      target={isWhatsAppOnly ? "_blank" : undefined}
+                      rel={isWhatsAppOnly ? "noopener noreferrer" : undefined}
+                      className="text-orange-600 hover:text-orange-700"
+                    >
+                      {phone} {isWhatsAppOnly ? '(WhatsApp only)' : ''}
+                    </a>
+                  </li>
+                );
+              })}
               <li>
                 <a
                   href={site.whatsappUrl}

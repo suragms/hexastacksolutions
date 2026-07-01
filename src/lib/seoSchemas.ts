@@ -88,7 +88,7 @@ export function createLocalBusinessSchema(options?: { name?: string; description
         image: options?.image || DEFAULT_IMAGE,
         '@id': SITE_URL,
         url: SITE_URL,
-        telephone: '+919074092490', // Assuming a placeholder, will be replaced if there's a real one
+        telephone: '+917591999365', // Primary business phone number
         priceRange: options?.priceRange || '$$',
         address: {
             '@type': 'PostalAddress',

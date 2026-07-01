@@ -3,7 +3,7 @@ import React from 'react';
 export const WhatsAppCTA: React.FC = () => {
     return (
         <a
-            href="https://wa.me/919074092490?text=Hi%20HexaStack%20Solutions,%20I%20would%20like%20to%20discuss%20a%20project."
+            href="https://wa.me/917591999365?text=Hi%20HexaStack%20Solutions,%20I%20would%20like%20to%20discuss%20a%20project."
             target="_blank"
             rel="noopener noreferrer"
             className="fixed bottom-20 right-4 md:bottom-24 md:right-8 z-50 flex items-center justify-center w-14 h-14 bg-green-500 rounded-full shadow-lg hover:bg-green-600 hover:scale-110 transition-all duration-300 group"

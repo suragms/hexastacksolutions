@@ -13,7 +13,7 @@ const COMPANY_NAME = 'HexaStack Solutions';
 const PRIMARY_PHONE = '+91 75919 99365';
 const PRIMARY_PHONE_LINK = '+917591999365';
 const FOOTER_PRIMARY_PHONE = '+917591999365';
-const SECONDARY_PHONE = '+917012714150';
+const SECONDARY_PHONE = '+919400974150';
 const PRIMARY_EMAIL = 'hexastacksolutions@gmail.com';
 const SUPPORT_EMAIL = 'supporthexastack@hexastacksolutions.com';
 const ADDRESS = 'Vadanappally, Thrissur, Kerala 680614, India';
@@ -90,7 +90,10 @@ export default function Layout({ children }: LayoutProps) {
                     <div className="hidden items-center justify-between border-b border-[var(--border)]/70 py-3 text-xs text-[var(--muted-foreground)] lg:flex">
                         <div className="flex items-center gap-5">
                             <a href={`tel:${PRIMARY_PHONE_LINK}`} className="inline-flex items-center gap-2 hover:text-[var(--primary)]">
-                                <Phone className="h-3.5 w-3.5 text-[var(--primary)]" />
+                                <span className="flex items-center gap-1">
+                                    <Phone className="h-3.5 w-3.5 text-[var(--primary)]" />
+                                    <MessageCircle className="h-3.5 w-3.5 text-[#25D366]" />
+                                </span>
                                 {PRIMARY_PHONE}
                             </a>
                             <a href={`mailto:${PRIMARY_EMAIL}`} className="inline-flex items-center gap-2 hover:text-[var(--primary)]">
@@ -233,7 +236,10 @@ export default function Layout({ children }: LayoutProps) {
                                     <p className="text-sm font-semibold text-[var(--foreground)]">Talk to HexaStack</p>
                                     <div className="mt-4 space-y-3 text-sm text-[var(--foreground)]">
                                         <a href={`tel:${PRIMARY_PHONE_LINK}`} className="flex items-center gap-3">
-                                            <Phone className="h-4 w-4 text-[var(--primary)]" />
+                                            <span className="flex items-center gap-1.5">
+                                                <Phone className="h-4 w-4 text-[var(--primary)]" />
+                                                <MessageCircle className="h-4 w-4 text-[#25D366]" />
+                                            </span>
                                             {PRIMARY_PHONE}
                                         </a>
                                         <a href={`mailto:${PRIMARY_EMAIL}`} className="flex items-center gap-3 break-all">
@@ -304,12 +310,20 @@ export default function Layout({ children }: LayoutProps) {
                                     <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">Phone</p>
                                     <div className="mt-3 space-y-2">
                                         <a href={`tel:${PRIMARY_PHONE_LINK}`} className="flex items-center gap-3 text-sm font-medium text-[var(--foreground)] transition-colors hover:text-[var(--primary)]">
-                                            <Phone className="h-4 w-4 text-[var(--primary)]" />
+                                            <span className="flex items-center gap-1.5">
+                                                <Phone className="h-4 w-4 text-[var(--primary)]" />
+                                                <MessageCircle className="h-4 w-4 text-[#25D366]" />
+                                            </span>
                                             {FOOTER_PRIMARY_PHONE}
                                         </a>
-                                        <a href={`tel:${SECONDARY_PHONE}`} className="flex items-center gap-3 text-sm font-medium text-[var(--foreground)] transition-colors hover:text-[var(--primary)]">
-                                            <Phone className="h-4 w-4 text-[var(--primary)]" />
-                                            {SECONDARY_PHONE}
+                                        <a
+                                            href={`https://wa.me/${SECONDARY_PHONE.replace('+', '')}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-3 text-sm font-medium text-[var(--foreground)] transition-colors hover:text-[var(--primary)]"
+                                        >
+                                            <MessageCircle className="h-4 w-4 text-[var(--primary)]" />
+                                            +91 94009 74150 (WhatsApp only)
                                         </a>
                                         <a
                                             href={`https://wa.me/${PRIMARY_PHONE_LINK.replace('+', '')}?text=${encodeURIComponent('Hi HexaStack, I need help with a project.')}`}

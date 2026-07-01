@@ -33,7 +33,7 @@ export const site = {
   serviceAreasLabel:
     'Kerala & all India; GCC (UAE, Saudi Arabia, Qatar, Oman, Bahrain, Kuwait); US & UK; and remote clients worldwide',
   email: 'hexastacksolutions@gmail.com',
-  phones: ['+91 75919 99365', '+91 70127 14150'] as const,
+  phones: ['+91 75919 99365', '+91 94009 74150'] as const,
   whatsappUrl: 'https://wa.me/917591999365',
   /** Generic fallbacks for footer/UI only — not used in JSON-LD sameAs. */
   social: {

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Phone } from 'lucide-react';
+import { ArrowRight, Phone, MessageCircle } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { GlassCard } from '@/components/GlassCard';
@@ -77,6 +77,7 @@ export default function About() {
                     <div className="mt-6">
                         <a href="tel:+917591999365" className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-white px-5 py-3 text-sm font-semibold text-[var(--foreground)] shadow-sm hover:border-[var(--primary)] hover:text-[var(--primary)]">
                             <Phone className="h-4 w-4 text-[var(--primary)]" />
+                            <MessageCircle className="h-4 w-4 text-[#25D366]" />
                             +91 75919 99365
                         </a>
                     </div>

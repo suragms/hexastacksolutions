@@ -53,7 +53,7 @@ async function fixAdminConfiguration() {
                     leadWhatsApp1: '+917591999365',
                     leadName2: 'Surag',
                     leadEmail2: 'officialsurag@gmail.com',
-                    leadWhatsApp2: '+917012714150',
+                    leadWhatsApp2: '+919400974150',
                     address: 'Vadanappally, Thrissur, Kerala 680614, India',
                     tagline: 'Building Digital Excellence',
                     description: 'We create innovative web applications.',
