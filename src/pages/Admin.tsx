@@ -3,16 +3,26 @@ import { Link } from 'react-router-dom';
 import { API_URL } from '@/lib/utils';
 import SEO from '@/components/SEO';
 import { FOUNDER_DEFAULT_IMAGES } from '../data/founderAssets';
+import { TeamTab } from '@/components/admin/TeamTab';
+import { CrmKanbanTab } from '@/components/admin/CrmKanbanTab';
+import { TasksTab } from '@/components/admin/TasksTab';
+import { BlogEditorTab } from '@/components/admin/BlogEditorTab';
+import { AnalyticsEnhanced } from '@/components/admin/AnalyticsEnhanced';
+import { SocialPostComposer } from '@/components/admin/SocialPostComposer';
+import { RevenueTab } from '@/components/admin/RevenueTab';
+import { ClientsTab, convertLeadToClient } from '@/components/admin/ClientsTab';
+import { DailyOpsTab } from '@/components/admin/DailyOpsTab';
 import {
     Trash2, Mail, Phone, Clock, ArrowLeft, RefreshCw, Lock, LogOut, Shield,
     FolderOpen, Settings, Bell, Plus, Edit2, Save, X, ExternalLink,
     MessageCircle, AlertCircle, CheckCircle, ImagePlus, BarChart3, Eye, Users, TrendingUp, Zap, Package,
-    Globe, Link2
+    Globe, Link2, Kanban, ListTodo, FileText, Megaphone, IndianRupee, Building2, Target
 } from 'lucide-react';
 
 const ADMIN_SESSION_KEY = 'hexastack_admin_auth';
 const ADMIN_TOKEN_KEY = 'admin_token';
 const ADMIN_SESSION_TIME_KEY = 'hexastack_admin_time';
+const ADMIN_USER_KEY = 'hexastack_admin_user';
 const BACKLINKS_CHECKLIST_KEY = 'hexastack_backlinks_checklist';
 
 /** Headers for admin API calls (includes Bearer token when logged in). */
@@ -118,7 +128,15 @@ interface Product {
     displayOrder: number;
 }
 
-type TabType = 'enquiries' | 'projects' | 'settings' | 'analytics' | 'services' | 'products' | 'seo' | 'backlinks';
+type TabType = 'enquiries' | 'crm' | 'ops' | 'revenue' | 'clients' | 'projects' | 'settings' | 'analytics' | 'services' | 'products' | 'seo' | 'backlinks' | 'team' | 'tasks' | 'blog' | 'social';
+
+type AdminUser = {
+    id: string;
+    email: string;
+    name: string;
+    role: string;
+    mustChangePassword?: boolean;
+};
 
 interface SeoLocationPageEntry {
     id: string;
@@ -154,10 +172,15 @@ interface AnalyticsStats {
 export default function Admin() {
     // Auth state
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginError, setLoginError] = useState('');
     const [loginAttempts, setLoginAttempts] = useState(0);
     const [isLocked, setIsLocked] = useState(false);
+    const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
+    const [mustChangePassword, setMustChangePassword] = useState(false);
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     // Tab state
     const [activeTab, setActiveTab] = useState<TabType>('analytics');
@@ -549,19 +572,28 @@ export default function Admin() {
         }
     };
 
-    // Check auth on mount (token from /api/admin/login)
+    // Check auth on mount (token from /api/auth/login)
     useEffect(() => {
         const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
         const sessionTime = sessionStorage.getItem(ADMIN_SESSION_TIME_KEY);
+        const storedUser = sessionStorage.getItem(ADMIN_USER_KEY);
 
         if (token && sessionTime) {
             const elapsed = Date.now() - parseInt(sessionTime);
             if (elapsed < 4 * 60 * 60 * 1000) {
                 setIsAuthenticated(true);
+                if (storedUser) {
+                    try {
+                        const u = JSON.parse(storedUser) as AdminUser;
+                        setAdminUser(u);
+                        setMustChangePassword(Boolean(u.mustChangePassword));
+                    } catch { /* ignore */ }
+                }
             } else {
                 sessionStorage.removeItem(ADMIN_TOKEN_KEY);
                 sessionStorage.removeItem(ADMIN_SESSION_KEY);
                 sessionStorage.removeItem(ADMIN_SESSION_TIME_KEY);
+                sessionStorage.removeItem(ADMIN_USER_KEY);
             }
         }
 
@@ -606,16 +638,16 @@ export default function Admin() {
         setTimeout(() => setNotification(null), 3000);
     };
 
-    // Auth handlers (API login)
+    // Auth handlers (per-user JWT via /api/auth/login)
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         if (isLocked) return;
 
         try {
-            const res = await fetch(`${API_URL}/api/admin/login`, {
+            const res = await fetch(`${API_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ password }),
+                body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
             });
             const data = await res.json().catch(() => ({}));
 
@@ -623,10 +655,13 @@ export default function Admin() {
                 sessionStorage.setItem(ADMIN_TOKEN_KEY, data.token);
                 sessionStorage.setItem(ADMIN_SESSION_KEY, 'authenticated');
                 sessionStorage.setItem(ADMIN_SESSION_TIME_KEY, Date.now().toString());
+                sessionStorage.setItem(ADMIN_USER_KEY, JSON.stringify(data.user));
                 localStorage.removeItem('hexastack_attempts');
                 localStorage.removeItem('hexastack_lock_time');
                 setLoginError('');
                 setLoginAttempts(0);
+                setAdminUser(data.user);
+                setMustChangePassword(Boolean(data.user?.mustChangePassword));
                 setIsAuthenticated(true);
                 if (typeof window !== 'undefined' && window.history.replaceState) {
                     window.history.replaceState(null, '', '/admin');
@@ -641,15 +676,7 @@ export default function Admin() {
                     localStorage.setItem('hexastack_lock_time', Date.now().toString());
                     setLoginError('Too many failed attempts. Locked for 15 minutes.');
                 } else {
-                    if (res.status === 404) {
-                        setLoginError('Login API not found. Add API route and set ADMIN_PASSWORD, JWT_SECRET in Vercel → Settings → Environment Variables, then redeploy.');
-                    } else if (res.status === 503 && data.error) {
-                        setLoginError(data.error);
-                    } else if (res.status === 500) {
-                        setLoginError(data.error || 'Server error. Set ADMIN_PASSWORD and JWT_SECRET in Vercel → Settings → Environment Variables (Production), then redeploy. Verify: ' + (typeof window !== 'undefined' ? window.location.origin : API_URL || '') + '/api/admin/status');
-                    } else {
-                        setLoginError(data.error || `Invalid password. ${5 - newAttempts} attempts remaining.`);
-                    }
+                    setLoginError(data.error || `Invalid credentials. ${5 - newAttempts} attempts remaining.`);
                 }
             }
         } catch {
@@ -658,11 +685,41 @@ export default function Admin() {
         setPassword('');
     };
 
+    const handleChangePassword = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (newPassword.length < 8 || newPassword !== confirmPassword) {
+            setLoginError('Passwords must match and be at least 8 characters.');
+            return;
+        }
+        const res = await fetch(`${API_URL}/api/auth/change-password`, {
+            method: 'POST',
+            headers: getAdminAuthHeaders(),
+            body: JSON.stringify({ newPassword }),
+        });
+        if (!res.ok) {
+            const data = await res.json().catch(() => ({}));
+            setLoginError(data.error || 'Failed to change password');
+            return;
+        }
+        setMustChangePassword(false);
+        if (adminUser) {
+            const next = { ...adminUser, mustChangePassword: false };
+            setAdminUser(next);
+            sessionStorage.setItem(ADMIN_USER_KEY, JSON.stringify(next));
+        }
+        setNewPassword('');
+        setConfirmPassword('');
+        setLoginError('');
+    };
+
     const handleLogout = () => {
         setIsAuthenticated(false);
+        setAdminUser(null);
+        setMustChangePassword(false);
         sessionStorage.removeItem(ADMIN_TOKEN_KEY);
         sessionStorage.removeItem(ADMIN_SESSION_KEY);
         sessionStorage.removeItem(ADMIN_SESSION_TIME_KEY);
+        sessionStorage.removeItem(ADMIN_USER_KEY);
     };
 
     // Analytics handlers
@@ -951,6 +1008,18 @@ export default function Admin() {
 
                         <form onSubmit={handleLogin} className="space-y-4">
                             <div>
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    disabled={isLocked}
+                                    className="w-full rounded-2xl border border-slate-200 bg-white py-3.5 px-4 text-slate-900 outline-none transition-colors focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 disabled:bg-slate-100"
+                                    placeholder="Email"
+                                    autoFocus
+                                    autoComplete="username"
+                                />
+                            </div>
+                            <div>
                                 <div className="relative">
                                     <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                                     <input
@@ -959,8 +1028,8 @@ export default function Admin() {
                                         onChange={(e) => setPassword(e.target.value)}
                                         disabled={isLocked}
                                         className="w-full rounded-2xl border border-slate-200 bg-white py-3.5 pl-11 pr-4 text-slate-900 outline-none transition-colors focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 disabled:bg-slate-100"
-                                        placeholder="Enter password"
-                                        autoFocus
+                                        placeholder="Password"
+                                        autoComplete="current-password"
                                     />
                                 </div>
                             </div>
@@ -973,10 +1042,10 @@ export default function Admin() {
 
                             <button
                                 type="submit"
-                                disabled={isLocked || !password}
+                                disabled={isLocked || !password || !email}
                                 className="w-full rounded-full bg-slate-900 px-4 py-3.5 font-medium text-white transition-opacity hover:bg-slate-800 disabled:opacity-50"
                             >
-                                {isLocked ? 'Locked' : 'Access Admin'}
+                                {isLocked ? 'Locked' : 'Sign in'}
                             </button>
                         </form>
 
@@ -1010,6 +1079,40 @@ export default function Admin() {
             </div>
         );
     }
+
+    if (isAuthenticated && mustChangePassword) {
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-[#f7fbff] px-4">
+                <SEO title="Change password | HexaStack Admin" description="Required password change" noindex />
+                <form onSubmit={handleChangePassword} className="w-full max-w-md space-y-4 rounded-[28px] border border-slate-200 bg-white p-8 shadow-sm">
+                    <h1 className="text-xl font-semibold text-slate-900">Change your password</h1>
+                    <p className="text-sm text-slate-500">You must set a new password before using the admin console.</p>
+                    <input
+                        type="password"
+                        className="w-full rounded-2xl border border-slate-200 px-4 py-3"
+                        placeholder="New password (min 8)"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                    <input
+                        type="password"
+                        className="w-full rounded-2xl border border-slate-200 px-4 py-3"
+                        placeholder="Confirm password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                    {loginError && <p className="text-sm text-red-600">{loginError}</p>}
+                    <button type="submit" className="w-full rounded-full bg-slate-900 py-3 text-white">
+                        Save password
+                    </button>
+                </form>
+            </div>
+        );
+    }
+
+    const role = adminUser?.role || 'STAFF';
+    const canManageTeam = role === 'SUPER_ADMIN';
+    const canEditSettings = role === 'SUPER_ADMIN' || role === 'ADMIN';
 
     return (
         <div className="min-h-screen bg-[#f7fbff] font-sans text-slate-900">
@@ -1075,13 +1178,21 @@ export default function Admin() {
                     <div className="flex gap-2 overflow-x-auto py-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                         {[
                             { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+                            { id: 'ops', label: 'Daily Ops', icon: Target },
+                            { id: 'crm', label: 'CRM', icon: Kanban },
+                            { id: 'revenue', label: 'Revenue', icon: IndianRupee },
+                            { id: 'clients', label: 'Clients', icon: Building2 },
                             { id: 'enquiries', label: 'Enquiries', icon: Mail, count: unreadCount },
+                            { id: 'tasks', label: 'Tasks', icon: ListTodo },
+                            { id: 'blog', label: 'Blog', icon: FileText },
+                            { id: 'social', label: 'Social', icon: Megaphone },
                             { id: 'projects', label: 'Projects', icon: FolderOpen },
                             { id: 'services', label: 'Services', icon: Zap },
                             { id: 'products', label: 'Products', icon: Package },
                             { id: 'seo', label: 'SEO Pages', icon: Globe },
                             { id: 'backlinks', label: 'Backlinks', icon: Link2 },
-                            { id: 'settings', label: 'Settings', icon: Settings },
+                            ...(canManageTeam ? [{ id: 'team', label: 'Team', icon: Users }] : []),
+                            ...(canEditSettings ? [{ id: 'settings', label: 'Settings', icon: Settings }] : []),
                         ].map(tab => (
                             <button
                                 key={tab.id}
@@ -1114,6 +1225,9 @@ export default function Admin() {
                                 <RefreshCw className={`w-4 h-4 ${analyticsLoading ? 'animate-spin' : ''}`} />
                                 Refresh
                             </button>
+                        </div>
+                        <div className="mb-8">
+                            <AnalyticsEnhanced days={30} />
                         </div>
 
                         {analyticsLoading && !analytics ? (
@@ -1238,6 +1352,48 @@ export default function Admin() {
                 )}
 
                 {/* ENQUIRIES TAB */}
+                {activeTab === 'ops' && (
+                    <DailyOpsTab
+                        onNotify={showNotification}
+                        role={role}
+                        onJumpCrm={() => setActiveTab('crm')}
+                    />
+                )}
+
+                {activeTab === 'crm' && (
+                    <CrmKanbanTab
+                        onNotify={showNotification}
+                        onConvertClient={async (leadId) => {
+                            const id = await convertLeadToClient(leadId, showNotification);
+                            if (id) setActiveTab('clients');
+                        }}
+                    />
+                )}
+
+                {activeTab === 'revenue' && (
+                    <RevenueTab onNotify={showNotification} />
+                )}
+
+                {activeTab === 'clients' && (
+                    <ClientsTab onNotify={showNotification} />
+                )}
+
+                {activeTab === 'team' && canManageTeam && (
+                    <TeamTab currentRole={role} onNotify={showNotification} />
+                )}
+
+                {activeTab === 'tasks' && (
+                    <TasksTab onNotify={showNotification} />
+                )}
+
+                {activeTab === 'blog' && (
+                    <BlogEditorTab onNotify={showNotification} />
+                )}
+
+                {activeTab === 'social' && (
+                    <SocialPostComposer />
+                )}
+
                 {activeTab === 'enquiries' && (
                     <div>
                         <div className="flex justify-between items-center mb-6">

@@ -1,5 +1,7 @@
 import express from 'express';
 import { db } from '../db';
+import { requireAdminOrAbove } from '../utils/auth';
+import { writeAuditLog } from '../utils/audit';
 
 const router = express.Router();
 
@@ -10,11 +12,15 @@ router.get('/', async (_req, res) => {
     } catch (error: any) {
         console.error('[SETTINGS_GET]', error?.message || error);
         const isDb = error?.message?.includes('DATABASE') || error?.message?.includes('connect') || error?.code === 'P1001';
-        res.status(isDb ? 503 : 500).json({ error: isDb ? 'Database not configured. Set DATABASE_URL in Vercel/Netlify.' : 'Failed to fetch settings' });
+        res.status(isDb ? 503 : 500).json({
+            error: isDb
+                ? 'Database not configured. Set DATABASE_URL in Vercel/Netlify.'
+                : 'Failed to fetch settings',
+        });
     }
 });
 
-router.patch('/', async (req, res) => {
+router.patch('/', requireAdminOrAbove, async (req, res) => {
     try {
         const allowed = [
             'companyName',
@@ -39,21 +45,26 @@ router.patch('/', async (req, res) => {
         for (const key of allowed) {
             if (req.body[key] !== undefined) data[key] = req.body[key];
         }
-        const first = await db.companySettings.findFirst();
-
+        const existing = await db.companySettings.findFirst();
         let settings;
-        if (first) {
+        if (existing) {
             settings = await db.companySettings.update({
-                where: { id: first.id },
-                data,
+                where: { id: existing.id },
+                data: data as any,
             });
         } else {
             settings = await db.companySettings.create({
-                data,
+                data: data as any,
             });
         }
+        await writeAuditLog({
+            userId: req.auth!.userId,
+            action: 'updated_settings',
+            targetId: settings.id,
+        });
         res.json(settings);
     } catch (error) {
+        console.error('[SETTINGS_PATCH]', error);
         res.status(500).json({ error: 'Failed to update settings' });
     }
 });

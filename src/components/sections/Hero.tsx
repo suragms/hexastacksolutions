@@ -19,14 +19,14 @@ export function Hero() {
 
       <Container className="relative z-10">
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 28 }}
+          initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={reduce ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
           className="mx-auto flex w-full max-w-4xl flex-col text-center"
         >
           {/* DOM: H1 first for SEO; visual order unchanged via flex `order`. */}
           <h1 className="order-2 break-words text-3xl font-bold leading-[1.15] tracking-tight text-text-primary sm:text-4xl md:text-5xl lg:text-[3.5rem]">
-            Grow Faster With a Web Development Company in Kerala That Builds for Revenue.
+            Custom Software &amp; Websites — Built in Thrissur, Trusted in the Gulf
           </h1>
 
           <h2 className="order-1 mb-3 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-zinc-600 sm:mb-4 sm:text-xs">
@@ -34,26 +34,26 @@ export function Hero() {
           </h2>
 
           <h3 className="order-3 mt-4 text-base font-semibold leading-snug text-text-primary sm:mt-5 sm:text-lg">
-            Software company in Thrissur for scalable websites, apps, and business systems
+            You talk to the developer. Reply in 2 hours on WhatsApp.
           </h3>
 
           <p className="order-4 mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-text-muted sm:mt-4 sm:text-base">
-            We help growth-focused teams in Kerala turn slow manual workflows into fast digital systems. As a{' '}
+            We help growth-focused teams in Kerala and the Gulf turn slow manual workflows into fast digital systems. As a{' '}
             <Link to="/services/web-design" className="font-semibold text-text-primary underline decoration-orange-200 underline-offset-2 hover:text-orange-700">
               web development company in Kerala
             </Link>{' '}
             and trusted{' '}
             <strong className="font-semibold text-text-primary">software company in Thrissur</strong>, we deliver{' '}
             <Link to="/services/web-applications" className="font-semibold text-text-primary underline decoration-orange-200 underline-offset-2 hover:text-orange-700">
-              mobile app development Kerala
+              mobile app development
             </Link>
-            ,{' '} 
+            ,{' '}
             <Link to="/products/hexabill" className="font-semibold text-text-primary underline decoration-orange-200 underline-offset-2 hover:text-orange-700">
-              ERP software Kerala
+              ERP and POS
             </Link>
-            with POS, stock, billing, and reporting, plus{' '}
+            , plus{' '}
             <Link to="/services/web-applications" className="font-semibold text-text-primary underline decoration-orange-200 underline-offset-2 hover:text-orange-700">
-              AI automation services Kerala
+              AI automation
             </Link>{' '}
             so you can save time, increase revenue, and scale with confidence.
           </p>

@@ -5,10 +5,11 @@ import { Container } from '../components/ui/Container'
 import { FadeInView } from '../components/ui/FadeInView'
 import { GradientLink } from '../components/ui/GradientLink'
 import { Section } from '../components/ui/Section'
-import { blogCategories, blogPosts, sortedBlogPostsByDate, type BlogPost } from '../data/blogPosts'
+import { blogCategories, blogPosts, type BlogPost } from '../data/blogPosts'
 import { site } from '../data/site'
 import { readAdminCategories } from '../lib/adminContent'
 import { usePageSeo } from '../hooks/usePageSeo'
+import { Skeleton } from '../components/ui/skeleton'
 
 const siteLine = `${site.siteUrl.replace(/\/$/, '')}/`
 
@@ -27,7 +28,7 @@ function BlogCard({ post }: { post: BlogPost }) {
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-orange-950/80 via-orange-900/20 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-2 p-4 pt-16">
-          <span className="w-fit rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-orange-800 shadow-sm backdrop-blur-sm">
+          <span className="w-fit rounded-full bg-white px-3 py-1 text-xs font-semibold text-orange-800 shadow-sm">
             {post.category}
           </span>
           <h2 className="text-lg font-bold leading-snug text-white drop-shadow-sm md:text-xl">
@@ -105,7 +106,36 @@ function useMergedCategories(): string[] {
 export function BlogPage() {
   const [q, setQ] = useState('')
   const [cat, setCat] = useState<string>('All')
+  const [dbPosts, setDbPosts] = useState<BlogPost[]>([])
+  const [dbLoading, setDbLoading] = useState(true)
   const mergedCats = useMergedCategories()
+
+  useEffect(() => {
+    void fetch('/api/blog')
+      .then((r) => (r.ok ? r.json() : []))
+      .then((rows: any[]) => {
+        if (!Array.isArray(rows)) return
+        setDbPosts(
+          rows.map((p) => ({
+            id: p.slug,
+            title: p.title,
+            dateLabel: new Date(p.publishedAt || p.createdAt).toLocaleDateString('en-IN', {
+              month: 'short',
+              year: 'numeric',
+            }),
+            dateIso: String(p.publishedAt || p.createdAt || '').slice(0, 10),
+            excerpt: p.excerpt || '',
+            coverImage: p.featuredImageUrl || '/images/blog/cover-vat-2026.jpg',
+            coverAlt: p.title,
+            category: p.category || 'General',
+            tags: [] as const,
+            featured: false,
+          })),
+        )
+      })
+      .catch(() => {})
+      .finally(() => setDbLoading(false))
+  }, [])
 
   usePageSeo({
     title: 'Blog | VAT, POS, ERP, SEO & digital marketing | HexaStack Kerala & Gulf',
@@ -114,23 +144,33 @@ export function BlogPage() {
     canonicalPath: '/blog',
   })
 
-  const categories = useMemo(() => ['All', ...mergedCats], [mergedCats])
+  const categories = useMemo(() => {
+    const extra = dbPosts.map((p) => p.category)
+    return ['All', ...new Set([...mergedCats, ...extra])]
+  }, [mergedCats, dbPosts])
+
+  const allPosts = useMemo(() => {
+    const byId = new Map<string, BlogPost>()
+    for (const p of blogPosts) byId.set(p.id, p)
+    for (const p of dbPosts) byId.set(p.id, p)
+    return [...byId.values()].sort((a, b) => b.dateIso.localeCompare(a.dateIso))
+  }, [dbPosts])
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase()
-    return sortedBlogPostsByDate().filter((p) => {
+    return allPosts.filter((p) => {
       const matchCat = cat === 'All' || p.category === cat
       const matchQ =
         !needle ||
         p.title.toLowerCase().includes(needle) ||
         p.excerpt.toLowerCase().includes(needle) ||
-        p.tags.some((t) => t.toLowerCase().includes(needle))
+        (p.tags && p.tags.some((t) => t.toLowerCase().includes(needle)))
       return matchCat && matchQ
     })
-  }, [q, cat])
+  }, [q, cat, allPosts])
 
-  const featured = useMemo(() => blogPosts.filter((p) => p.featured).slice(0, 3), [])
-  const latest = useMemo(() => sortedBlogPostsByDate().slice(0, 5), [])
+  const featured = useMemo(() => allPosts.filter((p) => p.featured).slice(0, 3), [allPosts])
+  const latest = useMemo(() => allPosts.slice(0, 5), [allPosts])
 
   const strip = filtered.slice(0, 3)
   const rest = filtered.slice(3)
@@ -144,13 +184,20 @@ export function BlogPage() {
               Blog
             </span>
             <h1 className="mt-4 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
-              Discover our latest notes
+              VAT, POS &amp; SEO Notes for Kerala and Gulf Teams
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-text-muted">
-              2026 trends, VAT/POS/ERP topics, and SEO for Gulf B2B—horizontal layout: top row + grid + sidebar (no
-              repeated thumbnails in the list).
+              Practical write-ups — not fluff. Pick a topic below or search.
             </p>
           </FadeInView>
+
+          {dbLoading ? (
+            <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-3" aria-busy="true">
+              <Skeleton className="aspect-[16/11] w-full rounded-2xl" />
+              <Skeleton className="aspect-[16/11] w-full rounded-2xl" />
+              <Skeleton className="aspect-[16/11] w-full rounded-2xl" />
+            </div>
+          ) : null}
 
           <FadeInView className="mx-auto mt-10 max-w-3xl" delay={0.05}>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

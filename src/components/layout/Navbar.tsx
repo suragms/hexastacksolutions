@@ -173,7 +173,7 @@ export function Navbar() {
   const productsNavActive = pathname.startsWith('/products')
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${headerClass}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-200 ${headerClass}`}>
       <Container className="flex h-14 items-center justify-between md:h-16">
         <BrandWordmark />
 
@@ -251,7 +251,7 @@ export function Navbar() {
       {mobileOpen ? (
         <div
           id="mobile-menu"
-          className="max-h-[min(80vh,calc(100vh-4rem))] overflow-y-auto border-b border-border bg-background/98 backdrop-blur-md lg:hidden"
+          className="max-h-[min(80vh,calc(100vh-4rem))] overflow-y-auto border-b border-border bg-background lg:hidden"
         >
           <nav className="flex flex-col gap-1 px-4 py-4" aria-label="Mobile">
             <p className="px-2 text-xs font-semibold uppercase tracking-wider text-text-muted">Our Work</p>

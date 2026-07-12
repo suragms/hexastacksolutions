@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { site } from '../../data/site'
+import { API_URL } from '@/lib/utils'
 import {
   companySiteLine,
   facebookShareUrl,
@@ -13,11 +14,49 @@ const defaultBody = `HexaStack builds VAT-ready POS, billing, and fast websites 
 
 Reply on WhatsApp or book a call—we usually respond within one business day.`
 
-export function SocialPostComposer() {
+type Props = {
+  projectTitle?: string
+  projectDescription?: string
+  techStack?: string
+}
+
+export function SocialPostComposer({ projectTitle, projectDescription, techStack }: Props) {
   const [body, setBody] = useState(defaultBody)
+  const [hook, setHook] = useState('')
   const [copied, setCopied] = useState(false)
+  const [generating, setGenerating] = useState(false)
   const pageUrl = `${site.siteUrl.replace(/\/$/, '')}/`
-  const fullText = withCompanyBacklink(body)
+  const fullText = withCompanyBacklink(hook ? `${hook}\n\n${body}` : body)
+
+  async function generate() {
+    setGenerating(true)
+    try {
+      const token = sessionStorage.getItem('admin_token')
+      const res = await fetch(`${API_URL}/api/ai/generate-post`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({
+          title: projectTitle || 'HexaStack project update',
+          description: projectDescription || body,
+          techStack: techStack || '',
+          platform: 'instagram',
+        }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        alert(data.error || 'Generate failed')
+        return
+      }
+      setHook(data.hook || '')
+      const tags = Array.isArray(data.hashtags) ? data.hashtags.join(' ') : ''
+      setBody(`${data.caption || ''}${tags ? `\n\n${tags}` : ''}`.trim())
+    } finally {
+      setGenerating(false)
+    }
+  }
 
   async function copyFull() {
     try {
@@ -31,13 +70,27 @@ export function SocialPostComposer() {
 
   return (
     <section>
-      <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-400">Social post builder</h2>
-      <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm text-sm text-zinc-600 space-y-4">
+      <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-400">
+        Social post builder
+      </h2>
+      <div className="space-y-4 rounded-2xl border border-zinc-200 bg-white p-6 text-sm text-zinc-600 shadow-sm">
         <p>
-          Draft a post; we append your live site line <code className="rounded bg-zinc-100 px-1 text-xs">{companySiteLine}</code>{' '}
-          for backlinks. Copy the text, then use the share links (LinkedIn and X open with your URL; Instagram has no web
-          share API—paste there manually).
+          Generate a first draft with a free/open LLM (or fallback), edit it, then Copy & Open. We append{' '}
+          <code className="rounded bg-zinc-100 px-1 text-xs">{companySiteLine}</code>. No auto-publish to Meta/X.
         </p>
+        <button
+          type="button"
+          disabled={generating}
+          onClick={() => void generate()}
+          className="rounded-lg bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800 disabled:opacity-50"
+        >
+          {generating ? 'Generating…' : 'Generate post'}
+        </button>
+        {hook && (
+          <p className="rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-800">
+            Hook: {hook}
+          </p>
+        )}
         <div>
           <label htmlFor="social-body" className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
             Post body
@@ -100,17 +153,17 @@ export function SocialPostComposer() {
             href="https://www.instagram.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg border border-zinc-200 px-4 py-2 text-xs font-semibold text-zinc-500 hover:border-orange-200"
+            className="rounded-lg border border-zinc-200 px-4 py-2 text-xs font-semibold text-zinc-700 hover:border-orange-200 hover:text-orange-800"
           >
-            Instagram (paste manually)
+            Open Instagram (paste)
           </a>
           <a
-            href="https://www.youtube.com/upload"
+            href="https://studio.youtube.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg border border-zinc-200 px-4 py-2 text-xs font-semibold text-zinc-500 hover:border-orange-200"
+            className="rounded-lg border border-zinc-200 px-4 py-2 text-xs font-semibold text-zinc-700 hover:border-orange-200 hover:text-orange-800"
           >
-            YouTube Studio
+            Open YouTube Studio
           </a>
         </div>
       </div>

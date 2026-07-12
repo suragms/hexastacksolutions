@@ -152,7 +152,7 @@ export default function WebsiteNotifications() {
                         exit={{ opacity: 0, y: 18, scale: 0.98 }}
                         transition={{ duration: 0.24, ease: 'easeOut' }}
                         aria-label="Website notifications"
-                        className="pointer-events-auto overflow-hidden rounded-[30px] border border-[var(--border)] bg-white/96 shadow-[0_28px_70px_rgba(15,23,42,0.16)] backdrop-blur-xl"
+                        className="pointer-events-auto overflow-hidden rounded-[30px] border border-[var(--border)] bg-white shadow-[0_28px_70px_rgba(15,23,42,0.16)]"
                     >
                         <div className="border-b border-[var(--border)] bg-[linear-gradient(180deg,rgba(248,251,255,0.96),rgba(255,255,255,0.96))] px-5 py-4">
                             <div className="flex items-start justify-between gap-4">
@@ -230,7 +230,7 @@ export default function WebsiteNotifications() {
                             transition={{ duration: 0.2, ease: 'easeOut' }}
                             type="button"
                             onClick={() => setMinimized(false)}
-                            className="pointer-events-auto ml-auto inline-flex min-h-[48px] items-center gap-3 rounded-full border border-[var(--border)] bg-white/96 px-4 py-3 text-sm font-semibold text-[var(--foreground)] shadow-[0_18px_40px_rgba(15,23,42,0.14)] backdrop-blur-xl"
+                            className="pointer-events-auto ml-auto inline-flex min-h-[48px] items-center gap-3 rounded-full border border-[var(--border)] bg-white px-4 py-3 text-sm font-semibold text-[var(--foreground)] shadow-[0_18px_40px_rgba(15,23,42,0.14)]"
                             aria-label="Open notifications"
                         >
                             <BellRing className="h-4 w-4 text-[var(--primary)]" />

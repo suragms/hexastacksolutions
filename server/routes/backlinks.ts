@@ -1,9 +1,9 @@
 import express from 'express';
 import { db } from '../db';
+import { requireStaff } from '../utils/auth';
 
 const router = express.Router();
 
-// GET all backlinks
 router.get('/', async (_req, res) => {
     try {
         const backlinks = await db.backlink.findMany({
@@ -12,13 +12,17 @@ router.get('/', async (_req, res) => {
         res.json(backlinks);
     } catch (error: any) {
         console.error('[BACKLINKS_GET]', error?.message || error);
-        const isDb = error?.message?.includes('DATABASE') || error?.message?.includes('connect') || error?.code === 'P1001';
-        res.status(isDb ? 503 : 500).json({ error: isDb ? 'Database not configured.' : 'Failed to fetch backlinks' });
+        const isDb =
+            error?.message?.includes('DATABASE') ||
+            error?.message?.includes('connect') ||
+            error?.code === 'P1001';
+        res.status(isDb ? 503 : 500).json({
+            error: isDb ? 'Database not configured.' : 'Failed to fetch backlinks',
+        });
     }
 });
 
-// POST new backlink
-router.post('/', async (req, res) => {
+router.post('/', requireStaff, async (req, res) => {
     try {
         const { sourceUrl, targetUrl, sourceSite, linkType, daDr, notes, status } = req.body;
         const backlink = await db.backlink.create({
@@ -39,8 +43,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// PATCH update backlink
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
         const { sourceUrl, targetUrl, sourceSite, linkType, daDr, notes, status } = req.body;
@@ -63,8 +66,7 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-// DELETE backlink
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
         await db.backlink.delete({ where: { id } });

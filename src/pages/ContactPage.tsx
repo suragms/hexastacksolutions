@@ -19,9 +19,9 @@ const mapsEmbedSrc =
 
 export function ContactPage() {
   usePageSeo({
-    title: 'Contact HexaStack | Request a quote | Thrissur, Kerala | UAE & GCC projects',
+    title: 'Reply Within 2 Hours — WhatsApp or Form | HexaStack Thrissur',
     description:
-      'Contact HexaStack Solutions in Vadanappally, Thrissur, Kerala. Quotes for web design, web development, SEO, digital marketing, custom software, POS, and VAT-aware billing for India, Gulf (UAE, Saudi Arabia, Oman, Kuwait, Bahrain, Qatar), and worldwide. Phone, email, WhatsApp.',
+      'Contact HexaStack Solutions in Vadanappally, Thrissur. Reply within 2 hours on WhatsApp or form. Quotes for web, POS, billing, SaaS — Kerala, UAE & GCC.',
     canonicalPath: '/contact',
   })
 
@@ -44,6 +44,10 @@ export function ContactPage() {
     setSubmitting(true)
     setSubmitError('')
 
+    const utmSource = searchParams.get('utm_source')?.trim() || undefined
+    const utmCampaign = searchParams.get('utm_campaign')?.trim() || undefined
+    const source = searchParams.get('source')?.trim() || utmSource
+
     const contactUrl = `${API_URL}/api/contact`.replace(/([^:])\/\/+/g, '$1/')
     const payload = {
       name,
@@ -51,6 +55,9 @@ export function ContactPage() {
       requirement: message,
       message,
       ...(contextHint ? { serviceOrProduct: contextHint } : {}),
+      ...(utmSource ? { utmSource } : {}),
+      ...(utmCampaign ? { utmCampaign } : {}),
+      ...(source ? { source } : {}),
     }
 
     try {
@@ -114,11 +121,10 @@ export function ContactPage() {
           <FadeInView>
             <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">Contact</p>
             <h1 className="mt-3 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
-              Request a quote
+              Reply Within 2 Hours — WhatsApp or Form
             </h1>
             <p className="mt-4 text-text-muted">
-              Tell us what you’re building: POS, billing, SaaS, or a new site. We usually reply within
-              one business day.
+              Tell us what you’re building: POS, billing, SaaS, or a new site. You talk to the developer — not a ticket queue.
             </p>
             <ul className="mt-8 space-y-3 text-sm text-text-muted">
               <li>

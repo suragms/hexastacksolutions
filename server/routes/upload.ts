@@ -1,26 +1,25 @@
 import express from 'express';
 import multer from 'multer';
+import { requireStaff } from '../utils/auth';
 
 const router = express.Router();
 
-// Use memory storage to avoid filesystem issues on serverless
 const storage = multer.memoryStorage();
 
 const upload = multer({
     storage,
     limits: {
-        fileSize: 5 * 1024 * 1024, // 5MB limit
-    }
+        fileSize: 5 * 1024 * 1024,
+    },
 });
 
-router.post('/', upload.single('file'), (req, res) => {
+router.post('/', requireStaff, upload.single('file'), (req, res) => {
     try {
         if (!req.file) {
             res.status(400).json({ error: 'No file uploaded' });
             return;
         }
 
-        // Convert buffer to base64
         const b64 = Buffer.from(req.file.buffer).toString('base64');
         const mime = req.file.mimetype;
         const url = `data:${mime};base64,${b64}`;
@@ -33,5 +32,3 @@ router.post('/', upload.single('file'), (req, res) => {
 });
 
 export default router;
-
-

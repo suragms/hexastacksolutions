@@ -144,7 +144,7 @@ export function Portfolio() {
           <div>
             <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">Proof of work</p>
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-text-primary md:text-4xl">
-              Selected Work
+              Real Clients Across Kerala and the Gulf
             </h2>
             <p className="mt-2 max-w-md text-text-muted">
               Real clients across Kerala, Thrissur, and the Gulf: this row scrolls horizontally on a loop (hover to

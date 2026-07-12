@@ -48,7 +48,7 @@ router.post('/login', async (req, res) => {
         const client = await db.client.findUnique({
             where: { email: email.trim().toLowerCase() },
         });
-        if (!client) {
+        if (!client || !client.password) {
             res.status(401).json({ error: 'Invalid email or password' });
             return;
         }

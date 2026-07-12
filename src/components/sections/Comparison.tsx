@@ -26,7 +26,7 @@ export function Comparison() {
         <Container>
           <FadeInView className="mb-12 text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
-              Why growth-focused teams choose HexaStack
+              No Agency Fluff. Real Software. Real Results.
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-zinc-400">
               Many vendors promise fast delivery but miss business outcomes. Here is what changes when you partner

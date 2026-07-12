@@ -120,4 +120,78 @@ Single deploy target (Netlify); no Vercel or duplicate API in this repo.
 
 ---
 
+---
+
+## 8. Staff / CRM / Analytics / AI — schema & auth
+
+### 8.1 Auth (single system)
+
+- **Keep:** `server/routes/auth.ts` + `server/utils/auth.ts` (Prisma `User`, bcrypt, JWT `{ userId, role }`).
+- **Add:** `requireAuth`, `requireRole(['SUPER_ADMIN' | 'ADMIN' | 'STAFF'])` middleware.
+- **Delete:** `server/routes/admin-auth.ts`, unused `admin.js`; unmount shared-password `/api/admin` login.
+- **Frontend:** One admin page at `/admin`; login via `/api/auth/login`; Bearer token; no `VITE_ADMIN_PASSWORD`.
+
+### 8.2 Schema additions
+
+```prisma
+model User {
+  // existing...
+  active             Boolean   @default(true)
+  mustChangePassword Boolean   @default(false)
+  lastLoginAt        DateTime?
+}
+
+model AuditLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  action    String
+  targetId  String?
+  meta      String?
+  createdAt DateTime @default(now())
+}
+
+model BlogPost {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  slug        String    @unique
+  excerpt     String?
+  body        String    // markdown
+  coverImage  String?
+  videoUrl    String?
+  status      String    @default("draft") // draft | published
+  publishedAt DateTime?
+  authorId    String?   @db.ObjectId
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// ContactMessage additions:
+// source, utmSource, utmCampaign, stage @default("new")
+
+// PageView addition:
+// source String?
+```
+
+### 8.3 Key new/extended routes
+
+| Route | Notes |
+|-------|--------|
+| `POST/PATCH/DELETE /api/users` | SUPER_ADMIN staff CRUD; soft-delete |
+| `PATCH /api/contact/:id` | stage updates; quoted → email |
+| `GET /api/analytics/stats` | + source breakdown |
+| `CRUD /api/blog` | DB-driven posts |
+| `POST /api/ai/generate-post` | OpenRouter/Ollama |
+| `CRUD /api/tasks` | Task board |
+
+### 8.4 Integrations (env)
+
+| Env | Purpose |
+|-----|---------|
+| `RESEND_API_KEY` | Confirm + quoted emails (already used) |
+| `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_ID`, `WHATSAPP_TEMPLATE` | Optional Cloud API MVP |
+| `OPENROUTER_API_KEY` or `OLLAMA_BASE_URL` | Caption generation |
+| `JWT_SECRET` | Required in production |
+
+---
+
 *Next: [uiux.md](./uiux.md) — UI/UX Agent*

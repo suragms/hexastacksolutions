@@ -21,9 +21,9 @@ export function HomePage() {
   const { hash, pathname } = useLocation()
 
   usePageSeo({
-    title: 'Web Development & AI Automation Company in Kerala | HexaStack Solutions',
+    title: 'Custom Software & Websites — Built in Thrissur, Trusted in the Gulf | HexaStack',
     description:
-      'HexaStack Solutions is a Kerala-based web development and AI automation company in Thrissur. We build custom websites, mobile apps, ERP systems, and business software that help companies save time, increase revenue, and scale with confidence.',
+      'HexaStack Solutions builds custom websites, mobile apps, ERP/POS, and AI automation from Thrissur for Kerala and Gulf businesses. Talk to the developer. Reply in 2 hours on WhatsApp.',
     canonicalPath: '/',
   })
 

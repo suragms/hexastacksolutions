@@ -123,4 +123,21 @@ If a check fails, fix before handing off to Security agent; optionally log recur
 
 ---
 
+---
+
+## 10. Staff / CRM / Analytics / AI — test scenarios
+
+| Area | Pass |
+|------|------|
+| Login | `/api/auth/login` with User JWT; inactive user → 401 |
+| Role gate | STAFF cannot POST/DELETE `/api/users`; SUPER_ADMIN can |
+| Soft-delete | DELETE user sets `active: false`; still in audit history |
+| CRM stage | PATCH stage to `quoted` triggers proposal email when Resend set |
+| Analytics source | PageView with `utm_source=instagram` buckets as instagram |
+| Blog | Create draft → publish; public slug loads; sitemap includes post |
+| AI generate | Generate returns caption; no publish side-effect |
+| Tasks | Create task with projectId; board shows by status |
+
+---
+
 *Next: [security.md](./security.md) — Security Agent*

@@ -15,18 +15,23 @@ import servicesRouter from './routes/services';
 import productsRouter from './routes/products';
 import seoPagesRouter from './routes/seo-pages';
 import backlinksRouter from './routes/backlinks';
-import adminAuthRouter from './routes/admin-auth';
 import clientAuthRouter from './routes/client-auth';
 import syncStubRouter from './routes/syncStub';
+import blogRouter from './routes/blog';
+import tasksRouter from './routes/tasks';
+import aiRouter from './routes/ai';
+import opsRouter from './routes/ops';
+import revenueRouter from './routes/revenue';
+import clientsRouter from './routes/clients';
+import contractsRouter from './routes/contracts';
+import invoicesRouter from './routes/invoices';
 
-// Triggering server restart for new routes...
 dotenv.config();
 
 export const app = express();
-app.set('trust proxy', 1); // Trust Vercel proxy for rate-limiters
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3001;
 
-// Log initialization (Netlify or Vercel serverless)
 if (process.env.NETLIFY || process.env.VERCEL) {
     console.log(`=== Express (${process.env.VERCEL ? 'Vercel' : 'Netlify'}) ===`);
     console.log('NODE_ENV:', process.env.NODE_ENV);
@@ -49,7 +54,6 @@ app.use((req, res, next) => {
     res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
     next();
 });
-// On Vercel, req.body can be {} before express.json runs; empty object must not skip the parser (see api/index.js ensureBody).
 app.use((req, res, next) => {
     const preBody = req.body;
     const preBodyPopulated =
@@ -91,7 +95,7 @@ app.get('/api/health', async (_req, res) => {
             db: 'connected',
             userCount,
             env: process.env.NODE_ENV,
-            mongoDbUrl: process.env.DATABASE_URL ? 'Set' : 'Missing'
+            mongoDbUrl: process.env.DATABASE_URL ? 'Set' : 'Missing',
         });
     } catch (error) {
         console.error('Health check failed:', error);
@@ -99,7 +103,6 @@ app.get('/api/health', async (_req, res) => {
             status: 'error',
             db: 'disconnected',
             error: (error as Error).message,
-            stack: (error as Error).stack
         });
     }
 });
@@ -109,15 +112,16 @@ const contactLimiter = rateLimit({
     max: 30,
     message: {
         error: 'Too many enquiries',
-        message: 'Too many submissions from this network. Please try again in an hour or email us directly.',
+        message:
+            'Too many submissions from this network. Please try again in an hour or email us directly.',
     },
     standardHeaders: true,
     skip: (req) => req.method !== 'POST',
 });
 
-const adminLoginLimiter = rateLimit({
+const authLoginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 5,
+    max: 10,
     message: { error: 'Too many login attempts. Try again in 15 minutes.' },
     standardHeaders: true,
 });
@@ -125,7 +129,7 @@ const adminLoginLimiter = rateLimit({
 app.use('/api/projects', projectsRouter as any);
 app.use('/api/feedback', feedbackRouter as any);
 app.use('/api/contact', contactLimiter, contactRouter as any);
-app.use('/api/auth', authRouter as any);
+app.use('/api/auth', authLoginLimiter, authRouter as any);
 app.use('/api/users', usersRouter as any);
 app.use('/api/settings', settingsRouter as any);
 app.use('/api/upload', uploadRouter as any);
@@ -135,35 +139,32 @@ app.use('/api/services', servicesRouter as any);
 app.use('/api/products', productsRouter as any);
 app.use('/api/seo-pages', seoPagesRouter as any);
 app.use('/api/backlinks', backlinksRouter as any);
-app.use('/api/admin', adminLoginLimiter, adminAuthRouter as any);
 app.use('/api/client', clientAuthRouter as any);
 app.use('/api/sync', syncStubRouter as any);
+app.use('/api/blog', blogRouter as any);
+app.use('/api/tasks', tasksRouter as any);
+app.use('/api/ai', aiRouter as any);
+app.use('/api/ops', opsRouter as any);
+app.use('/api/revenue', revenueRouter as any);
+app.use('/api/clients', clientsRouter as any);
+app.use('/api/contracts', contractsRouter as any);
+app.use('/api/invoices', invoicesRouter as any);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Route not found', path: req.path, originalUrl: req.originalUrl });
 });
 
-// Global error handler — return 503 for API routes so frontend shows env/redeploy message
 app.use((err: any, req: express.Request, res: express.Response, _next: express.NextFunction) => {
     console.error('Unhandled Error:', err);
     const isBodyParse = err.type === 'entity.parse.failed' || err instanceof SyntaxError;
-    const url = req.url && String(req.url);
-    const isAnalytics = url && url.includes('/api/analytics');
-    const isAdmin = url && url.includes('/api/admin');
-    const use503 = isBodyParse || isAnalytics || isAdmin;
-    const status = use503 ? 503 : 500;
-    const errorMessage = isAdmin
-        ? (err?.message ? `Login failed: ${err.message}` : 'Login failed. Set ADMIN_PASSWORD and JWT_SECRET in Vercel → Settings → Environment Variables, then redeploy. Check /api/admin/status to verify.')
-        : (use503 ? 'Service temporarily unavailable' : 'Internal Server Error');
+    const status = isBodyParse ? 503 : 500;
     res.status(status).json({
-        error: errorMessage,
-        message: err?.message,
+        error: isBodyParse ? 'Service temporarily unavailable' : 'Internal Server Error',
         success: false,
-        ...(process.env.NODE_ENV === 'development' ? { stack: err.stack } : {})
+        ...(process.env.NODE_ENV === 'development' ? { stack: err.stack, message: err?.message } : {}),
     });
 });
 
-// Only start the server if we're not in a serverless environment
 if (!process.env.NETLIFY && !process.env.VERCEL) {
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);

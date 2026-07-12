@@ -12,6 +12,8 @@
   --color-accent-orange: #ea580c;
   /** Primary accent for labels, links, focus rings */
   --color-accent: #ea580c;
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.1);
 }
 
 @layer base {
@@ -33,6 +35,16 @@
 
   #root {
     @apply min-h-svh w-full min-w-0 overflow-x-clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    overflow-wrap: break-word;
   }
 }
 
@@ -60,7 +72,7 @@
 
   .glow-btn {
     box-shadow: 0 4px 14px 0 rgba(234, 88, 12, 0.39);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
   }
 
   .glow-btn:hover {
@@ -70,7 +82,8 @@
   .btn-gradient-primary {
     background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
     color: #ffffff;
-    @apply shadow-md hover:scale-[1.02] active:scale-[0.99] rounded-xl;
+    @apply rounded-xl shadow-md;
+    transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
   }
 
   .btn-gradient-primary:hover {
@@ -81,7 +94,53 @@
     @apply outline outline-2 outline-offset-2 outline-orange-500;
   }
 
-  /** Solutions: soft cream, fine warm grid (not heavy “small boxes”) */
+  /** Solid card surface — no backdrop-blur (nav only may blur) */
+  .glass-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-hover {
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .card-hover:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: rgba(234, 88, 12, 0.25);
+  }
+
+  .surface-panel {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.06);
+  }
+
+  .section-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: #ffffff;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .soft-divider {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+  }
+
+  .pb-safe {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 0));
+  }
+
   .bg-services-warm {
     background-color: #fffdfb;
     background-image:
@@ -93,7 +152,6 @@
     background-size: 28px 28px, 28px 28px, 100% 100%, 100% 100%, 100% 100%;
   }
 
-  /** Light grid + soft peach highlights (reference-style hero) */
   .bg-hero-grid-light {
     background-color: #ffffff;
     background-image:
@@ -117,7 +175,6 @@
     animation: marquee-x 45s linear infinite;
   }
 
-  /** Hero dual strips: speed via --marquee-duration; direction via --marquee-direction */
   .marquee-track {
     animation: marquee-x var(--marquee-duration, 50s) linear infinite;
     animation-direction: var(--marquee-direction, normal);
@@ -129,12 +186,12 @@
 
   @media (prefers-reduced-motion: reduce) {
     .animate-marquee,
-    .marquee-track {
+    .marquee-track,
+    .portfolio-track {
       animation: none;
     }
   }
 
-  /* Portfolio auto-scroll: duplicated flex row; -50% = one full pass (React hides strip when reduce-motion). */
   @keyframes portfolio-scroll {
     0% {
       transform: translate3d(0, 0, 0);

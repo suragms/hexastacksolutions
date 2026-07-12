@@ -126,4 +126,48 @@
 
 ---
 
+---
+
+## 7. Staff / CRM / Analytics / AI — implementation checklist
+
+One commit per step. Mark checkboxes as done.
+
+### Step 0 — Auth consolidation
+- [x] `requireAuth` + `requireRole` in `server/utils/auth.ts`
+- [x] Protect mutating routes (users, portfolio, products, services, contact admin, settings, blog, upload, analytics admin)
+- [x] Delete `admin-auth.ts` / `admin.js`; unmount `/api/admin` password login
+- [x] Merge to one Admin UI; login via `/api/auth/login`; remove `VITE_ADMIN_PASSWORD`
+- [x] Login rejects inactive users; sets `lastLoginAt`
+
+### Step 1 — Staff & roles
+- [x] Prisma: `active`, `mustChangePassword`, `lastLoginAt` on User
+- [x] users CRUD + reset-password; Team tab UI
+
+### Step 2 — CRM
+- [x] ContactMessage: source, utm*, stage
+- [x] Kanban + Resend confirm / quoted email + WhatsApp MVP (env-gated)
+
+### Step 3 — Analytics v2
+- [x] PageView.source; recharts; projected trend; AuditLog
+
+### Step 4 — Content
+- [x] BlogPost model + CRUD + editor; sitemap from DB; dnd reorder
+
+### Step 5 — AI composer
+- [x] `POST /api/ai/generate-post`; extend SocialPostComposer
+
+### Step 6 — Tasks
+- [x] Task CRUD + board UI
+
+### Step 7 — SEO/GMB process
+- [x] Document cadence + anti-slop in growth.md Operations
+
+### Step 8 — Operations (discipline / profit / clients)
+- [x] Prisma: deal/SLA fields; extend Client; DailyLog, OutreachLog, Contract, Invoice, Retainer, WeeklyMetricManual; Project.clientId
+- [x] APIs: `/api/ops/*`, `/api/revenue/summary`, `/api/clients`, `/api/contracts`, `/api/invoices`
+- [x] Admin tabs: Daily Ops, Revenue, Clients; CRM deal/SLA/referral + convert + case study draft
+- [x] Rule `23-OPERATIONS.md` + env notes (`MONTHLY_REVENUE_TARGET`, `OPS_DIGEST_SECRET`)
+
+---
+
 *Next: [testing.md](./testing.md) — Testing Agent*

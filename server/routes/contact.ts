@@ -1,18 +1,19 @@
 import express from 'express';
 import { db } from '../db';
+import { requireStaff } from '../utils/auth';
+import { writeAuditLog } from '../utils/audit';
+import { bucketSource } from '../utils/source';
 
 const router = express.Router();
 
-// Email validation helper
 const isValidEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 };
 
-// Sanitize input (accepts string or undefined)
 const sanitize = (str: string | undefined | null): string => {
     if (str == null || typeof str !== 'string') return '';
-    return str.trim().slice(0, 1000); // Limit length
+    return str.trim().slice(0, 1000);
 };
 
 const sanitizeLong = (str: string, max: number): string => {
@@ -25,7 +26,6 @@ const getSupportInboxEmail = async (): Promise<string> => {
         const settings = await db.companySettings.findFirst({
             select: { supportEmail: true, primaryEmail: true },
         });
-
         return (
             settings?.supportEmail?.trim() ||
             settings?.primaryEmail?.trim() ||
@@ -33,324 +33,400 @@ const getSupportInboxEmail = async (): Promise<string> => {
             process.env.ADMIN_EMAIL ||
             'supporthexastack@hexastacksolutions.com'
         );
-    } catch (error) {
-        console.error('[SUPPORT_EMAIL_LOOKUP]', error);
+    } catch {
         return process.env.SUPPORT_EMAIL || process.env.ADMIN_EMAIL || 'supporthexastack@hexastacksolutions.com';
     }
 };
 
-// Send email notification to admin (using Web3Forms - free service)
-const sendEmailNotification = async (
-    name: string,
-    email: string,
-    phone: string | null,
-    requirement: string,
-    extra?: { companyName?: string; country?: string; industry?: string; serviceOrProduct?: string; budget?: string; timeline?: string; numberOfBranches?: string; currentSystem?: string }
-) => {
+async function sendResend(opts: { to: string; subject: string; html: string }) {
+    if (!process.env.RESEND_API_KEY) return false;
+    const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        },
+        body: JSON.stringify({
+            from: process.env.RESEND_FROM || 'HexaStack <onboarding@resend.dev>',
+            to: opts.to,
+            subject: opts.subject,
+            html: opts.html,
+        }),
+    });
+    return response.ok;
+}
+
+async function sendAdminNotification(payload: {
+    name: string;
+    email: string;
+    phone: string | null;
+    requirement: string;
+    source?: string | null;
+    extra?: Record<string, string | undefined>;
+}) {
     try {
-        // Web3Forms is a free email API - no signup needed for basic usage
-        // Alternative: User can replace with their own SMTP or email service
         const adminEmail = await getSupportInboxEmail();
-        
-        // Log the notification (email can be configured later)
-        console.log(`\n========================================`);
-        console.log(`NEW ENQUIRY NOTIFICATION`);
-        console.log(`========================================`);
-        console.log(`Name: ${name}`);
-        console.log(`Email: ${email}`);
-        console.log(`Phone: ${phone || 'Not provided'}`);
-        if (extra?.companyName) console.log(`Company: ${extra.companyName}`);
-        if (extra?.country) console.log(`Country: ${extra.country}`);
-        if (extra?.industry) console.log(`Industry: ${extra.industry}`);
-        if (extra?.serviceOrProduct) console.log(`Service/Product: ${extra.serviceOrProduct}`);
-        if (extra?.budget) console.log(`Budget: ${extra.budget}`);
-        if (extra?.timeline) console.log(`Timeline: ${extra.timeline}`);
-        if (extra?.numberOfBranches) console.log(`Number of branches: ${extra.numberOfBranches}`);
-        if (extra?.currentSystem) console.log(`Current system: ${extra.currentSystem}`);
-        console.log(`Requirement: ${requirement}`);
-        console.log(`========================================`);
-        console.log(`To enable email notifications, add SMTP settings to .env`);
-        console.log(`========================================\n`);
-
-        // If RESEND_API_KEY is configured, send email via Resend
-        if (process.env.RESEND_API_KEY) {
-            const response = await fetch('https://api.resend.com/emails', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-                },
-                body: JSON.stringify({
-                    from: 'HexaStack <onboarding@resend.dev>',
-                    to: adminEmail,
-                    subject: `New Website Enquiry from ${name}`,
-                    html: `
-                        <h2>New Enquiry Received</h2>
-                        <p><strong>Name:</strong> ${name}</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-                        ${extra?.companyName ? `<p><strong>Company:</strong> ${extra.companyName}</p>` : ''}
-                        ${extra?.country ? `<p><strong>Country:</strong> ${extra.country}</p>` : ''}
-                        ${extra?.industry ? `<p><strong>Industry:</strong> ${extra.industry}</p>` : ''}
-                        ${extra?.serviceOrProduct ? `<p><strong>Service/Product:</strong> ${extra.serviceOrProduct}</p>` : ''}
-                        ${extra?.budget ? `<p><strong>Budget:</strong> ${extra.budget}</p>` : ''}
-                        ${extra?.timeline ? `<p><strong>Timeline:</strong> ${extra.timeline}</p>` : ''}
-                        ${extra?.numberOfBranches ? `<p><strong>Number of branches:</strong> ${extra.numberOfBranches}</p>` : ''}
-                        ${extra?.currentSystem ? `<p><strong>Current system:</strong> ${extra.currentSystem}</p>` : ''}
-                        <p><strong>Requirement:</strong></p>
-                        <p>${requirement}</p>
-                        <hr>
-                        <p><small>Sent from HexaStack Solutions website</small></p>
-                    `,
-                }),
-            });
-            
-            if (response.ok) {
-                console.log('[EMAIL] Notification sent to admin');
-            }
-        }
+        const extra = payload.extra || {};
+        await sendResend({
+            to: adminEmail,
+            subject: `New Website Enquiry from ${payload.name}`,
+            html: `
+                <h2>New Enquiry Received</h2>
+                <p><strong>Name:</strong> ${payload.name}</p>
+                <p><strong>Email:</strong> ${payload.email}</p>
+                <p><strong>Phone:</strong> ${payload.phone || 'Not provided'}</p>
+                ${payload.source ? `<p><strong>Source:</strong> ${payload.source}</p>` : ''}
+                ${extra.companyName ? `<p><strong>Company:</strong> ${extra.companyName}</p>` : ''}
+                ${extra.country ? `<p><strong>Country:</strong> ${extra.country}</p>` : ''}
+                ${extra.industry ? `<p><strong>Industry:</strong> ${extra.industry}</p>` : ''}
+                ${extra.serviceOrProduct ? `<p><strong>Service/Product:</strong> ${extra.serviceOrProduct}</p>` : ''}
+                ${extra.budget ? `<p><strong>Budget:</strong> ${extra.budget}</p>` : ''}
+                <p><strong>Requirement:</strong></p>
+                <p>${payload.requirement}</p>
+            `,
+        });
     } catch (error) {
-        console.error('[EMAIL_ERROR]', error);
-        // Don't throw - email failure shouldn't block enquiry submission
+        console.error('[EMAIL_ADMIN]', error);
     }
-};
+}
 
-// Create new enquiry — accepts: name, email, whatsapp (phone), service, budget, requirement
+async function sendConfirmationEmail(to: string, name: string) {
+    try {
+        if (!to || !isValidEmail(to)) return;
+        await sendResend({
+            to,
+            subject: 'We got your message — HexaStack Solutions',
+            html: `
+                <p>Hi ${name},</p>
+                <p>Thanks for reaching out to HexaStack Solutions. We got your message and will reply within <strong>2 hours</strong> during business hours.</p>
+                <p>Prefer WhatsApp? Message us at <a href="https://wa.me/917591999365">+91 75919 99365</a>.</p>
+                <p>— HexaStack Solutions (Thrissur)</p>
+            `,
+        });
+    } catch (error) {
+        console.error('[EMAIL_CONFIRM]', error);
+    }
+}
+
+async function sendQuotedEmail(
+    to: string,
+    name: string,
+    deal?: { dealValue?: number | null; currency?: string | null }
+) {
+    try {
+        if (!to || !isValidEmail(to)) return;
+        const valueLine =
+            deal?.dealValue != null
+                ? `<p><strong>Proposed investment:</strong> ${deal.currency || 'INR'} ${Number(deal.dealValue).toLocaleString('en-IN')}</p>`
+                : '';
+        await sendResend({
+            to,
+            subject: 'Your HexaStack proposal is ready',
+            html: `
+                <p>Hi ${name},</p>
+                <p>We've prepared a proposal based on your enquiry. Reply to this email or WhatsApp us if you have questions — we typically respond within 2 hours.</p>
+                ${valueLine}
+                <p>— HexaStack Solutions</p>
+            `,
+        });
+    } catch (error) {
+        console.error('[EMAIL_QUOTED]', error);
+    }
+}
+
+async function maybeSendSlaAlert(enquiry: {
+    id: string;
+    name: string;
+    createdAt: Date;
+    firstRepliedAt: Date | null;
+}) {
+    if (enquiry.firstRepliedAt) return;
+    const ageMs = Date.now() - new Date(enquiry.createdAt).getTime();
+    if (ageMs < 2 * 60 * 60 * 1000) return;
+    if (!process.env.RESEND_API_KEY) return;
+
+    const already = await db.auditLog.findFirst({
+        where: { action: 'sla_alert_sent', targetId: enquiry.id },
+    });
+    if (already) return;
+
+    const adminEmail = await getSupportInboxEmail();
+    const ok = await sendResend({
+        to: adminEmail,
+        subject: `SLA breach: unreplied enquiry from ${enquiry.name}`,
+        html: `<p>Enquiry <strong>${enquiry.name}</strong> (${enquiry.id}) has no human reply after 2 hours.</p>`,
+    });
+    if (ok) {
+        // Use a system-ish user id if we don't have auth — skip if no staff context
+        const superAdmin = await db.user.findFirst({
+            where: { role: 'SUPER_ADMIN', active: true },
+            select: { id: true },
+        });
+        if (superAdmin) {
+            await writeAuditLog({
+                userId: superAdmin.id,
+                action: 'sla_alert_sent',
+                targetId: enquiry.id,
+            });
+        }
+    }
+}
+
+async function sendWhatsAppTemplate(phone: string | null | undefined, name: string) {
+    const token = process.env.WHATSAPP_TOKEN;
+    const phoneId = process.env.WHATSAPP_PHONE_ID;
+    const template = process.env.WHATSAPP_TEMPLATE || 'enquiry_thanks';
+    if (!token || !phoneId || !phone) return;
+    const digits = phone.replace(/\D/g, '');
+    if (digits.length < 10) return;
+    try {
+        await fetch(`https://graph.facebook.com/v19.0/${phoneId}/messages`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                messaging_product: 'whatsapp',
+                to: digits,
+                type: 'template',
+                template: {
+                    name: template,
+                    language: { code: process.env.WHATSAPP_TEMPLATE_LANG || 'en' },
+                    components: [
+                        {
+                            type: 'body',
+                            parameters: [{ type: 'text', text: name.slice(0, 60) }],
+                        },
+                    ],
+                },
+            }),
+        });
+    } catch (error) {
+        console.error('[WHATSAPP]', error);
+    }
+}
+
 router.post('/', async (req, res) => {
     try {
         const body = req.body || {};
-        const name = body.name != null ? String(body.name) : '';
-        const requirement =
-            body.requirement != null
-                ? String(body.requirement)
-                : body.message != null
-                  ? String(body.message)
-                  : '';
-        const email = body.email != null ? String(body.email).trim() : '';
-        const phone = body.phone != null ? String(body.phone) : '';
-        const whatsapp = body.whatsapp != null ? String(body.whatsapp) : '';
-        const contactPhone = (phone || whatsapp).trim() || null;
-        const contactEmail = email && isValidEmail(email) ? sanitize(email).toLowerCase() : null;
-        const serviceValue = body.service || body.serviceOrProduct;
-        const companyName = body.companyName;
-        const country = body.country;
-        const industry = body.industry;
-        const budget = body.budget;
-        const timeline = body.timeline;
-        const numberOfBranches = body.numberOfBranches;
-        const currentSystem = body.currentSystem;
+        const name = sanitize(body.name);
+        const emailRaw = sanitize(body.email);
+        const phone = sanitize(body.phone || body.whatsapp) || null;
+        const requirement = sanitizeLong(body.requirement || body.message || '', 5000);
+        const companyName = sanitize(body.companyName) || null;
+        const country = sanitize(body.country) || null;
+        const industry = sanitize(body.industry) || null;
+        const serviceOrProduct = sanitize(body.serviceOrProduct || body.service) || null;
+        const budget = sanitize(body.budget) || null;
+        const timeline = sanitize(body.timeline) || null;
+        const numberOfBranches = sanitize(body.numberOfBranches) || null;
+        const currentSystem = sanitize(body.currentSystem) || null;
+        const utmSource = sanitize(body.utmSource || body.utm_source) || null;
+        const utmCampaign = sanitize(body.utmCampaign || body.utm_campaign) || null;
+        const sourceRaw = sanitize(body.source) || null;
+        const source = sourceRaw || bucketSource(utmSource, req.headers.referer as string);
 
-        // Validate required fields (name + requirement)
-        if (!name.trim()) {
-            return res.status(400).json({ error: 'Missing required fields', message: 'Please enter your name.' });
+        if (!name || name.length < 2) {
+            res.status(400).json({ error: 'Name is required' });
+            return;
         }
-        if (name.trim().length < 2) {
-            return res.status(400).json({ error: 'Name too short', message: 'Please enter your full name.' });
+        if (!requirement || requirement.length < 5) {
+            res.status(400).json({ error: 'Requirement is required' });
+            return;
         }
-        if (!requirement.trim()) {
-            return res.status(400).json({ error: 'Missing required fields', message: 'Please describe what you need.' });
-        }
+        const email = emailRaw && isValidEmail(emailRaw) ? emailRaw : null;
 
-        const createData = {
-            name: sanitize(name).slice(0, 200),
-            email: contactEmail ? contactEmail.slice(0, 255) : null,
-            phone: contactPhone ? sanitize(contactPhone).slice(0, 50) : null,
-            requirement: sanitizeLong(requirement, 5000),
-            companyName: companyName ? sanitize(String(companyName)).slice(0, 200) : null,
-            country: country ? sanitize(String(country)).slice(0, 100) : null,
-            industry: industry ? sanitize(String(industry)).slice(0, 100) : null,
-            serviceOrProduct: serviceValue ? sanitize(String(serviceValue)).slice(0, 100) : null,
-            budget: budget ? sanitize(String(budget)).slice(0, 100) : null,
-            timeline: timeline ? sanitize(String(timeline)).slice(0, 100) : null,
-            numberOfBranches: numberOfBranches ? sanitize(String(numberOfBranches)).slice(0, 50) : null,
-            currentSystem: currentSystem ? sanitize(String(currentSystem)).slice(0, 200) : null,
-        };
-
-        const message = await db.contactMessage.create({ data: createData });
-
-        console.log(`[NEW_ENQUIRY] ${name} ${contactPhone || contactEmail || ''}`);
-
-        // Email notification (fire-and-forget)
-        sendEmailNotification(name, contactEmail || 'no-email@hexastacksolutions.com', contactPhone, requirement, {
-            companyName: companyName ? sanitize(String(companyName)) : undefined,
-            country: country ? sanitize(String(country)) : undefined,
-            industry: industry ? sanitize(String(industry)) : undefined,
-            serviceOrProduct: serviceValue ? sanitize(String(serviceValue)) : undefined,
-            budget: budget ? sanitize(String(budget)) : undefined,
-            timeline: timeline ? sanitize(String(timeline)) : undefined,
-            numberOfBranches: numberOfBranches ? sanitize(String(numberOfBranches)) : undefined,
-            currentSystem: currentSystem ? sanitize(String(currentSystem)) : undefined,
-        });
-
-        // Analytics (don't block or fail the response)
-        const today = new Date().toISOString().split('T')[0];
-        db.analytics.upsert({
-            where: { date: today },
-            create: { date: today, totalViews: 0, formSubmissions: 1 },
-            update: { formSubmissions: { increment: 1 } },
-        }).catch(() => {});
-
-        res.json({ success: true, message: 'Enquiry received successfully', id: message.id });
-    } catch (error: unknown) {
-        const err = error as Error;
-        console.error('[CONTACT_POST]', err?.message || err);
-        const isDb = err?.message?.includes('DATABASE') || err?.message?.includes('connect') || (err as any)?.code === 'P1001';
-        const message = isDb ? 'Database not configured. Set DATABASE_URL in Vercel/Netlify Environment Variables.' : 'Something went wrong. Please try again.';
-        res.status(isDb ? 503 : 500).json({ error: 'Internal Error', message });
-    }
-});
-
-// Get all enquiries
-router.get('/', async (_req, res) => {
-    try {
-        const messages = await db.contactMessage.findMany({
-            orderBy: {
-                createdAt: 'desc',
+        const message = await db.contactMessage.create({
+            data: {
+                name,
+                email,
+                phone,
+                requirement,
+                companyName,
+                country,
+                industry,
+                serviceOrProduct,
+                budget,
+                timeline,
+                numberOfBranches,
+                currentSystem,
+                source,
+                utmSource,
+                utmCampaign,
+                stage: 'new',
             },
         });
 
-        res.json(messages);
-    } catch (error: any) {
-        console.error('[CONTACT_GET]', error);
-        const isDb = error?.message?.includes('DATABASE') || error?.message?.includes('connect') || error?.code === 'P1001';
-        res.status(isDb ? 503 : 500).json({ error: isDb ? 'Database not configured.' : 'Internal Error' });
+        void sendAdminNotification({
+            name,
+            email: email || 'not provided',
+            phone,
+            requirement,
+            source,
+            extra: {
+                companyName: companyName || undefined,
+                country: country || undefined,
+                industry: industry || undefined,
+                serviceOrProduct: serviceOrProduct || undefined,
+                budget: budget || undefined,
+            },
+        });
+        if (email) void sendConfirmationEmail(email, name);
+        void sendWhatsAppTemplate(phone, name);
+
+        res.status(201).json({ success: true, id: message.id });
+    } catch (error) {
+        console.error('[CONTACT_POST]', error);
+        res.status(500).json({ error: 'Failed to submit enquiry' });
     }
 });
 
-// Update enquiry (mark as read)
-router.patch('/:id', async (req, res) => {
+router.get('/', requireStaff, async (_req, res) => {
+    try {
+        const messages = await db.contactMessage.findMany({ orderBy: { createdAt: 'desc' } });
+        void Promise.all(
+            messages
+                .filter((m) => !m.firstRepliedAt && m.stage === 'new')
+                .map((m) => maybeSendSlaAlert(m))
+        );
+        res.json(messages);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch enquiries' });
+    }
+});
+
+router.patch('/:id', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
-        const { isRead, isStarred } = req.body;
+        const {
+            isRead,
+            isStarred,
+            stage,
+            dealValue,
+            currency,
+            invoiceStatus,
+            referredBy,
+            wonAt,
+        } = req.body || {};
+        const data: Record<string, unknown> = {};
+        if (isRead !== undefined) data.isRead = Boolean(isRead);
+        if (isStarred !== undefined) data.isStarred = Boolean(isStarred);
+        const allowedStages = ['new', 'contacted', 'quoted', 'won', 'lost'];
+        if (stage != null) {
+            if (!allowedStages.includes(String(stage))) {
+                res.status(400).json({ error: 'Invalid stage' });
+                return;
+            }
+            data.stage = String(stage);
+        }
+        if (dealValue !== undefined) {
+            data.dealValue = dealValue === null || dealValue === '' ? null : Number(dealValue);
+        }
+        if (currency !== undefined) data.currency = currency ? String(currency) : 'INR';
+        if (invoiceStatus !== undefined) {
+            data.invoiceStatus = invoiceStatus ? String(invoiceStatus) : null;
+        }
+        if (referredBy !== undefined) {
+            data.referredBy = referredBy ? String(referredBy).slice(0, 200) : null;
+        }
+        if (wonAt !== undefined) data.wonAt = wonAt ? new Date(wonAt) : null;
 
-        const updateData: any = {};
-        if (typeof isRead === 'boolean') updateData.isRead = isRead;
-        if (typeof isStarred === 'boolean') updateData.isStarred = isStarred;
+        const existing = await db.contactMessage.findUnique({ where: { id } });
+        if (!existing) {
+            res.status(404).json({ error: 'Not found' });
+            return;
+        }
 
-        const message = await db.contactMessage.update({
-            where: { id },
-            data: updateData,
+        if (stage != null && String(stage) !== existing.stage) {
+            data.lastStageChangeAt = new Date();
+            if (String(stage) === 'won' && !existing.wonAt) {
+                data.wonAt = new Date();
+            }
+            if (existing.stage === 'new' && String(stage) !== 'new' && !existing.firstRepliedAt) {
+                data.firstRepliedAt = new Date();
+            }
+        }
+
+        const updated = await db.contactMessage.update({ where: { id }, data: data as any });
+
+        if (stage === 'quoted' && existing.stage !== 'quoted' && existing.email) {
+            void sendQuotedEmail(existing.email, existing.name, {
+                dealValue: updated.dealValue ?? existing.dealValue,
+                currency: updated.currency ?? existing.currency,
+            });
+        }
+
+        void maybeSendSlaAlert(updated);
+
+        await writeAuditLog({
+            userId: req.auth!.userId,
+            action: 'updated_enquiry',
+            targetId: id,
+            meta: data,
         });
 
-        res.json(message);
+        res.json(updated);
     } catch (error) {
         console.error('[CONTACT_PATCH]', error);
-        res.status(500).json({ error: 'Internal Error' });
+        res.status(500).json({ error: 'Failed to update enquiry' });
     }
 });
 
-// Delete enquiry
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireStaff, async (req, res) => {
     try {
-        const { id } = req.params;
-
-        await db.contactMessage.delete({
-            where: { id },
+        await db.contactMessage.delete({ where: { id: req.params.id } });
+        await writeAuditLog({
+            userId: req.auth!.userId,
+            action: 'deleted_enquiry',
+            targetId: req.params.id,
         });
-
         res.json({ success: true });
     } catch (error) {
-        console.error('[CONTACT_DELETE]', error);
-        res.status(500).json({ error: 'Internal Error' });
+        res.status(500).json({ error: 'Failed to delete enquiry' });
     }
 });
 
-// Reply to enquiry - send email to user
-router.post('/:id/reply', async (req, res) => {
+router.post('/:id/reply', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
-        const { replyMessage } = req.body;
-
-        if (!replyMessage || replyMessage.trim().length < 10) {
-            return res.status(400).json({ 
-                error: 'Reply too short',
-                message: 'Please write a proper reply message.' 
-            });
+        const { message } = req.body || {};
+        if (!message || !String(message).trim()) {
+            res.status(400).json({ error: 'message is required' });
+            return;
         }
-
-        // Get the original enquiry
-        const enquiry = await db.contactMessage.findUnique({
-            where: { id },
-        });
-
+        const enquiry = await db.contactMessage.findUnique({ where: { id } });
         if (!enquiry) {
-            return res.status(404).json({ error: 'Enquiry not found' });
+            res.status(404).json({ error: 'Not found' });
+            return;
         }
-
-        // Log the reply
-        console.log(`\n========================================`);
-        console.log(`REPLY SENT TO: ${enquiry.name} <${enquiry.email}>`);
-        console.log(`========================================`);
-        console.log(`Reply: ${replyMessage}`);
-        console.log(`========================================\n`);
-
-        // Send email via Resend if configured
-        if (process.env.RESEND_API_KEY) {
-            const supportEmail = await getSupportInboxEmail();
-            const response = await fetch('https://api.resend.com/emails', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-                },
-                body: JSON.stringify({
-                    from: 'HexaStack <onboarding@resend.dev>',
-                    to: enquiry.email,
-                    subject: `Re: Your enquiry to HexaStack`,
-                    html: `
-                        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-                            <h2 style="color: #1e293b;">Hello ${enquiry.name},</h2>
-                            <p style="color: #475569; line-height: 1.6;">Thank you for reaching out to us. Here is our response to your enquiry:</p>
-                            <div style="background: #f8fafc; border-left: 4px solid #0f172a; padding: 16px; margin: 20px 0;">
-                                <p style="color: #1e293b; margin: 0; white-space: pre-wrap;">${replyMessage}</p>
-                            </div>
-                            <p style="color: #64748b; font-size: 14px; margin-top: 30px;">Your original message:</p>
-                            <div style="background: #f1f5f9; padding: 16px; border-radius: 8px; margin-top: 8px;">
-                                <p style="color: #64748b; margin: 0; font-size: 14px;">${enquiry.requirement}</p>
-                            </div>
-                            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
-                            <p style="color: #64748b; font-size: 12px;">Best regards,<br>HexaStack Solutions<br>${supportEmail}</p>
-                        </div>
-                    `,
-                }),
-            });
-            
-            if (response.ok) {
-                console.log('[EMAIL] Reply sent successfully to', enquiry.email);
-                
-                // Mark as read after reply
-                await db.contactMessage.update({
-                    where: { id },
-                    data: { isRead: true },
-                });
-                
-                return res.json({ 
-                    success: true, 
-                    message: `Reply sent to ${enquiry.email}` 
-                });
-            } else {
-                const errorData = await response.text();
-                console.error('[EMAIL_ERROR]', errorData);
-                return res.status(500).json({ 
-                    error: 'Email failed',
-                    message: 'Could not send email. Check RESEND_API_KEY configuration.' 
-                });
-            }
-        } else {
-            // No email configured - just mark as read
-            await db.contactMessage.update({
-                where: { id },
-                data: { isRead: true },
-            });
-            
-            return res.json({ 
-                success: true, 
-                message: 'Reply logged (email not configured - add RESEND_API_KEY to enable)' 
-            });
+        if (!enquiry.email || !isValidEmail(enquiry.email)) {
+            res.status(400).json({ error: 'Enquiry has no valid email' });
+            return;
         }
+        const ok = await sendResend({
+            to: enquiry.email,
+            subject: `Re: Your enquiry — HexaStack Solutions`,
+            html: `<p>Hi ${enquiry.name},</p><p>${String(message).replace(/\n/g, '<br>')}</p><p>— HexaStack Solutions</p>`,
+        });
+        if (!ok && !process.env.RESEND_API_KEY) {
+            res.status(503).json({ error: 'Email not configured (RESEND_API_KEY)' });
+            return;
+        }
+        const stage = enquiry.stage === 'new' ? 'contacted' : enquiry.stage;
+        await db.contactMessage.update({
+            where: { id },
+            data: {
+                isRead: true,
+                stage,
+                firstRepliedAt: enquiry.firstRepliedAt || new Date(),
+                ...(enquiry.stage === 'new' ? { lastStageChangeAt: new Date() } : {}),
+            },
+        });
+        res.json({ success: true });
     } catch (error) {
         console.error('[CONTACT_REPLY]', error);
-        res.status(500).json({ error: 'Internal Error' });
+        res.status(500).json({ error: 'Failed to send reply' });
     }
 });
 

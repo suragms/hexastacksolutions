@@ -16,24 +16,50 @@ function parseBlogPosts() {
     return posts;
 }
 
-const blogEntries = parseBlogPosts();
-const blogLastmodMap = new Map(blogEntries.map((post) => [`/blog/${post.slug}`, post.dateIso]));
+/** Optional: merge published DB posts when API_URL / DATABASE is reachable at build time. */
+async function fetchDbBlogPosts() {
+    const api = process.env.SITEMAP_API_URL || process.env.VITE_API_URL || '';
+    if (!api) return [];
+    try {
+        const res = await fetch(`${api.replace(/\/$/, '')}/api/blog`);
+        if (!res.ok) return [];
+        const posts = await res.json();
+        return (posts || []).map((p) => ({
+            slug: p.slug,
+            dateIso: (p.publishedAt || p.createdAt || fallbackLastmod).toString().slice(0, 10),
+        }));
+    } catch {
+        return [];
+    }
+}
 
-const urls = SITEMAP_PATHS.map((route) => {
-    const isBlog = route.startsWith('/blog/');
-    return {
-        loc: `${BASE}${route}`,
-        lastmod: blogLastmodMap.get(route) || fallbackLastmod,
-        changefreq: isBlog ? 'monthly' : 'weekly',
-        priority:
-            route === '/' ? '1.0' :
-            isBlog ? '0.75' :
-            route.startsWith('/services/') ? '0.85' :
-            '0.8',
-    };
-});
+async function main() {
+    const staticBlog = parseBlogPosts();
+    const dbBlog = await fetchDbBlogPosts();
+    const bySlug = new Map();
+    for (const p of [...staticBlog, ...dbBlog]) {
+        bySlug.set(p.slug, p.dateIso);
+    }
 
-const xml = `<?xml version="1.0" encoding="UTF-8"?>
+    const blogPaths = [...bySlug.keys()].map((slug) => `/blog/${slug}`);
+    const allPaths = [...new Set([...SITEMAP_PATHS, ...blogPaths])];
+    const blogLastmodMap = new Map([...bySlug.entries()].map(([slug, dateIso]) => [`/blog/${slug}`, dateIso]));
+
+    const urls = allPaths.map((route) => {
+        const isBlog = route.startsWith('/blog/');
+        return {
+            loc: `${BASE}${route}`,
+            lastmod: blogLastmodMap.get(route) || fallbackLastmod,
+            changefreq: isBlog ? 'monthly' : 'weekly',
+            priority:
+                route === '/' ? '1.0' :
+                isBlog ? '0.75' :
+                route.startsWith('/services/') ? '0.85' :
+                '0.8',
+        };
+    });
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((entry) => `  <url>
     <loc>${entry.loc}</loc>
@@ -44,8 +70,12 @@ ${urls.map((entry) => `  <url>
 </urlset>
 `;
 
-const outPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
-fs.writeFileSync(outPath, xml, 'utf8');
-console.log('Wrote sitemap.xml with', urls.length, 'URLs');
+    const outPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
+    fs.writeFileSync(outPath, xml, 'utf8');
+    console.log('Wrote sitemap.xml with', urls.length, 'URLs (static blog +', dbBlog.length, 'DB posts)');
+}
 
-module.exports = { urls };
+main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+});

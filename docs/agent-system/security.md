@@ -108,4 +108,27 @@
 
 ---
 
+---
+
+## 10. Staff / CRM auth hardening (mandatory before Step 0 ships)
+
+| Requirement | Action |
+|-------------|--------|
+| Kill shared password | Remove `ADMIN_PASSWORD` login and `VITE_ADMIN_PASSWORD` client gate |
+| JWT on mutating routes | `requireAuth` + `requireRole` on all admin mutations |
+| Soft-delete users | `active: false`; never hard-delete (preserve audit) |
+| Temp passwords | Return once in API response; never log plaintext |
+| Register lockdown | Disable open `/api/auth/register` in production or SUPER_ADMIN-only bootstrap |
+| STAFF isolation | 403 on user management, settings, API keys |
+| Audit | Write AuditLog on create/update/delete of staff, projects, blog, settings |
+
+### Checklist additions
+
+- [ ] No secrets in `src/` (no default admin password in bundle)
+- [ ] Inactive users cannot login
+- [ ] `mustChangePassword` enforced before admin tabs
+- [ ] WhatsApp / OpenRouter keys server-side only
+
+---
+
 *Next: Performance Agent (adds to deployment.md) → [deployment.md](./deployment.md) — Deployment Agent*

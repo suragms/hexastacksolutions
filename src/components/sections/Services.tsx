@@ -165,7 +165,7 @@ export function Services() {
           <FadeInView className="max-w-2xl text-left lg:max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">Solutions</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-text-primary md:text-4xl lg:text-[2.5rem] lg:leading-tight">
-              SEO-focused software services built to grow your business
+              Websites, POS, and AI — Built by People You Can Actually Reach
             </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-text-muted">
               Start with one priority and scale from there. We combine design, development, mobile app development

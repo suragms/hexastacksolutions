@@ -11,9 +11,9 @@ const hubServices = getHubServices()
 
 export function ServicesPage() {
   usePageSeo({
-    title: 'Web Development, Mobile Apps, ERP & AI Automation Services Kerala | HexaStack',
+    title: 'Web, Mobile, ERP & AI — Built by Developers Who Reply in 2 Hours | HexaStack Kerala',
     description:
-      'HexaStack Solutions is a software company in Thrissur offering web development company in Kerala services, mobile app development Kerala, ERP software Kerala, and AI automation services Kerala with reliable delivery.',
+      'Software services from HexaStack in Thrissur: web development, mobile apps, ERP/POS, and AI automation. Talk to the developer. Reply within 2 hours on WhatsApp.',
     canonicalPath: '/services',
   })
 
@@ -27,16 +27,11 @@ export function ServicesPage() {
         <FadeInView className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">Services</p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
-            Complete digital services to scale your business in Kerala
+            Web, Mobile &amp; ERP — Built by Developers Who Reply in 2 Hours
           </h1>
           <p className="mt-4 text-text-muted">
-            From revenue-focused websites to production-ready apps, we plan clearly and ship in milestones you can
-            trust. As a software company in Thrissur, we also deliver mobile app development Kerala, ERP software
-            Kerala, and AI automation services Kerala. Tell us your priority on{' '}
-            <Link to="/contact" className="font-medium text-orange-600 hover:text-orange-700">
-              contact
-            </Link>
-            .
+            Tired of agencies that disappear after the kickoff call? You talk to the people who write the code.
+            Plan clearly, ship in milestones, and get answers on WhatsApp the same day.
           </p>
         </FadeInView>
 

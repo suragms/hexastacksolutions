@@ -1,5 +1,7 @@
 import express from 'express';
 import { db } from '../db';
+import { requireStaff } from '../utils/auth';
+import { writeAuditLog } from '../utils/audit';
 
 const router = express.Router();
 
@@ -18,8 +20,7 @@ router.get('/', async (_req, res) => {
     }
 });
 
-// Create project
-router.post('/', async (req, res) => {
+router.post('/', requireStaff, async (req, res) => {
     try {
         const { title, description, techStack, projectUrl, featured, imageUrl, location, clientType, displayOrder } = req.body;
         
@@ -48,7 +49,7 @@ router.post('/', async (req, res) => {
 });
 
 // Update project
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
         const { title, description, techStack, projectUrl, featured, imageUrl, location, clientType, displayOrder } = req.body;
@@ -84,7 +85,7 @@ router.patch('/:id', async (req, res) => {
 });
 
 // Delete project
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
         
@@ -98,6 +99,25 @@ router.delete('/:id', async (req, res) => {
     } catch (error) {
         console.error('[PORTFOLIO_DELETE]', error);
         res.status(500).json({ error: 'Internal Error' });
+    }
+});
+
+router.patch('/reorder', requireStaff, async (req, res) => {
+    try {
+        const { orderedIds } = req.body || {};
+        if (!Array.isArray(orderedIds)) {
+            res.status(400).json({ error: 'orderedIds array required' });
+            return;
+        }
+        await Promise.all(
+            orderedIds.map((id: string, index: number) =>
+                db.portfolio.update({ where: { id }, data: { displayOrder: index } }),
+            ),
+        );
+        res.json({ success: true });
+    } catch (error) {
+        console.error('[PORTFOLIO_REORDER]', error);
+        res.status(500).json({ error: 'Failed to reorder' });
     }
 });
 

@@ -120,4 +120,33 @@ When adding a **new product or campaign** (any product name), use this structure
 
 ---
 
+---
+
+## 8. Admin ops UI (Staff / CRM / Analytics / AI)
+
+Single `/admin` shell. Tab visibility by role.
+
+| Tab | SUPER_ADMIN | ADMIN | STAFF |
+|-----|-------------|-------|-------|
+| Analytics | yes | yes | view |
+| CRM (kanban) | yes | yes | yes |
+| Team | yes | no | no |
+| Tasks | yes | yes | yes |
+| Blog editor | yes | yes | yes |
+| Projects / products | yes | yes | scoped write |
+| Settings / API keys | yes | limited | no |
+| AI / Social composer | yes | yes | yes |
+
+### 8.1 Flows
+
+- **Login:** Email + password → JWT; if `mustChangePassword`, force change screen before tabs.
+- **Team:** Table (name, email, role badge, active, last login); Add staff modal shows temp password once.
+- **CRM:** Columns `new → contacted → quoted → won | lost`; drag card to PATCH stage.
+- **Analytics:** Source bar chart (7/30/90d); views line + “projected trend” label; AuditLog feed.
+- **Blog:** Markdown textarea + live preview + cover upload + video URL.
+- **AI composer:** Generate → edit → Copy / share-intent (no auto-publish).
+- **Tasks:** Board by PENDING / IN_PROGRESS / COMPLETED; overdue red; assign from staff list.
+
+---
+
 *Next: [tasks.md](./tasks.md) — Development Agent*

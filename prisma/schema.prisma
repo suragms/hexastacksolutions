@@ -10,13 +10,16 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  name      String
-  password  String
-  role      UserRole @default(STAFF)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  email              String    @unique
+  name               String
+  password           String
+  role               UserRole  @default(STAFF)
+  active             Boolean   @default(true)
+  mustChangePassword Boolean   @default(false)
+  lastLoginAt        DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
 
   projects     Project[]
   tasks        Task[]
@@ -34,6 +37,9 @@ model Project {
 
   createdBy   User @relation(fields: [createdById], references: [id])
   createdById String @db.ObjectId
+
+  clientId    String? @db.ObjectId
+  client      Client? @relation(fields: [clientId], references: [id])
 
   media       ProjectMedia[]
   feedbacks   Feedback[]
@@ -180,9 +186,9 @@ enum TaskStatus {
 }
 
 model ContactMessage {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
   name              String
-  email             String?  // optional: doc uses Name, WhatsApp, Service, Budget, Requirement only
+  email             String?
   phone             String?
   requirement       String
   companyName       String?
@@ -193,10 +199,21 @@ model ContactMessage {
   timeline          String?
   numberOfBranches  String?
   currentSystem     String?
-  isRead            Boolean  @default(false)
-  isStarred         Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  source            String?
+  utmSource         String?
+  utmCampaign       String?
+  stage             String    @default("new") // new | contacted | quoted | won | lost
+  dealValue         Float?
+  currency          String?   @default("INR") // INR | AED | USD
+  wonAt             DateTime?
+  invoiceStatus     String?   // not_invoiced | invoiced | partial | paid
+  firstRepliedAt    DateTime?
+  referredBy        String?
+  lastStageChangeAt DateTime?
+  isRead            Boolean   @default(false)
+  isStarred         Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
 
 model Client {
@@ -205,10 +222,87 @@ model Client {
   company   String?
   email     String   @unique
   whatsapp  String?
-  password  String
-  status    String   @default("pending") // pending | approved
+  phone     String?
+  country   String?
+  password  String?  // optional for CRM-only (no portal login)
+  status    String   @default("pending") // pending | approved | active | past | churned
+  leadId    String?  // source ContactMessage id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  contracts  Contract[]
+  invoices   Invoice[]
+  projects   Project[]
+  retainers  RetainerContract[]
+}
+
+model DailyLog {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @db.ObjectId
+  date          String   // IST YYYY-MM-DD
+  outreachCount Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  @@unique([userId, date])
+}
+
+model OutreachLog {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String    @db.ObjectId
+  channel           String    // whatsapp | linkedin | email | instagram_dm
+  targetName        String?
+  targetInfo        String?
+  repliedAt         DateTime?
+  convertedToLeadId String?   @db.ObjectId
+  createdAt         DateTime  @default(now())
+}
+
+model Contract {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  clientId  String    @db.ObjectId
+  client    Client    @relation(fields: [clientId], references: [id])
+  scope     String
+  amount    Float
+  currency  String    @default("INR")
+  signedAt  DateTime?
+  fileUrl   String?
+  createdAt DateTime  @default(now())
+}
+
+model Invoice {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  clientId  String    @db.ObjectId
+  client    Client    @relation(fields: [clientId], references: [id])
+  amount    Float
+  currency  String    @default("INR")
+  status    String    @default("draft") // draft | sent | paid | overdue
+  dueDate   DateTime?
+  paidAt    DateTime?
+  invoiceNo String    @unique
+  createdAt DateTime  @default(now())
+}
+
+model RetainerContract {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  clientId       String    @db.ObjectId
+  client         Client    @relation(fields: [clientId], references: [id])
+  monthlyAmount  Float
+  currency       String    @default("INR")
+  startDate      DateTime?
+  nextInvoiceDate DateTime?
+  status         String    @default("active") // active | paused | ended
+  createdAt      DateTime  @default(now())
+}
+
+model WeeklyMetricManual {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  weekStart     String   @unique // YYYY-MM-DD Monday IST
+  gscClicks     Int?
+  gbpViews      Int?
+  linkedInReach Int?
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model PageView {
@@ -217,7 +311,33 @@ model PageView {
   userAgent String?
   ip        String?
   referrer  String?
+  source    String?  // google | instagram | facebook | x | youtube | whatsapp | direct | other
   createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  action    String
+  targetId  String?
+  meta      String?
+  createdAt DateTime @default(now())
+}
+
+model BlogPost {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  title            String
+  slug             String    @unique
+  excerpt          String
+  category         String
+  body             String
+  featuredImageUrl String?
+  videoUrl         String?
+  published        Boolean   @default(false)
+  publishedAt      DateTime?
+  authorId         String?   @db.ObjectId
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
 
 model Analytics {

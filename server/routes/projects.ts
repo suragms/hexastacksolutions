@@ -1,9 +1,10 @@
 import express from 'express';
 import { db } from '../db';
+import { requireStaff } from '../utils/auth';
 
 const router = express.Router();
 
-router.get('/', async (_req, res) => {
+router.get('/', requireStaff, async (_req, res) => {
     try {
         const projects = await db.project.findMany({
             include: {
@@ -24,7 +25,7 @@ router.get('/', async (_req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', requireStaff, async (req, res) => {
     try {
         const { name, overview, techStack, status, createdById, media } = req.body;
 

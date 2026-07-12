@@ -3,21 +3,23 @@ import type { ReactNode } from 'react'
 
 type Variant = 'fadeUp' | 'fadeIn' | 'slideLeft' | 'slideRight' | 'zoomIn'
 
+/** Section/card entry — default for ~90% of cases (y: 16, once: true). */
 const variants: Record<
   Variant,
   { initial: Record<string, number>; animate: Record<string, number> }
 > = {
-  fadeUp: { initial: { opacity: 0, y: 28 }, animate: { opacity: 1, y: 0 } },
+  fadeUp: { initial: { opacity: 0, y: 16 }, animate: { opacity: 1, y: 0 } },
   fadeIn: { initial: { opacity: 0 }, animate: { opacity: 1 } },
-  slideLeft: { initial: { opacity: 0, x: 40 }, animate: { opacity: 1, x: 0 } },
-  slideRight: { initial: { opacity: 0, x: -40 }, animate: { opacity: 1, x: 0 } },
-  zoomIn: { initial: { opacity: 0, scale: 0.96 }, animate: { opacity: 1, scale: 1 } },
+  slideLeft: { initial: { opacity: 0, x: 16 }, animate: { opacity: 1, x: 0 } },
+  slideRight: { initial: { opacity: 0, x: -16 }, animate: { opacity: 1, x: 0 } },
+  zoomIn: { initial: { opacity: 0, scale: 0.98 }, animate: { opacity: 1, scale: 1 } },
 }
 
 type Props = {
   children: ReactNode
   className?: string
   variant?: Variant
+  /** Stagger index: delay = index * 0.05 */
   delay?: number
   duration?: number
 }
@@ -27,7 +29,7 @@ export function FadeInView({
   className = '',
   variant = 'fadeUp',
   delay = 0,
-  duration = 0.5,
+  duration = 0.45,
 }: Props) {
   const reduce = useReducedMotion()
   const v = variants[variant]

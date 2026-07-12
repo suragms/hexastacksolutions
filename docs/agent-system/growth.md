@@ -1,68 +1,103 @@
 # Growth & Marketing — Output
 
 **Input:** [research.md](./research.md), [strategy.md](./strategy.md), [uiux.md](./uiux.md)  
-**Output:** SEO, messaging, conversion, and launch plan for any product; operations and workflows (Growth Agent + Operations Agent).
+**Output:** SEO, messaging, conversion, and launch plan for HexaStack main site; operations and workflows (Growth Agent + Operations Agent).
 
 ---
 
-## 1. Growth — Marketing website and domain
+## 1. Positioning (live site)
 
-- **Domain:** Register a product domain (e.g. [product].com or subdomain) and point to your host (Netlify/Vercel).
-- **Purpose:** Single clear message — value prop and target audience.
-
----
-
-## 2. Landing page structure (template)
-
-1. Hero: headline + subhead + “Book demo” / “Start trial”.
-2. Problem: 2–3 pain points.
-3. Solution: benefits and key features.
-4. Features: short list with icons or cards.
-5. Use cases: who it’s for (segments/regions).
-6. Social proof: “Used by X”, 2–3 quotes.
-7. Screenshots / demo video.
-8. Final CTA + form or Calendly.
-9. Footer: Contact, Privacy, Terms.
+- **Domain:** hexastacksolutions.com (Netlify).
+- **Promise:** Thrissur-based; Kerala & Gulf; talk to the developer; reply in 2 hours on WhatsApp.
+- **Proof:** Portfolio, products (HexaBill, HexaCV), case-led blog.
 
 ---
 
-## 3. Screenshots and product showcase
+## 2. SEO (on-site + ops)
 
-- **Screens:** 5–10 key screens; compress for web.
-- **Demo video:** 1–3 min (e.g. Loom): problem → solution → short demo → CTA.
-
----
-
-## 4. SEO
-
-- **Keywords:** Low-competition phrases for the product and audience.
-- **On-page:** Unique title and meta description per page; one H1; clear headings.
-- **Sitemap:** Generate and submit to Google Search Console after go-live.
-- **Content:** 1–2 blog or resource posts to support SEO.
+- Use existing keyword targets in `.cursor/rules/02-SEO.md` — do not regenerate from scratch.
+- Sitemap: `scripts/generate-sitemap.cjs` (extend to DB blog posts).
+- GBP website field UTM: `https://hexastacksolutions.com/?utm_source=google_maps`.
+- Ranking still requires: verified GBP + weekly posts, 2–4 real blogs/month, citations, page speed. No dashboard substitutes for these.
 
 ---
 
-## 5. YouTube and video
+## 3. Content cadence (achievable)
 
-- **Long-form:** One overview video (5–10 min): problem → solution → demo → CTA.
-- **Short-form:** 30–60 s clips per feature; captions.
+| Channel | Cadence | Notes |
+|---------|---------|--------|
+| Blog | 2 real posts / month | Hook-first; anti-slop rules below |
+| Google Business Profile | 3 short posts / week | Low effort; helps Maps |
+| Social | Generate in admin → human edit → Copy & Open | No unsupervised auto-post |
+
+### Anti-slop (banned)
+
+Em-dash-heavy rhythm; “In today’s fast-paced world”; unlock/elevate/seamless/robust/cutting-edge/game-changing; rule-of-three in every paragraph; emoji-as-bullets.
+
+### Required pattern
+
+1. Hook in first sentence (number, pain, or Thrissur/Gulf local reference).
+2. One concrete claim per section.
+3. Plain words (WhatsApp-to-client tone, lightly cleaned).
 
 ---
 
-## 6. Social and conversion
+## 4. Conversion
 
-- **Social:** LinkedIn, Twitter/X, or region-specific channels; link to main site or product site.
-- **CRO:** One primary CTA; basic events (form submit, demo request) in analytics.
+- Contact form + WhatsApp CTA; auto-confirmation email when Resend configured.
+- UTM on channel links (`?utm_source=instagram` etc.) for attribution.
+- Primary CTA: Get quote / Contact; secondary: WhatsApp.
+
+---
+
+## 5. Social and video
+
+- LinkedIn / X / Facebook / WhatsApp share intents via SocialPostComposer.
+- Instagram / YouTube: open platform + paste (API later).
+- Video: template posters first; not AI video-gen for daily posting.
+
+---
+
+## 6. Analytics for growth
+
+- Own dashboard: views by source (incl. google_maps UTM).
+- GBP Performance dashboard (Google’s free UI) checked weekly for calls/directions.
+- Label forecast charts as “projected trend,” not AI prediction.
 
 ---
 
 ## 7. Operations & workflows (Operations Agent)
 
-- **Task management:** Use MASTER_TODO and GSC checklist in `docs/` for SEO batches and one-off tasks; commit after each batch or milestone.
-- **Agent pipeline:** “Start next” = run next agent in sequence; read previous output + `memory/*` before acting; optionally update memory after the stage.
-- **Automation:** No heavy orchestration for MVP; manual or light script to generate the next agent prompt.
-- **Internal workflows:** Document repeatable flows (e.g. new location batch, new product landing) in this doc or in tasks.md.
+### 7.1 Weekly ops
+
+1. Post 3× to GBP (offer, project snippet, tip).
+2. Reply to all CRM `new` / `contacted` within 2 hours business hours.
+3. Review Analytics source breakdown; note spikes.
+4. Assign overdue Tasks; clear COMPLETED older than 30 days if needed.
+
+### 7.2 Monthly ops
+
+1. Publish 2 blog posts (DB editor); verify sitemap.
+2. Soft audit: AuditLog for unexpected edits.
+3. Reset any staff password that leaked; rotate if needed.
+4. Review won/lost CRM for messaging insights.
+
+### 7.3 Staff onboarding
+
+1. SUPER_ADMIN creates user → share temp password once.
+2. Staff must change password on first login.
+3. Grant STAFF by default; promote to ADMIN only for CTO-level.
+
+### 7.4 Agent pipeline
+
+- “Start next” = next agent in sequence; read previous output + `memory/*`.
+- Feature work for admin ops: follow Steps 0–7 in `tasks.md`; one commit per step.
+
+### 7.5 Incident / access
+
+- Compromised account: SUPER_ADMIN soft-deactivates + reset password.
+- Never share SUPER_ADMIN credentials; no shared env password after Step 0.
 
 ---
 
-*Use this doc as a template for any product launch; replace [Product] and audience with the real name and segment.*
+*Use alongside `.cursor/rules/02-SEO.md` for page titles and keywords.*

@@ -76,13 +76,13 @@ export function Process() {
           {steps.map((step, index) => (
             <motion.article
               key={step.title}
-              className="flex h-full flex-col rounded-2xl border border-border bg-card/90 px-4 py-5 shadow-sm backdrop-blur-sm transition hover:border-orange-200/80 hover:shadow-md"
+              className="flex h-full flex-col rounded-2xl border border-border bg-card px-4 py-5 shadow-sm transition-colors duration-200 hover:border-orange-200/80"
               initial={reduce ? false : { opacity: 0, y: 16 }}
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{
                 duration: 0.4,
-                delay: reduce ? 0 : index * 0.04,
+                delay: reduce ? 0 : index * 0.05,
                 ease: [0.4, 0, 0.2, 1],
               }}
             >

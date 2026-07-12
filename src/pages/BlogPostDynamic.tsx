@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { usePageSeo } from '../hooks/usePageSeo'
+import { Skeleton } from '../components/ui/skeleton'
 import { API_URL } from '../lib/utils'
 
 type Post = {
@@ -47,6 +48,7 @@ export default function BlogPostDynamic() {
   useEffect(() => {
     if (!slug) return
     let cancelled = false
+    setResolvedSlug('')
     fetch(`${API_URL}/api/blog/post/${encodeURIComponent(slug)}`)
       .then((r) => {
         if (!r.ok) throw new Error('not found')
@@ -94,8 +96,13 @@ export default function BlogPostDynamic() {
 
   if (loading) {
     return (
-      <div className="flex min-h-[40vh] items-center justify-center">
-        <div className="h-10 w-10 animate-spin rounded-full border-2 border-[var(--primary)] border-t-transparent" />
+      <div className="mx-auto max-w-3xl space-y-4 px-4 py-12 md:py-16" aria-busy="true">
+        <Skeleton className="h-4 w-24" />
+        <Skeleton className="h-10 w-full max-w-xl" />
+        <Skeleton className="aspect-[16/9] w-full rounded-2xl" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-5/6" />
+        <Skeleton className="h-4 w-4/6" />
       </div>
     )
   }

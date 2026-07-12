@@ -12,9 +12,9 @@ import { portfolioProjects } from '../data/portfolioManifest'
 
 export function WorkPage() {
   usePageSeo({
-    title: 'Portfolio & case studies | Web design & software | Kerala, Gulf & global',
+    title: 'Real Software for Real Clients — UAE to Kerala | HexaStack Portfolio',
     description:
-      'Selected websites, dashboards, e‑commerce, and custom software delivered for Kerala, UAE, Saudi Arabia, GCC, and global clients. Browse by category and read case notes.',
+      'Selected websites, dashboards, e-commerce, and custom software delivered for Kerala, UAE, Saudi Arabia, GCC, and global clients. Browse by category.',
     canonicalPath: '/work',
   })
 
@@ -37,11 +37,10 @@ export function WorkPage() {
         <FadeInView className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">Our work</p>
           <h1 className="mt-3 break-words text-2xl font-bold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
-            Websites & products we’ve shipped
+            Real Software for Real Clients — UAE to Kerala
           </h1>
           <p className="mt-4 text-text-muted">
-            From marketing sites to internal tools, each engagement is tailored to the business, not a
-            template.
+            From marketing sites to internal tools — each engagement is tailored to the business, not a template.
           </p>
         </FadeInView>
 

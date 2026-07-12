@@ -86,4 +86,65 @@
 
 ---
 
+---
+
+## 8. Staff / CRM / Analytics / AI — P0 scope (Steps 0–7)
+
+Extend the main site admin into a real internal ops surface. Do **not** rebuild the public site.
+
+### 8.1 Role map
+
+| Role | Person | Access |
+|------|--------|--------|
+| SUPER_ADMIN | Owner/CEO | Full access; only role that creates/deletes users |
+| ADMIN | CTO | Full access except deleting SUPER_ADMIN or billing/API keys |
+| STAFF | Team + hires | CRM, blog/posts, analytics view; no user management, settings, API keys |
+
+### 8.2 Build order (P0)
+
+| Step | Scope |
+|------|--------|
+| 0 | Kill duplicate admin auth; one Admin UI; JWT + role on all mutating routes |
+| 1 | Staff & roles (create/reset/soft-delete; mustChangePassword) |
+| 2 | CRM: lead source + pipeline stages + Resend confirm + WhatsApp MVP |
+| 3 | Analytics v2: source attribution, charts, projected trend, AuditLog |
+| 4 | Content: BlogPost DB + editor; drag reorder portfolio/products |
+| 5 | AI generate caption/hashtags + Copy & Open publish (no Meta auto-post) |
+| 6 | Task manager UI on existing Task model |
+| 7 | SEO/GMB operational cadence (process, not a ranking switch) |
+
+### 8.3 Explicit non-goals
+
+- Meta Instagram/Facebook auto-publish (needs app review — wire later).
+- X/Twitter write API (paid).
+- Calling linear regression an “AI prediction.”
+- Third-party unofficial WhatsApp automation.
+
+### 8.4 Success criteria (ops)
+
+- One admin entrypoint; no shared `VITE_ADMIN_PASSWORD` / `ADMIN_PASSWORD` gate.
+- SUPER_ADMIN creates staff with once-shown temp passwords.
+- Enquiries have source + stage; confirmation email when Resend configured.
+- Analytics shows source breakdown + projected trend + audit feed.
+- Blog creatable from admin without editing TSX.
+- Generate-post → human edit → copy/share.
+
+---
+
+## 9. Operations — Discipline, Profit, Clients (P0)
+
+Extends CRM/admin without rebuilding auth or the public site. See `.cursor/rules/23-OPERATIONS.md`.
+
+| Area | Scope |
+|------|--------|
+| Deal money | `dealValue`, currency, invoiceStatus, referredBy, firstRepliedAt, wonAt on ContactMessage |
+| Daily Ops | DailyLog 5/day IST, OutreachLog, streak, SLA list, weekly manual metrics, digest |
+| Revenue | Pipeline, funnel, MTD vs `MONTHLY_REVENUE_TARGET`, retainers MRR, unpaid invoices |
+| Clients | Extend portal Client (password optional); convert won → Client + Project + onboarding Tasks; contracts/invoices |
+| Case study | Human-triggered draft via `/api/ai/generate-post` — no auto-publish / no client DMs |
+
+**Non-goals:** Razorpay/Stripe; auto-DM clients; stamping SLA on auto-confirm email alone.
+
+---
+
 *Next: [architecture.md](./architecture.md) — Architecture Agent*

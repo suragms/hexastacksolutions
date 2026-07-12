@@ -1,5 +1,6 @@
 import express from 'express';
 import { getCollection, ObjectId } from '../mongodb';
+import { requireStaff } from '../utils/auth';
 
 const router = express.Router();
 
@@ -23,7 +24,7 @@ router.get('/', async (_req, res) => {
 });
 
 // POST new service
-router.post('/', async (req, res) => {
+router.post('/', requireStaff, async (req, res) => {
     try {
         const collection = await getCollection('Service');
         const { name, icon, description, link, isComingSoon, displayOrder } = req.body;
@@ -48,7 +49,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT update service
-router.put('/:id', async (req, res) => {
+router.put('/:id', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
         const collection = await getCollection('Service');
@@ -77,7 +78,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE service
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
         const collection = await getCollection('Service');
@@ -90,7 +91,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // PATCH reorder services
-router.patch('/reorder', async (req, res) => {
+router.patch('/reorder', requireStaff, async (req, res) => {
     try {
         const { orders } = req.body;
         const collection = await getCollection('Service');

@@ -43,7 +43,7 @@ export function ProjectLightbox({ project, onClose }: Props) {
     >
       <button
         type="button"
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/80"
         aria-label="Close"
         onClick={onClose}
       />
@@ -59,7 +59,7 @@ export function ProjectLightbox({ project, onClose }: Props) {
             className="h-full w-full object-cover"
           />
           {slides.length > 1 ? (
-            <div className="absolute bottom-0 left-0 right-0 flex gap-1.5 overflow-x-auto bg-background/85 p-2 backdrop-blur-sm scrollbar-thin">
+            <div className="absolute bottom-0 left-0 right-0 flex gap-1.5 overflow-x-auto bg-background p-2 scrollbar-thin">
               {slides.map((src, i) => (
                 <button
                   key={src}
@@ -79,7 +79,7 @@ export function ProjectLightbox({ project, onClose }: Props) {
             ref={closeRef}
             type="button"
             onClick={onClose}
-            className="absolute right-3 top-3 rounded-lg bg-background/80 p-2 text-text-primary backdrop-blur hover:bg-background"
+            className="absolute right-3 top-3 rounded-lg bg-background p-2 text-text-primary transition-colors duration-200 hover:bg-surface"
             aria-label="Close dialog"
           >
             <X className="h-5 w-5" />

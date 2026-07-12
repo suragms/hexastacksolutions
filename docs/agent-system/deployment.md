@@ -91,4 +91,36 @@
 
 ---
 
-*Pipeline complete. Optional: [growth.md](./growth.md) for SEO and launch template.*
+---
+
+## 7. Staff / CRM env vars (Netlify)
+
+| Variable | Required | Notes |
+|----------|----------|--------|
+| `DATABASE_URL` | yes | MongoDB |
+| `JWT_SECRET` | yes | Production |
+| `RESEND_API_KEY` | recommended | Confirm + quoted emails |
+| `WHATSAPP_TOKEN` | optional | Cloud API |
+| `WHATSAPP_PHONE_ID` | optional | |
+| `WHATSAPP_TEMPLATE` | optional | Approved template name |
+| `OPENROUTER_API_KEY` | optional | Free-tier caption gen |
+| `OLLAMA_BASE_URL` | optional | Local LLM alternative |
+| `MONTHLY_REVENUE_TARGET` | optional | Default `50000` (INR) for Revenue MTD bar |
+| `OPS_DIGEST_SECRET` | optional | Cron header `x-ops-digest-secret` for `POST /api/ops/digest` without JWT |
+
+Remove `ADMIN_PASSWORD` / `VITE_ADMIN_PASSWORD` after Step 0. Bootstrap first SUPER_ADMIN via seed script or one-time register.
+
+### Ops digest cron (optional, post-MVP UI)
+
+Netlify scheduled function or external cron can `POST /api/ops/digest` with header `x-ops-digest-secret: $OPS_DIGEST_SECRET`. UI “Send digest now” remains SUPER_ADMIN-only via JWT. Digests never email clients.
+
+### Performance notes (ops features)
+
+- Paginate AuditLog and CRM lists (cap 50–100).
+- Analytics aggregate by date/source in DB queries, not client-side full PageView dumps.
+- AI generate: short timeout (15–30s); never block contact form path.
+- After schema change: `npx prisma generate` + `npx prisma db push` with `DATABASE_URL`.
+
+---
+
+*Pipeline: [growth.md](./growth.md) for SEO and launch.*

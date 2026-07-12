@@ -1,6 +1,7 @@
 import express from 'express';
 import { db } from '../db';
-import { requireAdmin } from './admin-auth';
+import { requireStaff } from '../utils/auth';
+import { writeAuditLog } from '../utils/audit';
 
 const router = express.Router();
 
@@ -14,7 +15,6 @@ function slugify(title: string) {
         .replace(/^-|-$/g, '');
 }
 
-// Single published post (for dynamic blog page)
 router.get('/post/:slug', async (req, res) => {
     try {
         const post = await db.blogPost.findFirst({
@@ -24,14 +24,16 @@ router.get('/post/:slug', async (req, res) => {
             res.status(404).json({ error: 'Not found' });
             return;
         }
-        res.json(post);
+        res.json({
+            ...post,
+            dateIso: (post.publishedAt || post.createdAt).toISOString().slice(0, 10),
+        });
     } catch (error) {
         console.error('[BLOG_GET_SLUG]', error);
         res.status(500).json({ error: 'Internal Error' });
     }
 });
 
-// Public: published posts only
 router.get('/', async (_req, res) => {
     try {
         const posts = await db.blogPost.findMany({
@@ -44,19 +46,22 @@ router.get('/', async (_req, res) => {
                 excerpt: true,
                 category: true,
                 featuredImageUrl: true,
+                publishedAt: true,
                 createdAt: true,
             },
         });
         res.json(posts);
     } catch (error: any) {
         console.error('[BLOG_GET]', error?.message || error);
-        const isDb = error?.message?.includes('DATABASE') || error?.code === 'P2021' || error?.message?.includes('BlogPost');
+        const isDb =
+            error?.message?.includes('DATABASE') ||
+            error?.code === 'P2021' ||
+            error?.message?.includes('BlogPost');
         res.status(isDb ? 503 : 500).json({ error: isDb ? 'Blog not available' : 'Internal Error' });
     }
 });
 
-// Admin: all posts
-router.get('/manage', requireAdmin, async (_req, res) => {
+router.get('/manage', requireStaff, async (_req, res) => {
     try {
         const posts = await db.blogPost.findMany({ orderBy: { createdAt: 'desc' } });
         res.json(posts);
@@ -66,9 +71,18 @@ router.get('/manage', requireAdmin, async (_req, res) => {
     }
 });
 
-router.post('/', requireAdmin, async (req, res) => {
+router.post('/', requireStaff, async (req, res) => {
     try {
-        const { title, slug: rawSlug, excerpt, category, body, featuredImageUrl, published } = req.body || {};
+        const {
+            title,
+            slug: rawSlug,
+            excerpt,
+            category,
+            body,
+            featuredImageUrl,
+            videoUrl,
+            published,
+        } = req.body || {};
         if (!title || !excerpt || !category || !body) {
             res.status(400).json({ error: 'title, excerpt, category, and body are required' });
             return;
@@ -78,7 +92,7 @@ router.post('/', requireAdmin, async (req, res) => {
             res.status(400).json({ error: 'Could not derive slug from title' });
             return;
         }
-
+        const isPublished = Boolean(published);
         const post = await db.blogPost.create({
             data: {
                 title: String(title).trim(),
@@ -87,8 +101,16 @@ router.post('/', requireAdmin, async (req, res) => {
                 category: String(category).trim(),
                 body: String(body),
                 featuredImageUrl: featuredImageUrl ? String(featuredImageUrl) : null,
-                published: Boolean(published),
+                videoUrl: videoUrl ? String(videoUrl) : null,
+                published: isPublished,
+                publishedAt: isPublished ? new Date() : null,
+                authorId: req.auth!.userId,
             },
+        });
+        await writeAuditLog({
+            userId: req.auth!.userId,
+            action: 'created_blog',
+            targetId: post.id,
         });
         res.json(post);
     } catch (error: any) {
@@ -101,22 +123,41 @@ router.post('/', requireAdmin, async (req, res) => {
     }
 });
 
-router.patch('/:id', requireAdmin, async (req, res) => {
+router.patch('/:id', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, slug: rawSlug, excerpt, category, body, featuredImageUrl, published } = req.body || {};
+        const {
+            title,
+            slug: rawSlug,
+            excerpt,
+            category,
+            body,
+            featuredImageUrl,
+            videoUrl,
+            published,
+        } = req.body || {};
         const data: Record<string, unknown> = {};
         if (title != null) data.title = String(title).trim();
         if (excerpt != null) data.excerpt = String(excerpt).trim();
         if (category != null) data.category = String(category).trim();
         if (body != null) data.body = String(body);
-        if (featuredImageUrl !== undefined) data.featuredImageUrl = featuredImageUrl ? String(featuredImageUrl) : null;
-        if (published !== undefined) data.published = Boolean(published);
+        if (featuredImageUrl !== undefined)
+            data.featuredImageUrl = featuredImageUrl ? String(featuredImageUrl) : null;
+        if (videoUrl !== undefined) data.videoUrl = videoUrl ? String(videoUrl) : null;
+        if (published !== undefined) {
+            data.published = Boolean(published);
+            if (published) data.publishedAt = new Date();
+        }
         if (rawSlug != null && String(rawSlug).trim()) data.slug = slugify(String(rawSlug));
 
         const post = await db.blogPost.update({
             where: { id },
             data: data as any,
+        });
+        await writeAuditLog({
+            userId: req.auth!.userId,
+            action: 'edited_blog',
+            targetId: id,
         });
         res.json(post);
     } catch (error: any) {
@@ -129,10 +170,15 @@ router.patch('/:id', requireAdmin, async (req, res) => {
     }
 });
 
-router.delete('/:id', requireAdmin, async (req, res) => {
+router.delete('/:id', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
         await db.blogPost.delete({ where: { id } });
+        await writeAuditLog({
+            userId: req.auth!.userId,
+            action: 'deleted_blog',
+            targetId: id,
+        });
         res.json({ success: true });
     } catch (error) {
         console.error('[BLOG_DELETE]', error);

@@ -1,9 +1,9 @@
 import express from 'express';
 import { db } from '../db';
+import { requireStaff } from '../utils/auth';
 
 const router = express.Router();
 
-// GET all SEO location pages
 router.get('/', async (_req, res) => {
     try {
         const pages = await db.seoLocationPage.findMany({
@@ -12,15 +12,20 @@ router.get('/', async (_req, res) => {
         res.json(pages);
     } catch (error: any) {
         console.error('[SEO_PAGES_GET]', error?.message || error);
-        const isDb = error?.message?.includes('DATABASE') || error?.message?.includes('connect') || error?.code === 'P1001';
-        res.status(isDb ? 503 : 500).json({ error: isDb ? 'Database not configured.' : 'Failed to fetch SEO pages' });
+        const isDb =
+            error?.message?.includes('DATABASE') ||
+            error?.message?.includes('connect') ||
+            error?.code === 'P1001';
+        res.status(isDb ? 503 : 500).json({
+            error: isDb ? 'Database not configured.' : 'Failed to fetch SEO pages',
+        });
     }
 });
 
-// POST new SEO page
-router.post('/', async (req, res) => {
+router.post('/', requireStaff, async (req, res) => {
     try {
-        const { location, locationSlug, service, serviceSlug, title, description, h1, region } = req.body;
+        const { location, locationSlug, service, serviceSlug, title, description, h1, region } =
+            req.body;
         const page = await db.seoLocationPage.create({
             data: {
                 location: location || '',
@@ -40,11 +45,11 @@ router.post('/', async (req, res) => {
     }
 });
 
-// PATCH update SEO page
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
-        const { location, locationSlug, service, serviceSlug, title, description, h1, region } = req.body;
+        const { location, locationSlug, service, serviceSlug, title, description, h1, region } =
+            req.body;
         const page = await db.seoLocationPage.update({
             where: { id },
             data: {
@@ -65,8 +70,7 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-// DELETE SEO page
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireStaff, async (req, res) => {
     try {
         const { id } = req.params;
         await db.seoLocationPage.delete({ where: { id } });
