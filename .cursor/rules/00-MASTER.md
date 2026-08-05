@@ -90,7 +90,7 @@ and use the native MongoDB driver directly.
 Company:    HexaStack Solutions
 WhatsApp1:  +917591999365 (Anandu Krishna — Lead Dev)
 WhatsApp2:  +917012714150 (Surag — Full Stack Dev & PM)
-Email:      supporthexastack@hexastacksolutions.com
+Email:      supporthexastacksolutions@gmail.com
 Address:    Thrissur, Kerala (default in CompanySettings)
 Admin pass: hexastack@2024
 Domain:     hexastacksolutions.com (canonical set in index.html — correct)

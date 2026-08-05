@@ -3,27 +3,10 @@ import { db } from '../db';
 import { requireStaff } from '../utils/auth';
 import { writeAuditLog } from '../utils/audit';
 import { addIstDays, istDateKey, istHour, istWeekStart } from '../utils/ist';
+import { getNotificationEmails, sendResend } from '../utils/email';
 
 const router = express.Router();
 const OUTREACH_TARGET = 5;
-
-async function sendResend(opts: { to: string; subject: string; html: string }) {
-  if (!process.env.RESEND_API_KEY) return false;
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-    },
-    body: JSON.stringify({
-      from: process.env.RESEND_FROM || 'HexaStack <onboarding@resend.dev>',
-      to: opts.to,
-      subject: opts.subject,
-      html: opts.html,
-    }),
-  });
-  return response.ok;
-}
 
 async function computeStreak(userId: string): Promise<number> {
   let streak = 0;
@@ -301,7 +284,7 @@ router.post('/digest', async (req, res) => {
     const now = new Date();
     const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
 
-    const [wonMtd, quoted, sla, dailyLogs, settings] = await Promise.all([
+    const [wonMtd, quoted, sla, dailyLogs] = await Promise.all([
       db.contactMessage.findMany({
         where: { stage: 'won', wonAt: { gte: monthStart } },
         select: { dealValue: true, currency: true, name: true },
@@ -319,7 +302,6 @@ router.post('/digest', async (req, res) => {
         },
       }),
       db.dailyLog.findMany({ where: { date } }),
-      db.companySettings.findFirst({ select: { supportEmail: true, primaryEmail: true } }),
     ]);
 
     const mtd = wonMtd.reduce((s, w) => s + (w.dealValue || 0), 0);
@@ -336,14 +318,10 @@ router.post('/digest', async (req, res) => {
       <ul>${outreachSummary || '<li>No logs yet</li>'}</ul>
     `;
 
-    const to =
-      settings?.supportEmail?.trim() ||
-      settings?.primaryEmail?.trim() ||
-      process.env.SUPPORT_EMAIL ||
-      process.env.ADMIN_EMAIL;
+    const to = await getNotificationEmails();
 
     let sent = false;
-    if (to) {
+    if (to.length) {
       sent = await sendResend({
         to,
         subject: `HexaStack ops digest — ${date}`,

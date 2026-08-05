@@ -35,6 +35,7 @@ router.patch('/', requireAdminOrAbove, async (req, res) => {
             'leadName2',
             'leadEmail2',
             'leadWhatsApp2',
+            'leadEmail3',
             'address',
             'tagline',
             'description',

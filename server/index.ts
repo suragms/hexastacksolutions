@@ -25,6 +25,8 @@ import revenueRouter from './routes/revenue';
 import clientsRouter from './routes/clients';
 import contractsRouter from './routes/contracts';
 import invoicesRouter from './routes/invoices';
+import reportsRouter from './routes/reports';
+import seoTrackingRouter from './routes/seo-tracking';
 
 dotenv.config();
 
@@ -149,6 +151,8 @@ app.use('/api/revenue', revenueRouter as any);
 app.use('/api/clients', clientsRouter as any);
 app.use('/api/contracts', contractsRouter as any);
 app.use('/api/invoices', invoicesRouter as any);
+app.use('/api/reports', reportsRouter as any);
+app.use('/api/seo-tracking', seoTrackingRouter as any);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Route not found', path: req.path, originalUrl: req.originalUrl });

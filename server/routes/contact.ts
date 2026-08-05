@@ -3,6 +3,7 @@ import { db } from '../db';
 import { requireStaff } from '../utils/auth';
 import { writeAuditLog } from '../utils/audit';
 import { bucketSource } from '../utils/source';
+import { getNotificationEmails, sendResend } from '../utils/email';
 
 const router = express.Router();
 
@@ -21,41 +22,6 @@ const sanitizeLong = (str: string, max: number): string => {
     return str.trim().slice(0, max);
 };
 
-const getSupportInboxEmail = async (): Promise<string> => {
-    try {
-        const settings = await db.companySettings.findFirst({
-            select: { supportEmail: true, primaryEmail: true },
-        });
-        return (
-            settings?.supportEmail?.trim() ||
-            settings?.primaryEmail?.trim() ||
-            process.env.SUPPORT_EMAIL ||
-            process.env.ADMIN_EMAIL ||
-            'supporthexastack@hexastacksolutions.com'
-        );
-    } catch {
-        return process.env.SUPPORT_EMAIL || process.env.ADMIN_EMAIL || 'supporthexastack@hexastacksolutions.com';
-    }
-};
-
-async function sendResend(opts: { to: string; subject: string; html: string }) {
-    if (!process.env.RESEND_API_KEY) return false;
-    const response = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-        },
-        body: JSON.stringify({
-            from: process.env.RESEND_FROM || 'HexaStack <onboarding@resend.dev>',
-            to: opts.to,
-            subject: opts.subject,
-            html: opts.html,
-        }),
-    });
-    return response.ok;
-}
-
 async function sendAdminNotification(payload: {
     name: string;
     email: string;
@@ -65,10 +31,10 @@ async function sendAdminNotification(payload: {
     extra?: Record<string, string | undefined>;
 }) {
     try {
-        const adminEmail = await getSupportInboxEmail();
+        const recipients = await getNotificationEmails();
         const extra = payload.extra || {};
         await sendResend({
-            to: adminEmail,
+            to: recipients,
             subject: `New Website Enquiry from ${payload.name}`,
             html: `
                 <h2>New Enquiry Received</h2>
@@ -150,9 +116,9 @@ async function maybeSendSlaAlert(enquiry: {
     });
     if (already) return;
 
-    const adminEmail = await getSupportInboxEmail();
+    const recipients = await getNotificationEmails();
     const ok = await sendResend({
-        to: adminEmail,
+        to: recipients,
         subject: `SLA breach: unreplied enquiry from ${enquiry.name}`,
         html: `<p>Enquiry <strong>${enquiry.name}</strong> (${enquiry.id}) has no human reply after 2 hours.</p>`,
     });

@@ -33,6 +33,7 @@ export const site = {
   serviceAreasLabel:
     'Kerala & all India; GCC (UAE, Saudi Arabia, Qatar, Oman, Bahrain, Kuwait); US & UK; and remote clients worldwide',
   email: 'hexastacksolutions@gmail.com',
+  supportEmail: 'supporthexastacksolutions@gmail.com',
   phones: ['+91 75919 99365', '+91 94009 74150'] as const,
   whatsappUrl: 'https://wa.me/917591999365',
   /** Generic fallbacks for footer/UI only — not used in JSON-LD sameAs. */
@@ -40,7 +41,7 @@ export const site = {
     x: 'https://x.com/SolutionsHexa',
     linkedin: 'https://www.linkedin.com/company/hexastack-solutions',
     github: 'https://github.com/hexastacksolutions',
-    instagram: 'https://www.instagram.com/hexastacksolutions',
+    instagram: 'https://www.instagram.com/hexastack_solutions/',
   },
   /** Default Open Graph / Twitter preview image (absolute URL). Matches index.html og:image. */
   defaultOgImage:

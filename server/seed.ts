@@ -106,7 +106,7 @@ async function seed() {
       data: {
         companyName: 'HexaStack Solutions',
         primaryEmail: 'hexastacksolutions@gmail.com',
-        supportEmail: 'supporthexastack@hexastacksolutions.com',
+        supportEmail: 'supporthexastacksolutions@gmail.com',
         primaryWhatsApp: '+917591999365',
         secondaryWhatsApp: '+919400974150',
         leadName1: 'Anandu Krishna',
@@ -114,6 +114,7 @@ async function seed() {
         leadWhatsApp1: '+917591999365',
         leadName2: 'Surag',
         leadEmail2: 'officialsurag@gmail.com',
+        leadEmail3: 'anandukrishna2999@gmail.com',
         leadWhatsApp2: '+919400974150',
         address: 'Vadanappally, Thrissur, Kerala 680614, India',
         tagline: 'Building Digital Excellence',

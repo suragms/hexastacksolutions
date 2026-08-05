@@ -12,6 +12,7 @@ import { SocialPostComposer } from '@/components/admin/SocialPostComposer';
 import { RevenueTab } from '@/components/admin/RevenueTab';
 import { ClientsTab, convertLeadToClient } from '@/components/admin/ClientsTab';
 import { DailyOpsTab } from '@/components/admin/DailyOpsTab';
+import { ReportsTab } from '@/components/admin/ReportsTab';
 import {
     Trash2, Mail, Phone, Clock, ArrowLeft, RefreshCw, Lock, LogOut, Shield,
     FolderOpen, Settings, Bell, Plus, Edit2, Save, X, ExternalLink,
@@ -82,6 +83,7 @@ interface CompanySettings {
     leadName2: string;
     leadEmail2: string;
     leadWhatsApp2: string;
+    leadEmail3: string;
     address: string;
     tagline: string;
     description: string;
@@ -93,7 +95,7 @@ const DEFAULT_COMPANY_SETTINGS: CompanySettings = {
     heroDesktopImageUrl: '',
     heroMobileImageUrl: '',
     primaryEmail: 'hexastacksolutions@gmail.com',
-    supportEmail: 'supporthexastack@hexastacksolutions.com',
+    supportEmail: 'supporthexastacksolutions@gmail.com',
     primaryWhatsApp: '+917591999365',
     secondaryWhatsApp: '+919400974150',
     leadName1: 'Anandu Krishna',
@@ -102,6 +104,7 @@ const DEFAULT_COMPANY_SETTINGS: CompanySettings = {
     leadName2: 'Surag',
     leadEmail2: 'officialsurag@gmail.com',
     leadWhatsApp2: '+919400974150',
+    leadEmail3: 'anandukrishna2999@gmail.com',
     address: 'Vadanappally, Thrissur, Kerala 680614, India',
     tagline: 'Building Digital Excellence',
     description: 'We create innovative web applications, mobile solutions, and AI-powered tools that transform your business ideas into reality.',
@@ -128,7 +131,7 @@ interface Product {
     displayOrder: number;
 }
 
-type TabType = 'enquiries' | 'crm' | 'ops' | 'revenue' | 'clients' | 'projects' | 'settings' | 'analytics' | 'services' | 'products' | 'seo' | 'backlinks' | 'team' | 'tasks' | 'blog' | 'social';
+type TabType = 'enquiries' | 'crm' | 'ops' | 'revenue' | 'clients' | 'projects' | 'settings' | 'analytics' | 'reports' | 'services' | 'products' | 'seo' | 'backlinks' | 'team' | 'tasks' | 'blog' | 'social';
 
 type AdminUser = {
     id: string;
@@ -1181,6 +1184,7 @@ export default function Admin() {
                             { id: 'ops', label: 'Daily Ops', icon: Target },
                             { id: 'crm', label: 'CRM', icon: Kanban },
                             { id: 'revenue', label: 'Revenue', icon: IndianRupee },
+                            { id: 'reports', label: 'Reports', icon: FileText },
                             { id: 'clients', label: 'Clients', icon: Building2 },
                             { id: 'enquiries', label: 'Enquiries', icon: Mail, count: unreadCount },
                             { id: 'tasks', label: 'Tasks', icon: ListTodo },
@@ -1372,6 +1376,10 @@ export default function Admin() {
 
                 {activeTab === 'revenue' && (
                     <RevenueTab onNotify={showNotification} />
+                )}
+
+                {activeTab === 'reports' && (
+                    <ReportsTab onNotify={showNotification} />
                 )}
 
                 {activeTab === 'clients' && (
@@ -1781,6 +1789,7 @@ export default function Admin() {
                                 <div><span className="text-slate-500">Secondary WhatsApp</span><br /><span className="text-slate-900">{(settings?.secondaryWhatsApp ?? settingsForm.secondaryWhatsApp) || '—'}</span></div>
                                 <div><span className="text-slate-500">Lead 1</span><br /><span className="text-slate-900">{[settings?.leadName1 || settingsForm.leadName1, (settings?.leadEmail1 || settingsForm.leadEmail1) && `(${settings?.leadEmail1 || settingsForm.leadEmail1})`].filter(Boolean).join(' ') || '—'}</span></div>
                                 <div><span className="text-slate-500">Lead 2</span><br /><span className="text-slate-900">{[settings?.leadName2 || settingsForm.leadName2, (settings?.leadEmail2 || settingsForm.leadEmail2) && `(${settings?.leadEmail2 || settingsForm.leadEmail2})`].filter(Boolean).join(' ') || '—'}</span></div>
+                                <div><span className="text-slate-500">Lead 3 (alerts)</span><br /><span className="text-slate-900">{(settings?.leadEmail3 || settingsForm.leadEmail3) || '—'}</span></div>
                                 <div className="sm:col-span-2 lg:col-span-3"><span className="text-slate-500">Address</span><br /><span className="text-slate-900">{(settings?.address ?? settingsForm.address) || '—'}</span></div>
                                 <div><span className="text-slate-500">Tagline</span><br /><span className="text-slate-900">{(settings?.tagline ?? settingsForm.tagline) || '—'}</span></div>
                                 <div className="sm:col-span-2"><span className="text-slate-500">Description</span><br /><span className="text-slate-900 line-clamp-2">{(settings?.description ?? settingsForm.description) || '—'}</span></div>
@@ -2089,6 +2098,24 @@ export default function Admin() {
                                         disabled={!editingSettings}
                                         className="w-full px-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-50"
                                     />
+                                </div>
+                                </div>
+                            </section>
+
+                            {/* Lead 3 / Alerts */}
+                            <section>
+                                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Lead 3 / Alerts</h3>
+                                <div className="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                                    <input
+                                        type="email"
+                                        value={settingsForm.leadEmail3}
+                                        onChange={(e) => setSettingsForm({ ...settingsForm, leadEmail3: e.target.value })}
+                                        disabled={!editingSettings}
+                                        className="w-full px-4 py-2 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900 disabled:bg-slate-50"
+                                    />
+                                    <p className="mt-1.5 text-xs text-slate-500">Enquiry alerts and daily reports are emailed to the Lead 1, Lead 2, and Lead 3 addresses above.</p>
                                 </div>
                                 </div>
                             </section>

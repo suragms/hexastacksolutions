@@ -207,6 +207,13 @@ export function Footer() {
               <Mail className="h-4 w-4 shrink-0" aria-hidden />
               {site.email}
             </a>
+            <a
+              href={`mailto:${site.supportEmail}`}
+              className="mt-1 flex items-center gap-2 text-sm text-text-muted transition hover:text-orange-600"
+            >
+              <Mail className="h-4 w-4 shrink-0" aria-hidden />
+              {site.supportEmail}
+            </a>
             <div className="mt-6 flex gap-3">
               <a
                 href={site.social.x}
