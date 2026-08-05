@@ -46,13 +46,14 @@ async function fixAdminConfiguration() {
                 data: {
                     companyName: 'HexaStack Solutions',
                     primaryEmail: 'hexastacksolutions@gmail.com',
-                    supportEmail: 'supporthexastack@hexastacksolutions.com',
+                    supportEmail: 'supporthexastacksolutions@gmail.com',
                     primaryWhatsApp: '+917591999365',
                     leadName1: 'Anandu Krishna',
                     leadEmail1: 'hexastacksolutions@gmail.com',
                     leadWhatsApp1: '+917591999365',
                     leadName2: 'Surag',
                     leadEmail2: 'officialsurag@gmail.com',
+                    leadEmail3: 'anandukrishna2999@gmail.com',
                     leadWhatsApp2: '+919400974150',
                     address: 'Vadanappally, Thrissur, Kerala 680614, India',
                     tagline: 'Building Digital Excellence',
@@ -65,11 +66,11 @@ async function fixAdminConfiguration() {
                 where: { id: settings.id },
                 data: {
                     primaryEmail: 'hexastacksolutions@gmail.com',
-                    supportEmail: 'supporthexastack@hexastacksolutions.com',
+                    supportEmail: 'supporthexastacksolutions@gmail.com',
                     leadEmail1: 'hexastacksolutions@gmail.com',
                 },
             });
-            console.log('Company settings updated (primaryEmail -> hexastacksolutions@gmail.com, supportEmail -> supporthexastack@hexastacksolutions.com, leadEmail1 -> hexastacksolutions@gmail.com).');
+            console.log('Company settings updated (primaryEmail -> hexastacksolutions@gmail.com, supportEmail -> supporthexastacksolutions@gmail.com, leadEmail1 -> hexastacksolutions@gmail.com).');
         }
 
         console.log('\n=== Configuration Summary ===');

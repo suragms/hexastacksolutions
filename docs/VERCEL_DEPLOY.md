@@ -76,7 +76,7 @@ Set these in **Vercel → Project → Settings → Environment Variables** for *
 | `DATABASE_URL` | **Yes** | MongoDB Atlas connection string. Include DB name: `.../hexastacksolutions?retryWrites=true&w=majority`. Optional: `&connectTimeoutMS=10000&serverSelectionTimeoutMS=10000&appName=hexastack` |
 | `JWT_SECRET` | **Yes** | Secret for JWT; use ≥32 characters (e.g. a long random string) |
 | `ADMIN_PASSWORD` | **Yes** | The password you use to log in at https://www.hexastacksolutions.com/admin |
-| `ADMIN_EMAIL` | No | Where contact form enquiries are sent (default: supporthexastack@hexastacksolutions.com) |
+| `ADMIN_EMAIL` | No | Where contact form enquiries are sent (default: supporthexastacksolutions@gmail.com) |
 | `RESEND_API_KEY` | No | For sending reply emails from Admin Enquiries via Resend.com |
 
 After adding or changing any variable, **redeploy** (Deployments → ⋯ → Redeploy) so the new values are used.

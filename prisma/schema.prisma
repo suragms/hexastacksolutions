@@ -105,7 +105,7 @@ model CompanySettings {
   companyName         String   @default("HexaStack Solutions")
   logoUrl             String?  // Brand logo (display); optional, fallback to /logo.svg
   primaryEmail        String   @default("hexastacksolutions@gmail.com")
-  supportEmail        String?  @default("supporthexastack@hexastacksolutions.com")
+  supportEmail        String?  @default("supporthexastacksolutions@gmail.com")
   primaryWhatsApp     String   @default("+917591999365")
   secondaryWhatsApp   String?  @default("+919400974150")
   leadName1           String   @default("Anandu Krishna")
@@ -114,6 +114,7 @@ model CompanySettings {
   leadName2           String   @default("Surag")
   leadEmail2          String   @default("officialsurag@gmail.com")
   leadWhatsApp2       String   @default("+919400974150")
+  leadEmail3          String?  @default("anandukrishna2999@gmail.com")
   address             String?  @default("Vadanappally, Thrissur, Kerala 680614, India")
   tagline             String?  @default("Building Digital Excellence")
   description         String?  @default("We create innovative web applications, mobile solutions, and AI-powered tools that transform your business ideas into reality.")
@@ -402,4 +403,48 @@ model Backlink {
   status      String?  // active | pending | lost | review
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model DailyReport {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  date      String    @unique // IST YYYY-MM-DD
+  summary   String    // compact text used in lists / email subject line
+  json      String    // JSON.stringify(aggregate) for history re-render
+  emailedTo String[]
+  sentAt    DateTime?
+  createdBy String?   // user id, or "cron"
+  createdAt DateTime  @default(now())
+}
+
+model KeywordRank {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  keyword      String
+  position     Int
+  volume       Int?
+  kd           Float?
+  traffic      Int?
+  snapshotDate String   // IST YYYY-MM-DD
+  notes        String?
+  createdAt    DateTime @default(now())
+  @@unique([keyword, snapshotDate])
+}
+
+model SeoKeyword {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  keyword       String   @unique
+  pagePath      String?
+  market        String?
+  intent        String?
+  painPoint     String?
+  businessFit   String?
+  pageBucket    String?
+  mappedUrl     String?
+  position      Int?
+  volume        Int?
+  kd            Float?
+  traffic       Int?
+  priorityScore Int?
+  sourceFile    String?  // e.g. "keyword_master.csv"
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

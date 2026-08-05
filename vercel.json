@@ -33,6 +33,9 @@
       "includeFiles": "api/server-bundle.cjs"
     }
   },
+  "crons": [
+    { "path": "/api/reports/daily/send", "schedule": "30 3 * * *" }
+  ],
   "rewrites": [
     { "source": "/favicon.ico", "destination": "/favicon-new.png" },
     { "source": "/api/(.*)", "destination": "/api/index.js" },

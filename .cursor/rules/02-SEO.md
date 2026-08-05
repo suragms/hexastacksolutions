@@ -130,7 +130,7 @@ schema={{
   description: 'Custom software development, website design and AI integration for businesses in Thrissur, Kerala and Gulf.',
   url: 'https://hexastacksolutions.com',
   telephone: '+917591999365',
-  email: 'supporthexastack@hexastacksolutions.com',
+  email: 'supporthexastacksolutions@gmail.com',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Vatanappally',

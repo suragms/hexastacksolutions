@@ -16,6 +16,7 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "seed:admin": "tsx server/scripts/seed-super-admin.ts",
+    "seo:import": "node scripts/import-seo-keywords.cjs",
     "catalog:images": "node scripts/catalog-all-images.mjs",
     "organize:assets": "node scripts/organize-portfolio-assets.mjs",
     "sync:images": "node scripts/sync-local-images.mjs"

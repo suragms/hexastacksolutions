@@ -133,6 +133,12 @@ export function ContactPage() {
                   {site.email}
                 </a>
               </li>
+              <li>
+                <span className="font-medium text-text-primary">Support:</span>{' '}
+                <a href={`mailto:${site.supportEmail}`} className="text-orange-600 hover:text-orange-700">
+                  {site.supportEmail}
+                </a>
+              </li>
               {site.phones.map((phone) => {
                 const isWhatsAppOnly = phone.includes('94009');
                 return (
