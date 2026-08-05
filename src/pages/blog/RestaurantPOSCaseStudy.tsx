@@ -1,21 +1,20 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function RestaurantPOSCaseStudy() {
     return (
-        <Layout>
+        <>
             <SEO
                 title="UAE Restaurant POS Case Study | HexaStack Solutions"
                 description="How a custom POS system solved billing, VAT, and multi-branch operations for a restaurant in the UAE. Built by HexaStack from Kerala."
                 keywords="restaurant POS UAE, VAT compliant POS, UAE billing software case study"
-                canonical="/blog/restaurant-pos-uae-case-study"
+                canonical="/blog/restaurant-pos-case-study"
                 schema={createArticleSchema({
                     headline: 'UAE Restaurant POS Case Study',
                     description: 'How a custom POS system solved billing, VAT, and multi-branch operations for a restaurant in the UAE. Built by HexaStack from Kerala.',
-                    path: '/blog/restaurant-pos-uae-case-study',
+                    path: '/blog/restaurant-pos-case-study',
                     datePublished: '2026-03-23',
                 })}
             />
@@ -54,6 +53,6 @@ export default function RestaurantPOSCaseStudy() {
                     </Link>
                 </div>
             </article>
-        </Layout>
+        </>
     );
 }

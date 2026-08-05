@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function AIIntegrationSmallBusinessKerala() {
     return (
-        <Layout>
+        <>
             <SEO
                 title="AI Integration for Small Business Kerala | HexaStack"
                 description="Practical ways to use AI in your Kerala small business: chatbots, automation, and custom AI tools without huge budgets."
@@ -54,6 +53,6 @@ export default function AIIntegrationSmallBusinessKerala() {
                     </Link>
                 </div>
             </article>
-        </Layout>
+        </>
     );
 }

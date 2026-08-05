@@ -58,7 +58,11 @@ export function usePageSeo({
   const path = canonicalPath ?? pathname
 
   useEffect(() => {
-    const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`
+    // Avoid "X | HexaStack | HexaStack Solutions": if the title already ends with a partial
+    // brand ("| HexaStack" or "| HexaStack <City>"), strip it before appending the full brand.
+    const fullTitle = title.includes(site.name)
+      ? title
+      : `${title.replace(/\s*\|\s*HexaStack(\s+[^|]*)?\s*$/i, '').trim()} | ${site.name}`
     document.title = fullTitle
 
     let meta = document.querySelector(`meta[name="${META_NAME}"]`) as HTMLMetaElement | null

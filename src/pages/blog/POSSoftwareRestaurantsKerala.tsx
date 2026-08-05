@@ -1,21 +1,20 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function POSSoftwareRestaurantsKerala() {
     return (
-        <Layout>
+        <>
             <SEO
                 title="POS Software for Restaurants in Kerala 2026 | HexaStack"
                 description="What to look for in restaurant POS software in Kerala in 2026 — billing, GST, table management, and custom solutions from Thrissur."
                 keywords="POS software restaurants Kerala 2026, restaurant billing Kerala, GST POS"
-                canonical="/blog/pos-software-restaurants-kerala-2026"
+                canonical="/blog/pos-software-restaurants-kerala"
                 schema={createArticleSchema({
                     headline: 'POS Software for Restaurants in Kerala in 2026',
                     description: 'What to look for in restaurant POS software in Kerala in 2026 - billing, GST, table management, and custom solutions from Thrissur.',
-                    path: '/blog/pos-software-restaurants-kerala-2026',
+                    path: '/blog/pos-software-restaurants-kerala',
                     datePublished: '2026-03-23',
                 })}
             />
@@ -54,6 +53,6 @@ export default function POSSoftwareRestaurantsKerala() {
                     </Link>
                 </div>
             </article>
-        </Layout>
+        </>
     );
 }

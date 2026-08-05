@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function VATCompliantBillingUAE() {
     return (
-        <Layout>
+        <>
             <SEO
                 title="VAT-Compliant Billing Software for UAE Businesses | HexaStack"
                 description="A practical guide to VAT-compliant invoicing and billing software for UAE and Gulf businesses. What to look for and how custom solutions help."
@@ -54,6 +53,6 @@ export default function VATCompliantBillingUAE() {
                     </Link>
                 </div>
             </article>
-        </Layout>
+        </>
     );
 }

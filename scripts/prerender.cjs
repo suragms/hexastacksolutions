@@ -8,6 +8,12 @@ const DIST_DIR = path.join(__dirname, '..', 'dist');
 const routes = ALL_PUBLIC_PATHS;
 const RENDER_TIMEOUT_MS = 15000;
 
+// Allow opt-out (e.g. fast Vercel previews): SKIP_PRERENDER=1
+if (process.env.SKIP_PRERENDER === '1') {
+    console.log('[prerender] SKIP_PRERENDER=1 — skipping headless prerender.');
+    process.exit(0);
+}
+
 const MIME_TYPES = {
     '.css': 'text/css; charset=utf-8',
     '.gif': 'image/gif',
@@ -153,32 +159,38 @@ async function waitForRender(page) {
 async function renderRoute(browser, baseUrl, route) {
     const page = await browser.newPage();
 
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        const url = request.url();
-        const allowedLocal = url.startsWith(baseUrl);
-        const isDataRequest = url.startsWith('data:');
-        const isBlobRequest = url.startsWith('blob:');
+    try {
+        await page.setRequestInterception(true);
+        page.on('request', (request) => {
+            const url = request.url();
+            const allowedLocal = url.startsWith(baseUrl);
+            const isDataRequest = url.startsWith('data:');
+            const isBlobRequest = url.startsWith('blob:');
 
-        if (allowedLocal || isDataRequest || isBlobRequest) {
-            request.continue();
-            return;
-        }
+            if (allowedLocal || isDataRequest || isBlobRequest) {
+                request.continue();
+                return;
+            }
 
-        request.abort();
-    });
+            request.abort();
+        });
 
-    await page.goto(`${baseUrl}${route}`, {
-        waitUntil: 'domcontentloaded',
-        timeout: 60000,
-    });
+        await page.goto(`${baseUrl}${route}`, {
+            waitUntil: 'domcontentloaded',
+            timeout: 60000,
+        });
 
-    await waitForRender(page);
+        await waitForRender(page);
 
-    const html = (await page.content()).trim();
-    const outputPath = ensureOutputPath(route);
-    fs.writeFileSync(outputPath, html, 'utf8');
-    await page.close();
+        const html = (await page.content()).trim();
+        const outputPath = ensureOutputPath(route);
+        fs.writeFileSync(outputPath, html, 'utf8');
+    } catch (error) {
+        // Fail soft: leave the SPA fallback for this route rather than breaking the build.
+        console.warn(`[prerender] Skipped ${route} (${error?.message || error}). SPA fallback will serve it.`);
+    } finally {
+        await page.close().catch(() => {});
+    }
 }
 
 async function run() {
@@ -208,9 +220,10 @@ async function run() {
 
         console.log('[prerender] Static HTML written successfully.');
     } catch (error) {
-        console.error('[prerender] Failed to generate static HTML.');
-        console.error(error);
-        process.exitCode = 1;
+        // Fail soft: do NOT fail the build. Without static HTML the site still works as an
+        // SPA (as it did before); prerender just won't have produced per-route files.
+        console.warn('[prerender] Headless prerender failed — continuing with SPA-only output.');
+        console.warn(error);
     } finally {
         if (browser) {
             await browser.close().catch(() => {});
