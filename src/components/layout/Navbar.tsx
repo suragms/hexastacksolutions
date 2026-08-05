@@ -1,7 +1,7 @@
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { getSolutionNavLinks } from '../../data/servicesManifest'
+import { getNavGroups } from '../../data/serviceCatalog'
 import { useNavbarScroll } from '../../hooks/useNavbarScroll'
 import { BrandWordmark } from './BrandWordmark'
 import { Container } from '../ui/Container'
@@ -13,7 +13,7 @@ const workLinks = [
   { label: 'Web application development', to: '/work' },
 ]
 
-const solutionLinks = getSolutionNavLinks()
+const navGroups = getNavGroups()
 
 const productLinks = [
   { label: 'HexaBill overview', to: '/products/hexabill' },
@@ -157,10 +157,120 @@ function NavDropdown({
   )
 }
 
+function NavServicesDropdown({
+  open,
+  onOpen,
+  onClose,
+  labelActive,
+}: {
+  open: boolean
+  onOpen: () => void
+  onClose: () => void
+  labelActive?: boolean
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const { pathname, hash } = useLocation()
+
+  const clearCloseTimer = useCallback(() => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current)
+      closeTimer.current = null
+    }
+  }, [])
+
+  const scheduleClose = useCallback(() => {
+    clearCloseTimer()
+    closeTimer.current = setTimeout(() => onClose(), CLOSE_DELAY_MS)
+  }, [clearCloseTimer, onClose])
+
+  useEffect(() => {
+    function onDoc(e: MouseEvent) {
+      if (!ref.current?.contains(e.target as Node)) onClose()
+    }
+    if (open) document.addEventListener('mousedown', onDoc)
+    return () => document.removeEventListener('mousedown', onDoc)
+  }, [open, onClose])
+
+  useEffect(() => {
+    if (!open) return
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [open, onClose])
+
+  useEffect(() => () => clearCloseTimer(), [clearCloseTimer])
+
+  return (
+    <div
+      ref={ref}
+      className="relative"
+      onMouseEnter={() => {
+        clearCloseTimer()
+        onOpen()
+      }}
+      onMouseLeave={scheduleClose}
+    >
+      <button
+        type="button"
+        className={`flex items-center gap-1 text-sm font-medium transition ${
+          labelActive || open ? 'text-orange-700' : 'text-text-muted hover:text-orange-700'
+        }`}
+        aria-expanded={open}
+        onClick={() => (open ? onClose() : onOpen())}
+      >
+        Services
+        <ChevronDown className={`h-4 w-4 transition ${open ? 'rotate-180' : ''}`} aria-hidden />
+      </button>
+      {open ? (
+        <div
+          role="menu"
+          className="absolute left-0 top-full z-50 mt-2 w-[460px] rounded-xl border border-orange-100/80 bg-card py-3 shadow-xl shadow-orange-900/10"
+        >
+          <div className="grid grid-cols-2 gap-x-3 gap-y-5 px-3">
+            {navGroups.map((group) => (
+              <div key={group.label}>
+                <p className="px-3 text-[0.65rem] font-bold uppercase tracking-wider text-text-muted">
+                  {group.label}
+                </p>
+                <div className="mt-1.5">
+                  {group.items.map((item) => (
+                    <Link
+                      key={item.to}
+                      role="menuitem"
+                      to={item.to}
+                      className={dropdownLinkClass(item.to, pathname, hash)}
+                      onClick={onClose}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-2 border-t border-orange-100/70 px-2 pt-2">
+            <Link
+              to="/services"
+              role="menuitem"
+              className={dropdownLinkClass('/services', pathname, hash)}
+              onClick={onClose}
+            >
+              All services →
+            </Link>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
 export function Navbar() {
   const solid = useNavbarScroll()
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [dd, setDd] = useState<'work' | 'solutions' | 'products' | null>(null)
+  const [dd, setDd] = useState<'work' | 'services' | 'products' | null>(null)
   const { pathname, hash } = useLocation()
 
   const headerClass =
@@ -168,7 +278,7 @@ export function Navbar() {
       ? 'border-b border-border bg-background/95 shadow-sm backdrop-blur-md'
       : 'border-b border-transparent bg-transparent'
 
-  const solutionsNavActive = pathname.startsWith('/services')
+  const servicesNavActive = pathname.startsWith('/services')
   const workNavActive = pathname.startsWith('/work')
   const productsNavActive = pathname.startsWith('/products')
 
@@ -186,13 +296,11 @@ export function Navbar() {
             onClose={() => setDd(null)}
             labelActive={workNavActive}
           />
-          <NavDropdown
-            label="Solutions"
-            items={solutionLinks}
-            open={dd === 'solutions'}
-            onOpen={() => setDd('solutions')}
+          <NavServicesDropdown
+            open={dd === 'services'}
+            onOpen={() => setDd('services')}
             onClose={() => setDd(null)}
-            labelActive={solutionsNavActive}
+            labelActive={servicesNavActive}
           />
           <NavDropdown
             label="Products"
@@ -266,18 +374,38 @@ export function Navbar() {
               </Link>
             ))}
             <p className="mt-3 px-2 text-xs font-semibold uppercase tracking-wider text-text-muted">
-              Solutions
+              Services
             </p>
-            {solutionLinks.map((l) => (
-              <Link
-                key={l.label}
-                to={l.to}
-                className={mobileSolutionLinkClass(l.to, pathname, hash)}
-                onClick={() => setMobileOpen(false)}
-              >
-                {l.label}
-              </Link>
+            {navGroups.map((group) => (
+              <div key={group.label} className="mt-2">
+                <p className="px-2 text-[0.65rem] font-bold uppercase tracking-wider text-text-muted">
+                  {group.label}
+                </p>
+                <div className="mt-1">
+                  {group.items.map((l) => (
+                    <Link
+                      key={l.to}
+                      to={l.to}
+                      className={mobileSolutionLinkClass(l.to, pathname, hash)}
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {l.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             ))}
+            <Link
+              to="/services"
+              className={`mt-2 rounded-lg px-2 py-2 text-base font-medium transition ${
+                pathname === '/services'
+                  ? 'bg-orange-500 text-white'
+                  : 'text-text-muted hover:bg-orange-500 hover:text-white'
+              }`}
+              onClick={() => setMobileOpen(false)}
+            >
+              All services →
+            </Link>
             <p className="mt-3 px-2 text-xs font-semibold uppercase tracking-wider text-text-muted">Products</p>
             {productLinks.map((l) => (
               <Link

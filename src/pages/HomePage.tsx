@@ -12,18 +12,20 @@ import { Portfolio } from '../components/sections/Portfolio'
 import { Process } from '../components/sections/Process'
 import { Services } from '../components/sections/Services'
 import { Stats } from '../components/sections/Stats'
+import { TeamSection } from '../components/sections/TeamSection'
 import { Testimonials } from '../components/sections/Testimonials'
-import { ValueProp } from '../components/sections/ValueProp'
-import { FounderStory } from '../components/sections/FounderStory'
 import { TrustMetrics } from '../components/sections/TrustMetrics'
+import { ValueProp } from '../components/sections/ValueProp'
+import { WhyChooseUs } from '../components/sections/WhyChooseUs'
+import { FounderStory } from '../components/sections/FounderStory'
 
 export function HomePage() {
   const { hash, pathname } = useLocation()
 
   usePageSeo({
-    title: 'Custom Software & Websites — Built in Thrissur, Trusted in the Gulf | HexaStack',
+    title: 'Software, AI, Web & Digital Growth Partner in Kerala | HexaStack',
     description:
-      'HexaStack Solutions builds custom websites, mobile apps, ERP/POS, and AI automation from Thrissur for Kerala and Gulf businesses. Talk to the developer. Reply in 2 hours on WhatsApp.',
+      'HexaStack Solutions is a software development company and digital marketing agency in Thrissur, Kerala — custom software, AI solutions, websites, mobile apps, attendance systems, branding, and IT support for businesses in India and the Gulf.',
     canonicalPath: '/',
   })
 
@@ -41,16 +43,18 @@ export function HomePage() {
       <FaqJsonLd />
       <Hero />
       <Portfolio />
+      <Services />
+      <WhyChooseUs />
       <ValueProp />
       <FounderStory />
+      <TeamSection />
       <Stats />
       <Testimonials />
       <TrustMetrics />
-      <Services />
-      <OperationalProducts />
-      <Comparison />
       <Process />
       <Industries />
+      <OperationalProducts />
+      <Comparison />
       <FAQ />
       <CTASection />
     </>

@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom'
 import App from './App'
 import { site } from './data/site'
 import { getAllLocalSeoSlugs, getLocalSeoPage } from './data/localSeoPages'
+import { getServiceCategories } from './data/serviceCatalog'
 
 type PrerenderInput = { url: string }
 
@@ -138,6 +139,14 @@ for (const slug of getAllLocalSeoSlugs()) {
       title: page.title,
       description: page.metaDescription,
     }
+  }
+}
+
+// Service category detail pages (from src/data/serviceCatalog.ts).
+for (const category of getServiceCategories()) {
+  routeMeta[`/services/${category.slug}`] = {
+    title: category.pageTitle,
+    description: category.metaDescription,
   }
 }
 

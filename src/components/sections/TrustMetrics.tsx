@@ -30,7 +30,7 @@ const metrics = [
 
 export function TrustMetrics() {
   return (
-    <section className="bg-muted/30 py-12 md:py-16">
+    <section className="bg-surface/30 py-12 md:py-16">
       <Container>
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <span className="section-kicker mx-auto mb-4">Proven Results</span>
@@ -47,7 +47,7 @@ export function TrustMetrics() {
             <FadeInView key={i} delay={i * 0.15}>
               <div className="glass-card card-hover relative h-full p-8 flex flex-col">
                 <div className="mb-6 flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-brand bg-brand/10 px-3 py-1 rounded-full">
+                  <span className="text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-50 px-3 py-1 rounded-full">
                     {metric.industry}
                   </span>
                 </div>
@@ -64,11 +64,11 @@ export function TrustMetrics() {
                 <div className="flex-1 space-y-4">
                   <div>
                     <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-1">Before HexaStack</p>
-                    <p className="text-sm text-text-secondary line-through opacity-70">{metric.before}</p>
+                    <p className="text-sm text-text-muted line-through opacity-70">{metric.before}</p>
                   </div>
                   <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
                   <div>
-                    <p className="text-xs font-semibold text-brand uppercase tracking-wider mb-1">After HexaStack</p>
+                    <p className="text-xs font-semibold text-orange-600 uppercase tracking-wider mb-1">After HexaStack</p>
                     <p className="text-sm font-medium text-text-primary">{metric.after}</p>
                   </div>
                 </div>
