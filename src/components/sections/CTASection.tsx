@@ -5,6 +5,14 @@ import { FadeInView } from '../ui/FadeInView'
 import { GradientLink } from '../ui/GradientLink'
 import { Section } from '../ui/Section'
 
+const intents = [
+  { label: 'Request a Free Consultation', to: '/contact' },
+  { label: 'Schedule a Demo', to: '/contact' },
+  { label: 'Get a Custom Quote', to: '/contact' },
+  { label: 'Business Inquiry', to: '/contact' },
+  { label: 'Project Discussion', to: '/contact' },
+]
+
 export function CTASection() {
   return (
     <Section id="cta" className="!pb-10 md:!pb-16">
@@ -21,11 +29,24 @@ export function CTASection() {
             />
             <div className="relative mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-text-primary md:text-4xl">
-                Limited consultation slots this week - secure your growth roadmap
+                Limited consultation slots this week — secure your growth roadmap
               </h2>
               <p className="mt-4 text-text-muted">
                 Share your goals and get clear next steps to save time, increase revenue, and launch with confidence.
               </p>
+
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-2.5">
+                {intents.map((intent) => (
+                  <Link
+                    key={intent.label}
+                    to={intent.to}
+                    className="inline-flex items-center rounded-full border border-orange-200/80 bg-white/80 px-4 py-2 text-sm font-semibold text-orange-700 shadow-sm transition hover:border-orange-300 hover:bg-white"
+                  >
+                    {intent.label}
+                  </Link>
+                ))}
+              </div>
+
               <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:justify-center">
                 <GradientLink to="/contact" className="w-full justify-center sm:w-auto">
                   Get a Quote

@@ -1,8 +1,28 @@
 /**
  * Single source of truth for the site's public routes.
  * Used by sitemap generation and (optionally) the puppeteer prerender script.
- * Keep blog slugs in sync with src/prerender.tsx routeMeta and src/App.tsx routes.
+ * Keep slugs in sync with src/prerender.tsx routeMeta and src/App.tsx routes.
  */
+
+/**
+ * Service category detail pages (src/data/serviceCatalog.ts slugs).
+ * Must stay in sync with the serviceCatalog entries.
+ */
+const SERVICE_CATEGORY_PATHS = [
+    '/services/software-development',
+    '/services/ai-machine-learning',
+    '/services/attendance-management-system',
+    '/services/website-development',
+    '/services/mobile-app-development',
+    '/services/ui-ux-design',
+    '/services/digital-marketing',
+    '/services/branding-creative',
+    '/services/business-development',
+    '/services/it-support-maintenance',
+    '/services/ecommerce-solutions',
+    '/services/educational-solutions',
+    '/services/healthcare-solutions',
+];
 
 /** Routed core pages (must match src/App.tsx). */
 const CORE_PATHS = [
@@ -11,6 +31,7 @@ const CORE_PATHS = [
     '/services/web-design',
     '/services/web-applications',
     '/services/seo',
+    ...SERVICE_CATEGORY_PATHS,
     '/products/hexabill',
     '/work',
     '/blog',
@@ -66,6 +87,7 @@ const ALL_PUBLIC_PATHS = [...new Set([...CORE_PATHS, ...BLOG_PATHS, ...LOCAL_SEO
 
 module.exports = {
     CORE_PATHS,
+    SERVICE_CATEGORY_PATHS,
     BLOG_PATHS,
     LOCAL_SEO_PATHS,
     SEO_PATHS,

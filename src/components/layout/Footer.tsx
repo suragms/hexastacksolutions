@@ -1,6 +1,7 @@
 import { Mail, MapPin, Phone, MessageCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { site } from '../../data/site'
+import { getServiceCategories } from '../../data/serviceCatalog'
 import { Container } from '../ui/Container'
 
 function IconX({ className }: { className?: string }) {
@@ -37,11 +38,23 @@ function IconInstagram({ className }: { className?: string }) {
   )
 }
 
-const solutionLinks = [
-  { label: 'Website design & development', to: '/services/web-design' },
-  { label: 'Custom software development', to: '/services/web-applications' },
-  { label: 'Search engine optimization', to: '/services/seo' },
-]
+/** Curated service links for the footer (kept short; "All services" links to the hub). */
+const solutionLinks = (() => {
+  const bySlug = new Map(getServiceCategories().map((c) => [c.slug, c]))
+  const pick = (slug: string) => {
+    const c = bySlug.get(slug)
+    return c ? { label: c.title, to: `/services/${c.slug}` } : null
+  }
+  const slugs = [
+    'software-development',
+    'ai-machine-learning',
+    'website-development',
+    'mobile-app-development',
+    'digital-marketing',
+    'attendance-management-system',
+  ]
+  return slugs.map(pick).filter((l): l is { label: string; to: string } => Boolean(l))
+})()
 
 const quickLinks = [
   { label: 'Home', to: '/' },
@@ -90,7 +103,7 @@ export function Footer() {
             </p>
           </div>
           <div className="lg:col-span-2">
-            <p className="text-sm font-semibold text-text-primary">Solutions</p>
+            <p className="text-sm font-semibold text-text-primary">Services</p>
             <ul className="mt-4 space-y-2">
               {solutionLinks.map((l) => (
                 <li key={l.label}>
@@ -102,6 +115,14 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  to="/services"
+                  className="text-sm font-semibold text-orange-600 transition hover:text-orange-700"
+                >
+                  All services →
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="lg:col-span-2">
@@ -227,7 +248,10 @@ export function Footer() {
           </div>
         </div>
         <p className="mt-12 border-t border-border pt-8 text-center text-xs text-text-muted">
-          © {new Date().getFullYear()} {site.name}. All rights reserved.
+          © 2026 HexaStack Solutions. All Rights Reserved.
+        </p>
+        <p className="mt-2 text-center text-xs text-text-muted">
+          Empowering Businesses Through Technology, AI, Digital Marketing, and Innovation.
         </p>
       </Container>
     </footer>
