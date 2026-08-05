@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function WebDevelopmentCompanyThrissur() {
     return (
-        <Layout>
+        <>
             <SEO
                 title="Web Development Company Thrissur - What to Look For | HexaStack"
                 description="How to choose a web development company in Thrissur: scope, pricing, support, and working with a local team that serves Kerala and Gulf."
@@ -54,6 +53,6 @@ export default function WebDevelopmentCompanyThrissur() {
                     </Link>
                 </div>
             </article>
-        </Layout>
+        </>
     );
 }

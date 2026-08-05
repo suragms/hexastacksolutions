@@ -18,8 +18,10 @@
   included_files = ["prisma/schema.prisma"]
 
 [[redirects]]
-  from = "https://www.hexastacksolutions.com/*"
-  to = "https://hexastacksolutions.com/:splat"
+  # Canonical host is www (matches index.html comments, site.ts JSON-LD, sitemap.xml,
+  # and Search Console). Redirect the apex domain to www so there is one canonical host.
+  from = "https://hexastacksolutions.com/*"
+  to = "https://www.hexastacksolutions.com/:splat"
   status = 301
   force = true
 

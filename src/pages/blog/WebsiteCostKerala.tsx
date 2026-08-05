@@ -1,21 +1,20 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function WebsiteCostKerala() {
     return (
-        <Layout>
+        <>
             <SEO
                 title="How Much Does a Website Cost in Kerala in 2026? | HexaStack"
                 description="A practical guide to website costs in Kerala in 2026 — from simple brochure sites to custom web apps. Transparent pricing from a Thrissur-based team."
                 keywords="website cost Kerala 2026, web development price Thrissur, Kerala website design"
-                canonical="/blog/website-cost-kerala-2026"
+                canonical="/blog/website-cost-kerala"
                 schema={createArticleSchema({
                     headline: 'How Much Does a Website Cost in Kerala in 2026?',
                     description: 'A practical guide to website costs in Kerala in 2026 - from simple brochure sites to custom web apps. Transparent pricing from a Thrissur-based team.',
-                    path: '/blog/website-cost-kerala-2026',
+                    path: '/blog/website-cost-kerala',
                     datePublished: '2026-03-23',
                 })}
             />
@@ -54,6 +53,6 @@ export default function WebsiteCostKerala() {
                     </Link>
                 </div>
             </article>
-        </Layout>
+        </>
     );
 }

@@ -2,8 +2,11 @@
 <html lang="en-IN" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <!-- Canonical host: use www everywhere (matches site.ts JSON-LD, sitemap, Search Console). Redirect apex → www in hosting DNS. -->
-    <link rel="canonical" href="https://www.hexastacksolutions.com/" />
+    <!-- Canonical host: use www everywhere (matches site.ts JSON-LD, sitemap, Search Console). Redirect apex → www in hosting DNS.
+         NOTE: canonical / description / og / twitter tags are intentionally NOT hardcoded here. The prerender step
+         injects the correct per-route values into each static HTML file (src/prerender.tsx), and the client-side
+         SEO hooks (usePageSeo / SEO.tsx) set them for SPA-routed pages. Hardcoding them here would create duplicate
+         tags in the prerendered output, which hurts SEO. -->
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon-new.png" />
@@ -17,10 +20,6 @@
     -->
     <meta name="google-site-verification" content="WMjF2f8_2yH5H-XydiKtRwcpu4B4uyIjDNJbJ9Yh6tg" />
     <meta
-      name="description"
-      content="HexaStack Solutions is a Kerala-based web development and AI automation company offering custom websites, mobile apps, ERP systems, SEO, and business software solutions for startups and businesses."
-    />
-    <meta
       name="keywords"
       content="web development company Kerala, software company Thrissur, mobile app development Kerala, ERP software Kerala, AI automation company Kerala, SEO company Kerala"
     />
@@ -33,41 +32,6 @@
     <!-- One href per language; avoid duplicate hreflang URLs (same page for every region hurts Lighthouse SEO). -->
     <link rel="alternate" hreflang="en-IN" href="https://www.hexastacksolutions.com/" />
     <link rel="alternate" hreflang="x-default" href="https://www.hexastacksolutions.com/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="HexaStack Solutions" />
-    <meta property="og:title" content="Web Development & AI Automation Company in Kerala | HexaStack Solutions" />
-    <meta
-      property="og:description"
-      content="HexaStack Solutions is a Kerala-based web development and AI automation company offering custom websites, mobile apps, ERP systems, SEO, and business software solutions for startups and businesses."
-    />
-    <meta property="og:locale" content="en_IN" />
-    <meta property="og:locale:alternate" content="en_AE" />
-    <meta property="og:locale:alternate" content="en_SA" />
-    <meta property="og:url" content="https://www.hexastacksolutions.com/" />
-    <meta
-      property="og:image"
-      content="https://www.hexastacksolutions.com/images/portfolio/oripio-healthcare-doctor-booking-web-ui.jpg"
-    />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta
-      property="og:image:alt"
-      content="HexaStack Solutions — Kerala web design, UI/UX, ecommerce, SEO & custom software for India, UAE, GCC & global clients"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Web Development & AI Automation Company in Kerala | HexaStack Solutions" />
-    <meta
-      name="twitter:description"
-      content="HexaStack Solutions is a Kerala-based web development and AI automation company offering custom websites, mobile apps, ERP systems, SEO, and business software solutions for startups and businesses."
-    />
-    <meta
-      name="twitter:image"
-      content="https://www.hexastacksolutions.com/images/portfolio/oripio-healthcare-doctor-booking-web-ui.jpg"
-    />
-    <meta
-      name="twitter:image:alt"
-      content="HexaStack Solutions — Kerala web design, UI/UX, ecommerce, SEO & custom software for India, UAE, GCC & global clients"
-    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Non-blocking font CSS (reduces render-blocking vs synchronous stylesheet). -->

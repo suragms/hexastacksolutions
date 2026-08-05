@@ -1,114 +1,73 @@
-/** Routes used for Vite prerender (full list). */
+/**
+ * Single source of truth for the site's public routes.
+ * Used by sitemap generation and (optionally) the puppeteer prerender script.
+ * Keep blog slugs in sync with src/prerender.tsx routeMeta and src/App.tsx routes.
+ */
+
+/** Routed core pages (must match src/App.tsx). */
 const CORE_PATHS = [
     '/',
-    '/services',
-    '/products',
-    '/work',
-    '/portfolio',
-    '/blog',
-    '/contact',
-    '/about',
-    '/products/hexabill',
-    '/privacy',
-    '/terms',
-    '/kerala',
-    '/gulf-vat',
-];
-
-/** Blog URLs (single canonical slug per article; no duplicate paths). */
-const BLOG_PATHS = [
-    '/blog/website-cost-kerala-2026',
-    '/blog/restaurant-pos-uae-case-study',
-    '/blog/pos-software-restaurants-kerala-2026',
-    '/blog/vat-compliant-billing-software-uae',
-    '/blog/vat-billing-software-uae-2026',
-    '/blog/web-development-company-thrissur',
-    '/blog/medical-lab-software-kerala',
-    '/blog/whatsapp-business-setup-kerala-2026',
-    '/blog/ai-integration-small-business-kerala',
-    '/blog/choose-mobile-app-developer-kerala',
-    '/blog/nutriscan-ai-food-recognition-app',
-];
-
-/** All SEO template routes (prerender + legacy URLs). */
-const SEO_PATHS = [
-    '/seo/thrissur/web-development',
-    '/seo/ernakulam/web-development',
-    '/seo/kozhikode/web-development',
-    '/seo/thrissur/pos-software',
-    '/seo/ernakulam/pos-software',
-    '/seo/kozhikode/pos-software',
-    '/seo/thrissur/billing-software',
-    '/seo/thrissur/custom-software',
-    '/seo/ernakulam/custom-software',
-    '/seo/uae/vat-billing',
-    '/seo/dubai/vat-billing',
-    '/seo/kuwait/vat-billing',
-    '/seo/bahrain/vat-billing',
-    '/services/website-development-thrissur-kerala',
-    '/services/website-development-ernakulam-kerala',
-    '/services/website-development-kozhikode-kerala',
-    '/services/pos-software-thrissur-kerala',
-    '/services/pos-software-ernakulam-kerala',
-    '/services/pos-software-kozhikode-kerala',
-    '/services/billing-software-thrissur-kerala',
-    '/services/custom-software-thrissur-kerala',
-    '/services/custom-software-ernakulam-kerala',
-    '/services/website-development-uae',
-    '/services/website-development-kuwait',
-    '/services/website-development-bahrain',
-    '/services/pos-software-uae',
-    '/services/pos-software-kuwait',
-    '/services/pos-software-bahrain',
-    '/services/billing-software-uae',
-    '/services/billing-software-kuwait',
-    '/services/billing-software-bahrain',
-    '/services/custom-software-uae',
-    '/services/custom-software-kuwait',
-    '/services/custom-software-bahrain',
-];
-
-/**
- * Quality sitemap: core + blog + Thrissur-only SEO templates (no thin duplicates, no legal pages).
- * Other URLs remain prerendered via ALL_PUBLIC_PATHS for direct visits.
- */
-const SITEMAP_PATHS = [
-    '/',
-    '/work',
     '/services',
     '/services/web-design',
     '/services/web-applications',
     '/services/seo',
+    '/products/hexabill',
+    '/work',
     '/blog',
-    '/blog/vat-einvoice-2026',
-    '/blog/cwv-gulf-leads',
-    '/blog/pos-erp-narrative',
-    '/blog/seo-keywords-2026',
-    '/blog/restaurant-pos-case-study',
-    '/blog/medical-lab-software-kerala',
-    '/blog/ai-integration-small-business-kerala',
-    '/blog/website-cost-kerala',
-    '/blog/vat-billing-uae',
-    '/blog/web-development-company-thrissur',
-    '/blog/whatsapp-business-kerala',
-    '/blog/mobile-app-developer-kerala',
-    '/blog/pos-software-restaurants-kerala',
-    '/blog/nutriscan-ai-food-recognition',
     '/contact',
     '/about',
-    '/products/hexabill',
-    '/terms',
     '/privacy',
+    '/terms',
     '/security',
     '/rules',
     '/refund-policy',
 ];
 
-const ALL_PUBLIC_PATHS = [...CORE_PATHS, ...BLOG_PATHS, ...SEO_PATHS];
+/**
+ * Blog URLs — canonical slugs with real content (static components in src/pages/blog/*).
+ * NOTE: these MUST match the route slugs in src/App.tsx and the meta in src/prerender.tsx.
+ * Do NOT use blogPosts.ts data ids here — several of those have no routed page.
+ */
+const BLOG_PATHS = [
+    '/blog/vat-compliant-billing-software-uae',
+    '/blog/restaurant-pos-case-study',
+    '/blog/medical-lab-software-kerala',
+    '/blog/ai-integration-small-business-kerala',
+    '/blog/website-cost-kerala',
+    '/blog/web-development-company-thrissur',
+    '/blog/whatsapp-business-setup-kerala',
+    '/blog/choose-mobile-app-developer-kerala',
+    '/blog/pos-software-restaurants-kerala',
+    '/blog/nutriscan-ai-food-recognition',
+];
+
+/** Local SEO landing pages (src/pages/seo/LocalSeoPage.tsx + src/data/localSeoPages.ts). */
+const LOCAL_SEO_PATHS = [
+    '/web-development-company-thrissur',
+    '/seo-company-thrissur',
+    '/software-company-kerala',
+    '/mobile-app-development-kerala',
+    '/erp-software-kerala',
+    '/ai-automation-company-kerala',
+    '/website-design-company-thrissur',
+];
+
+/**
+ * Legacy / dead SEO template URLs. NOT routed in src/App.tsx (they redirect to /services
+ * or render the 404 page), so they must never be prerendered or added to the sitemap.
+ * Kept empty for backwards-compatibility with old scripts.
+ */
+const SEO_PATHS = [];
+
+/** Sitemap: core + service pages + legal (blog + local SEO are appended by generate-sitemap.cjs). */
+const SITEMAP_PATHS = CORE_PATHS;
+
+const ALL_PUBLIC_PATHS = [...new Set([...CORE_PATHS, ...BLOG_PATHS, ...LOCAL_SEO_PATHS, ...SEO_PATHS])];
 
 module.exports = {
     CORE_PATHS,
     BLOG_PATHS,
+    LOCAL_SEO_PATHS,
     SEO_PATHS,
     SITEMAP_PATHS,
     ALL_PUBLIC_PATHS,

@@ -47,6 +47,9 @@
       "has": [{ "type": "host", "value": "hexastacksolutions.com" }],
       "destination": "https://www.hexastacksolutions.com/:path*",
       "permanent": true
-    }
+    },
+    { "source": "/united-states", "destination": "/", "permanent": true },
+    { "source": "/solutions", "destination": "/services", "permanent": true },
+    { "source": "/pricing", "destination": "/contact", "permanent": true }
   ]
 }

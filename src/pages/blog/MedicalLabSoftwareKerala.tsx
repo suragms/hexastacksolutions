@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function MedicalLabSoftwareKerala() {
     return (
-        <Layout>
+        <>
             <SEO
                 title="Medical Lab Software Kerala — Features and Pricing | HexaStack"
                 description="What to expect from medical lab software in Kerala: patient management, reports, billing, and how custom solutions compare on features and pricing."
@@ -54,6 +53,6 @@ export default function MedicalLabSoftwareKerala() {
                     </Link>
                 </div>
             </article>
-        </Layout>
+        </>
     );
 }

@@ -28,13 +28,14 @@ If you pushed but production still shows the old design:
 
 Vercel caps build duration (often **45 minutes** on Hobby). A timeout usually means the build **stuck** (open handles, a hung step), not that the project needs 45 minutes to compile.
 
-**Prerender on Vercel:** The repo skips the Vite prerender plugin when `VERCEL=1` (set automatically by Vercel) so `vite build` does not run route-by-route SSR during the deploy. That avoids long or stuck prerender steps and keeps builds short. The site is still a normal SPA with client-side routing and your SEO hooks (`usePageSeo`, JSON-LD, etc.).
+**Prerender on Vercel:** `npm run build` runs `node scripts/prerender.cjs` after `vite build`. That loads each public route in headless Chrome (`@sparticuz/chromium` on Vercel, system Chrome locally), waits for the content to render, and writes full per-route HTML (`dist/<route>/index.html`). Google then sees real static HTML with per-route title/meta/JSON-LD instead of an empty SPA shell. `vite build` itself stays a plain SPA build (no SSR plugin), so it is fast and reliable.
 
 | Variable | Effect |
 |----------|--------|
-| *(default on Vercel)* | Prerender **off** — fast, reliable builds. |
-| `ENABLE_PRERENDER=1` | Turn prerender **on** for Vercel (only if you need static HTML per route and builds complete). |
-| `SKIP_PRERENDER=1` | Force prerender **off** (any environment). |
+| *(default)* | Prerender **on** for every build. |
+| `SKIP_PRERENDER=1` | Skip the headless prerender step (faster previews / CI). |
+
+Prerender requirements: `puppeteer-core` + `@sparticuz/chromium` (both in `package.json`). Locally, the script also works with a system Chrome/Edge install.
 
 If builds are still slow after this, check the log for the last step printed (e.g. `tsc`, `vite build`, `[build-api-bundle]`). **Enhanced Builds** on Vercel can increase CPU/RAM but will not fix a true hang.
 

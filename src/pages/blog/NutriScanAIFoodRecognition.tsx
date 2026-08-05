@@ -1,21 +1,20 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function NutriScanAIFoodRecognition() {
     return (
-        <Layout>
+        <>
             <SEO
                 title="NutriScan AI — Food Recognition App with GPT-4 Vision | HexaStack"
                 description="NutriScan AI uses GPT-4 Vision to recognise food from a photo and give nutritional insights. Built by HexaStack Solutions, Thrissur."
                 keywords="NutriScan AI, food recognition app, GPT-4 Vision, nutrition app Kerala"
-                canonical="/blog/nutriscan-ai-food-recognition-app"
+                canonical="/blog/nutriscan-ai-food-recognition"
                 schema={createArticleSchema({
                     headline: 'NutriScan AI - Food Recognition App with GPT-4 Vision',
                     description: 'NutriScan AI uses GPT-4 Vision to recognise food from a photo and give nutritional insights. Built by HexaStack Solutions, Thrissur.',
-                    path: '/blog/nutriscan-ai-food-recognition-app',
+                    path: '/blog/nutriscan-ai-food-recognition',
                     datePublished: '2026-03-23',
                 })}
             />
@@ -54,6 +53,6 @@ export default function NutriScanAIFoodRecognition() {
                     </Link>
                 </div>
             </article>
-        </Layout>
+        </>
     );
 }

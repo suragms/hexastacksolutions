@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import Layout from '@/components/Layout';
 import SEO from '@/components/SEO';
 import { createArticleSchema } from '@/lib/seoSchemas';
 
 export default function ChooseMobileAppDeveloperKerala() {
     return (
-        <Layout>
+        <>
             <SEO
                 title="How to Choose a Mobile App Developer in Kerala | HexaStack"
                 description="What to look for when choosing a mobile app developer in Kerala: portfolio, platform, cost, and support. Practical tips for 2026."
@@ -54,6 +53,6 @@ export default function ChooseMobileAppDeveloperKerala() {
                     </Link>
                 </div>
             </article>
-        </Layout>
+        </>
     );
 }
