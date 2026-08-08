@@ -94,19 +94,25 @@ async function getBrowserRuntime() {
     const isVercel = Boolean(process.env.VERCEL || process.env.VERCEL_ENV);
 
     if (isVercel) {
-        const chromium = require('@sparticuz/chromium');
+        // @sparticuz/chromium v149+ is ESM-only: CJS require() returns a namespace whose API
+        // lives on `.default` (older CJS builds expose it directly — fall back to the module).
+        // v149 also removed `defaultViewport`/`headless` (replaced by `graphicsMode`); pass
+        // `headless: 'shell'` explicitly for puppeteer-core.
+        const chromiumNs = require('@sparticuz/chromium');
+        const chromium = chromiumNs.default || chromiumNs;
         const executablePath = await chromium.executablePath();
 
-        return {
-            puppeteer,
-            launchOptions: {
-                args: chromium.args,
-                defaultViewport: chromium.defaultViewport,
-                executablePath,
-                headless: chromium.headless,
-                ignoreHTTPSErrors: true,
-            },
+        const launchOptions = {
+            args: chromium.args,
+            executablePath,
+            headless: chromium.headless ?? 'shell',
+            ignoreHTTPSErrors: true,
         };
+        if (chromium.defaultViewport) {
+            launchOptions.defaultViewport = chromium.defaultViewport;
+        }
+
+        return { puppeteer, launchOptions };
     }
 
     const localCandidates = [

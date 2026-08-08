@@ -64,11 +64,11 @@ npm run preview   # preview static dist locally
 - **`vercel.json`**: `buildCommand`, `outputDirectory` (`dist`), `rewrites` for SPA + `/api`, `functions` include for `server-bundle.cjs`.
 - Set **`DATABASE_URL`** and other secrets in the Vercel project **Environment Variables**.
 - In Vercel dashboard, go to **Project Settings → Environment Variables** and set:
-  - **`ENABLE_PRERENDER=1`** (optional, Production + Preview) — turns on **route prerender** during `vite build` for static HTML per URL. Default on Vercel is **off** for faster, more reliable deploys; the SPA still ships with `usePageSeo` and JSON-LD at runtime.
+  - **`SKIP_PRERENDER=1`** (optional) — skips the headless prerender step (`scripts/prerender.cjs`) during `npm run build` for faster previews/CI. Prerender is **on by default** (it is part of the build script) and writes per-route static HTML into `dist/`; it fails soft, so if Chrome/Chromium is unavailable the build still succeeds with SPA-only output.
   - **`NODE_ENV=production`**
   - **`VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX`** (Production + Preview, for Google Analytics)
 
-If you need full static HTML for every public route on deploy, set **`ENABLE_PRERENDER=1`** and redeploy. Otherwise leave it unset for quicker builds.
+Static HTML for every public route (from `scripts/public-routes.cjs`) is written on deploy **by default**. Set **`SKIP_PRERENDER=1`** only if you want faster builds without per-route HTML.
 
 More detail: **`docs/VERCEL_DEPLOY.md`**.
 

@@ -1,7 +1,7 @@
 /**
  * Single source of truth for the site's public routes.
- * Used by sitemap generation and (optionally) the puppeteer prerender script.
- * Keep slugs in sync with src/prerender.tsx routeMeta and src/App.tsx routes.
+ * Used by sitemap generation, the puppeteer prerender script, and check-route-parity.cjs.
+ * Keep in sync with src/App.tsx routes (check-route-parity.cjs enforces this at prebuild).
  */
 
 /**
@@ -46,7 +46,7 @@ const CORE_PATHS = [
 
 /**
  * Blog URLs — canonical slugs with real content (static components in src/pages/blog/*).
- * NOTE: these MUST match the route slugs in src/App.tsx and the meta in src/prerender.tsx.
+ * These must match the explicit /blog/... routes in src/App.tsx (check-route-parity.cjs verifies).
  * Do NOT use blogPosts.ts data ids here — several of those have no routed page.
  */
 const BLOG_PATHS = [
