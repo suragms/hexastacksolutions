@@ -1,7 +1,8 @@
-import { ChevronDown, Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, MessageCircle, Phone, X } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { getNavGroups } from '../../data/serviceCatalog'
+import { site } from '../../data/site'
 import { useNavbarScroll } from '../../hooks/useNavbarScroll'
 import { BrandWordmark } from './BrandWordmark'
 import { Container } from '../ui/Container'
@@ -47,7 +48,7 @@ function dropdownLinkClass(to: string, pathname: string, hash: string) {
 function mobileSolutionLinkClass(to: string, pathname: string, hash: string) {
   const active = navItemActive(to, pathname, hash)
   return [
-    'rounded-lg px-2 py-2 text-base font-medium transition',
+    'rounded-lg px-2 py-2.5 text-base font-medium transition',
     active
       ? 'bg-orange-500 text-white'
       : 'text-text-muted hover:bg-orange-500 hover:text-white',
@@ -57,7 +58,7 @@ function mobileSolutionLinkClass(to: string, pathname: string, hash: string) {
 function mobileWorkLinkClass(pathname: string) {
   const active = pathname.startsWith('/work')
   return [
-    'rounded-lg px-2 py-2 text-base font-medium transition',
+    'rounded-lg px-2 py-2.5 text-base font-medium transition',
     active ? 'bg-orange-500 text-white' : 'text-text-muted hover:bg-orange-500 hover:text-white',
   ].join(' ')
 }
@@ -273,6 +274,16 @@ export function Navbar() {
   const [dd, setDd] = useState<'work' | 'services' | 'products' | null>(null)
   const { pathname, hash } = useLocation()
 
+  /** Lock body scroll while the mobile menu is open so the drawer reads as a real overlay. */
+  useEffect(() => {
+    if (!mobileOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [mobileOpen])
+
   const headerClass =
     solid || pathname !== '/'
       ? 'border-b border-border bg-background/95 shadow-sm backdrop-blur-md'
@@ -340,7 +351,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2 lg:hidden">
-          <GradientLink to="/contact" className="!py-1.5 !px-3 text-xs sm:!px-3.5 sm:text-sm">
+          <GradientLink to="/contact" className="!py-2.5 !px-3.5 text-sm sm:!px-4">
             Request Pricing
           </GradientLink>
           <button
@@ -359,10 +370,41 @@ export function Navbar() {
       {mobileOpen ? (
         <div
           id="mobile-menu"
-          className="max-h-[min(80vh,calc(100vh-4rem))] overflow-y-auto border-b border-border bg-background lg:hidden"
+          className="max-h-[min(80vh,calc(100vh-9.5rem))] overflow-y-auto border-b border-border bg-background lg:hidden"
         >
           <nav className="flex flex-col gap-1 px-4 py-4" aria-label="Mobile">
-            <p className="px-2 text-xs font-semibold uppercase tracking-wider text-text-muted">Our Work</p>
+            <div className="mb-2 grid grid-cols-2 gap-2 border-b border-border pb-3">
+              <a
+                href={site.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileOpen(false)}
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#25D366] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1ebe57]"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden />
+                WhatsApp
+              </a>
+              <a
+                href={`tel:${site.phones[0].replace(/\s/g, '')}`}
+                onClick={() => setMobileOpen(false)}
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-orange-200 bg-orange-50 px-4 py-2.5 text-sm font-semibold text-orange-700 transition-colors hover:bg-orange-100"
+              >
+                <Phone className="h-4 w-4" aria-hidden />
+                Call Us
+              </a>
+            </div>
+            <Link
+              to="/"
+              className={`rounded-lg px-2 py-2.5 text-base font-medium transition ${
+                pathname === '/'
+                  ? 'bg-orange-500 text-white'
+                  : 'text-text-muted hover:bg-orange-500 hover:text-white'
+              }`}
+              onClick={() => setMobileOpen(false)}
+            >
+              Home
+            </Link>
+            <p className="mt-1 px-2 text-xs font-semibold uppercase tracking-wider text-text-muted">Our Work</p>
             {workLinks.map((l) => (
               <Link
                 key={l.label}
@@ -397,7 +439,7 @@ export function Navbar() {
             ))}
             <Link
               to="/services"
-              className={`mt-2 rounded-lg px-2 py-2 text-base font-medium transition ${
+              className={`mt-2 rounded-lg px-2 py-2.5 text-base font-medium transition ${
                 pathname === '/services'
                   ? 'bg-orange-500 text-white'
                   : 'text-text-muted hover:bg-orange-500 hover:text-white'
@@ -419,7 +461,7 @@ export function Navbar() {
             ))}
             <Link
               to="/about"
-              className={`mt-2 rounded-lg px-2 py-2 text-base font-medium transition ${
+              className={`mt-2 rounded-lg px-2 py-2.5 text-base font-medium transition ${
                 pathname === '/about'
                   ? 'bg-orange-500 text-white'
                   : 'text-text-muted hover:bg-orange-500 hover:text-white'
@@ -430,7 +472,7 @@ export function Navbar() {
             </Link>
             <Link
               to="/blog"
-              className={`rounded-lg px-2 py-2 text-base font-medium transition ${
+              className={`rounded-lg px-2 py-2.5 text-base font-medium transition ${
                 pathname === '/blog'
                   ? 'bg-orange-500 text-white'
                   : 'text-text-muted hover:bg-orange-500 hover:text-white'
@@ -441,7 +483,7 @@ export function Navbar() {
             </Link>
             <Link
               to="/contact"
-              className={`rounded-lg px-2 py-2 text-base font-medium transition ${
+              className={`rounded-lg px-2 py-2.5 text-base font-medium transition ${
                 pathname === '/contact'
                   ? 'bg-orange-500 text-white'
                   : 'text-text-muted hover:bg-orange-500 hover:text-white'

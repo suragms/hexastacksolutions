@@ -7,7 +7,7 @@ export function FloatingBookCall() {
   return (
     <Link
       to="/contact"
-      className="btn-gradient-primary fixed bottom-[5.5rem] right-4 z-40 rounded-xl px-4 py-3 text-sm font-semibold transition-colors duration-200 md:bottom-[5.5rem] md:right-4"
+      className="btn-gradient-primary fixed bottom-[5.5rem] right-4 z-40 hidden rounded-xl px-4 py-3 text-sm font-semibold transition-colors duration-200 lg:block lg:bottom-[5.5rem] lg:right-4"
     >
       Get a Quote
     </Link>
