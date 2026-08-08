@@ -60,6 +60,16 @@ const BLOG_PATHS = [
     '/blog/choose-mobile-app-developer-kerala',
     '/blog/pos-software-restaurants-kerala',
     '/blog/nutriscan-ai-food-recognition',
+    '/blog/web-design-vs-web-development-kerala',
+    '/blog/website-development-timeline-2026',
+    '/blog/website-vs-web-application',
+    '/blog/ecommerce-website-development-kerala',
+    '/blog/website-maintenance-budget-kerala',
+    '/blog/web-development-company-vs-freelancer',
+    '/blog/website-redesign-without-losing-seo',
+    '/blog/react-nextjs-vs-wordpress-2026',
+    '/blog/website-speed-fix-guide',
+    '/blog/thrissur-business-website-not-facebook',
 ];
 
 /** Local SEO landing pages (src/pages/seo/LocalSeoPage.tsx + src/data/localSeoPages.ts). */

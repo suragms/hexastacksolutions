@@ -95,7 +95,7 @@ export function createLocalBusinessSchema(options?: { name?: string; description
             streetAddress: 'Thrissur',
             addressLocality: 'Thrissur',
             addressRegion: 'KL',
-            postalCode: '680569',
+            postalCode: '680614',
             addressCountry: 'IN',
         },
         geo: {

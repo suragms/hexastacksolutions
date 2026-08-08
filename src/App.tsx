@@ -25,6 +25,16 @@ const BlogNutriScan = lazy(() => import('./pages/blog/NutriScanAIFoodRecognition
 const BlogLab = lazy(() => import('./pages/blog/MedicalLabSoftwareKerala'))
 const BlogMobileDev = lazy(() => import('./pages/blog/ChooseMobileAppDeveloperKerala'))
 const BlogAi = lazy(() => import('./pages/blog/AIIntegrationSmallBusinessKerala'))
+const BlogWebDesignVsDev = lazy(() => import('./pages/blog/WebDesignVsWebDevelopment'))
+const BlogWebsiteTimeline = lazy(() => import('./pages/blog/WebsiteDevelopmentTimeline'))
+const BlogWebsiteVsApp = lazy(() => import('./pages/blog/WebsiteVsWebApplication'))
+const BlogEcommerceKerala = lazy(() => import('./pages/blog/EcommerceWebsiteDevelopmentKerala'))
+const BlogWebsiteMaintenance = lazy(() => import('./pages/blog/WebsiteMaintenanceBudget'))
+const BlogCompanyVsFreelancer = lazy(() => import('./pages/blog/WebDevCompanyVsFreelancer'))
+const BlogWebsiteRedesign = lazy(() => import('./pages/blog/WebsiteRedesignSeo'))
+const BlogReactVsWp = lazy(() => import('./pages/blog/ReactNextJsVsWordPress'))
+const BlogWebsiteSpeed = lazy(() => import('./pages/blog/WebsiteSpeedFix'))
+const BlogThrissurWebsite = lazy(() => import('./pages/blog/ThrissurBusinessWebsite'))
 const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })))
 const TermsPage = lazy(() => import('./pages/TermsPage').then((m) => ({ default: m.TermsPage })))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((m) => ({ default: m.PrivacyPage })))
@@ -78,6 +88,16 @@ function App() {
             <Route path="/blog/medical-lab-software-kerala" element={<BlogLab />} />
             <Route path="/blog/choose-mobile-app-developer-kerala" element={<BlogMobileDev />} />
             <Route path="/blog/ai-integration-small-business-kerala" element={<BlogAi />} />
+            <Route path="/blog/web-design-vs-web-development-kerala" element={<BlogWebDesignVsDev />} />
+            <Route path="/blog/website-development-timeline-2026" element={<BlogWebsiteTimeline />} />
+            <Route path="/blog/website-vs-web-application" element={<BlogWebsiteVsApp />} />
+            <Route path="/blog/ecommerce-website-development-kerala" element={<BlogEcommerceKerala />} />
+            <Route path="/blog/website-maintenance-budget-kerala" element={<BlogWebsiteMaintenance />} />
+            <Route path="/blog/web-development-company-vs-freelancer" element={<BlogCompanyVsFreelancer />} />
+            <Route path="/blog/website-redesign-without-losing-seo" element={<BlogWebsiteRedesign />} />
+            <Route path="/blog/react-nextjs-vs-wordpress-2026" element={<BlogReactVsWp />} />
+            <Route path="/blog/website-speed-fix-guide" element={<BlogWebsiteSpeed />} />
+            <Route path="/blog/thrissur-business-website-not-facebook" element={<BlogThrissurWebsite />} />
             <Route path="/blog/:slug" element={<BlogPostDynamic />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/terms" element={<TermsPage />} />

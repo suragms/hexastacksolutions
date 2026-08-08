@@ -88,3 +88,36 @@ After each deploy, confirm the live sitemap loads: `https://www.hexastacksolutio
 ### Search Console follow-up (Aug 2026 data) — user-side actions, no code
 
 - Trend positive (homepage impressions 57→138, +142%); **zero impressions** for the 7 local-SEO target keywords; trust queries suggest GBP is unverified/wrong-city. Actions: verify GBP, fix city to Thrissur, NAP audit, request indexing for the 7 local-SEO pages via URL Inspection.
+
+## 2026-08-08 — Web-development blog cluster + internal linking (SEO pass)
+
+### 10 new web-development articles (all live routes, sitemap + prerender + route-parity)
+
+New static pages in [`src/pages/blog/`](../src/pages/blog/), each with `<SEO>` + `createArticleSchema` **and** `createBreadcrumbSchema`, internal links to service pages + related posts, and a `/contact` CTA. Added to [`src/App.tsx`](../src/App.tsx) (lazy import + static route), [`scripts/public-routes.cjs`](../scripts/public-routes.cjs) (`BLOG_PATHS`), and [`src/data/blogPosts.ts`](../src/data/blogPosts.ts) (category `Web development`, Aug 2026):
+
+1. `web-design-vs-web-development-kerala` — design vs development scoping
+2. `website-development-timeline-2026` — realistic build timelines
+3. `website-vs-web-application` — tool vs website decision
+4. `ecommerce-website-development-kerala` — e-commerce scope + costs
+5. `website-maintenance-budget-kerala` — maintenance budget/red flags
+6. `web-development-company-vs-freelancer` — agency vs freelancer trade-offs
+7. `website-redesign-without-losing-seo` — safe redesign checklist
+8. `react-nextjs-vs-wordpress-2026` — tech-stack plain-language guide
+9. `website-speed-fix-guide` — slow-site causes + fixes
+10. `thrissur-business-website-not-facebook` — why own your web presence
+
+Covers reuse the existing 6 blog JPGs (incl. previously-unused `cover-gst-gulf.jpg`); no new imagery. Sitemap now lists 20 blog posts. `check-route-parity` expects **55** public paths (was 45).
+
+### Homepage → blog surfacing (internal linking)
+
+- New [`src/components/sections/BlogSection.tsx`](../src/components/sections/BlogSection.tsx) renders the 3 latest posts (from `sortedBlogPostsByDate()`), linked into [`src/pages/HomePage.tsx`](../src/pages/HomePage.tsx) between OperationalProducts and Comparison. Homepage (highest authority) now links to blog posts directly.
+
+### Structured data fixes
+
+- [`src/components/services/SeoLanding.tsx`](../src/components/services/SeoLanding.tsx): added `Service` + `FAQPage` schema (from its existing visible FAQ) — previously only BreadcrumbList. Brings `/services/seo` to parity with the 13 catalog service pages.
+- [`src/lib/seoSchemas.ts`](../src/lib/seoSchemas.ts): `createLocalBusinessSchema` postalCode **680569 → 680614** to match [`src/data/site.ts`](../src/data/site.ts) — removed a conflicting NAP signal.
+
+### Docs
+
+- [`docs/SEO_RANKING_TODO.md`](../docs/SEO_RANKING_TODO.md): marked genuinely-shipped items `[x]` (#34–48 blog, #51–55, #59–62) and added a dated note for the 10 new articles. Off-site/GBP/perf items left unchecked (honest status).
+

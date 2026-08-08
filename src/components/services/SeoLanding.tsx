@@ -2,6 +2,7 @@ import { BadgeCheck, Eye, Gauge, LineChart } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { site } from '../../data/site'
 import { portfolio } from '../../data/servicesManifest'
+import { createFAQSchema, createServiceSchema } from '../../lib/seoSchemas'
 import { Container } from '../ui/Container'
 import { FadeInView } from '../ui/FadeInView'
 import { GradientLink } from '../ui/GradientLink'
@@ -94,6 +95,15 @@ export function SeoLanding() {
     ],
   }
 
+  const serviceLd = createServiceSchema({
+    name: 'SEO services in Kerala',
+    description:
+      'Technical SEO, local SEO, on-page optimization, content, and measurement for businesses in Thrissur and across Kerala.',
+    serviceType: 'SEO & Digital Growth',
+  })
+
+  const faqLd = createFAQSchema(faq.map((f) => ({ question: f.q, answer: f.a })))
+
   return (
     <Section className="relative pt-24 md:pt-28">
       <div
@@ -101,6 +111,8 @@ export function SeoLanding() {
         aria-hidden
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
 
       <Container>
         <nav className="text-sm text-text-muted" aria-label="Breadcrumb">
