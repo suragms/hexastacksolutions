@@ -29,32 +29,36 @@ ORM:       @prisma/client v6
 Auth:      Simple hardcoded password in Admin.tsx: 'hexastack@2024'
 Email:     Resend API (already integrated in contact.ts — needs RESEND_API_KEY env var)
 Upload:    multer (server/routes/upload.ts exists)
-Deploy:    Netlify (frontend dist/ + Netlify Functions via netlify/functions/api.ts)
-API base:  /api/* → /.netlify/functions/api/:splat
+Deploy:    Vercel (static dist/ + serverless function /api/index.js; vercel.json controls rewrites/headers/functions)
+API base:  /api/* → /api/index.js (serverless bundle built by scripts/build-api-bundle.cjs)
 ```
 
 ### What Already EXISTS (do not rebuild these)
 ```
 Pages (src/pages/):
-  Home.tsx         — hero, services grid, products grid, portfolio link, process, CTA, blog preview
-  Services.tsx     — exists (read before editing)
-  Products.tsx     — exists (read before editing)
-  Work.tsx         — exists (read before editing)
-  Contact.tsx      — exists (read before editing)
-  Admin.tsx        — full admin panel: analytics, enquiries, portfolio, settings, services, products tabs
-  About.tsx        — exists
-  Blog.tsx         — exists
-  Pricing.tsx      — exists
-  Solutions.tsx    — exists
-  Privacy.tsx      — exists
-  Terms.tsx        — exists
-  products/HexaBill.tsx  — product sub-page
-  products/HexaCV.tsx    — product sub-page
+  HomePage.tsx         — hero, services grid, products grid, portfolio link, process, CTA, blog preview
+  ServicesPage.tsx     — services overview (read before editing)
+  ServiceDetailPage.tsx — dynamic /services/:slug (data from src/data/serviceCatalog.ts)
+  WorkPage.tsx         — portfolio (data from src/data/portfolioManifest.ts)
+  ContactPage.tsx      — contact form + WhatsApp CTA
+  AboutPage.tsx        — about / founder story
+  BlogPage.tsx         — blog index (links to static article pages)
+  BlogPostDynamic.tsx  — generic /blog/:slug fallback
+  blog/*.tsx           — 10 static article pages (WebsiteCostKerala, RestaurantPOSCaseStudy, …)
+  seo/LocalSeoPage.tsx — renders the 7 local-SEO landing pages from src/data/localSeoPages.ts
+  HexaBillPage.tsx     — /products/hexabill
+  Legal pages: TermsPage, PrivacyPage, SecurityPage, RulesPage, RefundPolicyPage
+  Admin.tsx            — full admin panel (analytics, enquiries, CRM pipeline, revenue, daily ops)
+  NotFound.tsx         — catch-all `*` route (noindex, follow)
 
 Components:
-  Layout.tsx       — sticky nav + footer + WhatsApp floating button (ALREADY EXISTS)
-  SEO.tsx          — sets document.title + meta tags + JSON-LD schema
-  ThemeToggle.tsx  — dark mode toggle
+  layout/Layout.tsx   — sticky nav + footer + WhatsApp floating button (ALREADY EXISTS; renders JsonLd)
+  seo/JsonLd.tsx      — site-wide Organization + WebSite + ProfessionalService @graph (rendered in Layout)
+  SEO.tsx             — per-page title/meta for blog pages + Admin (import from '@/components/SEO')
+  hooks/usePageSeo.ts — per-route title/description/canonical/OG/Twitter (most pages)
+  ui/Container.tsx, ui/Section.tsx, ui/GradientLink.tsx, ui/GradientButton.tsx — design system
+  seo/FaqJsonLd.tsx, seo/GoogleAnalytics.tsx
+  ThemeToggle.tsx     — dark mode toggle
 
 Server routes (server/routes/):
   contact.ts    — POST/GET/PATCH/DELETE + /:id/reply (email via Resend)
@@ -93,8 +97,8 @@ WhatsApp2:  +917012714150 (Surag — Full Stack Dev & PM)
 Email:      supporthexastacksolutions@gmail.com
 Address:    Thrissur, Kerala (default in CompanySettings)
 Admin pass: hexastack@2024
-Domain:     hexastacksolutions.com (canonical set in index.html — correct)
-LinkedIn:   https://www.linkedin.com/company/hexastack-solutions/
+Domain:     www.hexastacksolutions.com (canonical; apex 301s to www via vercel.json)
+LinkedIn:   https://www.linkedin.com/company/hexastacksolutions
 
 Real Products:
   HexaBill  — POS/ERP/billing, VAT-compliant, India & Gulf
@@ -172,7 +176,7 @@ State: what the definition of "done" looks like
 | Products pages (HexaBill, HexaCV etc) | 07-PRODUCTS.md |
 | Business copy, conversion, CTAs | 08-MARKETING.md |
 | Competitor research + positioning | 09-COMPETITION.md |
-| Deploy, Netlify, performance | 10-PRODUCTION.md |
+| Deploy, Vercel, performance | 10-PRODUCTION.md |
 | Growth, analytics, content plan | 11-GROWTH.md |
 | Mobile layout, breakpoints, touch, mobile frame | 12-MOBILE-UX.md |
 | Copy for SMB owners, audience behaviour | 13-CUSTOMER-BEHAVIOUR.md |

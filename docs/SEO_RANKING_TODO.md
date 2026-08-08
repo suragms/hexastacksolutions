@@ -35,10 +35,10 @@ Work from **#1** to the end. Do not skip. Mark completed items with `[x]`.
 | 9 | Sulekha listing | sulekha.com — Add software company listing | HIGH |
 | 10 | IndiaMART seller | indiamart.com/seller — Create seller profile, list services | HIGH |
 | 11 | Clutch.co profile | clutch.co/profile/create — Verified software company listing | HIGH |
-| 12 | GitHub organization | github.com/orgs/new — Add hexastacksolutions.com in profile | MEDIUM |
+| 12 | GitHub organization | ✅ Done — github.com/hexastacksolutions live (verified 2026-08-08); add hexastacksolutions.com in profile | MEDIUM |
 | 13 | Google Business Posts | Once GBP verified: weekly posts with link to site | HIGH |
 | 14 | Kerala startup outreach | Email kerala.gov.in/startup, keralastartup.in — Thrissur software company | HIGH |
-| 15 | LinkedIn company page | Post case studies with link to hexastacksolutions.com/work | MEDIUM |
+| 15 | LinkedIn company page | ✅ Done — in.linkedin.com/company/hexastacksolutions live, 136 followers (verified 2026-08-08). Post case studies with link to hexastacksolutions.com/work | MEDIUM |
 | 16 | Product Hunt launch | Submit HexaBill or NutriScan AI — producthunt.com | HIGH |
 | 17 | Guest post | "Write for us" + Kerala business — one article, link back | HIGH |
 | 18 | GoodFirms profile | goodfirms.co — Free listing with website link | MEDIUM |

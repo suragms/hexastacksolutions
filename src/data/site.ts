@@ -39,7 +39,7 @@ export const site = {
   /** Generic fallbacks for footer/UI only — not used in JSON-LD sameAs. */
   social: {
     x: 'https://x.com/SolutionsHexa',
-    linkedin: 'https://www.linkedin.com/company/hexastack-solutions',
+    linkedin: 'https://www.linkedin.com/company/hexastacksolutions',
     github: 'https://github.com/hexastacksolutions',
     instagram: 'https://www.instagram.com/hexastack_solutions/',
   },
@@ -56,7 +56,7 @@ export const site = {
  */
 export const brandSocialProfileUrls: readonly string[] = [
   'https://x.com/SolutionsHexa',
-  'https://www.linkedin.com/company/hexastack-solutions',
+  'https://www.linkedin.com/company/hexastacksolutions',
   'https://github.com/hexastacksolutions',
 ]
 

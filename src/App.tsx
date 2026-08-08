@@ -35,6 +35,7 @@ const RefundPolicyPage = lazy(() =>
 )
 
 const LocalSeoPage = lazy(() => import('./pages/seo/LocalSeoPage'))
+const NotFound = lazy(() => import('./pages/NotFound').then((m) => ({ default: m.NotFound })))
 
 function RouteFallback() {
   return (
@@ -92,6 +93,8 @@ function App() {
             <Route path="/erp-software-kerala" element={<LocalSeoPage />} />
             <Route path="/ai-automation-company-kerala" element={<LocalSeoPage />} />
             <Route path="/website-design-company-thrissur" element={<LocalSeoPage />} />
+
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </Suspense>

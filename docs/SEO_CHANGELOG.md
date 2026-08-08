@@ -41,3 +41,50 @@ After each deploy, confirm the live sitemap loads: `https://www.hexastacksolutio
 - Re-run **Search Console** “URL inspection” after deploys.
 - Bump `lastmod` in `sitemap.xml` when you materially change priority URLs.
 - Add real URLs to `brandSocialProfileUrls` in `site.ts` when available.
+
+## 2026-08-08
+
+### Prerender root-cause fix (live site was serving a blank SPA shell)
+
+- [`scripts/prerender.cjs`](../scripts/prerender.cjs): `@sparticuz/chromium` v149 is **ESM-only** — the CJS `require()` returns a namespace whose API lives on `.default`. The old call `chromium.executablePath()` threw `TypeError` inside the fail-soft guard, so **every route deployed as the 3.8KB empty shell** (`<div id=”root”></div>`, no content, no JSON-LD). Fixed with `chromiumNs.default || chromiumNs`, `headless: 'shell'`, and `ignoreHTTPSErrors`. Verified locally: prerendered HTML now has real title / JSON-LD / H1.
+- If you deploy and want to double-check: `curl -s https://www.hexastacksolutions.com/services | grep -o '<title>[^<]*'` should show the per-route title, not the shell.
+
+### Route / sitemap parity (enforced at build)
+
+- New [`scripts/check-route-parity.cjs`](../scripts/check-route-parity.cjs): parses `<Route path>` from `src/App.tsx`, expands `/services/:slug` from the service catalogs, and fails the build if `src/App.tsx` and `scripts/public-routes.cjs` drift in either direction. **45/45 routes verified**; wired into the `prebuild` hook.
+- `package.json` `prebuild`: `node scripts/check-route-parity.cjs && node scripts/generate-sitemap.cjs`.
+
+### 404 handling
+
+- Catch-all `<Route path=”*”>` added; [`src/pages/NotFound.tsx`](../src/pages/NotFound.tsx) rebuilt (Container/Section design system, `robots: noindex, follow`, WhatsApp CTA). Stale URLs now get a real 404 instead of a soft-404.
+
+### Dead file cleanup (27 files removed)
+
+- Removed pages/components/scripts that had **zero references** (verified across `src/`, `scripts/`, `docs/`, config): old `About/ Blog/ Contact/ Dashboard/ GulfVatPage/ Home/ KeralaHubPage/ LocationServicePage/ Login/ Portfolio/ Pricing/ Privacy/ Products/ Register/ Services/ Solutions/ Terms/ Work/`, `seo/SEOLocationPage.tsx`, `seo/WebDevelopmentThrissur.tsx`, `products/HexaBill.tsx`, `products/HexaCV.tsx`, `components/Layout.tsx`, `src/prerender.tsx`, `netlify.toml`, `netlify/functions/api.ts`, `public/_redirects`.
+- **One false-positive corrected:** `src/components/SEO.tsx` was initially flagged dead by a regex bug (missed `import X from '@/components/SEO'`) and restored — it is live (blog pages + Admin).
+
+### Structured data
+
+- [`src/components/seo/JsonLd.tsx`](../src/components/seo/JsonLd.tsx): `ProfessionalService` node now includes `address` (PostalAddress) + `geo` (10.787, 76.23); Organization already had geo/founder/address. `sameAs` now points at **real** profiles only: X, `linkedin.com/company/hexastacksolutions` (corrected from the hyphenated URL that 301-redirected), `github.com/hexastacksolutions`.
+
+### Local SEO content audit (Step 3)
+
+- Re-verified the 7 local-SEO pages (`src/data/localSeoPages.ts`): max pairwise verbatim sentence overlap **19%** (software vs ERP), all others ≤17% — no doorway-page flag; pages are genuinely differentiated (distinct FAQs/services/stats/process/techStack).
+
+### Backlink / GBP verification (Step 5)
+
+- ✅ GitHub org `github.com/hexastacksolutions` — live. ✅ LinkedIn `in.linkedin.com/company/hexastacksolutions` — live, 136 followers (**note:** its website field currently points to a typo domain — fix in LinkedIn). ❌ JustDial / Sulekha / IndiaMART / Clutch / GoodFirms / Product Hunt — **no indexed listings found** (still outstanding). ⚠️ GBP (#23–33) cannot be verified from here — **user action required at business.google.com**. See [`SEO_RANKING_TODO.md`](../docs/SEO_RANKING_TODO.md) for updated status.
+
+### Doc hygiene (Step 6)
+
+- [`README.md`](../README.md): replaced stale `ENABLE_PRERENDER=1` guidance with the real `SKIP_PRERENDER=1` opt-out (prerender is on by default as part of the build).
+- [`index.html`](../index.html): comment no longer references the deleted `src/prerender.tsx`.
+- `.cursor/rules/`: `00-MASTER.md` (page inventory → real files, Netlify → Vercel, domain/LinkedIn), `02-SEO.md` (www canonical, `/pricing` removed from sitemap example), `10-PRODUCTION.md` (Netlify → Vercel + prerender section), `20-GOOGLE-RANKINGS.md` (www property, `/pricing` → `/contact` redirect, `/admin` noindex header).
+
+### Image dedupe report (Step 7 — report only, nothing deleted)
+
+- Full report presented to owner: `public/images/hexastack-assets/` (79 files, 13M) is **100% byte-duplicated** by `public/images/portfolio/` with **zero references**; root `images/` (100 files, 14M) is legacy/never-deployed; `public/images/ss/` (229K) is orphaned. **~13.2 MB** reclaimable off the deploy with sign-off. No files deleted.
+
+### Search Console follow-up (Aug 2026 data) — user-side actions, no code
+
+- Trend positive (homepage impressions 57→138, +142%); **zero impressions** for the 7 local-SEO target keywords; trust queries suggest GBP is unverified/wrong-city. Actions: verify GBP, fix city to Thrissur, NAP audit, request indexing for the 7 local-SEO pages via URL Inspection.

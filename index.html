@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <!-- Canonical host: use www everywhere (matches site.ts JSON-LD, sitemap, Search Console). Redirect apex → www in hosting DNS.
-         NOTE: canonical / description / og / twitter tags are intentionally NOT hardcoded here. The prerender step
-         injects the correct per-route values into each static HTML file (src/prerender.tsx), and the client-side
-         SEO hooks (usePageSeo / SEO.tsx) set them for SPA-routed pages. Hardcoding them here would create duplicate
-         tags in the prerendered output, which hurts SEO. -->
+         NOTE: canonical / description / og / twitter tags are intentionally NOT hardcoded here. scripts/prerender.cjs
+         renders each route headless and writes per-route static HTML into dist/<route>/index.html, with the values
+         usePageSeo / SEO.tsx set already baked in; the client-side hooks cover SPA-routed pages. Hardcoding them here
+         would create duplicate tags in the prerendered output, which hurts SEO. -->
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon-new.png" />

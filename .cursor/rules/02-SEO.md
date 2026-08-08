@@ -18,8 +18,8 @@ cat public/robots.txt    # check rules
 
 ### index.html — what's correct ✓
 ```
-canonical: https://hexastacksolutions.com — CORRECT
-og:url:    https://hexastacksolutions.com — CORRECT
+canonical: https://www.hexastacksolutions.com — CORRECT
+og:url:    https://www.hexastacksolutions.com — CORRECT
 og:image:  /logo-full-white.png — ok
 Font:      Inter (preloaded) — CORRECT
 ```
@@ -128,7 +128,7 @@ schema={{
   '@type': 'LocalBusiness',
   name: 'HexaStack Solutions',
   description: 'Custom software development, website design and AI integration for businesses in Thrissur, Kerala and Gulf.',
-  url: 'https://hexastacksolutions.com',
+  url: 'https://www.hexastacksolutions.com',
   telephone: '+917591999365',
   email: 'supporthexastacksolutions@gmail.com',
   address: {
@@ -145,7 +145,7 @@ schema={{
   areaServed: ['Kerala', 'UAE', 'India'],
   priceRange: '₹₹',
   openingHours: 'Mo-Sa 09:00-20:00',
-  sameAs: ['https://www.linkedin.com/company/hexastack-solutions/'],
+  sameAs: ['https://www.linkedin.com/company/hexastacksolutions'],
 }}
 ```
 
@@ -172,16 +172,16 @@ schema={{
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://hexastacksolutions.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://hexastacksolutions.com/services</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://hexastacksolutions.com/work</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://hexastacksolutions.com/products</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://hexastacksolutions.com/products/hexabill</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://hexastacksolutions.com/pricing</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://hexastacksolutions.com/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://hexastacksolutions.com/contact</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://hexastacksolutions.com/blog</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://hexastacksolutions.com/solutions</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hexastacksolutions.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hexastacksolutions.com/services</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hexastacksolutions.com/work</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hexastacksolutions.com/products</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hexastacksolutions.com/products/hexabill</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <!-- /pricing is a permanent redirect to /contact — never list it in the sitemap -->
+  <url><loc>https://www.hexastacksolutions.com/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hexastacksolutions.com/contact</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hexastacksolutions.com/blog</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hexastacksolutions.com/solutions</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
 </urlset>
 ```
 
@@ -192,7 +192,7 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://hexastacksolutions.com/sitemap.xml
+Sitemap: https://www.hexastacksolutions.com/sitemap.xml
 ```
 
 ---

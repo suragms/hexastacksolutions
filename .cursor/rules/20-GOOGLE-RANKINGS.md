@@ -11,10 +11,10 @@ Use for Search Console setup, sitemap, and keyword/ranking focus. Always align w
 
 ## VERIFICATION & SITEMAP
 
-- **Property**: hexastacksolutions.com (primary)
+- **Property**: www.hexastacksolutions.com (canonical host; apex hexastacksolutions.com 301s to www via vercel.json)
 - **Search Console**: search.google.com/search-console — verify domain or URL prefix; add sitemap
-- **Sitemap**: public/sitemap.xml — include all public routes (/, /services, /work, /contact, /about, /pricing, /blog, /products, product sub-pages). Submit URL: https://hexastacksolutions.com/sitemap.xml
-- **robots.txt**: Allow / ; Disallow /admin and /api (no indexing of admin or API)
+- **Sitemap**: public/sitemap.xml — include all public routes (/, /services, /work, /contact, /about, /blog, /products/hexabill, service sub-pages). Submit URL: https://www.hexastacksolutions.com/sitemap.xml. Note: `/pricing` is a permanent redirect to `/contact` (do not list it).
+- **robots.txt**: Allow / ; Disallow /admin and /api (no indexing of admin or API). vercel.json also returns `X-Robots-Tag: noindex, nofollow` on /admin.
 
 ---
 
@@ -32,7 +32,7 @@ Use in: page &lt;SEO&gt; title and description (02-SEO), H1/H2 where natural, GB
 
 - Sitemap submitted and no critical coverage errors in Search Console
 - All target pages have correct title and description (Thrissur/Kerala/Gulf where relevant)
-- canonical URL https://hexastacksolutions.com in index.html and OG tags
+- canonical URL https://www.hexastacksolutions.com in index.html and OG tags
 - New pages added to sitemap.xml when created
 
 ---
