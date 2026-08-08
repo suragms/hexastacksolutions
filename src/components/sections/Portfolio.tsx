@@ -91,6 +91,7 @@ export function Portfolio() {
     let raf = 0
     let last = performance.now()
     let hoverPaused = false
+    let touchPaused = false
     let tabHidden = document.hidden
 
     const onEnter = () => {
@@ -99,8 +100,17 @@ export function Portfolio() {
     const onLeave = () => {
       hoverPaused = false
     }
+    const onTouchStart = () => {
+      touchPaused = true
+    }
+    const onTouchEnd = () => {
+      touchPaused = false
+    }
     el.addEventListener('pointerenter', onEnter)
     el.addEventListener('pointerleave', onLeave)
+    el.addEventListener('touchstart', onTouchStart)
+    el.addEventListener('touchend', onTouchEnd)
+    el.addEventListener('touchcancel', onTouchEnd)
 
     const maxScroll = () => Math.max(0, el.scrollWidth - el.clientWidth)
 
@@ -108,7 +118,7 @@ export function Portfolio() {
       const dt = Math.min(80, now - last)
       last = now
       const range = maxScroll()
-      const allowScroll = !hoverPaused && !tabHidden && range > 1
+      const allowScroll = !hoverPaused && !touchPaused && !tabHidden && range > 1
       if (allowScroll) {
         const pxPerMs = range / (loopDurationSec * 1000)
         el.scrollLeft += pxPerMs * dt
@@ -134,6 +144,9 @@ export function Portfolio() {
       document.removeEventListener('visibilitychange', onVis)
       el.removeEventListener('pointerenter', onEnter)
       el.removeEventListener('pointerleave', onLeave)
+      el.removeEventListener('touchstart', onTouchStart)
+      el.removeEventListener('touchend', onTouchEnd)
+      el.removeEventListener('touchcancel', onTouchEnd)
     }
   }, [filtered, loopDurationSec])
 

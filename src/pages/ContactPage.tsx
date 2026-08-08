@@ -120,7 +120,7 @@ export function ContactPage() {
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <FadeInView>
             <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">Contact</p>
-            <h1 className="mt-3 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
+            <h1 className="mt-3 text-3xl font-bold tracking-tight text-text-primary md:text-5xl">
               Reply Within 2 Hours — WhatsApp or Form
             </h1>
             <p className="mt-4 text-text-muted">

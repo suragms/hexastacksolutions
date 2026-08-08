@@ -183,7 +183,7 @@ export function BlogPage() {
             <span className="inline-flex rounded-full border border-orange-200 bg-white px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-orange-700">
               Blog
             </span>
-            <h1 className="mt-4 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
+            <h1 className="mt-4 text-3xl font-bold tracking-tight text-text-primary md:text-5xl">
               VAT, POS &amp; SEO Notes for Kerala and Gulf Teams
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-text-muted">

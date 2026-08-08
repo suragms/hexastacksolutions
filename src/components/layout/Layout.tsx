@@ -5,6 +5,7 @@ import { hydrateTestimonialsFromServer } from '../../lib/testimonials'
 import { JsonLd } from '../seo/JsonLd'
 import { FloatingBookCall } from './FloatingBookCall'
 import { Footer } from './Footer'
+import { MobileTabBar } from './MobileTabBar'
 import { Navbar } from './Navbar'
 
 import { WhatsAppCTA } from '../WhatsAppCTA'
@@ -65,6 +66,7 @@ export function Layout() {
         <Outlet />
       </main>
       <Footer />
+      <MobileTabBar />
       <FloatingBookCall />
       <WhatsAppCTA />
       <ExitIntentPopup />

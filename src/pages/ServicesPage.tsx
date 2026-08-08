@@ -33,7 +33,7 @@ export function ServicesPage() {
       <Container>
         <FadeInView className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">Services</p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
+          <h1 className="mt-3 text-3xl font-bold tracking-tight text-text-primary md:text-5xl">
             Complete Technology, AI &amp; Growth Services
           </h1>
           <p className="mt-4 text-text-muted">

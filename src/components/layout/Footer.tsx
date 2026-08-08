@@ -87,7 +87,7 @@ const industryLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-surface py-12 md:py-16">
+    <footer className="border-t border-border bg-surface py-12 pb-28 md:py-16 md:pb-16">
       <Container>
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-4">

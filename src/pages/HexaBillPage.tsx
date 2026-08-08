@@ -84,7 +84,7 @@ export function HexaBillPage() {
         <Container>
           <FadeInView className="mx-auto max-w-4xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">HexaBill product suite</p>
-            <h1 className="mt-4 text-4xl font-bold tracking-tight text-text-primary md:text-5xl lg:text-[3.25rem] lg:leading-[1.1]">
+            <h1 className="mt-4 text-3xl font-bold tracking-tight text-text-primary md:text-5xl lg:text-[3.25rem] lg:leading-[1.1]">
               {hexabillHero.headline}
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg text-text-muted md:text-xl">{hexabillHero.subtext}</p>

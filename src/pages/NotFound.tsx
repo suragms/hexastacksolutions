@@ -16,7 +16,7 @@ export function NotFound() {
       <Container>
         <div className="flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">404</p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
+          <h1 className="mt-3 text-3xl font-bold tracking-tight text-text-primary md:text-5xl">
             Page Not Found
           </h1>
           <p className="mt-4 max-w-md text-text-muted">

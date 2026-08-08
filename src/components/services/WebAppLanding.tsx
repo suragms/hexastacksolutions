@@ -148,7 +148,7 @@ export function WebAppLanding() {
 
         <div className="mt-10 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <FadeInView>
-            <h1 className="text-4xl font-bold tracking-tight text-text-primary md:text-5xl lg:text-[2.75rem] lg:leading-[1.1]">
+            <h1 className="text-3xl font-bold tracking-tight text-text-primary md:text-5xl lg:text-[2.75rem] lg:leading-[1.1]">
               We build custom software that powers businesses
             </h1>
             <p className="mt-5 text-lg text-text-muted">

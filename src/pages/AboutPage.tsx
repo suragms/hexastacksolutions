@@ -63,7 +63,7 @@ export function AboutPage() {
           <Container>
             <FadeInView className="mx-auto max-w-3xl">
               <p className="text-sm font-semibold uppercase tracking-wider text-orange-600">About HexaStack Solutions</p>
-              <h1 className="mt-3 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
+              <h1 className="mt-3 text-3xl font-bold tracking-tight text-text-primary md:text-5xl">
                 A Kerala software studio with a product mindset
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-text-muted">

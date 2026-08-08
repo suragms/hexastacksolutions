@@ -4,7 +4,7 @@ export function WhatsAppCTA() {
       href="https://wa.me/917591999365?text=Hi%20HexaStack%20Solutions,%20I%20would%20like%20to%20discuss%20a%20project."
       target="_blank"
       rel="noopener noreferrer"
-      className="group fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-lg transition-colors duration-200 hover:bg-[#1ebe57] md:bottom-4 md:right-4"
+      className="group fixed bottom-[calc(env(safe-area-inset-bottom)+4.75rem)] right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-lg transition-colors duration-200 hover:bg-[#1ebe57] lg:bottom-4"
       aria-label="Chat with us on WhatsApp"
     >
       <span className="pointer-events-none absolute right-16 whitespace-nowrap rounded-lg bg-white px-3 py-1 text-sm font-semibold text-slate-800 opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100">
