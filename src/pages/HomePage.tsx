@@ -7,6 +7,7 @@ import { CTASection } from '../components/sections/CTASection'
 import { FAQ } from '../components/sections/FAQ'
 import { Hero } from '../components/sections/Hero'
 import { Industries } from '../components/sections/Industries'
+import { BlogSection } from '../components/sections/BlogSection'
 import { OperationalProducts } from '../components/sections/OperationalProducts'
 import { Portfolio } from '../components/sections/Portfolio'
 import { Process } from '../components/sections/Process'
@@ -54,6 +55,7 @@ export function HomePage() {
       <Process />
       <Industries />
       <OperationalProducts />
+      <BlogSection />
       <Comparison />
       <FAQ />
       <CTASection />

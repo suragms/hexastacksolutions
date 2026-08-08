@@ -71,21 +71,27 @@ Work from **#1** to the end. Do not skip. Mark completed items with `[x]`.
 
 | # | Task | Action | Priority |
 |---|------|--------|----------|
-| 34 | Create src/pages/blog/ folder | For individual article .tsx files | HIGH |
-| 35 | Article 1 page | WebsiteCostKerala.tsx — "How Much Does a Website Cost in Kerala in 2026?" | HIGH |
-| 36 | Article 2 page | RestaurantPOSCaseStudy.tsx — UAE POS case study | HIGH |
-| 37 | Article 3 page | POS software restaurants Kerala 2026 | HIGH |
-| 38 | Article 4 page | VAT-Compliant Billing Software UAE | HIGH |
-| 39 | Article 5 page | Web Development Company Thrissur — What to Look For | HIGH |
-| 40 | Article 6 page | Medical Lab Software Kerala — Features and Pricing | HIGH |
-| 41 | Article 7 page | WhatsApp Business Setup Kerala 2026 | HIGH |
-| 42 | Article 8 page | AI Integration Small Business Kerala | HIGH |
-| 43 | Article 9 page | How to Choose Mobile App Developer Kerala | HIGH |
-| 44 | Article 10 page | NutriScan AI — Food Recognition App GPT-4 Vision | HIGH |
-| 45 | Add blog routes in App.tsx | Route for each /blog/slug | HIGH |
-| 46 | Update Blog.tsx | Change slug '#' to real /blog/article-url for each | HIGH |
-| 47 | Add blog URLs to sitemap.xml | All 10 with changefreq monthly, priority 0.8 | HIGH |
-| 48 | Write Article 1 content | 600–900 words, Surag + Anandu — publish first | CRITICAL |
+| 34 | Create src/pages/blog/ folder | ✅ Done — for individual article .tsx files | HIGH |
+| 35 | Article 1 page | ✅ Done — WebsiteCostKerala.tsx "How Much Does a Website Cost in Kerala in 2026?" | HIGH |
+| 36 | Article 2 page | ✅ Done — RestaurantPOSCaseStudy.tsx UAE POS case study | HIGH |
+| 37 | Article 3 page | ✅ Done — POS software restaurants Kerala 2026 | HIGH |
+| 38 | Article 4 page | ✅ Done — VAT-Compliant Billing Software UAE | HIGH |
+| 39 | Article 5 page | ✅ Done — Web Development Company Thrissur — What to Look For | HIGH |
+| 40 | Article 6 page | ✅ Done — Medical Lab Software Kerala — Features and Pricing | HIGH |
+| 41 | Article 7 page | ✅ Done — WhatsApp Business Setup Kerala 2026 | HIGH |
+| 42 | Article 8 page | ✅ Done — AI Integration Small Business Kerala | HIGH |
+| 43 | Article 9 page | ✅ Done — How to Choose Mobile App Developer Kerala | HIGH |
+| 44 | Article 10 page | ✅ Done — NutriScan AI — Food Recognition App GPT-4 Vision | HIGH |
+| 45 | Add blog routes in App.tsx | ✅ Done — route for each /blog/slug | HIGH |
+| 46 | Update Blog.tsx | ✅ Done — real /blog/article-url for each (blogPosts.ts listing) | HIGH |
+| 47 | Add blog URLs to sitemap.xml | ✅ Done — generated from BLOG_PATHS each build | HIGH |
+| 48 | Write Article 1 content | ✅ Done — 600–900 words each, publish first | CRITICAL |
+
+**2026-08-08 update — Web-development cluster added (10 new articles, all live routes + sitemap + prerender):**
+web-design-vs-web-development-kerala · website-development-timeline-2026 · website-vs-web-application ·
+ecommerce-website-development-kerala · website-maintenance-budget-kerala · web-development-company-vs-freelancer ·
+website-redesign-without-losing-seo · react-nextjs-vs-wordpress-2026 · website-speed-fix-guide ·
+thrissur-business-website-not-facebook. All indexed via BLOG_PATHS, each links internally to service pages + related posts.
 
 ---
 
@@ -102,18 +108,18 @@ Work from **#1** to the end. Do not skip. Mark completed items with `[x]`.
 
 | # | Task | Action | Priority |
 |---|------|--------|----------|
-| 51 | SSG / meta in HTML | Ensure critical meta in index.html or via SSG (see Section 1) | CRITICAL |
-| 52 | Canonical on every page | SEO.tsx: add `<link rel="canonical" href="https://hexastacksolutions.com/[page]">` | HIGH |
-| 53 | Sitemap lastmod dates | Update all lastmod to 2026-03-09 in public/sitemap.xml | HIGH |
-| 54 | Sitemap include blog/location | Add every new blog and location page URL to sitemap | HIGH |
-| 55 | Open Graph image | 1200x630px: HexaStack logo + "Custom Software — Thrissur, Kerala"; set in index.html + SEO.tsx | MEDIUM |
+| 51 | SSG / meta in HTML | ✅ Done — prerender (scripts/prerender.cjs) writes real HTML with per-route title/meta/JSON-LD; live in prod 2026-08-08 | CRITICAL |
+| 52 | Canonical on every page | ✅ Done — usePageSeo/SEO.tsx emit `https://www.hexastacksolutions.com/[page]` | HIGH |
+| 53 | Sitemap lastmod dates | ✅ Done — generated per build (scripts/generate-sitemap.cjs) | HIGH |
+| 54 | Sitemap include blog/location | ✅ Done — BLOG_PATHS + LOCAL_SEO_PATHS appended automatically | HIGH |
+| 55 | Open Graph image | ✅ Done — site.defaultOgImage + SEO defaults (logo-full-white.png) | MEDIUM |
 | 56 | Alt text all images | Every img: descriptive alt e.g. "HexaBill POS software for UAE restaurant" | HIGH |
 | 57 | H1 with target keyword | Services: one H1 with keyword; About, Pricing: strong H1 with keyword | HIGH |
 | 58 | PageSpeed Insights | Run pagespeed.web.dev; fix mobile score if below 70 | HIGH |
-| 59 | Structured data | Service schema on Services; Article on blog; Review on Work case studies | MEDIUM |
-| 60 | Domain consolidation | Pick hexastacksolutions.com as primary; 301 redirect any other domain to it (netlify + GBP) | CRITICAL |
-| 61 | Admin noindex | Admin.tsx: `<SEO noindex={true} />` so admin never indexed | MEDIUM |
-| 62 | Internal linking | Blog → service pages; services → work/portfolio; cross-link content | HIGH |
+| 59 | Structured data | ✅ Done — Service/FAQ/Breadcrumb on service pages; Article + Breadcrumb on blog; sitewide @graph | MEDIUM |
+| 60 | Domain consolidation | ✅ Done — www.hexastacksolutions.com primary; apex 301s via vercel.json | CRITICAL |
+| 61 | Admin noindex | ✅ Done — /admin X-Robots-Tag noindex + robots.txt Disallow | MEDIUM |
+| 62 | Internal linking | ✅ Done 2026-08-08 — 10 new web-dev posts link to service pages + related posts; homepage → blog section; SeoLanding cross-links | HIGH |
 
 ---
 
